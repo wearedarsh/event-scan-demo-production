@@ -1,0 +1,252 @@
+/* TRIX */
+trix-editor {
+    min-height: 200px;
+}
+
+/* SIDE BAR */
+.nav-item{
+    color: $brand-light !important;
+}
+
+.sidebar-nav .nav-link{
+    color: $brand-light !important;
+}
+
+.sidebar-nav .nav-link.active{
+    background-color: $brand-primary-dark !important;
+}
+
+.sidebar-nav .nav-link:hover {
+    background-color: $brand-primary-dark !important;
+}
+
+.nav-icon{
+    color: $brand-light !important;
+}
+
+.nav-title{
+    color: $brand-light !important;
+}
+
+.nav-link{
+    font-size: $font-medium !important; 
+}
+
+.wrapper {
+    margin-left: var(--cui-sidebar-occupy-start, 0px);
+    transition: margin 0.15s ease-in-out;
+}
+  
+
+/* BREADCRUMBS */
+.breadcrumb-item a{
+    font-size: $font-medium !important;
+    color: $brand-secondary !important;
+}
+
+.breadcrumb-item.active {
+    font-size: $font-medium !important;
+}
+
+.breadcrumb {
+    margin: 0;
+    padding: 0;
+}
+
+.breadcrumb-item {
+    display: flex;
+    align-items: center;
+    line-height: 1;
+}
+.breadcrumb a {
+    display: flex;
+    align-items: center;
+}
+
+/* FOOTER */
+.footer span{
+    font-size: $font-small !important;
+}
+
+.footer a{
+    font-size: $font-small !important;
+}
+
+/* DATATABLES */
+.datatable{
+    width:100%;
+    font-size: $font-medium !important; 
+}
+
+thead {
+    border-color: $brand-primary;
+    border-bottom-width: 1px;
+}
+
+.dt-container{
+    width: 100%;
+    margin: 0 auto;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: $brand-bg;
+    min-height:300px;
+}
+
+.dt-scroll-body{
+    min-height:300px;
+}
+
+.datatable tr{
+    vertical-align:middle;
+}
+
+.dt-paging-button button{
+    font-size: $font-small !important;
+}
+
+
+tr .dropdown .dropdown-menu .dropdown-item a{
+    font-size: $font-medium;
+    color: $brand-primary;
+    text-decoration: none;
+}
+
+li.active .page-link{
+    background-color: $brand-secondary !important;
+    border-color: $brand-secondary !important;
+}
+
+@media (max-width: 768px) { 
+    .dt-length {
+        display: none;
+    }
+
+    .dt-info{
+        display:none;
+    }
+
+    .dt-search{
+        text-align:right !important;
+    }
+
+    .dt-paging{
+        margin-top:8px!important;
+        text-align:right !important;
+    }
+
+    .wrapper{
+        width: 100%!important;
+    }
+}
+
+/* ALERTS */
+.alert span{
+    font-size: $font-small !important;
+}
+
+/* SUB NAV */
+#sub-nav-button-group .btn {
+    background-color: $brand-bg;
+    border: none;
+}
+
+#sub-nav-button-group .btn span{
+    color: $brand-dark;
+}
+
+#sub-nav-button-group .active {
+    background-color: $brand-medium-grey;
+    color: $brand-dark
+}
+
+#sub-nav-button-group .active span {
+    color: $brand-dark
+}
+
+#sub-nav-button-group .btn:hover {
+    background-color: $brand-medium-grey;
+    color: $brand-dark;
+}
+
+#sub-nav-button-group .btn:hover span {
+    color: $brand-dark;
+}
+
+/* TYPOGRAPHY */
+.fs-7 {
+    font-size: 0.75rem;
+}
+
+.form-label {
+    font-size: $font-medium !important;
+    color: $brand-dark;
+}
+
+/* FORMS */
+.form-control{
+    font-size: $font-medium !important; 
+}
+
+.form-text{
+    font-size: $font-small !important;
+}
+
+.form-select{
+    font-size: $font-medium !important; 
+}
+
+/* LOGIN FORM */
+.login-card {
+    width: 100%;
+    max-width: 450px;
+    padding: 2rem;
+    border-radius: 8px;
+    background: $brand-light;
+    text-align: center;
+}
+.login-card img {
+    max-width: 200px;
+    margin-bottom: 1rem;
+}
+
+.login-input-icon {
+    color: $brand-secondary !important;
+}
+
+/* BUTTONS */
+.btn {
+    color: $brand-light !important;
+    font-size: $font-medium !important;
+}
+.btn span{
+    font-size: $font-medium !important; 
+}
+
+/* DATEPICKER */
+.datepicker-dropdown .day{
+    font-size:$font-medium;
+    padding: 6px;
+    margin:2px;
+}
+
+.datepicker-dropdown .active{
+    background-image:none !important;
+    background-color:$brand-secondary !important;
+}
+
+/* CKEDITOR */
+.ck-editor{
+    font-size: $font-medium!important;
+    width: 100%!important;
+}
+
+.ck-editor__editable {
+    min-height: 200px;  /* Set a minimum height */
+    max-height: 400px;  /* Set a maximum height */
+    overflow-y: auto;  /* Enable scrolling */
+}
+
+
+
+
+
