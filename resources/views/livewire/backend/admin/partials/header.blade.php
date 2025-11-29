@@ -36,16 +36,11 @@
            class="text-[var(--color-text-light)] hover:text-[var(--color-primary)] transition">
             <x-heroicon-o-cog-6-tooth class="h-5 w-5" />
         </a>
-
-        <!-- Logout -->
-        <a href="{{ route('logout') }}"
-           class="flex items-center px-3 py-1.5 rounded-md text-sm font-medium
-                  border border-[var(--color-primary)] text-[var(--color-primary)]
-                  hover:bg-[var(--color-primary)] hover:text-white
-                  transition">
-            <x-heroicon-o-arrow-right-on-rectangle class="h-4 w-4 mr-1.5" />
+        <x-admin.outline-btn-icon
+            :href="route('logout')"
+            icon="heroicon-o-arrow-right-on-rectangle">
             Logout
-        </a>
+        </x-admin.outline-btn-icon>
     </div>
 
 </header>

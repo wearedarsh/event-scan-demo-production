@@ -1,37 +1,39 @@
 @import "tailwindcss";
 
 @theme{
-    --color-bg: #F9FAFB;
-    --color-surface: #FFFFFF;
-    --color-primary: #1A4AFF;
-    --color-primary-hover: #163ECC;
-    --color-accent: #00C7B7;
-    --color-accent-light: #E8F8F6;
-    --color-text: #1E293B;
-    --color-text-light: #64748B;
-    --color-border: #E2E8F0;
-    --color-gradient: linear-gradient(135deg, #1A4AFF 0%, #00C7B7 100%);
-    --color-secondary: #0f1724;
+  --color-bg: #F9FAFB;
+  --color-surface: #FFFFFF;
+  --color-primary: #1A4AFF;
+  --color-primary-hover: #163ECC;
+  --color-accent: #00C7B7;
+  --color-accent-light: #E8F8F6;
+  --color-text: #1E293B;
+  --color-text-light: #64748B;
+  --color-border: #E2E8F0;
+  --color-gradient: linear-gradient(135deg, #1A4AFF 0%, #00C7B7 100%);
+  --color-secondary: #0f1724;
 
-    --color-success: #16A34A;
-    --color-warning: #F59E0B;
-    --color-danger: #DC2626;
-    --color-muted: #94A3B8;
-    --color-surface-hover: #F3F4F6;
-  }
+  --color-success: #16A34A;
+  --color-warning: #F59E0B;
+  --color-danger: #DC2626;
+  --color-info: #0EA5E9;
+  --color-neutral: #94A3B8;
 
-  body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; color:var(--color-text); background:var(--color-bg); }
+  --color-muted: #94A3B8;
+  --color-surface-hover: #F3F4F6;
+}
 
-  /* Sidebar collapse helpers (toggle class on <html>) */
-  .sidebar-collapsed #sidebar { transform: translateX(-16rem); }
-  .sidebar-collapsed #main-content { margin-left: 0; }
+body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; color:var(--color-text); background:var(--color-bg); }
 
-  /* Small visual niceties for the preview */
-  .soft-card { background:var(--color-surface); border:1px solid var(--color-border); border-radius:12px; }
-  .soft-btn { background:var(--color-secondary); color:#fff; padding:8px 12px; border-radius:8px; }
+/* Sidebar collapse helpers (toggle class on <html>) */
+.sidebar-collapsed #sidebar { transform: translateX(-16rem); }
+.sidebar-collapsed #main-content { margin-left: 0; }
 
-  .form-label-custom {
-    @apply block text-sm font-medium text-[var(--color-text)] mb-1;
+.soft-card { background:var(--color-surface); border:1px solid var(--color-border); border-radius:12px; }
+.soft-btn { background:var(--color-secondary); color:#fff; padding:8px 12px; border-radius:8px; }
+
+.form-label-custom {
+  @apply block text-sm font-medium text-[var(--color-text)] mb-1;
 }
 
 .input-text {
