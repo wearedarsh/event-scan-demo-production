@@ -1,13 +1,22 @@
 <div class="min-h-screen flex flex-col bg-[var(--color-bg)]">
+  @include('livewire.frontend.partials.nav')
+  <!-- ===== Hero ===== -->
+<section class="relative flex items-center justify-center pt-40 pb-16 text-center overflow-hidden">
+  <!-- Background -->
+  <div class="absolute inset-0 bg-cover bg-center" 
+       style="background-image:url('{{ asset('images/frontend/header-bg.jpg') }}');">
+  </div>
 
+  <!-- Content -->
+  <div class="relative max-w-3xl mx-auto px-6 text-white z-10">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4">{{ $event->title }}</h1>
+  </div>
+</section>
   <!-- Hero Header -->
   <header class="bg-[var(--color-secondary)] text-[var(--color-surface)] py-10 text-center relative">
-    @include('livewire.frontend.partials.nav')
+
     <div class="mt-6">
-      <h1 class="text-3xl font-bold tracking-tight">{{ $event->title }}</h1>
-      <p class="text-[var(--color-text-light)] mt-2">
-        {{ $event->formatted_start_date }} - {{ $event->formatted_end_date }}
-      </p>
+      <h1 class="text-3xl font-bold tracking-tight">Thank you for your booking</h1>
     </div>
   </header>
 
@@ -30,13 +39,13 @@
 
       <!-- Dynamic Message -->
       @if($registration->registration_total > 0)
-        <p class="text-[var(--color-text)]">
-          Your payment was successful, and your booking is now confirmed.
-        </p>
+      <p class="text-[var(--color-text)]">
+        Your payment was successful, and your booking is now confirmed.
+      </p>
       @else
-        <p class="text-[var(--color-text)]">
-          Your booking is now confirmed.
-        </p>
+      <p class="text-[var(--color-text)]">
+        Your booking is now confirmed.
+      </p>
       @endif
 
       <!-- Divider -->
@@ -46,8 +55,7 @@
       <button
         type="button"
         wire:click="clearLocalStorageAndRedirect"
-        class="w-full bg-[var(--color-primary)] text-[var(--color-surface)] font-semibold px-6 py-3 rounded-lg transition hover:opacity-90"
-      >
+        class="w-full bg-[var(--color-primary)] text-[var(--color-surface)] font-semibold px-6 py-3 rounded-lg transition hover:opacity-90">
         Finish and Return to Homepage
       </button>
 

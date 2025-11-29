@@ -11,6 +11,7 @@ class CheckoutSuccess extends Component
     public Event $event;
     public $registration_id;
     public $registration;
+    public $events;
 
 
     public function mount($registration_id, Event $event)
@@ -25,10 +26,16 @@ class CheckoutSuccess extends Component
         $this->dispatch('removeFromLocalStorageAndRedirect');
     }
     
-    public function render(){
-        return view('livewire.frontend.checkout-success')
-            ->extends('livewire.frontend.layouts.app', [
-                'page_title' => 'Payment successful'
+    public function render()
+    {
+
+        $this->events = Event::where('active', true)
+            ->orderBy('date_start', 'asc')->get();
+
+        return view('livewire.frontend.checkout-success')->extends('livewire.frontend.layouts.app', [
+                'page_title' => 'Payment successful',
+                'events' => $this->events,
+                'event' => $this->event
 
             ]);
     }
