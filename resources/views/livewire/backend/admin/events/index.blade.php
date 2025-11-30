@@ -28,7 +28,7 @@
 
 
     <!-- Main card -->
-    <x-admin.card class="p-6 mx-6 space-y-4">
+    <x-admin.card hover="false" class="p-6 mx-6 space-y-4">
         
         <!-- Filters row -->
         <div class="flex flex-wrap items-center gap-2 mb-2">

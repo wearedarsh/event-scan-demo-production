@@ -16,12 +16,12 @@
 @endphp
 
 <div class="px-6">
-    <div class="soft-card p-4 border-l-4" style="border-color: {{ $color }}">
-
-        <div class="text-sm font-medium"
-             style="color: {{ $color }}">
+    <div
+        class="rounded-lg p-4"
+        style="background-color: color-mix(in srgb, {{ $color }} 10%, transparent);"
+    >
+        <div class="text-sm font-medium" style="color: {{ $color }}">
             {{ $message ?? $slot }}
         </div>
-
     </div>
 </div>

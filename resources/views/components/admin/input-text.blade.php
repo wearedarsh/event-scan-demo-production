@@ -17,7 +17,7 @@
 
     @if($model)
         @error($model)
-            <p class="text-sm text-[var(--color-danger)]">{{ $message }}</p>
+            <x-admin.input-error :message="$message" />
         @enderror
     @endif
 </div>

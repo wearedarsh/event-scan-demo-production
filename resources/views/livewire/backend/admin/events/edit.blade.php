@@ -41,21 +41,33 @@
                     </div>
 
                     <div>
-                        <x-admin.input-label for="date_start">Start Date</x-admin.input-label>
+                        <div class="flex items-center gap-1">
+                            <x-admin.input-label for="date_start">Start Date</x-admin.input-label>
+                            <x-admin.tooltip text="Enter date using dd-mm-yyyy format">
+                                <x-admin.icon-info />
+                            </x-admin.tooltip>
+                        </div>
                         <x-admin.input-text
                             id="date_start"
                             model="date_start"
                             class="datepicker"
-                            autocomplete="off" />
+                            autocomplete="off" 
+                        />
                     </div>
 
                     <div>
-                        <x-admin.input-label for="date_end">End Date</x-admin.input-label>
+                        <div class="flex items-center gap-1">
+                            <x-admin.input-label for="date_end">End Date</x-admin.input-label>
+                            <x-admin.tooltip text="Enter date using dd-mm-yyyy format">
+                                <x-admin.icon-info />
+                            </x-admin.tooltip>
+                        </div>
                         <x-admin.input-text
                             id="date_end"
                             model="date_end"
                             class="datepicker"
-                            autocomplete="off" />
+                            autocomplete="off"
+                        />
                     </div>
 
                     <div>
@@ -71,8 +83,6 @@
                 </div>
 
             </x-admin.card>
-
-
 
             <!-- Event status -->
             <x-admin.section-title title="Event status" />
@@ -115,8 +125,6 @@
                 </div>
 
             </x-admin.card>
-
-
 
             <!-- Email marketing -->
             <x-admin.section-title title="Email marketing" />

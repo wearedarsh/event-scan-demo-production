@@ -32,10 +32,13 @@
     <div class="flex items-center gap-4">
 
         <!-- Settings -->
-        <a href="{{route('admin.settings.index')}}"
-           class="text-[var(--color-text-light)] hover:text-[var(--color-primary)] transition">
-            <x-heroicon-o-cog-6-tooth class="h-5 w-5" />
-        </a>
+        <x-admin.tooltip text="Settings">
+            <x-admin.icon-button 
+                icon="heroicon-o-cog-6-tooth" 
+                href="{{ route('admin.settings.index') }}"
+            />
+        </x-admin.tooltip>
+
         <x-admin.outline-btn-icon
             :href="route('logout')"
             icon="heroicon-o-arrow-right-on-rectangle">

@@ -6,96 +6,78 @@
         ['label' => 'Add team member'],
     ]" />
 
-    <!-- Page Header -->
-    <div class="px-6 flex items-center justify-between">
-        <div>
-            <h1 class="text-2xl font-semibold text-[var(--color-text)]">Add team member</h1>
-            <p class="text-sm text-[var(--color-text-light)] mt-1">
-                Create a new team member and assign permissions.
-            </p>
-        </div>
-    </div>
+    <!-- Header -->
+    <x-admin.page-header
+        title="Add team member"
+        subtitle="Create a new team member and assign permissions."
+    />
 
     <!-- Alerts -->
     @if($errors->any())
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-warning)]">
-                <p class="text-sm text-[var(--color-warning)]">{{ $errors->first() }}</p>
-            </div>
-        </div>
+        <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
 
     @if(session('success'))
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-success)]">
-                <p class="text-sm text-[var(--color-success)]">{{ session('success') }}</p>
-            </div>
-        </div>
+        <x-admin.alert type="success" :message="session('success')" />
     @endif
 
 
-    <!-- ============================================================= -->
-    <!-- FORM WRAPPER -->
-    <!-- ============================================================= -->
+    <!-- Form wrapper -->
     <div class="px-6">
         <form wire:submit.prevent="save" class="space-y-6">
 
-
-            <!-- ============================================================= -->
-            <!-- USER INFORMATION -->
-            <!-- ============================================================= -->
+            <!-- User information -->
             <x-admin.section-title title="Information" />
 
-            <div class="soft-card p-6 space-y-3">
+            <x-admin.card hover="false" class="p-6 space-y-4">
 
                 <div class="grid md:grid-cols-2 gap-6">
 
                     <!-- First name -->
                     <div>
-                        <label class="form-label-custom">First Name</label>
-                        <input wire:model.live="first_name" type="text" class="input-text">
+                        <x-admin.input-label for="first_name">First name</x-admin.input-label>
+                        <x-admin.input-text id="first_name" model="first_name" />
                     </div>
 
                     <!-- Last name -->
                     <div>
-                        <label class="form-label-custom">Last Name</label>
-                        <input wire:model.live="last_name" type="text" class="input-text">
+                        <x-admin.input-label for="last_name">Last name</x-admin.input-label>
+                        <x-admin.input-text id="last_name" model="last_name" />
                     </div>
 
                     <!-- Email -->
                     <div>
-                        <label class="form-label-custom">Email</label>
-                        <input wire:model.live="email" type="email" class="input-text">
+                        <x-admin.input-label for="email">Email</x-admin.input-label>
+                        <x-admin.input-text id="email" model="email" type="email" />
                     </div>
 
                     <!-- Password -->
                     <div>
-                        <label class="form-label-custom">Password</label>
-                        <input wire:model.live="password" type="password" class="input-text">
-                        <p class="text-xs text-[var(--color-text-light)] mt-1">
+                        <x-admin.input-label for="password">Password</x-admin.input-label>
+                        <x-admin.input-text id="password" model="password" type="password" />
+
+                        <x-admin.input-help>
                             Must be at least 8 characters.
-                        </p>
+                        </x-admin.input-help>
                     </div>
 
                 </div>
 
-            </div>
+            </x-admin.card>
 
 
 
-            <!-- ============================================================= -->
-            <!-- ACCOUNT SETTINGS -->
-            <!-- ============================================================= -->
+            <!-- Account settings -->
             <x-admin.section-title title="Account Settings" />
 
-            <div class="soft-card p-6 space-y-3">
+            <x-admin.card hover="false" class="p-6 space-y-4">
 
                 <div class="grid md:grid-cols-2 gap-6">
 
                     <!-- Role -->
                     <div>
-                        <label class="form-label-custom">Role</label>
-                        <x-admin.select wire:model.live="role_id">
+                        <x-admin.input-label for="role_id">Role</x-admin.input-label>
+                        <x-admin.select id="role_id" wire:model.live="role_id">
                             <option value="">Select Role</option>
                             @foreach ($roles as $role)
                                 <option value="{{ $role->id }}">{{ $role->name }}</option>
@@ -105,8 +87,8 @@
 
                     <!-- Active -->
                     <div>
-                        <label class="form-label-custom">Active Status</label>
-                        <x-admin.select wire:model.live="active">
+                        <x-admin.input-label for="active">Active status</x-admin.input-label>
+                        <x-admin.select id="active" wire:model.live="active">
                             <option value="0">Inactive</option>
                             <option value="1">Active</option>
                         </x-admin.select>
@@ -114,35 +96,25 @@
 
                 </div>
 
-            </div>
+            </x-admin.card>
 
 
-
-            <!-- ============================================================= -->
-            <!-- ACTION BUTTONS -->
-            <!-- ============================================================= -->
-            <div class="soft-card p-6 space-y-3">
+            <!-- Action buttons -->
+            <x-admin.card hover="false" class="p-6 space-y-4">
 
                 <div class="flex items-center gap-3">
 
-                    <!-- PRIMARY OUTLINED BUTTON (your requested style) -->
-                    <button type="submit"
-                            class="flex items-center px-3 py-1.5 rounded-md text-sm font-medium
-                                   border border-[var(--color-primary)] text-[var(--color-primary)]
-                                   hover:bg-[var(--color-primary)] hover:text-white
-                                   transition">
+                    <x-admin.button type="submit" variant="outline">
                         Add team member
-                    </button>
+                    </x-admin.button>
 
-                    <!-- Cancel -->
-                    <a href="{{ route('admin.users.index') }}"
-                       class="btn-secondary">
+                    <x-admin.button href="{{ route('admin.users.index') }}" variant="secondary">
                         Cancel
-                    </a>
+                    </x-admin.button>
 
                 </div>
 
-            </div>
+            </x-admin.card>
 
         </form>
     </div>

@@ -15,6 +15,7 @@ use Spatie\Activitylog\Models\Activity;
 use App\Services\EmailService;
 use App\Models\EmailQueuedSend;
 use App\Jobs\SendQueuedEmailJob;
+use Livewire\WithPagination;
 
 use Carbon\Carbon;
 
@@ -24,7 +25,7 @@ use App\Services\EmailMarketing\EmailMarketingService;
 #[Layout('livewire.backend.admin.layouts.app')]
 class Manage extends Component
 {
-
+    use WithPagination;
     public EmailSend $email_send;
     public Event $event;
     public Registration $attendee;
@@ -123,15 +124,15 @@ class Manage extends Component
     public function render()
     {
         $activity_logs = Activity::where('causer_id', $this->attendee->user->id)
-            ->latest()->limit(20)->get();
+            ->latest()->limit(20)->paginate(20);
 
         $email_sends = EmailSend::where('recipient_id', $this->attendee->user->id)
-            ->latest()->get();
+            ->latest()->paginate(20);
 
         $check_ins = $this->attendee->checkIns()
             ->with(['session', 'checkedInBy'])
             ->orderByDesc('checked_in_at')
-            ->get();
+            ->paginate(20);
 
         return view('livewire.backend.admin.attendees.manage', [
             'activity_logs' => $activity_logs,

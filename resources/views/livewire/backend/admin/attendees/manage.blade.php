@@ -1,8 +1,6 @@
 <div class="space-y-6">
 
-    <!-- ============================================================= -->
-    <!-- BREADCRUMBS -->
-    <!-- ============================================================= -->
+    <!-- Breadcrumb -->
     <x-admin.breadcrumb :items="[
         ['label' => 'Events', 'href' => route('admin.events.index')],
         ['label' => $event->title, 'href' => route('admin.events.manage', $event->id)],
@@ -10,253 +8,241 @@
         ['label' => $attendee->title . ' ' . $attendee->last_name],
     ]" />
 
-
-    <!-- ============================================================= -->
-    <!-- PAGE HEADER -->
-    <!-- ============================================================= -->
-    <div class="px-6 flex items-center justify-between">
-
-        <div>
-            <h1 class="text-2xl font-semibold text-[var(--color-text)]">
-                {{ $attendee->title }} {{ $attendee->last_name }}
-            </h1>
-            <p class="text-sm text-[var(--color-text-light)] mt-1">
-                Attendee overview for {{ $event->title }}
-            </p>
-        </div>
-
+    <!-- Header -->
+    <x-admin.page-header
+        title="{{ $attendee->title }} {{ $attendee->last_name }}"
+        subtitle="Attendee overview for {{ $event->title }}">
         <!-- Summary Tiles -->
         <div class="flex items-center gap-3">
 
-            <!-- Status -->
-            @php
-            $isPaid = ! empty($attendee->formatted_paid_date);
-            @endphp
-            <div class="soft-card px-4 py-2 flex flex-col items-center">
-                <span class="text-xs text-[var(--color-text-light)]">Status</span>
+            <!-- Payment Status -->
+            @php $isPaid = ! empty($attendee->formatted_paid_date); @endphp
+            <x-admin.stat-card label="Status">
                 <span class="text-sm font-semibold {{ $isPaid ? 'text-[var(--color-success)]' : 'text-[var(--color-warning)]' }}">
                     {{ $isPaid ? 'Paid' : 'Unpaid' }}
                 </span>
-            </div>
+            </x-admin.stat-card>
 
             <!-- Group -->
-            <div class="soft-card px-4 py-2 flex flex-col items-center">
-                <span class="text-xs text-[var(--color-text-light)]">Group</span>
+            <x-admin.stat-card label="Group">
                 <span class="text-sm font-semibold">
                     {{ $attendee->attendeeGroup->title ?? '—' }}
                 </span>
-            </div>
+            </x-admin.stat-card>
 
-            <!-- Ticket Count -->
-            <div class="soft-card px-4 py-2 flex flex-col items-center">
-                <span class="text-xs text-[var(--color-text-light)]">Tickets</span>
+            <!-- Tickets -->
+            <x-admin.stat-card label="Tickets">
                 <span class="text-sm font-semibold">
                     {{ $attendee->registrationTickets->sum('quantity') }}
                 </span>
-            </div>
+            </x-admin.stat-card>
 
         </div>
-    </div>
+    </x-admin.page-header>
 
-
-
-    <!-- ============================================================= -->
-    <!-- ALERTS -->
-    <!-- ============================================================= -->
+    <!-- Alerts -->
     @if($errors->any())
-    <div class="px-6">
-        <div class="soft-card p-4 border-l-4 border-[var(--color-warning)]">
-            <p class="text-sm text-[var(--color-warning)]">{{ $errors->first() }}</p>
-        </div>
-    </div>
+    <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
 
     @if(session()->has('success'))
-    <div class="px-6">
-        <div class="soft-card p-4 border-l-4 border-[var(--color-success)]">
-            <p class="text-sm text-[var(--color-success)]">{{ session('success') }}</p>
-        </div>
-    </div>
+    <x-admin.alert type="success" :message="session('success')" />
     @endif
 
 
+    <!-- Primary tools -->
+    <div class="py-4 px-6">
+        <x-admin.section-title title="Primary tools" />
 
-    <!-- ============================================================= -->
-    <!-- QUICK TOOLS STRIP -->
-    <!-- ============================================================= -->
-    <div class="px-6 grid md:grid-cols-3 gap-6">
+        <div class="grid md:grid-cols-3 gap-6">
 
-        <!-- ============================================================= -->
-        <!-- COLUMN 1: ATTENDEE TOOLS -->
-        <!-- ============================================================= -->
-        <div class="soft-card p-5 hover:shadow-md hover:-translate-y-0.5 transition">
-            <h3 class="font-medium mb-2">Attendee tools</h3>
-            <p class="text-sm text-[var(--color-text-light)] mb-4">
-                Manage attendee data and details.
-            </p>
+            <!-- Attendee tools -->
+            <x-admin.tile-card
+                title="Attendee tools"
+                description="Manage attendee data and details.">
+                <x-link-arrow
+                    href="{{ route('admin.events.attendees.edit', [$event->id, $attendee->id]) }}">
+                    Edit attendee
+                </x-link-arrow>
+            </x-admin.tile-card>
 
-            <x-link-arrow
-                href="{{ route('admin.events.attendees.edit', [$event->id, $attendee->id]) }}">
-                Edit attendee
-            </x-link-arrow>
+
+            <!-- Communication -->
+            <x-admin.tile-card
+                title="Communication"
+                description="Send emails or manage payment updates.">
+                <x-link-arrow href="#" wire:click.prevent="sendWelcome">
+                    Send welcome email
+                </x-link-arrow>
+
+                <x-link-arrow class="mt-1" href="#" wire:click.prevent="sendReceipt">
+                    Send receipt email
+                </x-link-arrow>
+
+                @if($attendee->eventPaymentMethod->payment_method === 'bank_transfer')
+                <x-link-arrow
+                    class="mt-1"
+                    href="#"
+                    wire:click.prevent="sendBankTransferInfo">
+                    Send bank transfer details
+                </x-link-arrow>
+
+                <x-link-arrow
+                    class="mt-1"
+                    href="#"
+                    wire:click.prevent="openMarkPaidModal">
+                    Mark as paid
+                </x-link-arrow>
+                @endif
+            </x-admin.tile-card>
+
+
+            <!-- Badges & Labels -->
+            <x-admin.tile-card
+                title="Badges & labels"
+                description="Export digital badges or Avery labels.">
+                <x-link-arrow
+                    href="{{ route('admin.events.attendees.single-badge.export', [$event->id, $attendee->id]) }}">
+                    Download digital badge
+                </x-link-arrow>
+
+                <x-link-arrow
+                    class="mt-1"
+                    href="#"
+                    wire:click.prevent="openLabelModal">
+                    Download Avery label
+                </x-link-arrow>
+            </x-admin.tile-card>
+
         </div>
-
-
-
-        <!-- ============================================================= -->
-        <!-- COLUMN 2: COMMUNICATION -->
-        <!-- ============================================================= -->
-        <div class="soft-card p-5 hover:shadow-md hover:-translate-y-0.5 transition space-y-2">
-            <h3 class="font-medium mb-2">Communication</h3>
-            <p class="text-sm text-[var(--color-text-light)] mb-4">
-                Send event-related emails or manage payment updates.
-            </p>
-
-            <x-link-arrow href="#" wire:click.prevent="sendWelcome">
-                Send welcome email
-            </x-link-arrow>
-
-            <x-link-arrow href="#" wire:click.prevent="sendReceipt">
-                Send receipt email
-            </x-link-arrow>
-
-            @if($attendee->eventPaymentMethod->payment_method === 'bank_transfer')
-            <x-link-arrow href="#"
-                wire:click.prevent="sendBankTransferInfo"
-                wire:confirm="Send bank transfer details to this attendee?">
-                Send bank transfer details
-            </x-link-arrow>
-
-            <x-link-arrow href="#" wire:click.prevent="openMarkPaidModal">
-                Mark as paid
-            </x-link-arrow>
-            @endif
-        </div>
-
-
-
-        <!-- ============================================================= -->
-        <!-- COLUMN 3: BADGES & LABELS -->
-        <!-- ============================================================= -->
-        <div class="soft-card p-5 hover:shadow-md hover:-translate-y-0.5 transition">
-            <h3 class="font-medium mb-2">Badges & labels</h3>
-            <p class="text-sm text-[var(--color-text-light)] mb-4">
-                Export digital badges or print Avery labels.
-            </p>
-
-            <x-link-arrow
-                href="{{ route('admin.events.attendees.single-badge.export', [$event->id, $attendee->id]) }}">
-                Download digital badge
-            </x-link-arrow>
-
-            <x-link-arrow
-                href="#"
-                wire:click.prevent="openLabelModal">
-                Download Avery label
-            </x-link-arrow>
-        </div>
-
     </div>
 
-    <!-- ============================================================= -->
-    <!-- PERSONAL + PROFESSIONAL DETAILS -->
-    <!-- ============================================================= -->
+
+    <!-- Attendee details -->
     <div class="px-6 space-y-4">
+
         <x-admin.section-title title="Attendee details" />
-        <div class="soft-card p-6 space-y-6">
-            <div class="grid md:grid-cols-2 gap-8 text-sm">
 
-                <!-- PERSONAL -->
-                <div class="space-y-2">
-                    <h3 class="font-medium mb-1">Personal details</h3>
+        <div class="grid md:grid-cols-2 gap-6">
 
-                    @if($this->roleKey === 'developer')
-                    <p><span class="font-semibold">ID:</span> {{ $attendee->id }}</p>
+            <!-- Personal details -->
+            <x-admin.tile-card
+                title="Personal details"
+                description="Core attendee contact and address information.">
+
+                @if($this->roleKey === 'developer')
+                <p class="text-sm">
+                    <span class="font-semibold">ID:</span> {{ $attendee->id }}
+                </p>
+                @endif
+
+                <p class="text-sm">
+                    <span class="font-semibold">Name:</span>
+                    {{ $attendee->title }} {{ $attendee->first_name }} {{ $attendee->last_name }}
+                </p>
+
+                <p class="text-sm">
+                    <span class="font-semibold">Email:</span>
+                    <a href="mailto:{{ $attendee->user->email }}"
+                        class="underline-offset-2 hover:underline">
+                        {{ $attendee->user->email }}
+                    </a>
+                </p>
+
+                <p class="text-sm">
+                    <span class="font-semibold">Mobile:</span>
+                    {{ $attendee->mobile_country_code }}{{ $attendee->mobile_number }}
+                </p>
+
+                <p class="text-sm">
+                    <span class="font-semibold">Address line 1:</span>
+                    {{ $attendee->address_line_one }}
+                </p>
+
+                <p class="text-sm">
+                    <span class="font-semibold">Town:</span> {{ $attendee->town }}
+                </p>
+
+                <p class="text-sm">
+                    <span class="font-semibold">Country:</span> {{ $attendee->country->name }}
+                </p>
+
+                <p class="text-sm">
+                    <span class="font-semibold">Postcode:</span> {{ $attendee->postcode }}
+                </p>
+
+            </x-admin.tile-card>
+
+
+            <!-- Professional + actions -->
+            <x-admin.tile-card
+                title="Professional details"
+                description="Work-related information and attendee type.">
+
+                <p class="text-sm">
+                    <span class="font-semibold">Position:</span>
+                    {{ $attendee->currently_held_position }}
+                </p>
+
+                <p class="text-sm">
+                    <span class="font-semibold">Profession:</span>
+                    @if($attendee->AttendeeType->name !== 'Other')
+                    {{ $attendee->AttendeeType->name }}
+                    @else
+                    {{ $attendee->attendee_type_other }}
                     @endif
+                </p>
 
-                    <p><span class="font-semibold">Name:</span> {{ $attendee->title }} {{ $attendee->first_name }} {{ $attendee->last_name }}</p>
+                <!-- Actions -->
+                <div class="mt-4 space-y-2">
 
-                    <p>
-                        <span class="font-semibold">Email:</span>
-                        <a href="mailto:{{ $attendee->user->email }}" class="underline-offset-2 hover:underline">
-                            {{ $attendee->user->email }}
-                        </a>
-                    </p>
+                    <x-admin.outline-btn-icon
+                        :href="route('admin.events.attendees.edit', [$event->id, $attendee->id])"
+                        icon="heroicon-o-pencil-square">
+                        Edit attendee
+                    </x-admin.outline-btn-icon>
 
-                    <p><span class="font-semibold">Mobile:</span> {{ $attendee->mobile_country_code }}{{ $attendee->mobile_number }}</p>
-                    <p><span class="font-semibold">Address line 1:</span> {{ $attendee->address_line_one }}</p>
-                    <p><span class="font-semibold">Town:</span> {{ $attendee->town }}</p>
-                    <p><span class="font-semibold">Country:</span> {{ $attendee->country->name }}</p>
-                    <p><span class="font-semibold">Postcode:</span> {{ $attendee->postcode }}</p>
+                    <x-admin.outline-btn-icon
+                        wire:click.prevent="sendWelcome"
+                        icon="heroicon-o-envelope">
+                        Send welcome email
+                    </x-admin.outline-btn-icon>
+
                 </div>
 
-                <!-- PROFESSIONAL -->
-                <div class="space-y-2">
-                    <h3 class="font-medium mb-1">Professional details</h3>
-
-                    <p><span class="font-semibold">Position:</span> {{ $attendee->currently_held_position }}</p>
-
-                    <p>
-                        <span class="font-semibold">Profession:</span>
-                        @if($attendee->AttendeeType->name !== 'Other')
-                        {{ $attendee->AttendeeType->name }}
-                        @else
-                        {{ $attendee->attendee_type_other }}
-                        @endif
-                    </p>
-
-                    <div class="mt-4">
-                        <h4 class="font-medium mb-1">Attendee actions</h4>
-
-                        <a href="{{ route('admin.events.attendees.edit', [$event->id, $attendee->id]) }}"
-                            class="inline-flex items-center rounded-md border border-[var(--color-primary)]
-                                  bg-[var(--color-surface)] px-3 py-1.5 text-sm font-medium text-[var(--color-primary)]
-                                  hover:bg-[var(--color-primary)] hover:text-white transition-colors">
-                            <x-heroicon-o-pencil-square class="w-4 h-4 mr-1.5" />
-                            Edit attendee
-                        </a>
-
-                        <div class="mt-2">
-                            <button
-                                wire:confirm="Are you sure you want to send a welcome email?"
-                                wire:click.prevent="sendWelcome"
-                                class="inline-flex items-center rounded-md border border-[var(--color-primary)]
-                                       bg-[var(--color-surface)] px-3 py-1.5 text-sm font-medium text-[var(--color-primary)]
-                                       hover:bg-[var(--color-primary)] hover:text-white transition-colors">
-                                <x-heroicon-o-envelope class="w-4 h-4 mr-1.5" />
-                                Send welcome email
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+            </x-admin.tile-card>
 
         </div>
+
     </div>
 
 
 
-    <!-- ============================================================= -->
-    <!-- MARKETING + ACCOUNT -->
-    <!-- ============================================================= -->
+
+    <!-- Email marketing & account -->
     <div class="px-6 space-y-4">
 
         <x-admin.section-title title="Email marketing & account" />
 
         <div class="grid md:grid-cols-2 gap-6">
 
-            <!-- MARKETING -->
-            <div class="soft-card p-6 space-y-4 text-sm">
-                <p class="font-medium">General marketing opt-in</p>
-                <p class="text-[var(--color-text-light)]">
-                    {{ $attendee->user->email_marketing_opt_in ? 'Opted in' : 'Opted out' }}
+            <!-- Marketing -->
+            <x-admin.tile-card
+                title="Email marketing"
+                description="Manage marketing preferences and event-specific opt-ins.">
+
+                <p class="text-sm">
+                    <span class="font-semibold">General marketing opt-in:</span>
+                    <span class="text-[var(--color-text-light)]">
+                        {{ $attendee->user->email_marketing_opt_in ? 'Opted in' : 'Opted out' }}
+                    </span>
                 </p>
 
                 <x-link-arrow
                     href="#"
                     wire:click.prevent="updateEmailOptIn"
-                    wire:confirm="@if($attendee->user->email_marketing_opt_in) Are you sure you want to opt out? @else Are you sure you want to opt in? @endif">
+                    wire:confirm="@if($attendee->user->email_marketing_opt_in) Are you sure you want to opt out? @else Are you sure you want to opt in? @endif"
+                    class="mt-1">
                     @if($attendee->user->email_marketing_opt_in)
                     Opt out user
                     @else
@@ -264,9 +250,10 @@
                     @endif
                 </x-link-arrow>
 
-                <div class="pt-3 space-y-3">
+                <!-- Event-specific opt-ins -->
+                <div class="pt-4 space-y-3">
                     @foreach($attendee->optInResponses as $opt)
-                    <div>
+                    <div class="text-sm">
                         <p class="font-medium">{{ $opt->eventOptInCheck->friendly_name }}</p>
                         <p class="text-[var(--color-text-light)]">
                             {{ $opt->value ? 'Opted in' : 'Opted out' }}
@@ -274,410 +261,365 @@
                     </div>
                     @endforeach
                 </div>
-            </div>
 
-            <!-- ACCOUNT -->
-            <div class="soft-card p-6 space-y-4 text-sm">
-                <p class="font-medium">Account email</p>
-                <p>{{ $attendee->user->email }}</p>
-
-                <div>
-                    <p class="font-medium">Password</p>
-                    <p class="text-[var(--color-text-light)] inline-flex items-center gap-1">
-                        <x-heroicon-o-lock-closed class="w-4 h-4" />
-                        Encrypted and stored securely.
-                    </p>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
+            </x-admin.tile-card>
 
 
+            <!-- Account -->
+            <x-admin.tile-card
+                title="Account"
+                description="Your attendee’s login and authentication details.">
 
+                <div class="text-sm space-y-3">
 
-    <!-- ============================================================= -->
-    <!-- REGISTRATION & PAYMENT -->
-    <!-- ============================================================= -->
-    <div class="px-6 space-y-4">
-        <x-admin.section-title title="Registration & payment" />
-        <div class="soft-card p-6 space-y-6">
-
-            <div class="grid md:grid-cols-2 gap-6 text-sm">
-
-                <!-- OVERVIEW -->
-                <div class="space-y-2">
-
-                    <p><span class="font-semibold">Payment method:</span> {{ $attendee->eventPaymentMethod->name }}</p>
-
-                    <p><span class="font-semibold">Paid at:</span> {{ $attendee->formatted_paid_date ?? 'Not paid yet' }}</p>
-
-                    <p><span class="font-semibold">Total amount:</span> {{ $currency_symbol }}{{ $attendee->registration_total }}</p>
-
-                    @if($attendee->eventPaymentMethod->payment_method === 'stripe' && $attendee->payment_intent_id)
-                    <p>
-                        <a href="{{ config('services.stripe.payment_link') }}{{ $attendee->payment_intent_id }}"
-                            target="_blank"
-                            class="text-[var(--color-primary)] underline-offset-2 hover:underline">
-                            View on Stripe
-                        </a>
-                    </p>
-                    @endif
-                </div>
-
-                <!-- BREAKDOWN -->
-                <div>
-                    <table class="w-full text-sm border-t border-[var(--color-border)]">
-                        <thead>
-                            <tr class="text-xs text-[var(--color-primary)] border-b border-[var(--color-border)]">
-                                <th class="py-2 text-left">Description</th>
-                                <th class="py-2 text-right">Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($attendee->registrationTickets as $ticket)
-                            <tr class="border-b border-[var(--color-border)]">
-                                <td class="py-2">
-                                    {{ $ticket->quantity }} × {{ $ticket->ticket->name }} (inc. VAT)
-                                </td>
-                                <td class="py-2 text-right">
-                                    {{ $currency_symbol }}{{ number_format($ticket->price_at_purchase * $ticket->quantity, 2) }}
-                                </td>
-                            </tr>
-                            @endforeach
-                            <tr>
-                                <td class="py-3 font-semibold text-right">Total</td>
-                                <td class="py-3 font-semibold text-right">
-                                    {{ $currency_symbol }}{{ number_format($attendee->registrationTickets->sum(fn($t) => $t->price_at_purchase * $t->quantity), 2) }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
-
-
-            <!-- UPLOADS -->
-            @if($attendee->registrationDocuments->isNotEmpty())
-            <div class="border-t border-[var(--color-border)] pt-4 mt-2">
-                <h3 class="font-medium mb-2">Uploads</h3>
-
-                <div class="space-y-3 text-sm">
-                    @foreach($attendee->registrationDocuments as $doc)
                     <div>
-                        <p class="mb-1">
-                            Upload for <span class="font-semibold">{{ $doc->ticket->name }}</span>
+                        <p class="font-medium">Account email</p>
+                        <p class="text-[var(--color-text-light)]">
+                            {{ $attendee->user->email }}
                         </p>
-
-                        <a href="{{ route('admin.registration-documents.download', $doc) }}"
-                            class="inline-flex items-center rounded-md border border-[var(--color-primary)]
-                                          bg-[var(--color-surface)] px-3 py-1.5 text-sm font-medium text-[var(--color-primary)]
-                                          hover:bg-[var(--color-primary)] hover:text-white transition-colors">
-                            <x-heroicon-o-arrow-down-tray class="w-4 h-4 mr-1.5" />
-                            View upload
-                        </a>
                     </div>
-                    @endforeach
-                </div>
-            </div>
-            @endif
 
-
-            <!-- ACTIONS -->
-            <div class="border-t border-[var(--color-border)] pt-4 mt-2 space-y-3">
-                <h3 class="font-medium">Payment actions</h3>
-
-                <div class="flex flex-wrap gap-3">
-
-                    <button
-                        wire:click.prevent="openMarkPaidModal"
-                        class="inline-flex items-center rounded-md border border-[var(--color-primary)]
-                               bg-[var(--color-surface)] px-3 py-1.5 text-sm font-medium text-[var(--color-primary)]
-                               hover:bg-[var(--color-primary)] hover:text-white transition-colors">
-                        <x-heroicon-o-check-circle class="w-4 h-4 mr-1.5" />
-                        Mark as paid
-                    </button>
-
-                    <button
-                        wire:confirm="Send bank transfer details?"
-                        wire:click.prevent="sendBankTransferInfo"
-                        class="inline-flex items-center rounded-md border border-[var(--color-primary)]
-                               bg-[var(--color-surface)] px-3 py-1.5 text-sm font-medium text-[var(--color-primary)]
-                               hover:bg-[var(--color-primary)] hover:text-white transition-colors">
-                        <x-heroicon-o-envelope class="w-4 h-4 mr-1.5" />
-                        Send bank transfer details
-                    </button>
-
-                    <button
-                        wire:confirm="Send receipt email?"
-                        wire:click.prevent="sendReceipt"
-                        class="inline-flex items-center rounded-md border border-[var(--color-primary)]
-                               bg-[var(--color-surface)] px-3 py-1.5 text-sm font-medium text-[var(--color-primary)]
-                               hover:bg-[var(--color-primary)] hover:text-white transition-colors">
-                        <x-heroicon-o-envelope-open class="w-4 h-4 mr-1.5" />
-                        Send receipt
-                    </button>
+                    <div>
+                        <p class="font-medium">Password</p>
+                        <p class="text-[var(--color-text-light)] inline-flex items-center gap-1">
+                            <x-heroicon-o-lock-closed class="w-4 h-4" />
+                            Stored securely (encrypted).
+                        </p>
+                    </div>
 
                 </div>
-            </div>
+
+            </x-admin.tile-card>
 
         </div>
     </div>
 
 
 
-    <!-- ============================================================= -->
-    <!-- EMAIL LOG -->
-    <!-- ============================================================= -->
-    <div class="px-6">
-        <div class="soft-card p-6 space-y-4">
-            <x-admin.section-title title="Received email log" />
+    <!-- Registration & payment -->
+    <div class="px-6 space-y-4">
 
-            <div class="overflow-x-auto">
+        <x-admin.section-title title="Registration & payment" />
+
+        <!-- Grid: Overview + Breakdown -->
+        <div class="grid md:grid-cols-2 gap-6">
+
+            <!-- Overview tile -->
+            <x-admin.tile-card
+                title="Payment overview"
+                description="Summary of payment method, status and totals.">
+
+                <p class="text-sm">
+                    <span class="font-semibold">Payment method:</span>
+                    <span class="text-[var(--color-text-light)]">
+                        {{ $attendee->eventPaymentMethod->name }}
+                    </span>
+                </p>
+
+                <p class="text-sm">
+                    <span class="font-semibold">Paid at:</span>
+                    <span class="text-[var(--color-text-light)]">
+                        {{ $attendee->formatted_paid_date ?? 'Not paid yet' }}
+                    </span>
+                </p>
+
+                <p class="text-sm">
+                    <span class="font-semibold">Total amount:</span>
+                    {{ $currency_symbol }}{{ $attendee->registration_total }}
+                </p>
+
+                @if($attendee->eventPaymentMethod->payment_method === 'stripe' && $attendee->payment_intent_id)
+                <x-link-arrow
+                    class="mt-2"
+                    href="{{ config('services.stripe.payment_link') }}{{ $attendee->payment_intent_id }}"
+                    target="_blank">
+                    View on Stripe
+                </x-link-arrow>
+                @endif
+
+            </x-admin.tile-card>
+
+
+            <!-- Breakdown tile -->
+            <x-admin.tile-card
+                title="Price breakdown"
+                description="Tickets purchased and full itemised totals.">
+
+                <table class="w-full text-sm border-t border-[var(--color-border)]">
+                    <thead>
+                        <tr class="text-xs text-[var(--color-primary)] border-b border-[var(--color-border)]">
+                            <th class="py-2 text-left">Description</th>
+                            <th class="py-2 text-right">Amount</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach ($attendee->registrationTickets as $ticket)
+                        <tr class="border-b border-[var(--color-border)]">
+                            <td class="py-2">
+                                {{ $ticket->quantity }} × {{ $ticket->ticket->name }} (inc. VAT)
+                            </td>
+                            <td class="py-2 text-right">
+                                {{ $currency_symbol }}{{ number_format($ticket->price_at_purchase * $ticket->quantity, 2) }}
+                            </td>
+                        </tr>
+                        @endforeach
+
+                        <tr>
+                            <td class="py-3 font-semibold text-right">Total</td>
+                            <td class="py-3 font-semibold text-right">
+                                {{ $currency_symbol }}{{ number_format(
+                                $attendee->registrationTickets->sum(
+                                    fn($t) => $t->price_at_purchase * $t->quantity
+                                ), 2) }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </x-admin.tile-card>
+
+        </div>
+
+
+        <!-- Uploads -->
+        @if($attendee->registrationDocuments->isNotEmpty())
+        <x-admin.tile-card
+            title="Uploaded documents"
+            description="Files provided during registration."
+            class="mt-4">
+
+            <div class="space-y-4 text-sm">
+
+                @foreach($attendee->registrationDocuments as $doc)
+                <div>
+                    <p class="mb-1">
+                        Upload for
+                        <span class="font-semibold">{{ $doc->ticket->name }}</span>
+                    </p>
+
+                    <x-admin.outline-btn-icon
+                        :href="route('admin.registration-documents.download', $doc)"
+                        icon="heroicon-o-arrow-down-tray">
+                        View upload
+                    </x-admin.outline-btn-icon>
+                </div>
+                @endforeach
+
+            </div>
+
+        </x-admin.tile-card>
+        @endif
+
+
+        <!-- Payment actions -->
+        <x-admin.tile-card
+            title="Payment actions"
+            description="Send payment emails or update attendee payment status."
+            class="mt-4">
+
+            <div class="flex flex-wrap gap-3">
+
+                <x-admin.outline-btn-icon
+                    icon="heroicon-o-check-circle"
+                    wire:click.prevent="openMarkPaidModal">
+                    Mark as paid
+                </x-admin.outline-btn-icon>
+
+                <x-admin.outline-btn-icon
+                    icon="heroicon-o-envelope"
+                    wire:confirm="Send bank transfer details?"
+                    wire:click.prevent="sendBankTransferInfo">
+                    Send bank transfer details
+                </x-admin.outline-btn-icon>
+
+                <x-admin.outline-btn-icon
+                    icon="heroicon-o-envelope-open"
+                    wire:confirm="Send receipt email?"
+                    wire:click.prevent="sendReceipt">
+                    Send receipt
+                </x-admin.outline-btn-icon>
+
+            </div>
+
+        </x-admin.tile-card>
+
+    </div>
+
+
+
+
+    <!-- Email log -->
+    <div class="px-6 space-y-4">
+
+        <x-admin.section-title title="Received email log" />
+
+        <x-admin.card hover="false" class="p-6 space-y-4">
+
+            <x-admin.table>
                 <table class="min-w-full text-sm">
                     <thead>
-                        <tr class="bg-[var(--color-surface-hover)] text-xs text-[var(--color-text-light)] border-b border-[var(--color-border)]">
+                        <tr class="text-xs text-[var(--color-text-light)] uppercase border-b border-[var(--color-border)]">
                             <th class="px-4 py-2">Type</th>
                             <th class="px-4 py-2">Subject</th>
                             <th class="px-4 py-2">Sent</th>
                             <th class="px-4 py-2 text-right">Actions</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         @forelse($email_sends as $email_send)
-                        <tr class="border-b border-[var(--color-border)]">
-                            <td class="px-4 py-3">{{ $email_send->broadcast->type }}</td>
-                            <td class="px-4 py-3">{{ $email_send->subject }}</td>
-                            <td class="px-4 py-3">{{ $email_send->sent_at->diffForHumans() }}</td>
-                            <td class="px-4 py-3 text-right">
-                                <div class="inline-flex gap-2">
-                                    <x-admin.table-action-button
-                                        type="link"
-                                        :href="route('admin.emails.broadcasts.view', ['event' => $event->id, 'email_send' => $email_send->id])"
-                                        icon="eye"
-                                        label="View" />
+                            <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
 
-                                    <x-admin.table-action-button
-                                        type="button"
-                                        wireClick="resendEmail({{ $email_send->id }})"
-                                        confirm="Resend this email to {{ $email_send->email_address }}?"
-                                        icon="arrow-path"
-                                        label="Resend" />
-                                </div>
-                            </td>
-                        </tr>
+                                <td class="px-4 py-3">{{ $email_send->broadcast->type }}</td>
 
+                                <td class="px-4 py-3">{{ $email_send->subject }}</td>
+
+                                <td class="px-4 py-3">{{ $email_send->sent_at->diffForHumans() }}</td>
+
+                                <td class="px-4 py-3 text-right">
+                                    <div class="inline-flex gap-2">
+                                        <x-admin.table-action-button
+                                            type="link"
+                                            :href="route('admin.emails.broadcasts.view', [
+                                                'event' => $event->id,
+                                                'email_send' => $email_send->id
+                                            ])"
+                                            icon="eye"
+                                            label="View" />
+
+                                        <x-admin.table-action-button
+                                            type="button"
+                                            wireClick="resendEmail({{ $email_send->id }})"
+                                            confirm="Resend this email to {{ $email_send->email_address }}?"
+                                            icon="arrow-path"
+                                            label="Resend" />
+                                    </div>
+                                </td>
+
+                            </tr>
                         @empty
-                        <tr>
-                            <td colspan="4" class="px-4 py-6 text-center text-[var(--color-text-light)]">
-                                No email logs found.
-                            </td>
-                        </tr>
+                            <tr>
+                                <td colspan="4"
+                                    class="px-4 py-6 text-center text-[var(--color-text-light)]">
+                                    No email logs found.
+                                </td>
+                            </tr>
                         @endforelse
                     </tbody>
-                </table>
-            </div>
 
-        </div>
+                </table>
+            </x-admin.table>
+
+            <!-- Pagination -->
+            <x-admin.pagination :paginator="$email_sends" />
+
+        </x-admin.card>
+
     </div>
 
+    <!-- Check-ins -->
+    <div class="px-6 space-y-4">
 
+        <x-admin.section-title title="Check-ins" />
 
-    <!-- ============================================================= -->
-    <!-- CHECK INS -->
-    <!-- ============================================================= -->
-    <div class="px-6">
-        <div class="soft-card p-6 space-y-4">
+        <x-admin.card hover="false" class="p-6 space-y-4">
 
-            <x-admin.section-title title="Check-ins" />
-
-            <div class="overflow-x-auto">
+            <x-admin.table>
                 <table class="min-w-full text-sm">
                     <thead>
-                        <tr class="bg-[var(--color-surface-hover)] text-xs text-[var(--color-text-light)] border-b border-[var(--color-border)]">
+                        <tr class="text-xs text-[var(--color-text-light)] uppercase border-b border-[var(--color-border)]">
                             <th class="px-4 py-2">Session</th>
                             <th class="px-4 py-2">Checked in at</th>
                             <th class="px-4 py-2">Checked in by</th>
                             <th class="px-4 py-2">Route</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         @forelse($check_ins as $ci)
-                        <tr class="border-b border-[var(--color-border)]">
-                            <td class="px-4 py-3">{{ $ci->session?->title ?? '—' }}</td>
-                            <td class="px-4 py-3">
-                                @if($ci->checked_in_at)
-                                {{ $ci->checked_in_at->setTimezone('Europe/London')->format('d/m/Y H:i') }}
-                                @else
-                                —
-                                @endif
-                            </td>
-                            <td class="px-4 py-3">
-                                {{ $ci->checkedInBy?->first_name }} {{ $ci->checkedInBy?->last_name }}
-                            </td>
-                            <td class="px-4 py-3">{{ $ci->checked_in_route ?? '—' }}</td>
+
+                            <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
+
+                                <td class="px-4 py-3">{{ $ci->session?->title ?? '—' }}</td>
+
+                                <td class="px-4 py-3">
+                                    @if($ci->checked_in_at)
+                                        {{ $ci->checked_in_at->setTimezone('Europe/London')->format('d/m/Y H:i') }}
+                                    @else
+                                        —
+                                    @endif
+                                </td>
+
+                                <td class="px-4 py-3">
+                                    {{ $ci->checkedInBy?->first_name }} {{ $ci->checkedInBy?->last_name }}
+                                </td>
+
+                                <td class="px-4 py-3">{{ $ci->checked_in_route ?? '—' }}</td>
+
+                            </tr>
+
+                        @empty
+                            <tr>
+                                <td colspan="4"
+                                    class="px-4 py-6 text-center text-[var(--color-text-light)]">
+                                    No check-ins found.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+
+                </table>
+            </x-admin.table>
+
+            <!-- Pagination -->
+            <x-admin.pagination :paginator="$check_ins" />
+
+        </x-admin.card>
+
+    </div>
+
+    <!-- Activity log -->
+    <div class="px-6 space-y-4">
+        <x-admin.section-title title="Activity log" />
+
+        <x-admin.card hover="false" class="p-6 space-y-4">
+
+            <x-admin.table>
+                <table class="min-w-full text-sm">
+                    <thead>
+                        <tr class="text-xs text-[var(--color-text-light)] uppercase border-b border-[var(--color-border)]">
+                            <th class="px-4 py-2">Description</th>
+                            <th class="px-4 py-2">Occurred</th>
+                            <th class="px-4 py-2">IP</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @forelse($activity_logs as $log)
+                        <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
+                            <td class="px-4 py-3">{{ $log->description }}</td>
+                            <td class="px-4 py-3">{{ $log->created_at->diffForHumans() }}</td>
+                            <td class="px-4 py-3">{{ $log->properties['ip'] ?? '—' }}</td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="4" class="px-4 py-6 text-center text-[var(--color-text-light)]">
-                                No check-ins found.
+                            <td colspan="3" class="px-4 py-6 text-center text-[var(--color-text-light)]">
+                                No activity found.
                             </td>
                         </tr>
                         @endforelse
                     </tbody>
                 </table>
-            </div>
+            </x-admin.table>
 
-        </div>
+            <x-admin.pagination :paginator="$activity_logs" />
+
+        </x-admin.card>
     </div>
 
-
-    <!-- ============================================================= -->
-    <!-- LABEL PRINTING MODAL -->
-    <!-- ============================================================= -->
-    @if($showLabelModal)
-    <div class="fixed inset-0 z-40 flex items-center justify-center bg-black/50">
-        <div class="soft-card p-6 w-full max-w-md space-y-5">
-
-            <!-- Header -->
-            <div class="flex items-start justify-between">
-                <div>
-                    <h2 class="text-lg font-semibold text-[var(--color-text)]">
-                        Download Avery label
-                    </h2>
-                    <p class="text-sm text-[var(--color-text-light)] mt-1">
-                        Choose the label format and sheet position.
-                    </p>
-                </div>
-
-                <button
-                    type="button"
-                    wire:click="$set('showLabelModal', false)"
-                    class="text-[var(--color-text-light)] hover:text-[var(--color-text)]">
-                    ✕
-                </button>
-            </div>
-
-            <!-- Form -->
-            <form
-                method="GET"
-                action="{{ route('admin.events.attendees.label.export', ['event' => $event->id, 'attendee' => $attendee->id]) }}"
-                target="_blank"
-                class="space-y-5">
-
-                <!-- Label format -->
-                <div>
-                    <label class="form-label-custom">Label format</label>
-                    <x-admin.select name="mode">
-                        <option value="overlay_core">No Header – Avery (75×110 mm)</option>
-                        <option value="a6_full">Full – Avery A6 (105×148 mm)</option>
-                    </x-admin.select>
-                </div>
-
-                <!-- Sheet position pills -->
-                <div>
-                    <label class="form-label-custom">Sheet position</label>
-
-                    <div class="flex flex-wrap gap-2 mt-2">
-                        @foreach([1 => 'Top left', 2 => 'Top right', 3 => 'Bottom left', 4 => 'Bottom right'] as $num => $label)
-                        <x-admin.filter-pill
-                            :active="(string) request('slot', '1') === (string) $num"
-                            onclick="document.getElementById('slot_{{ $num }}').checked = true">
-                            {{ $num }} — {{ $label }}
-                        </x-admin.filter-pill>
-                        <input id="slot_{{ $num }}" type="radio" name="slot" value="{{ $num }}" class="hidden" {{ $num === 1 ? 'checked' : '' }}>
-                        @endforeach
-                    </div>
-                </div>
-
-                <!-- Buttons -->
-                <div class="flex items-center justify-end gap-3 pt-4">
-                    <button type="button"
-                        wire:click="$set('showLabelModal', false)"
-                        class="inline-flex items-center rounded-md border border-[var(--color-border)]
-                                    bg-[var(--color-surface)] px-3 py-1.5 text-sm font-medium text-[var(--color-text)]
-                                    hover:bg-[var(--color-surface-hover)] transition">
-                        Cancel
-                    </button>
-
-                    <button type="submit"
-                        wire:click="$set('showLabelModal', false)"
-                        class="inline-flex items-center rounded-md border border-[var(--color-primary)]
-                                    bg-[var(--color-surface)] px-3 py-1.5 text-sm font-medium text-[var(--color-primary)]
-                                    hover:bg-[var(--color-surface-hover)] transition">
-                        <x-heroicon-o-document-arrow-down class="w-4 h-4 mr-1.5" />
-                        Download label
-                    </button>
-                </div>
-
-            </form>
-
-        </div>
-    </div>
-    @endif
-
-
-
-    <!-- ============================================================= -->
-    <!-- MARK AS PAID MODAL -->
-    <!-- ============================================================= -->
-    @if($showMarkPaidModal)
-    <div class="fixed inset-0 z-40 flex items-center justify-center bg-black/50">
-        <div class="soft-card p-6 w-full max-w-md space-y-4">
-
-            <div class="flex items-start justify-between">
-                <div>
-                    <h2 class="text-lg font-semibold">Confirm payment</h2>
-                    <p class="text-sm text-[var(--color-text-light)] mt-1">
-                        Enter the date payment was received.
-                    </p>
-                </div>
-
-                <button
-                    wire:click="$set('showMarkPaidModal', false)"
-                    class="text-[var(--color-text-light)] hover:text-[var(--color-text)]">
-                    ✕
-                </button>
-            </div>
-
-            @if($errors->any())
-            <div class="soft-card p-3 border-l-4 border-[var(--color-warning)]">
-                <p class="text-sm text-[var(--color-warning)]">{{ $errors->first() }}</p>
-            </div>
-            @endif
-
-            <form wire:submit.prevent="confirmMarkAsPaid" class="space-y-4">
-
-                <div>
-                    <label class="form-label-custom">Payment date</label>
-                    <input type="text" wire:model="payment_date" maxlength="10"
-                        placeholder="dd-mm-yyyy" class="input-text" />
-                </div>
-
-                <div class="flex items-center justify-end gap-3">
-
-                    <button type="button"
-                        wire:click="$set('showMarkPaidModal', false)"
-                        class="inline-flex items-center rounded-md border border-[var(--color-border)]
-                                       bg-[var(--color-surface)] px-3 py-1.5 text-sm font-medium text-[var(--color-text)]
-                                       hover:bg-[var(--color-surface-hover)] transition">
-                        Cancel
-                    </button>
-
-                    <button type="submit"
-                        class="inline-flex items-center rounded-md border border-[var(--color-primary)]
-                                       bg-[var(--color-surface)] px-3 py-1.5 text-sm font-medium text-[var(--color-primary)]
-                                       hover:bg-[var(--color-primary)] hover:text-white transition">
-                        Confirm &amp; mark as paid
-                    </button>
-
-                </div>
-
-            </form>
-        </div>
-    </div>
-    @endif
+    <!-- Modals -->
+    @include('livewire.backend.admin.attendees.modals.label-modal')
+    @include('livewire.backend.admin.attendees.modals.mark-paid-modal')
 
 </div>

@@ -1,119 +1,178 @@
-<div>
-    <div class="flex-row d-flex flex-1 rounded-2 p-3 align-items-center">
-        <h2 class="fs-4 text-brand-dark p-0 m-0">{{$attendee->title}} {{$attendee->last_name}}</h2>
-    </div>
+<div class="space-y-6">
 
-    <div class="flex-row d-flex flex-1 bg-white rounded-2 p-3">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb d-flex flex-row align-items-center">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.events.attendees.index', $event->id) }}">Attendees</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Edit</li>
-            </ol>
-        </nav>
-    </div>
+    <!-- Breadcrumb -->
+    <x-admin.breadcrumb :items="[
+        ['label' => 'Events', 'href' => route('admin.events.index')],
+        ['label' => $event->title, 'href' => route('admin.events.attendees.index', $event->id)],
+        ['label' => 'Edit attendee'],
+    ]" />
 
-    <div class="flex-column d-flex p-3 bg-white rounded-2 mt-3">
-        <div class="container mt-2">
-            <h4 class="mb-3">Edit Attendee</h4>
+    <!-- Header -->
+    <x-admin.page-header
+        title="{{ $attendee->title }} {{ $attendee->last_name }}"
+        subtitle="Edit attendee information, contact details and group assignment."
+    />
 
-            @if($errors->any())
-                <div class="col-12">
-                    <div class="alert alert-info" role="alert">
-                        <span class="font-m">{{ $errors->first() }}</span>           
+    <!-- Alerts -->
+    @if($errors->any())
+        <x-admin.alert type="danger" :message="$errors->first()" />
+    @endif
+
+    @if (session()->has('success'))
+        <x-admin.alert type="success" :message="session('success')" />
+    @endif
+
+
+    <!-- MAIN FORM -->
+    <div class="px-6 space-y-6">
+
+        <form wire:submit.prevent="update" class="space-y-6">
+
+            <!-- Contact Information -->
+            <x-admin.section-title title="Contact information" />
+
+            <x-admin.card hover="false" class="p-6 space-y-6">
+
+                <div class="grid md:grid-cols-2 gap-6">
+
+                    <!-- Mobile Country Code -->
+                    <div>
+                        <x-admin.input-label for="mobile_country_code">
+                            Mobile Country Code
+                        </x-admin.input-label>
+                        <x-admin.input-text
+                            id="mobile_country_code"
+                            model="mobile_country_code"
+                        />
                     </div>
-                </div>
-            @endif
 
-            @if (session()->has('success'))
-                <div class="col-12">
-                    <div class="alert alert-success" role="alert">
-                        <span class="font-m">{{ session('success') }}</span>           
+                    <!-- Mobile Number -->
+                    <div>
+                        <x-admin.input-label for="mobile_number">
+                            Mobile Number
+                        </x-admin.input-label>
+                        <x-admin.input-text
+                            id="mobile_number"
+                            model="mobile_number"
+                        />
                     </div>
-                </div>
-            @endif
 
-            <form wire:submit.prevent="update" class="row g-3">
-                <!-- <div class="col-md-6">
-                    <label for="title" class="form-label">Title</label>
-                        <select wire:model="title" class="form-control">
-                        <option value="Dr">Dr</option>
-                        <option value="Mr">Mr</option> 
-                        <option value="Mrs">Mrs</option>
-                        <option value="Miss">Miss</option> 
-                        <option value="Ms">Ms</option> 
-                        <option value="Professor">Professor</option> 
-                    </select>
-                </div>
+                    <!-- Address Line One -->
+                    <div>
+                        <x-admin.input-label for="address_line_one">
+                            Address Line One
+                        </x-admin.input-label>
+                        <x-admin.input-text
+                            id="address_line_one"
+                            model="address_line_one"
+                        />
+                    </div>
 
-                <div class="col-md-6">
-                    <label for="first_name" class="form-label">First Name</label>
-                    <input wire:model.live="first_name" type="text" class="form-control" id="first_name">
-                </div>
+                    <!-- Town -->
+                    <div>
+                        <x-admin.input-label for="town">
+                            Town
+                        </x-admin.input-label>
+                        <x-admin.input-text
+                            id="town"
+                            model="town"
+                        />
+                    </div>
 
-                <div class="col-md-6">
-                    <label for="last_name" class="form-label">Last Name</label>
-                    <input wire:model.live="last_name" type="text" class="form-control" id="last_name">
-                </div> -->
+                    <!-- Postcode -->
+                    <div>
+                        <x-admin.input-label for="postcode">
+                            Postcode
+                        </x-admin.input-label>
+                        <x-admin.input-text
+                            id="postcode"
+                            model="postcode"
+                        />
+                    </div>
 
-                <div class="col-md-6">
-                    <label for="mobile_country_code" class="form-label">Mobile Country Code</label>
-                    <input wire:model.live="mobile_country_code" type="text" class="form-control" id="mobile_country_code">
-                </div>
-
-                <div class="col-md-6">
-                    <label for="mobile_number" class="form-label">Mobile Number</label>
-                    <input wire:model.live="mobile_number" type="text" class="form-control" id="mobile_number">
-                </div>
-
-                <div class="col-md-6">
-                    <label for="address_line_one" class="form-label">Address Line One</label>
-                    <input wire:model.live="address_line_one" type="text" class="form-control" id="address_line_one">
                 </div>
 
-                <div class="col-md-6">
-                    <label for="town" class="form-label">Town</label>
-                    <input wire:model.live="town" type="text" class="form-control" id="town">
+            </x-admin.card>
+
+
+
+            <!-- Medical Information -->
+            <x-admin.section-title title="Medical information" />
+
+            <x-admin.card hover="false" class="p-6 space-y-6">
+
+                <div class="grid md:grid-cols-2 gap-6">
+
+                    <!-- Current Position -->
+                    <div>
+                        <x-admin.input-label for="currently_held_position">
+                            Medical Position
+                        </x-admin.input-label>
+                        <x-admin.input-text
+                            id="currently_held_position"
+                            model="currently_held_position"
+                        />
+                    </div>
+
+                    <!-- Attendee Type -->
+                    <div>
+                        <x-admin.input-label for="attendee_type_id">
+                            Attendee Type
+                        </x-admin.input-label>
+                        <x-admin.select id="attendee_type_id" wire:model="attendee_type_id">
+                            <option value="">Select type</option>
+                            @foreach ($attendeeTypes as $attendeeType)
+                                <option value="{{ $attendeeType->id }}">
+                                    {{ $attendeeType->name }}
+                                </option>
+                            @endforeach
+                        </x-admin.select>
+                    </div>
+
+                    <!-- Attendee Group -->
+                    <div>
+                        <x-admin.input-label for="attendee_group_id">
+                            Attendee Group (optional)
+                        </x-admin.input-label>
+
+                        <x-admin.select id="attendee_group_id" wire:model="attendee_group_id">
+                            <option value="">No group allocated</option>
+                            @foreach ($attendeeGroups as $group)
+                                <option value="{{ $group->id }}">
+                                    {{ $group->title }}
+                                </option>
+                            @endforeach
+                        </x-admin.select>
+
+                        @error('attendee_group_id')
+                            <x-admin.input-error :message="$message" />
+                        @enderror
+                    </div>
+
                 </div>
 
-                <div class="col-md-6">
-                    <label for="postcode" class="form-label">Postcode</label>
-                    <input wire:model.live="postcode" type="text" class="form-control" id="postcode">
-                </div>
+            </x-admin.card>
 
-                <div class="col-md-6">
-                    <label for="currently_held_position" class="form-label">Medical Position</label>
-                    <input wire:model.live="currently_held_position" type="text" class="form-control" id="currently_held_position">
-                </div>
 
-                <div class="col-md-6">
-                    <label for="attendee_type_id" class="form-label">Medical attendeeType</label>
-                    <select wire:model.live="attendee_type_id" class="form-select" id="attendee_type_id">
-                        <option value="">Select attendeeType</option>
-                        @foreach ($attendeeTypes as $attendeeType)
-                            <option value="{{ $attendeeType->id }}">{{ $attendeeType->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
+            <!-- Action buttons -->
+            <x-admin.card hover="false" class="p-6 space-y-4">
+                <div class="flex items-center gap-3">
 
-                <div class="col-md-6">
-                    <label for="attendee_group_id" class="form-label">Attendee Group (optional)</label>
-                    <select id="attendee_group_id" class="form-select" wire:model.live="attendee_group_id">
-                        <option value="">No group allocated</option>
-                        @foreach ($attendeeGroups as $dg)
-                            <option value="{{ $dg->id }}">{{ $dg->title }}</option>
-                        @endforeach
-                    </select>
-                    @error('attendee_group_id') <div class="text-danger small">{{ $message }}</div> @enderror
-                </div>
+                    <x-admin.button type="submit" variant="outline">
+                        Update attendee
+                    </x-admin.button>
 
-                <div class="col-12">
-                    <button type="submit" class="btn bg-brand-secondary">Update Attendee</button>
-                    <a href="{{ route('admin.events.attendees.manage', ['event' => $event->id, 'attendee' => $attendee->id]) }}" class="btn btn-light">
-                        <span class="text-brand-dark">Cancel</span>
-                    </a>
+                    <x-admin.button
+                        href="{{ route('admin.events.attendees.manage', [$event->id, $attendee->id]) }}"
+                        variant="secondary">
+                        Cancel
+                    </x-admin.button>
+
                 </div>
-            </form>
-        </div>
+            </x-admin.card>
+
+        </form>
+
     </div>
+
 </div>

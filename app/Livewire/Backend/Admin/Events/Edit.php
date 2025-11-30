@@ -56,6 +56,10 @@ class Edit extends Component
             'event_attendee_limit'     => 'required|integer',
             'vat_percentage'            => 'required|numeric|min:0|max:100',
             'email_opt_in_description'  => 'required_if:show_email_marketing_opt_in,1|string'
+        ],
+        [
+            'date_start.regex' => 'Please use the format dd-mm-yyyy for the start date.',
+            'date_end.regex' => 'Please use the format dd-mm-yy for the end date.'
         ]);
 
         $this->event->update([

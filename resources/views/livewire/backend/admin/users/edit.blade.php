@@ -7,76 +7,66 @@
         ['label' => 'Edit team member'],
     ]" />
 
-    <!-- Page Header -->
-    <div class="px-6 flex items-center justify-between">
-
-        <div>
-            <h1 class="text-2xl font-semibold text-[var(--color-text)]">
-                Edit team member
-            </h1>
-            <p class="text-sm text-[var(--color-text-light)] mt-1">
-                Update profile information, role and access.
-            </p>
-        </div>
-
-    </div>
+    <!-- Header -->
+    <x-admin.page-header
+        title="Edit team member"
+        subtitle="Update profile information, role and access."
+    />
 
     <!-- Alerts -->
     @if($errors->any())
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-warning)]">
-                <p class="text-sm text-[var(--color-warning)] font-medium">
-                    {{ $errors->first() }}
-                </p>
-            </div>
-        </div>
+        <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
 
     @if (session()->has('success'))
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-success)]">
-                <p class="text-sm text-[var(--color-success)] font-medium">
-                    {{ session('success') }}
-                </p>
-            </div>
-        </div>
+        <x-admin.alert type="success" :message="session('success')" />
     @endif
 
 
-
-    <!-- ============================================================= -->
-    <!-- MAIN FORM CARD -->
-    <!-- ============================================================= -->
+    <!-- Main form -->
     <div class="px-6 space-y-4">
 
-        <x-admin.section-title title="Team member details" />
+        <!-- Information -->
+        <x-admin.section-title title="Information" />
 
-        <form wire:submit.prevent="update" class="soft-card p-6 space-y-6">
+        <x-admin.card hover="false" class="p-6 space-y-6">
 
             <div class="grid md:grid-cols-2 gap-6">
 
                 <!-- First name -->
                 <div>
-                    <label class="form-label-custom">First name</label>
-                    <input type="text" wire:model.live="first_name" class="input-text" />
+                    <x-admin.input-label for="first_name">First name</x-admin.input-label>
+                    <x-admin.input-text id="first_name" model="first_name" />
                 </div>
 
                 <!-- Last name -->
                 <div>
-                    <label class="form-label-custom">Last name</label>
-                    <input type="text" wire:model.live="last_name" class="input-text" />
+                    <x-admin.input-label for="last_name">Last name</x-admin.input-label>
+                    <x-admin.input-text id="last_name" model="last_name" />
                 </div>
 
                 <!-- Email -->
                 <div>
-                    <label class="form-label-custom">Email</label>
-                    <input type="email" wire:model.live="email" class="input-text" />
+                    <x-admin.input-label for="email">Email</x-admin.input-label>
+                    <x-admin.input-text id="email" model="email" type="email" />
                 </div>
+
+            </div>
+
+        </x-admin.card>
+
+
+        <!-- Account settings -->
+        <x-admin.section-title title="Account settings" />
+
+        <x-admin.card hover="false" class="p-6 space-y-6">
+
+            <div class="grid md:grid-cols-2 gap-6">
 
                 <!-- Role -->
                 <div>
-                    <label class="form-label-custom">Role</label>
-                    <x-admin.select wire:model="role_id">
+                    <x-admin.input-label for="role_id">Role</x-admin.input-label>
+                    <x-admin.select id="role_id" wire:model="role_id">
                         <option value="">Select role</option>
                         @foreach ($roles as $role)
                             <option value="{{ $role->id }}">
@@ -86,10 +76,10 @@
                     </x-admin.select>
                 </div>
 
-                <!-- Active status -->
+                <!-- Active -->
                 <div>
-                    <label class="form-label-custom">Active status</label>
-                    <x-admin.select wire:model="active">
+                    <x-admin.input-label for="active">Active status</x-admin.input-label>
+                    <x-admin.select id="active" wire:model="active">
                         <option value="0">Inactive</option>
                         <option value="1">Active</option>
                     </x-admin.select>
@@ -97,20 +87,23 @@
 
             </div>
 
-            <!-- Buttons -->
-            <div class="flex items-center gap-3 pt-4">
-                <button type="submit" class="flex items-center px-3 py-1.5 rounded-md text-sm font-medium
-                                border border-[var(--color-primary)] text-[var(--color-primary)]
-                                hover:bg-[var(--color-primary)] hover:text-white
-                                transition">
-                    Update team member
-                </button>
-                <a href="{{ route('admin.users.index') }}" class="btn-secondary">
-                    Cancel
-                </a>
-            </div>
+        </x-admin.card>
 
-        </form>
+
+        <!-- Actions -->
+        <x-admin.card hover="false" class="p-6 space-y-4">
+            <div class="flex items-center gap-3">
+
+                <x-admin.button type="submit" variant="outline" wire:click.prevent="update">
+                    Update team member
+                </x-admin.button>
+
+                <x-admin.button href="{{ route('admin.users.index') }}" variant="secondary">
+                    Cancel
+                </x-admin.button>
+
+            </div>
+        </x-admin.card>
 
     </div>
 
