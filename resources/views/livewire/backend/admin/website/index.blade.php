@@ -2,7 +2,7 @@
 
     <!-- Breadcrumbs -->
     <x-admin.breadcrumb :items="[
-        ['label' => 'Dashboard', 'href' => route('admin.dashboard')],
+        ['label' => 'Home', 'href' => route('admin.dashboard')],
         ['label' => 'Website'],
     ]" />
 

@@ -4,7 +4,7 @@
     <!-- BREADCRUMBS -->
     <!-- ============================================================= -->
     <x-admin.breadcrumb :items="[
-        ['label' => 'Dashboard', 'href' => route('admin.dashboard')],
+        ['label' => 'Home', 'href' => route('admin.dashboard')],
         ['label' => 'Events', 'href' => route('admin.events.index')],
         ['label' => $event->title, 'href' => route('admin.events.manage', $event->id)],
         ['label' => 'Sessions'],
