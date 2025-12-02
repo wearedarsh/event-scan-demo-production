@@ -1,6 +1,6 @@
 <x-admin.modal
     :show="$showLabelModal"
-    wire:click="$set('showLabelModal', false)"
+    model="showLabelModal"
     title="Download Avery label"
     subtitle="Choose the label format and sheet position."
 >
@@ -15,30 +15,49 @@
         <!-- Label format -->
         <div>
             <x-admin.input-label>Label format</x-admin.input-label>
-            <x-admin.select name="mode">
-                <option value="overlay_core">No Header – Avery (75×110 mm)</option>
-                <option value="a6_full">Full – Avery A6 (105×148 mm)</option>
+
+            <x-admin.select name="mode" wire:model.live="selectedFormat">
+                @foreach ($labelFormats as $format)
+                    <option value="{{ $format->key_name }}">
+                        {{ $format->name }}
+                        ({{ $format->label_width_mm }}×{{ $format->label_height_mm }} mm)
+                    </option>
+                @endforeach
             </x-admin.select>
         </div>
+
 
         <!-- Sheet position -->
         <div>
             <x-admin.input-label>Sheet position</x-admin.input-label>
+            <x-admin.input-help>Select the label position on your A4 sheet</x-admin.input-help>
 
-            <div class="flex flex-wrap gap-2 mt-2">
-                @foreach([1 => 'Top left', 2 => 'Top right', 3 => 'Bottom left', 4 => 'Bottom right'] as $num => $label)
+            <!-- The slot Livewire prop is now bound properly -->
+            <input type="hidden" name="slot" wire:model="slot">
 
-                    <x-admin.filter-pill
-                        :active="(string) request('slot', '1') === (string) $num"
-                        onclick="document.getElementById('slot_{{ $num }}').checked = true"
-                    >
-                        {{ $num }} — {{ $label }}
-                    </x-admin.filter-pill>
+            @php
+                $currentFormat = $labelFormats->firstWhere('key_name', $selectedFormat);
+            @endphp
 
-                    <input type="radio" id="slot_{{ $num }}" name="slot" value="{{ $num }}" class="hidden" {{ $num === 1 ? 'checked' : '' }}>
+            <div
+                class="grid gap-3 mt-3"
+                style="grid-template-columns: repeat({{ $currentFormat->columns }}, minmax(0, 1fr));"
+            >
+                @foreach ($positions as $num)
+                    <button
+                        type="button"
+                        wire:click="updateSlot({{$num}})"
+                        class="cursor-pointer border rounded-lg p-4 flex items-center justify-center
+                               text-sm font-semibold transition
+                               hover:bg-[var(--color-surface-hover)] 
+                               {{ $slot == $num ? 'border-[var(--color-primary)]' : 'border-[var(--color-border)]' }}"
+                        >
+                        {{ $num }}
+                    </button>
                 @endforeach
             </div>
         </div>
+
 
         <!-- Footer -->
         <x-slot:footer>
@@ -50,7 +69,13 @@
                 Cancel
             </x-admin.button>
 
-            <x-admin.button type="submit" variant="outline">
+            <x-admin.button
+                type="submit"
+                variant="outline"
+                :disabled="!$slot"
+                wire:click="downloadLabel"
+                @class(['opacity-40 pointer-events-none' => !$slot])
+            >
                 <x-heroicon-o-document-arrow-down class="w-4 h-4 mr-1.5" />
                 Download label
             </x-admin.button>

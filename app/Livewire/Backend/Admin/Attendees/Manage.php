@@ -15,7 +15,9 @@ use Spatie\Activitylog\Models\Activity;
 use App\Services\EmailService;
 use App\Models\EmailQueuedSend;
 use App\Jobs\SendQueuedEmailJob;
+use App\Models\LabelFormat;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Log;
 
 use Carbon\Carbon;
 
@@ -36,6 +38,11 @@ class Manage extends Component
     public string $payment_minute = '';
     public bool $showMarkPaidModal = false;
     public bool $showLabelModal = false;
+    public $labelFormats;
+    public $selectedFormat;
+    public $positions = [];
+    public string $slot = '';
+
 
     #[Computed]
     public function roleKey(): string
@@ -46,7 +53,55 @@ class Manage extends Component
     public function mount(Event $event, Registration $attendee){
         $this->event = $event;
         $this->attendee = $attendee;
+        $this->slot = '';
         $this->currency_symbol = config('app.currency_symbol', '€');
+
+        $this->labelFormats = LabelFormat::where('active', true)->get();
+        $this->selectedFormat = $this->labelFormats->first()->key_name;
+        $this->generatePositions();
+    }
+
+    public function updateSlot($slot){
+        Log::info($slot);
+        $this->slot = $slot;
+    }
+
+    public function updatedSelectedFormat()
+    {
+        $this->generatePositions();
+    }
+
+    public function downloadLabel()
+    {
+        if (!$this->slot) {
+            $this->addError('slot', 'Please select a label position.');
+            return;
+        }
+
+        return redirect()->route(
+            'admin.events.attendees.label.export',
+            [
+                $this->event->id,
+                $this->attendee->id,
+                'slot' => $this->slot,
+                'mode' => $this->selectedFormat,
+            ]
+        );
+    }
+
+
+    protected function generatePositions()
+    {
+        $format = $this->labelFormats->firstWhere('key_name', $this->selectedFormat);
+
+        if (! $format) {
+            $this->positions = [];
+            return;
+        }
+
+        $count = $format->labels_per_sheet;
+
+        $this->positions = range(1, $count);
     }
 
     public function openLabelModal(): void

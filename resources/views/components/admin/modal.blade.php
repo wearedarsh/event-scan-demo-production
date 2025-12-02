@@ -1,6 +1,7 @@
 @props([
     'show' => false,
     'title' => null,
+    'model' => null,
     'subtitle' => null,
     'maxWidth' => 'md',
 ])
@@ -25,7 +26,7 @@
             <x-admin.icon-button
                 icon="heroicon-o-x-mark"
                 class="text-[var(--color-text-light)] hover:text-[var(--color-text)]"
-                {{ $attributes->whereStartsWith('wire:click') }}
+                wire:click="$set('{{ $model }}', false)"
             />
         </div>
 
