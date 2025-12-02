@@ -21,6 +21,21 @@ class LabelFormat extends Model
         'active',
     ];
 
+    public function positionForSlot(int $slot): array
+    {
+        $slot = max(1, min($slot, $this->labels_per_sheet));
+        $index = $slot - 1;
+
+        $row = intdiv($index, $this->columns);
+        $col = $index % $this->columns;
+
+        $x = $col * ($this->label_width_mm + $this->central_gap_mm);
+
+        $y = $row * ($this->label_height_mm + $this->row_gap_mm);
+        return compact('x', 'y');
+    }
+
+
     public function slots()
     {
         return $this->rows * $this->columns;
