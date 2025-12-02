@@ -82,7 +82,7 @@
 <body>
 <div class="sheet">
 
-    <div class="label">
+    <div class="label" style="border:1px solid #000000;">
 
         <div class="name">
             {{ $vm->first_name }}<br>
