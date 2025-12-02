@@ -27,6 +27,7 @@ class AveryLabelController extends Controller
         $qr_prefix  = config('check-in-app.qr_prefix');
         $encoded    = Hashids::connection('checkin')->encode($attendee->id, $client_id);
 
+
         $vm = (object)[
             'first_name'       => $attendee->user->first_name ?? '',
             'last_name'        => $attendee->user->last_name ?? '',
