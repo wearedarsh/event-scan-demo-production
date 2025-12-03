@@ -7,20 +7,20 @@
     html, body { margin: 0; padding: 0; }
 
     /* -------------------------
-       FONTS (must load from storage/fonts)
+       FONTS (load from resources/fonts)
        ------------------------- */
     @font-face {
         font-family: 'NotoSans';
         font-style: normal;
         font-weight: 400;
-        src: url("file://{{ storage_path('fonts/NotoSans-Regular.ttf') }}") format("truetype");
+        src: url("file://{{ resource_path('fonts/NotoSans-Regular.ttf') }}") format("truetype");
     }
 
     @font-face {
         font-family: 'NotoSans';
         font-style: normal;
         font-weight: 700;
-        src: url("file://{{ storage_path('fonts/NotoSans-Bold.ttf') }}") format("truetype");
+        src: url("file://{{ resource_path('fonts/NotoSans-Bold.ttf') }}") format("truetype");
     }
 
     body { font-family: NotoSans, sans-serif; }
@@ -31,7 +31,7 @@
         height: 297mm;
     }
 
-    /* The dynamically positioned label box */
+    /* Positioned label box */
     .label {
         position: absolute;
         left: {{ $offset_x }}mm;
@@ -40,12 +40,12 @@
         height: {{ $label_h }}mm;
         box-sizing: border-box;
         overflow: hidden;
-        border: 0.1mm solid transparent; /* helps debug when needed */
+        border: 0.1mm solid transparent;
         text-align: center;
         padding-top: 2mm;
     }
 
-    /* Content styling (universal) */
+    /* Main content */
     .name {
         font-size: {{ $label_h > 100 ? '18pt' : '14pt' }};
         font-weight: 700;
