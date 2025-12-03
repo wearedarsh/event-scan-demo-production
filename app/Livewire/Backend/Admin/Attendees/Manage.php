@@ -15,34 +15,35 @@ use Spatie\Activitylog\Models\Activity;
 use App\Services\EmailService;
 use App\Models\EmailQueuedSend;
 use App\Jobs\SendQueuedEmailJob;
-use App\Models\LabelFormat;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Log;
-
 use Carbon\Carbon;
-
-
 use App\Services\EmailMarketing\EmailMarketingService;
 
 #[Layout('livewire.backend.admin.layouts.app')]
 class Manage extends Component
 {
     use WithPagination;
+
     public EmailSend $email_send;
     public Event $event;
     public Registration $attendee;
+
     public $currency_symbol;
+
+    // Modals
     public bool $showEditPaymentModal = false;
+    public bool $showMarkPaidModal   = false;
+    public bool $showLabelModal      = false;
+
+    // Payments
     public string $payment_date = '';
     public string $payment_hour = '';
     public string $payment_minute = '';
-    public bool $showMarkPaidModal = false;
-    public bool $showLabelModal = false;
-    public $labelFormats;
-    public $selectedFormat;
-    public $positions = [];
-    public string $slot = '';
 
+    // Label modal
+    public string $slot = '';
+    public string $selectedFormat = '75mm_110mm'; // default
 
     #[Computed]
     public function roleKey(): string
@@ -50,25 +51,22 @@ class Manage extends Component
         return auth()->user()->role->key_name ?? '';
     }
 
-    public function mount(Event $event, Registration $attendee){
+    public function mount(Event $event, Registration $attendee)
+    {
         $this->event = $event;
         $this->attendee = $attendee;
-        $this->slot = '';
+
         $this->currency_symbol = config('app.currency_symbol', '€');
 
-        $this->labelFormats = LabelFormat::where('active', true)->get();
-        $this->selectedFormat = $this->labelFormats->first()->key_name;
-        $this->generatePositions();
+        // Defaults
+        $this->slot = '';
+        $this->selectedFormat = '75mm_110mm';
     }
 
-    public function updateSlot($slot){
-        Log::info($slot);
-        $this->slot = $slot;
-    }
-
-    public function updatedSelectedFormat()
+    public function updateSlot($slot)
     {
-        $this->generatePositions();
+        Log::info("Selected slot: " . $slot);
+        $this->slot = $slot;
     }
 
     public function downloadLabel()
@@ -89,31 +87,18 @@ class Manage extends Component
         );
     }
 
-
-    protected function generatePositions()
-    {
-        $format = $this->labelFormats->firstWhere('key_name', $this->selectedFormat);
-
-        if (! $format) {
-            $this->positions = [];
-            return;
-        }
-
-        $count = $format->labels_per_sheet;
-
-        $this->positions = range(1, $count);
-    }
-
     public function openLabelModal(): void
     {
         $this->resetErrorBag();
+        $this->slot = '';
+        $this->selectedFormat = '75mm_110mm';
         $this->showLabelModal = true;
     }
 
     public function openMarkPaidModal(): void
     {
         $this->resetErrorBag();
-        $this->payment_date = now()->format('d-m-Y'); // optional
+        $this->payment_date = now()->format('d-m-Y');
         $this->showMarkPaidModal = true;
     }
 
@@ -125,9 +110,7 @@ class Manage extends Component
 
         $parsedDate = Carbon::createFromFormat('d-m-Y', $this->payment_date)->startOfDay();
 
-        $this->attendee->update([
-            'paid_at' => $parsedDate,
-        ]);
+        $this->attendee->update(['paid_at' => $parsedDate]);
 
         $this->showMarkPaidModal = false;
         session()->flash('success', 'Registration marked as paid successfully.');
@@ -140,7 +123,6 @@ class Manage extends Component
         $this->showMarkPaidModal = false;
     }
 
-
     public function openEditPaymentModal()
     {
         if ($this->attendee->eventPaymentMethod->payment_method !== 'bank_transfer') {
@@ -148,6 +130,7 @@ class Manage extends Component
         }
 
         $paid_at = $this->attendee->paid_at ?? now();
+
         $this->payment_date   = $paid_at->format('d-m-Y');
         $this->payment_hour   = $paid_at->format('H');
         $this->payment_minute = $paid_at->format('i');
@@ -168,9 +151,7 @@ class Manage extends Component
             "{$this->payment_date} {$this->payment_hour}:{$this->payment_minute}"
         );
 
-        $this->attendee->update([
-            'paid_at' => $timestamp,
-        ]);
+        $this->attendee->update(['paid_at' => $timestamp]);
 
         $this->showEditPaymentModal = false;
         session()->flash('success', 'Payment date updated successfully.');
@@ -178,66 +159,65 @@ class Manage extends Component
 
     public function render()
     {
-        $activity_logs = Activity::where('causer_id', $this->attendee->user->id)
-            ->latest()->limit(20)->paginate(20);
-
-        $email_sends = EmailSend::where('recipient_id', $this->attendee->user->id)
-            ->latest()->paginate(20);
-
-        $check_ins = $this->attendee->checkIns()
-            ->with(['session', 'checkedInBy'])
-            ->orderByDesc('checked_in_at')
-            ->paginate(20);
-
         return view('livewire.backend.admin.attendees.manage', [
-            'activity_logs' => $activity_logs,
-            'attendee'      => $this->attendee,
-            'event'        => $this->event,
-            'email_sends'   => $email_sends,
-            'check_ins'     => $check_ins,
+            'activity_logs' => Activity::where('causer_id', $this->attendee->user->id)
+                ->latest()->limit(20)->paginate(20),
+
+            'email_sends' => EmailSend::where('recipient_id', $this->attendee->user->id)
+                ->latest()->paginate(20),
+
+            'check_ins' => $this->attendee->checkIns()
+                ->with(['session', 'checkedInBy'])
+                ->orderByDesc('checked_in_at')
+                ->paginate(20),
+
+            'attendee' => $this->attendee,
+            'event'    => $this->event,
         ]);
     }
-    
 
     public function updateEmailOptIn()
     {
-        $attendee_array = [
-            'email' => $this->attendee->user->email,
-            'first_name' => $this->attendee->user->first_name,
-            'last_name' => $this->attendee->user->last_name,
-            'title' => $this->attendee->user->title
-        ];
-
         $emailService = app(EmailMarketingService::class);
 
-        if (!$this->attendee->user->email_marketing_opt_in) {
+        $user = $this->attendee->user;
 
-            $email_subscriber_id = $emailService->addToList($attendee_array, config('services.emailblaster.marketing_list_id'));
+        $attendee_array = [
+            'email'      => $user->email,
+            'first_name' => $user->first_name,
+            'last_name'  => $user->last_name,
+            'title'      => $user->title,
+        ];
 
-            $this->attendee->user->update([
-                'email_marketing_opt_in' => true,
-                'email_marketing_subscriber_id' => $email_subscriber_id
+        if (!$user->email_marketing_opt_in) {
+            $subscriber_id = $emailService->addToList(
+                $attendee_array,
+                config('services.emailblaster.marketing_list_id')
+            );
+
+            $user->update([
+                'email_marketing_opt_in'     => true,
+                'email_marketing_subscriber_id' => $subscriber_id,
             ]);
-            session()->flash('opt_in', 'Attendee added to the marketing opt in list on Email Blaster');
 
+            session()->flash('opt_in', 'Attendee added to the marketing list.');
         } else {
+            $emailService->removeFromList(
+                $user->email_marketing_subscriber_id,
+                config('services.emailblaster.marketing_list_id')
+            );
 
-            $emailService->removeFromList($this->attendee->user->email_marketing_subscriber_id, config('services.emailblaster.marketing_list_id'));
-
-            $this->attendee->user->update([
-                'email_marketing_opt_in' => false,
-                'email_marketing_subscriber_id' => null
+            $user->update([
+                'email_marketing_opt_in'     => false,
+                'email_marketing_subscriber_id' => null,
             ]);
-            session()->flash('opt_in', 'Attendee removed from the marketing opt in list on Email Blaster');
 
+            session()->flash('opt_in', 'Attendee removed from the marketing list.');
         }
     }
 
-    public function sendWelcome(){
-        // Mail::to($this->attendee->user->email)->send(
-        //     (new WelcomeEmailCustomer($this->attendee))->from(config('mail.customer.address'), config('mail.customer.name'))
-        // );
-
+    public function sendWelcome()
+    {
         $mailable = new WelcomeEmailCustomer($this->attendee);
 
         EmailService::queueMailable(
@@ -249,7 +229,8 @@ class Manage extends Component
             type: 'Admin triggered',
             event_id: $this->attendee->event->id,
         );
-        session()->flash('welcome', 'Welcome email sent to the attendee');
+
+        session()->flash('welcome', 'Welcome email sent.');
     }
 
     public function resendEmail(int $email_send_id)
@@ -262,7 +243,7 @@ class Manage extends Component
             $this->addError('resend', 'That email belongs to a different event.');
             return;
         }
-        
+
         $queued = EmailQueuedSend::create([
             'email_broadcast_id' => $send->email_broadcast_id,
             'recipient_id'       => $send->recipient_id,
@@ -278,38 +259,28 @@ class Manage extends Component
         session()->flash('success', 'Email queued for resend.');
     }
 
-    public function sendReceipt(){
-        if($this->attendee->eventPaymentMethod->payment_method === 'stripe'){
+    public function sendReceipt()
+    {
+        $method = $this->attendee->eventPaymentMethod->payment_method;
 
-
+        if ($method === 'stripe') {
             $mailable = new StripeConfirmationCustomer($this->attendee, $this->attendee->registration_total);
-
-            EmailService::queueMailable(
-                mailable: $mailable,
-                recipient_email: $this->attendee->user->email,
-                recipient_user: $this->attendee->user,
-                sender_id: auth()->id(),
-                friendly_name: 'Stripe confirmation customer',
-                type: 'Admin triggered',
-                event_id: $this->attendee->event->id,
-            );
-
-
-            session()->flash('receipt', 'Stripe receipt sent to the attendees account email address');
-        }elseif($this->attendee->eventPaymentMethod->payment_method === 'bank_transfer'){
-
+            $type = 'Stripe confirmation customer';
+        } else {
             $mailable = new BankTransferConfirmationCustomer($this->attendee, $this->attendee->registration_total);
-
-            EmailService::queueMailable(
-                mailable: $mailable,
-                recipient_email: $this->attendee->user->email,
-                recipient_user: $this->attendee->user,
-                sender_id: auth()->id(),
-                friendly_name: 'Bank transfer confirmation customer',
-                type: 'Admin triggered',
-                event_id: $this->attendee->event->id,
-            );
-            session()->flash('receipt', 'Bank transfer receipt sent to the attendees account email address');
+            $type = 'Bank transfer confirmation customer';
         }
+
+        EmailService::queueMailable(
+            mailable: $mailable,
+            recipient_email: $this->attendee->user->email,
+            recipient_user: $this->attendee->user,
+            sender_id: auth()->id(),
+            friendly_name: $type,
+            type: 'Admin triggered',
+            event_id: $this->attendee->event->id,
+        );
+
+        session()->flash('receipt', 'Receipt sent to attendee.');
     }
 }
