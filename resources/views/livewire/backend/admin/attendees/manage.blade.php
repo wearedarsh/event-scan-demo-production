@@ -102,7 +102,7 @@
                 title="Badges & labels"
                 description="Export digital badges or Avery labels.">
                 <x-link-arrow
-                    wire.click.prevent="downloadSingleBadge"
+                    wire:click.prevent="downloadSingleBadge"
                     href="#">
                     Download digital badge
                 </x-link-arrow>

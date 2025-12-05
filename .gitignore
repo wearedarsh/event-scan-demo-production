@@ -6,6 +6,7 @@
 /storage/*.key
 /storage/pail
 /storage/fonts
+/resources/fonts
 /vendor
 *.env
 .env

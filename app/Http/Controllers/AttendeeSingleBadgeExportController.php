@@ -55,7 +55,7 @@ class AttendeeSingleBadgeExportController extends Controller
 
         $pdf = Pdf::setOptions([
                 'chroot'                 => base_path(),
-                'fontDir'                => storage_path('fonts'),
+                'fontDir'                => resource_path('fonts'),
                 'fontCache'              => storage_path('fonts'),
                 'isRemoteEnabled'        => false,
                 'enable_font_subsetting' => true,
@@ -68,6 +68,6 @@ class AttendeeSingleBadgeExportController extends Controller
             ])
             ->setPaper([0, 0, $width, $height], 'portrait');
 
-        return $pdf->download('EVF-HOW-digital-badge.pdf');
+        return $pdf->download('digital-badge.pdf');
     }
 }
