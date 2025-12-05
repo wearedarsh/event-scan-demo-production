@@ -11,14 +11,14 @@
       font-family: 'NotoSans';
       font-weight:400;
       font-style: normal;
-      src: url("{{ resource_path('fonts/NotoSans-Regular.ttf') }}") format('truetype');
+      src: url("file://{{ resource_path('fonts/NotoSans-Regular.ttf') }}") format('truetype');
   }
 
   @font-face {
       font-family: 'NotoSans';
       font-weight:700;
       font-style: normal;
-      src: url("{{ resource_path('fonts/NotoSans-Bold.ttf') }}") format('truetype');
+      src: url("file://{{ resource_path('fonts/NotoSans-Bold.ttf') }}") format('truetype');
   }
 
   .badge__punch {

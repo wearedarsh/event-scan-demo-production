@@ -5,20 +5,12 @@
     subtitle="Choose the label format and sheet position."
 >
 
-    <form
-        method="GET"
-        action="{{ route('admin.events.attendees.label.export', [$event->id, $attendee->id]) }}"
-        target="_blank"
-        class="space-y-6"
-    >
-
         <!-- Label format -->
         <div>
             <x-admin.input-label>Label format</x-admin.input-label>
 
-            <x-admin.select name="mode" wire:model.live="selectedFormat">
-                <option value="75mm_110mm">75×110 mm badge</option>
-                <option value="a6_full">A6 full badge</option>
+            <x-admin.select name="mode">
+                <option value="80mm_80mm">80 × 80 mm Avery</option>
             </x-admin.select>
         </div>
 
@@ -28,11 +20,9 @@
             <x-admin.input-label>Sheet position</x-admin.input-label>
             <x-admin.input-help>Select the label position on your A4 sheet.</x-admin.input-help>
 
-            <input type="hidden" name="slot" wire:model="slot">
-
             <div class="grid grid-cols-2 gap-3 mt-3">
 
-                @foreach ([1,2,3,4] as $num)
+                @foreach ([1,2,3,4,5,6] as $num)
                     <button
                         type="button"
                         wire:click="updateSlot({{ $num }})"
@@ -60,16 +50,17 @@
             </x-admin.button>
 
             <x-admin.button
-                type="submit"
+                type="button"
                 variant="outline"
                 :disabled="!$slot"
+                wire:click="downloadLabel"
                 @class(['opacity-40 pointer-events-none' => !$slot])
+                
             >
                 <x-heroicon-o-document-arrow-down class="w-4 h-4 mr-1.5" />
                 Download label
             </x-admin.button>
         </x-slot:footer>
 
-    </form>
 
 </x-admin.modal>

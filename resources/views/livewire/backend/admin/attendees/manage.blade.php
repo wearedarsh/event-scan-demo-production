@@ -102,7 +102,8 @@
                 title="Badges & labels"
                 description="Export digital badges or Avery labels.">
                 <x-link-arrow
-                    href="{{ route('admin.events.attendees.single-badge.export', [$event->id, $attendee->id]) }}">
+                    wire.click.prevent="downloadSingleBadge"
+                    href="#">
                     Download digital badge
                 </x-link-arrow>
 

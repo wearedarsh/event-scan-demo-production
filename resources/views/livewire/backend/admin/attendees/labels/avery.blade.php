@@ -6,9 +6,6 @@
     @page { margin: 0; size: A4; }
     html, body { margin: 0; padding: 0; }
 
-    /* -------------------------
-       FONTS (load from resources/fonts)
-       ------------------------- */
     @font-face {
         font-family: 'NotoSans';
         font-style: normal;
@@ -40,20 +37,19 @@
         height: {{ $label_h }}mm;
         box-sizing: border-box;
         overflow: hidden;
-        border: 0.1mm solid transparent;
         text-align: center;
-        padding-top: 2mm;
+        position: relative;
     }
 
     /* Main content */
     .name {
-        font-size: {{ $label_h > 100 ? '18pt' : '14pt' }};
+        font-size: 18pt;
         font-weight: 700;
         line-height: 1.05;
     }
 
     .country {
-        font-size: {{ $label_h > 100 ? '12pt' : '10pt' }};
+        font-size: 14pt;
         margin-top: 1mm;
     }
 
@@ -64,17 +60,15 @@
     }
 
     .band {
-        position: absolute;
-        bottom: 0;
-        left: 0;
+        margin-top:5mm;
         width: 100%;
-        height: 12mm;
-        background: {{ $vm->group_color }};
-        color: {{ $vm->group_text_color }};
+        height: 18mm;
+        background: {{ $attendee->group_color }};
+        color: {{ $attendee->group_text_color }};
         font-weight: bold;
-        font-size: 14pt;
-        line-height: 12mm;
-        letter-spacing: .5px;
+        font-size: 16pt;
+        line-height: 1;
+        padding-top:2mm;
     }
 </style>
 </head>
@@ -82,28 +76,30 @@
 <body>
 <div class="sheet">
 
-    <div class="label" style="border:1px solid #000000;">
+    <div class="label">
 
         <div class="name">
-            {{ $vm->first_name }}<br>
-            {{ $vm->last_name }}
+            {{ $attendee->first_name }}<br>
+            {{ $attendee->last_name }}
         </div>
 
-        @if($vm->country)
-            <div class="country">{{ $vm->country }}</div>
+        @if($attendee->country)
+            <div class="country">{{ $attendee->country }}</div>
         @endif
 
-        @if(!empty($vm->qr_data))
+        @if(!empty($attendee->qr_data))
             <div>
                 <img class="qr"
-                     src="data:image/svg+xml;base64,{{ base64_encode(QrCode::format('svg')->size(600)->generate($vm->qr_data)) }}">
+                     src="data:image/svg+xml;base64,{{ base64_encode(QrCode::format('svg')->size(600)->generate($attendee->qr_data)) }}">
             </div>
         @endif
 
-        <div class="band">
-            {{ strtoupper($vm->group_label ?: 'GROUP') }}
-        </div>
-
+        @if(!empty($attendee->group_label))
+            <div class="band">
+                {{ strtoupper($attendee->group_label) }}
+            </div>
+        @endif
+        
     </div>
 
 </div>

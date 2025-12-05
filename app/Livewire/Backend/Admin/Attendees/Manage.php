@@ -43,7 +43,7 @@ class Manage extends Component
 
     // Label modal
     public string $slot = '';
-    public string $selectedFormat = '75mm_110mm'; // default
+    public string $mode = '80mm_80mm';
 
     #[Computed]
     public function roleKey(): string
@@ -60,12 +60,10 @@ class Manage extends Component
 
         // Defaults
         $this->slot = '';
-        $this->selectedFormat = '75mm_110mm';
     }
 
     public function updateSlot($slot)
     {
-        Log::info("Selected slot: " . $slot);
         $this->slot = $slot;
     }
 
@@ -82,8 +80,19 @@ class Manage extends Component
                 $this->event->id,
                 $this->attendee->id,
                 'slot' => $this->slot,
-                'mode' => $this->selectedFormat,
+                'mode' => $this->mode,
             ]
+        );
+    }
+
+    public function downloadSingleBadge()
+    {
+        return redirect()->route(
+            'admin.events.attendees.single-badge.export',
+                [
+                    $this->event->id,
+                    $this->attendee->id,
+                ]
         );
     }
 
@@ -91,7 +100,7 @@ class Manage extends Component
     {
         $this->resetErrorBag();
         $this->slot = '';
-        $this->selectedFormat = '75mm_110mm';
+        $this->mode = '80mm_80mm';
         $this->showLabelModal = true;
     }
 

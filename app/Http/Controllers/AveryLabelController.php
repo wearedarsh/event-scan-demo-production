@@ -12,46 +12,37 @@ class AveryLabelController extends Controller
 {
     public function export(Request $request, Event $event, Registration $attendee)
     {
-        // Mode defaults to 75×110mm unless specified
-        $mode = $request->get('mode', '75mm_110mm');
+        $mode = $request->get('mode', '80mm_80mm');
 
-        // ---- FIXED 4 SLOT LOGIC ----
         $slot = (int) $request->get('slot', 1);
-        $slot = max(1, min($slot, 4)); // clamp 1–4
 
-        // ---- STATIC POSITION MAPS ----
-        if ($mode === 'a6_full') {
-            $label_w = 105.0;
-            $label_h = 148.0;
+        $cells = [];
 
-            $cells = [
-                1 => ['x' => 0.0,   'y' => 0.0],
-                2 => ['x' => 105.0, 'y' => 0.0],
-                3 => ['x' => 0.0,   'y' => 148.0],
-                4 => ['x' => 105.0, 'y' => 148.0],
-            ];
-        } else {
-            // 75×110mm (with bleed)
-            $label_w = 81.0;
-            $label_h = 116.0;
+        if ($mode === '80mm_80mm') {
+            // 80×80mm (with bleed)
+            $label_w = 86.0;
+            $label_h = 86.0;
 
             $cells = [
-                1 => ['x' => 23.0,  'y' => 33.0],
-                2 => ['x' => 107.0, 'y' => 33.0],
-                3 => ['x' => 23.0,  'y' => 153.0],
-                4 => ['x' => 107.0, 'y' => 153.0],
+                1 => ['x' => 19.0,  'y' => 19.5],   // Row 1, Col 1
+                2 => ['x' => 105.0, 'y' => 19.5],   // Row 1, Col 2
+
+                3 => ['x' => 19.0,  'y' => 105.5],  // Row 2, Col 1
+                4 => ['x' => 105.0, 'y' => 105.5],  // Row 2, Col 2
+
+                5 => ['x' => 19.0,  'y' => 191.5],  // Row 3, Col 1
+                6 => ['x' => 105.0, 'y' => 191.5],  // Row 3, Col 2
             ];
         }
 
         $offset_x = $cells[$slot]['x'];
         $offset_y = $cells[$slot]['y'];
 
-        // ---- QR CODE ENCODING ----
         $client_id  = config('services.eventscan.client_id');
         $qr_prefix  = config('check-in-app.qr_prefix');
         $encoded    = Hashids::connection('checkin')->encode($attendee->id, $client_id);
 
-        $vm = (object)[
+        $attendee = (object)[
             'first_name'       => $attendee->user->first_name ?? '',
             'last_name'        => $attendee->user->last_name ?? '',
             'country'          => optional($attendee->country)->name ?? '',
@@ -61,7 +52,6 @@ class AveryLabelController extends Controller
             'group_text_color' => optional($attendee->attendeeGroup)->label_colour ?? '#000000',
         ];
 
-        // ---- PDF RENDER ----
         $pdf = Pdf::setOptions([
                 'chroot'                 => base_path(),
                 'fontDir'                => resource_path('fonts'),
@@ -75,7 +65,7 @@ class AveryLabelController extends Controller
                 'offset_y'        => $offset_y,
                 'slot'            => $slot,
                 'mode'            => $mode,
-                'vm'              => $vm,
+                'attendee'        => $attendee,
                 'header_logo_url' => resource_path('badges/header-logo.jpg'),
                 'event_title'     => $event->title,
             ])
