@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title ?? 'EVF HOW Email' }}</title>
+    <title>{{ $title ?? 'Eventscan demo' }}</title>
     <style>
         body {
             margin: 0;
@@ -99,8 +99,8 @@
                     <tr>
                         <td class="email-masthead">
                             <a href="{{ config('app.url') }}" style="text-decoration: none; display: inline-block;">
-                                <img src="{{ config('app.url') }}/images/frontend/logo-white.png" alt="EVF HOW Logo">
-                                <p style="color:#fff; font-size:16px; margin-top:10px;">EVF HOW Events</p>
+                                <img src="{{ config('app.url') }}/images/frontend/logo-white.png" alt="{{config('config('customer.contact_details.booking_website_company_name') }} Logo">
+                                <p style="color:#fff; font-size:16px; margin-top:10px;">{{config('customer.contact_details.booking_website_company_name') }} events</p>
                             </a>
                         </td>
                     </tr>
@@ -113,13 +113,8 @@
 
                     <tr>
                         <td class="email-footer">
-                            <p>© {{ now()->year }} EVF HOW. All rights reserved.</p>
-                            <p>
-                                European Venous Forum Ltd<br>
-                                2nd Floor, 10-12 Bourlet Close, London, W1W 7BR<br>
-                                Company Number: 4354339<br>
-                                VAT Number: GB 374 4968 49
-                            </p>
+                            <p>© {{ now()->year }} {{ config('customer.contact_details.booking_website_company_name') }}. All rights reserved.</p>
+                            {!! config('customer.contact_details.booking_website_company_details') !!}
                         </td>
                     </tr>
                 </table>

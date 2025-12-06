@@ -41,7 +41,7 @@ class HtmlEmailSeeder extends Seeder
 
                     <p>
                         We look forward to seeing you soon.<br><br>
-                        <strong>The Eventscan Team</strong>
+                        <strong>The Medical Foundry Team</strong>
                     </p>
                 ',
             ],
