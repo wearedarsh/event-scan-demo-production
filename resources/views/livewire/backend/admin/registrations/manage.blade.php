@@ -575,7 +575,7 @@
 
                                         <x-admin.table-action-button
                                             type="link"
-                                            :href="route('admin.emails.broadcasts.view', ['email_send' => $email_send->id])"
+                                            :href="route('admin.emails.broadcasts.view', ['event' => $event->id, 'email_send' => $email_send->id])"
                                             icon="eye"
                                             label="View"
                                         />
