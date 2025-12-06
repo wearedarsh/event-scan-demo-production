@@ -36,7 +36,7 @@ class AttendeeBadgeExportController extends Controller
 
         $pdf = Pdf::setOptions([
             'chroot' => base_path(),
-            'fontDir'    => storage_path('fonts'),
+            'fontDir'    => resource_path('fonts'),
             'fontCache'  => storage_path('fonts'),
             'isRemoteEnabled' => false,
             'enable_font_subsetting' => true,

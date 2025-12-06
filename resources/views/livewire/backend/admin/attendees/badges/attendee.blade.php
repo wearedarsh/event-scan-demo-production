@@ -46,13 +46,13 @@
 
   .badge__header {
     position: absolute; left: 0; top: 0; width: 100%;
-    height: 40mm; background: #142B54; color: #fff;
+    height: 35mm; background: #142B54; color: #fff;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     z-index: 1;
   }
 
-  .badge__logo { height: 16mm; margin-top: 10mm;margin-left:-2mm}
-  .badge__event { font-size: 16pt; line-height: 1; margin-top:-1mm;}
+  .badge__logo { height: 14mm; margin-top: 10mm;margin-left:-2mm}
+  .badge__event { text-align:center; font-size: 14pt; line-height: 1; margin-top:-0.5mm;color:#00C7B7;}
   .badge__location { font-size: 12pt; line-height: 0.7; margin-top:-3mm;}
 
   .badge__groupband {
@@ -89,7 +89,7 @@
       <!-- <div class="badge__punch"></div> -->
       <img class="badge__logo" src="file://{{ $header_logo_url }}" alt="EVF HOW" />
       <p class="badge__event">{{ $event_title }}</p>
-      <p class="badge__location">{{ $event_location }}</p>
+      <!-- <p class="badge__location">{{ $event_location }}</p> -->
     </div>
 
       <div class="badge__nameblock">
