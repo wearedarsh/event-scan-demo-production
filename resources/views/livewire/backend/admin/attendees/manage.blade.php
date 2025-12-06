@@ -71,11 +71,16 @@
             <x-admin.tile-card
                 title="Communication"
                 description="Send emails or manage payment updates.">
-                <x-link-arrow href="#" wire:click.prevent="sendWelcome">
+                <x-link-arrow href="#" 
+                    wire:click.prevent="sendWelcome"
+                    wire:confirm="Send welcome email?"
+                >
                     Send welcome email
                 </x-link-arrow>
 
-                <x-link-arrow class="mt-1" href="#" wire:click.prevent="sendReceipt">
+                <x-link-arrow class="mt-1" href="#" 
+                    wire:click.prevent="sendReceipt" 
+                    wire:confirm="Send receipt email?">
                     Send receipt email
                 </x-link-arrow>
 
@@ -83,7 +88,9 @@
                 <x-link-arrow
                     class="mt-1"
                     href="#"
-                    wire:click.prevent="sendBankTransferInfo">
+                    wire:click.prevent="sendBankTransferInfo"
+                    wire:confirm="Send bank transfer details?"
+                    >
                     Send bank transfer details
                 </x-link-arrow>
 
