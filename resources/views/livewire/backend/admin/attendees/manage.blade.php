@@ -421,19 +421,21 @@
 
             <div class="flex flex-wrap gap-3">
 
-                <x-admin.outline-btn-icon
-                    icon="heroicon-o-check-circle"
-                    wire:click.prevent="openMarkPaidModal">
-                    Mark as paid
-                </x-admin.outline-btn-icon>
+                @if($attendee->eventPaymentMethod->payment_method === 'bank_transfer' && $attendee->payment_status !== 'paid')
+                    <x-admin.outline-btn-icon
+                        icon="heroicon-o-check-circle"
+                        wire:click.prevent="openMarkPaidModal">
+                        Mark as paid
+                    </x-admin.outline-btn-icon>
+                @endif
 
                 @if($attendee->eventPaymentMethod->payment_method === 'bank_transfer')
-                <x-admin.outline-btn-icon
-                    icon="heroicon-o-envelope"
-                    wire:confirm="Send bank transfer details?"
-                    wire:click.prevent="sendBankTransferInfo">
-                    Send bank transfer details
-                </x-admin.outline-btn-icon>
+                    <x-admin.outline-btn-icon
+                        icon="heroicon-o-envelope"
+                        wire:confirm="Send bank transfer details?"
+                        wire:click.prevent="sendBankTransferInfo">
+                        Send bank transfer details
+                    </x-admin.outline-btn-icon>
                 @endif
 
                 <x-admin.outline-btn-icon
