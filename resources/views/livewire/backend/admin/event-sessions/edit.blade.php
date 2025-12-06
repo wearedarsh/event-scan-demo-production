@@ -9,115 +9,99 @@
         ['label' => 'Edit Session']
     ]" />
 
-
     <!-- Page Header -->
     <div class="px-6">
         <h1 class="text-2xl font-semibold text-[var(--color-text)]">
             Edit Session – {{ $group->friendly_name }}
         </h1>
-
         <p class="text-sm text-[var(--color-text-light)] mt-1">
-            Update details for this event session.
+            Update the details for this event session.
         </p>
     </div>
 
-
     <!-- Alerts -->
     @if($errors->any())
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-warning)]">
-                <p class="text-sm text-[var(--color-warning)]">{{ $errors->first() }}</p>
-            </div>
-        </div>
+        <x-admin.alert type="danger" :message="$errors->first()" class="px-6" />
     @endif
 
     @if (session()->has('success'))
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-success)]">
-                <p class="text-sm text-[var(--color-success)]">{{ session('success') }}</p>
-            </div>
-        </div>
+        <x-admin.alert type="success" :message="session('success')" class="px-6" />
     @endif
 
-
-
-    <!-- ============================================================= -->
-    <!-- FORM WRAPPER -->
-    <!-- ============================================================= -->
+    <!-- Form -->
     <div class="px-6">
+        <x-admin.card class="p-6 space-y-6">
 
-        <div class="soft-card p-6 space-y-6">
-
-            <x-admin.section-title title="Update session details" />
+            <x-admin.section-title title="Session details" />
 
             <form wire:submit.prevent="update" class="space-y-6">
 
-                <!-- Two column grid -->
+                <!-- Grid -->
                 <div class="grid md:grid-cols-2 gap-6">
 
-                    <div>
-                        <label class="form-label-custom">Title</label>
-                        <input wire:model.live="title" type="text" class="input-text">
-                    </div>
+                    <x-admin.input-text
+                        label="Title"
+                        model="title"
+                    />
+
+                    <x-admin.input-time
+                        label="Start Time"
+                        model="start_time"
+                    />
+
+                    <x-admin.input-time
+                        label="End Time"
+                        model="end_time"
+                    />
+
+                    <x-admin.input-text
+                        label="CME Points"
+        type="number"
+                        model="cme_points"
+                    />
+
+                    <x-admin.input-text
+                        label="Display Order"
+                        type="number"
+                        model="display_order"
+                    />
 
                     <div>
-                        <label class="form-label-custom">Start Time</label>
-                        <input wire:model.live="start_time" type="time" class="input-text">
-                    </div>
-
-                    <div>
-                        <label class="form-label-custom">End Time</label>
-                        <input wire:model.live="end_time" type="time" class="input-text">
-                    </div>
-
-                    <div>
-                        <label class="form-label-custom">CME Points</label>
-                        <input wire:model.live="cme_points" type="text" class="input-text">
-                    </div>
-
-                    <div>
-                        <label class="form-label-custom">Display Order</label>
-                        <input wire:model.live="display_order" type="number" class="input-text">
-                    </div>
-
-                    <div>
-                        <label class="form-label-custom">Session Type</label>
-                        <x-admin.select wire:model.live="event_session_type_id">
-                            <option value="">Select a type</option>
+                        <x-admin.input-label for="event_session_type_id">Session Type</x-admin.input-label>
+                        <x-admin.select id="event_session_type_id" wire:model.live="event_session_type_id">
+                            <option value="">Select type</option>
                             @foreach($types as $type)
                                 <option value="{{ $type->id }}">{{ $type->friendly_name }}</option>
                             @endforeach
                         </x-admin.select>
+                        @error('event_session_type_id')
+                            <x-admin.input-error :message="$message" />
+                        @enderror
                     </div>
 
                 </div>
 
-
                 <!-- Buttons -->
                 <div class="flex items-center gap-3 pt-4">
 
-                    <!-- Outline Update Button -->
-                    <button type="submit"
-                        class="inline-flex items-center rounded-md border border-[var(--color-primary)]
-                               bg-[var(--color-surface)] px-2.5 py-1.5 text-xs md:text-sm font-medium
-                               text-[var(--color-primary)]
-                               hover:bg-[var(--color-primary)] hover:text-white
-                               transition-colors duration-150">
-                        <x-heroicon-o-check class="h-4 w-4 md:mr-1.5" />
-                        <span class="hidden md:inline">Update Session</span>
-                    </button>
+                    <x-admin.button variant="outline" type="submit">
+                        <x-slot:icon>
+                            <x-heroicon-o-check class="h-4 w-4" />
+                        </x-slot:icon>
+                        Update Session
+                    </x-admin.button>
 
-                    <a href="{{ route('admin.events.event-sessions.manage', [$event->id, $group->id]) }}"
-                       class="btn-secondary">
+                    <x-admin.button
+                        href="{{ route('admin.events.event-sessions.manage', [$event->id, $group->id]) }}"
+                        variant="secondary">
                         Cancel
-                    </a>
+                    </x-admin.button>
 
                 </div>
 
             </form>
 
-        </div>
-
+        </x-admin.card>
     </div>
 
 </div>

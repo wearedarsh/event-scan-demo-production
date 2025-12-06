@@ -73,11 +73,11 @@
 
                             <!-- Order Input -->
                             <td class="px-4 py-3 w-20">
-                                <x-admin.input-text
-                                    class="w-20 text-center p-1"
-                                    wire:model.lazy="orders.{{ $t->id }}"
+                                <x-admin.table-order-input
+                                    model="orders.{{ $t->id }}"
                                     wire:change="updateOrder({{ $t->id }}, $event.target.value)"
                                 />
+                                
                             </td>
 
                             <!-- Status -->

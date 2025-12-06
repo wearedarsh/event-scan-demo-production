@@ -13,13 +13,36 @@ class Manage extends Component
 {
     public Event $event;
     public EventSessionGroup $group;
-    public $event_sessions;
+
+    public $event_sessions = [];
+    public $orders = [];
 
     public function mount(Event $event, EventSessionGroup $group)
     {
         $this->event = $event;
         $this->group = $group;
-        $this->event_sessions = EventSession::where('event_session_group_id', $this->group->id)->get();
+
+        $this->event_sessions = EventSession::where('event_session_group_id', $this->group->id)
+            ->orderBy('display_order')
+            ->orderBy('start_time')
+            ->get();
+
+        $this->orders = $this->event_sessions
+            ->pluck('display_order', 'id')
+            ->toArray();
+    }
+
+    public function updateSessionOrder($id, $value)
+    {
+        $value = max(1, (int) $value);
+
+        EventSession::where('id', $id)->update([
+            'display_order' => $value
+        ]);
+
+        $this->orders[$id] = $value;
+
+        $this->dispatch('notify', 'Session order updated.');
     }
 
     public function delete(int $session_id)
@@ -28,12 +51,14 @@ class Manage extends Component
         $session->delete();
 
         session()->flash('success', 'Session deleted successfully.');
-        return redirect()->route('admin.events.event-sessions.index', ['event' => $this->event->id, 'group' => $this->group->id]);
     }
-
 
     public function render()
     {
+        $this->event_sessions = EventSession::where('event_session_group_id', $this->group->id)
+            ->orderBy('display_order')
+            ->orderBy('start_time')
+            ->get();
 
         return view('livewire.backend.admin.event-sessions.manage', [
             'event_sessions' => $this->event_sessions

@@ -1,84 +1,114 @@
-<div>
-    <div class="flex-row d-flex flex-1 rounded-2 p-3 align-items-center">
-        <h2 class="fs-4 text-brand-dark p-0 m-0">Create Ticket Group</h2>
-    </div>
+<div class="space-y-6">
 
-    <div class="flex-row d-flex flex-1 bg-white rounded-2 p-3">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb d-flex flex-row align-items-center">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.events.index') }}">Events</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.events.manage', $event->id) }}">{{ $event->title }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Create Ticket Group</li>
-            </ol>
-        </nav>
-    </div>
+    <!-- Breadcrumbs -->
+    <x-admin.breadcrumb :items="[
+        ['label' => 'Events', 'href' => route('admin.events.index')],
+        ['label' => $event->title, 'href' => route('admin.events.manage', $event->id)],
+        ['label' => 'Ticket Groups', 'href' => route('admin.events.tickets.index', $event->id)],
+        ['label' => 'Create Ticket Group'],
+    ]" />
 
-    <div class="flex-column d-flex p-3 bg-white rounded-2 mt-3">
-        <div class="container mt-2">
-            <h4 class="mb-3">Create Ticket Group</h4>
+    <!-- Page Header -->
+    <x-admin.page-header
+        title="Create Ticket Group"
+        subtitle="Define a new ticket group for {{ $event->title }}."
+    />
 
-            @if($errors->any())
-                <div class="col-12">
-                    <div class="alert alert-info" role="alert">
-                        <span class="font-m">{{ $errors->first() }}</span>
+    <!-- Alerts -->
+    @if($errors->any())
+        <x-admin.alert type="danger" :message="$errors->first()" />
+    @endif
+
+    @if (session()->has('success'))
+        <x-admin.alert type="success" :message="session('success')" />
+    @endif
+
+
+    <!-- Form -->
+    <div class="px-6">
+
+        <x-admin.card class="p-6 space-y-6">
+
+            <x-admin.section-title title="Ticket Group Details" />
+
+            <form wire:submit.prevent="store" class="space-y-6">
+
+                <div class="grid md:grid-cols-2 gap-6">
+
+                    <!-- Group Name -->
+                    <x-admin.input-text
+                        label="Group Name"
+                        model="name"
+                        class="w-full"
+                    />
+
+                    <!-- Display Order -->
+                    <x-admin.input-text
+                        label="Display Order"
+                        model="display_order"
+                        type="number"
+                        class="w-full"
+                    />
+
+                    <!-- Active -->
+                    <div>
+                        <label class="form-label-custom">Active?</label>
+                        <x-admin.select wire:model.live="active">
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </x-admin.select>
                     </div>
-                </div>
-            @endif
 
-            @if (session()->has('success'))
-                <div class="col-12">
-                    <div class="alert alert-success" role="alert">
-                        <span class="font-m">{{ session('success') }}</span>
+                    <!-- Allow Multiple Selection -->
+                    <div>
+                        <label class="form-label-custom">Allow Multiple Selection?</label>
+                        <x-admin.select wire:model.live="multiple_select">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </x-admin.select>
                     </div>
-                </div>
-            @endif
 
-            <form wire:submit.prevent="store" class="row g-3">
-                <div class="col-md-6">
-                    <label for="name" class="form-label">Group Name</label>
-                    <input wire:model.live="name" type="text" class="form-control" id="name">
-                </div>
+                    <!-- Required -->
+                    <div>
+                        <label class="form-label-custom">Is Required?</label>
+                        <x-admin.select wire:model.live="required">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </x-admin.select>
+                    </div>
 
-                <div class="col-md-6">
-                    <label for="display_order" class="form-label">Display Order</label>
-                    <input wire:model.live="display_order" type="text" class="form-control" id="display_order">
                 </div>
 
-                <div class="col-md-6">
-                    <label for="active" class="form-label">Active</label>
-                    <select wire:model.live="active" class="form-select">
-                        <option value="1">Yes</option>
-                        <option value="0">No</option>
-                    </select>
+                <!-- Description -->
+                <div>
+                    <label class="form-label-custom">Description</label>
+                    <textarea
+                        wire:model.live="description"
+                        rows="4"
+                        class="input-text min-h-[120px]"
+                    ></textarea>
                 </div>
 
-                <div class="col-md-6">
-                    <label for="multiple_select" class="form-label">Allow Multiple Selection?</label>
-                    <select wire:model.live="multiple_select" class="form-select">
-                        <option value="0">No</option>
-                        <option value="1">Yes</option>
-                    </select>
+
+                <!-- Buttons -->
+                <div class="flex items-center gap-3">
+                    <x-admin.outline-btn-icon
+                        type="submit"
+                        icon="heroicon-o-plus"
+                    >
+                        Create Group
+                    </x-admin.outline-btn-icon>
+
+                    <a href="{{ route('admin.events.tickets.index', $event->id) }}"
+                       class="btn-secondary">
+                        Cancel
+                    </a>
                 </div>
 
-                <div class="col-md-6">
-                    <label for="required" class="form-label">Is Required?</label>
-                    <select wire:model.live="required" class="form-select">
-                        <option value="0">No</option>
-                        <option value="1">Yes</option>
-                    </select>
-                </div>
-
-                <div class="col-md-12">
-                    <label for="description" class="form-label">Description</label>
-                    <textarea wire:model.live="description" class="form-control" id="description" rows="4"></textarea>
-                </div>
-
-                <div class="col-12">
-                    <button type="submit" class="btn bg-brand-secondary">Create Group</button>
-                    <a href="{{ route('admin.events.tickets.index', $event->id) }}" class="btn btn-light"><span class="text-brand-dark">Cancel</span></a>
-                </div>
             </form>
-        </div>
+
+        </x-admin.card>
+
     </div>
+
 </div>

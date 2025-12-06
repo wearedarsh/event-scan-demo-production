@@ -5,79 +5,56 @@
         ['label' => 'Events', 'href' => route('admin.events.index')],
         ['label' => $event->title, 'href' => route('admin.events.manage', $event->id)],
         ['label' => 'Event Sessions', 'href' => route('admin.events.event-sessions.index', $event->id)],
-        ['label' => 'Manage Sessions']
+        ['label' => 'Manage Sessions'],
     ]" />
 
-    <!-- Header -->
-    <div class="px-6 flex items-center justify-between">
-        <div>
-            <h1 class="text-2xl font-semibold text-[var(--color-text)]">
-                Sessions — {{ $group->friendly_name }}
-            </h1>
-            <p class="text-sm text-[var(--color-text-light)] mt-1">
-                Manage this session group’s sessions.
-            </p>
-        </div>
-
-        <!-- Add Session (outline button) -->
-        <a href="{{ route('admin.events.event-sessions.create', [$event->id, $group->id]) }}"
-           class="inline-flex items-center rounded-md border border-[var(--color-primary)]
-                  bg-[var(--color-surface)] px-2.5 py-1.5 text-xs md:text-sm font-medium
-                  text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white
-                  transition-colors duration-150">
-            <x-heroicon-o-plus class="h-4 w-4 md:mr-1.5" />
-            <span class="hidden md:inline">Add Session</span>
-        </a>
-    </div>
+    <!-- Page Header -->
+    <x-admin.page-header
+        title="{{ $group->friendly_name }}"
+        subtitle="Manage this session group’s sessions."
+    >
+        <x-admin.outline-btn-icon
+            :href="route('admin.events.event-sessions.create', [$event->id, $group->id])"
+            icon="heroicon-o-plus">
+            Add Session
+        </x-admin.outline-btn-icon>
+    </x-admin.page-header>
 
     <!-- Alerts -->
     @if($errors->any())
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-warning)]">
-                <p class="text-sm text-[var(--color-warning)]">{{ $errors->first() }}</p>
-            </div>
-        </div>
+        <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
 
-    @if(session()->has('success'))
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-success)]">
-                <p class="text-sm text-[var(--color-success)]">{{ session('success') }}</p>
-            </div>
-        </div>
+    @if(session('success'))
+        <x-admin.alert type="success" :message="session('success')" />
     @endif
 
 
-    <!-- ============================================================= -->
-    <!-- TABLE OF SESSIONS -->
-    <!-- ============================================================= -->
+    <!-- Sessions Table -->
     <div class="px-6">
-        <div class="soft-card p-6 space-y-4">
+        <x-admin.card class="p-6 space-y-4">
 
             <x-admin.section-title title="Sessions in {{ $group->friendly_name }}" />
 
-            <div class="relative overflow-x-auto">
-                <div class="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-[var(--color-surface)] pointer-events-none"></div>
-
+            <x-admin.table>
                 <table class="min-w-full text-sm text-left">
 
                     <thead>
-                        <tr class="text-xs uppercase text-[var(--color-text-light)]
-                                   border-b border-[var(--color-border)]">
-
+                        <tr class="text-xs uppercase text-[var(--color-text-light)] border-b border-[var(--color-border)]">
                             <th class="px-4 py-3">Title</th>
                             <th class="px-4 py-3">CME Points</th>
-                            <th class="px-4 py-3">Display Order</th>
+                            <th class="px-4 py-3">Order</th>
                             <th class="px-4 py-3">Type</th>
                             <th class="px-4 py-3 text-right">Actions</th>
                         </tr>
                     </thead>
 
-                    <tbody>
+                    <tbody x-data="{ openRow: null }" @click.away="openRow = null">
+
                         @forelse($event_sessions as $session)
 
-                            <tr class="border-b border-[var(--color-border)]
-                                       hover:bg-[var(--color-surface-hover)] transition">
+                            <!-- Main Row -->
+                            <tr class="group border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
 
                                 <td class="px-4 py-3 font-medium">
                                     {{ $session->title }}
@@ -88,7 +65,10 @@
                                 </td>
 
                                 <td class="px-4 py-3">
-                                    {{ $session->display_order }}
+                                    <x-admin.table-order-input
+                                        model="orders.{{ $session->id }}"
+                                        wire:change="updateSessionOrder({{ $session->id }}, $event.target.value)"
+                                    />
                                 </td>
 
                                 <td class="px-4 py-3">
@@ -96,9 +76,9 @@
                                 </td>
 
                                 <td class="px-4 py-3 text-right">
-
                                     <div class="flex items-center justify-end gap-2">
 
+                                        <!-- Edit as primary action -->
                                         <x-admin.table-action-button
                                             type="link"
                                             :href="route('admin.events.event-sessions.edit', [
@@ -109,6 +89,23 @@
                                             icon="pencil-square"
                                             label="Edit"
                                         />
+
+                                        <x-admin.table-actions-toggle :row-id="$session->id" />
+
+                                    </div>
+                                </td>
+
+                            </tr>
+
+                            <!-- Hidden Expanded Row -->
+                            <tr x-cloak
+                                x-show="openRow === {{ $session->id }}"
+                                x-transition.duration.150ms
+                                class="bg-[var(--color-surface-hover)] border-b border-[var(--color-border)]">
+
+                                <td colspan="5" class="px-4 py-4">
+
+                                    <div class="flex flex-wrap items-center justify-end gap-3">
 
                                         <x-admin.table-action-button
                                             type="button"
@@ -122,25 +119,24 @@
                                     </div>
 
                                 </td>
-
                             </tr>
 
                         @empty
 
                             <tr>
-                                <td colspan="5"
-                                    class="px-4 py-6 text-center text-[var(--color-text-light)]">
+                                <td colspan="5" class="px-4 py-6 text-center text-[var(--color-text-light)]">
                                     No sessions found.
                                 </td>
                             </tr>
 
                         @endforelse
+
                     </tbody>
 
                 </table>
-            </div>
+            </x-admin.table>
 
-        </div>
+        </x-admin.card>
     </div>
 
 </div>

@@ -1,8 +1,6 @@
 <div class="space-y-6">
 
-    <!-- ============================================================= -->
-    <!-- BREADCRUMBS -->
-    <!-- ============================================================= -->
+    <!-- Breadcrumbs -->
     <x-admin.breadcrumb :items="[
         ['label' => 'Home', 'href' => route('admin.dashboard')],
         ['label' => 'Events', 'href' => route('admin.events.index')],
@@ -10,160 +8,180 @@
         ['label' => 'Sessions'],
     ]" />
 
+    <!-- Page Header -->
+    <x-admin.page-header
+        title="Sessions"
+        subtitle="Manage session groups and types for {{ $event->title }}." />
 
-    <!-- ============================================================= -->
-    <!-- PAGE HEADER -->
-    <!-- ============================================================= -->
-    <div class="px-6 flex items-center justify-between">
-        <div>
-            <h1 class="text-2xl font-semibold text-[var(--color-text)]">Sessions</h1>
-            <p class="text-sm text-[var(--color-text-light)] mt-1">
-                Manage session groups and types for {{ $event->title }}.
-            </p>
-        </div>
-    </div>
-
-
-    <!-- ============================================================= -->
-    <!-- ALERTS -->
-    <!-- ============================================================= -->
+    <!-- Alerts -->
     @if($errors->any())
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-warning)]">
-                <p class="text-sm text-[var(--color-warning)] font-medium">
-                    {{ $errors->first() }}
-                </p>
-            </div>
-        </div>
+    <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
 
-    @if (session()->has('success'))
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-success)]">
-                <p class="text-sm text-[var(--color-success)] font-medium">
-                    {{ session('success') }}
-                </p>
-            </div>
-        </div>
+    @if(session('success'))
+    <x-admin.alert type="success" :message="session('success')" />
     @endif
 
 
-    <!-- ============================================================= -->
-    <!-- SESSION GROUPS -->
-    <!-- ============================================================= -->
+    <!-- Session Groups -->
     <div class="px-6 space-y-4">
+
         <x-admin.section-title title="Session Groups" />
 
-        <div class="soft-card p-6 space-y-4">
+        <x-admin.card class="p-5 space-y-4">
+
             <div class="flex items-center justify-between">
                 <p class="text-sm text-[var(--color-text-light)]">
                     Manage all groups of sessions that belong to this event.
                 </p>
 
-                <a href="{{ route('admin.events.event-sessions.groups.create', ['event' => $event->id]) }}"
-                   class="inline-flex items-center rounded-md border border-[var(--color-primary)]
-                          bg-[var(--color-surface)] px-2.5 py-1.5 text-xs md:text-sm font-medium
-                          text-[var(--color-primary)]
-                          hover:bg-[var(--color-primary)] hover:text-white
-                          transition-colors duration-150">
-                    <x-heroicon-o-plus class="h-4 w-4 md:mr-1.5" />
-                    <span class="hidden md:inline">Add Group</span>
-                </a>
+                <x-admin.outline-btn-icon
+                    :href="route('admin.events.event-sessions.groups.create', ['event' => $event->id])"
+                    icon="heroicon-o-plus">
+                    Add Group
+                </x-admin.outline-btn-icon>
             </div>
 
-            <div class="overflow-x-auto">
+            <x-admin.table>
                 <table class="min-w-full text-sm text-left">
+
                     <thead>
-                        <tr class="text-[var(--color-text-light)] uppercase text-xs border-b border-[var(--color-border)]">
+                        <tr class="text-xs uppercase text-[var(--color-text-light)] border-b border-[var(--color-border)]">
                             <th class="px-4 py-3">Name</th>
-                            <th class="px-4 py-3">Display Order</th>
+                            <th class="px-4 py-3 w-24">Order</th>
                             <th class="px-4 py-3">Status</th>
                             <th class="px-4 py-3 text-right">Actions</th>
                         </tr>
                     </thead>
 
-                    <tbody>
+                    <tbody x-data="{ openRow: null }" @click.away="openRow = null">
+
                         @forelse($event_session_groups as $group)
-                            <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
-                                <td class="px-4 py-3 font-medium">{{ $group->friendly_name }}</td>
-                                <td class="px-4 py-3">{{ $group->display_order }}</td>
-                                <td class="px-4 py-3">
-                                    @if ($group->active)
-                                        <x-admin.status-pill status="success">Active</x-admin.status-pill>
-                                    @else
-                                        <x-admin.status-pill status="danger">Inactive</x-admin.status-pill>
+
+                        <!-- Main Row -->
+                        <tr class="group border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
+
+                            <td class="px-4 py-3 font-medium">
+                                {{ $group->friendly_name }}
+                            </td>
+
+                            <td class="px-4 py-3">
+                                <x-admin.table-order-input
+                                    model="orders.{{ $group->id }}"
+                                    wire:change="updateSessionGroupOrder({{ $group->id }}, $event.target.value)"
+                                />
+                            </td>
+
+                            <td class="px-4 py-3">
+                                @if ($group->active)
+                                <x-admin.status-pill status="success">Active</x-admin.status-pill>
+                                @else
+                                <x-admin.status-pill status="danger">Inactive</x-admin.status-pill>
+                                @endif
+                            </td>
+
+                            <td class="px-4 py-3 text-right">
+                                <div class="flex justify-end items-center gap-2">
+
+                                    <!-- Priority CTA: Manage Sessions -->
+                                    <x-admin.table-action-button
+                                        type="link"
+                                        :href="route('admin.events.event-sessions.manage', [
+                                            'event' => $event->id,
+                                            'group' => $group->id
+                                        ])"
+                                        icon="rectangle-stack"
+                                        label="Manage sessions" />
+
+                                    <!-- Toggle for advanced actions -->
+                                    <x-admin.table-actions-toggle :row-id="$group->id" />
+
+                                </div>
+                            </td>
+
+                        </tr>
+
+                        <!-- Hidden Expanded Row -->
+                        <tr x-cloak
+                            x-show="openRow === {{ $group->id }}"
+                            x-transition.duration.150ms
+                            class="bg-[var(--color-surface-hover)] border-b border-[var(--color-border)]">
+
+                            <td colspan="4" class="px-4 py-4">
+
+                                <div class="flex flex-wrap items-center justify-end gap-3">
+
+                                    <!-- Edit -->
+                                    <x-admin.table-action-button
+                                        type="link"
+                                        :href="route('admin.events.event-sessions.groups.edit', [
+                                            'event' => $event->id,
+                                            'group' => $group->id
+                                        ])"
+                                        icon="pencil-square"
+                                        label="Edit" />
+
+                                    <!-- Delete -->
+                                    @if($group->sessions->isEmpty())
+                                    <x-admin.table-action-button
+                                        type="button"
+                                        wireClick="deleteGroup({{ $group->id }})"
+                                        confirm="Delete this session group?"
+                                        icon="trash"
+                                        label="Delete"
+                                        danger="true" />
                                     @endif
-                                </td>
-                                <td class="px-4 py-3 text-right">
-                                    <div class="flex justify-end items-center gap-2">
-                                        <x-admin.table-action-button
-                                            type="link"
-                                            :href="route('admin.events.event-sessions.manage', ['event' => $event->id, 'group' => $group->id])"
-                                            icon="rectangle-stack"
-                                            label="Manage Sessions"
-                                        />
 
-                                        <x-admin.table-action-button
-                                            type="link"
-                                            :href="route('admin.events.event-sessions.groups.edit', ['event' => $event->id, 'group' => $group->id])"
-                                            icon="pencil-square"
-                                            label="Edit"
-                                        />
+                                </div>
 
-                                        @if($group->sessions->isEmpty())
-                                            <x-admin.table-action-button
-                                                type="button"
-                                                wireClick="deleteGroup({{ $group->id }})"
-                                                confirm="Are you sure you want to delete this session group?"
-                                                icon="trash"
-                                                label="Delete"
-                                                danger="true"
-                                            />
-                                        @endif
-                                    </div>
-                                </td>
-                            </tr>
+                            </td>
+                        </tr>
+
                         @empty
-                            <tr>
-                                <td colspan="4" class="px-4 py-6 text-center text-[var(--color-text-light)]">
-                                    No session groups found.
-                                </td>
-                            </tr>
+
+                        <tr>
+                            <td colspan="4" class="px-4 py-6 text-center text-[var(--color-text-light)]">
+                                No session groups found.
+                            </td>
+                        </tr>
+
                         @endforelse
+
                     </tbody>
+
                 </table>
-            </div>
-        </div>
+            </x-admin.table>
+
+        </x-admin.card>
+
     </div>
 
 
-    <!-- ============================================================= -->
-    <!-- SESSION TYPES -->
-    <!-- ============================================================= -->
+
+    <!-- Session Types -->
     <div class="px-6 space-y-4">
+
         <x-admin.section-title title="Session Types" />
 
-        <div class="soft-card p-6 space-y-4">
+        <x-admin.card class="p-5 space-y-4">
+
             <div class="flex items-center justify-between">
                 <p class="text-sm text-[var(--color-text-light)]">
                     Manage available types of sessions for this event.
                 </p>
 
-                <a href="{{ route('admin.events.event-sessions.types.create', ['event' => $event->id]) }}"
-                   class="inline-flex items-center rounded-md border border-[var(--color-primary)]
-                          bg-[var(--color-surface)] px-2.5 py-1.5 text-xs md:text-sm font-medium
-                          text-[var(--color-primary)]
-                          hover:bg-[var(--color-primary)] hover:text-white
-                          transition-colors duration-150">
-                    <x-heroicon-o-plus class="h-4 w-4 md:mr-1.5" />
-                    <span class="hidden md:inline">Add Type</span>
-                </a>
+                <x-admin.outline-btn-icon
+                    :href="route('admin.events.event-sessions.types.create', ['event' => $event->id])"
+                    icon="heroicon-o-plus">
+                    Add Type
+                </x-admin.outline-btn-icon>
             </div>
 
-            <div class="overflow-x-auto">
+            <x-admin.table>
                 <table class="min-w-full text-sm text-left">
+
                     <thead>
-                        <tr class="text-[var(--color-text-light)] uppercase text-xs border-b border-[var(--color-border)]">
+                        <tr class="text-xs uppercase text-[var(--color-text-light)] border-b border-[var(--color-border)]">
                             <th class="px-4 py-3">Type Name</th>
                             <th class="px-4 py-3">Status</th>
                             <th class="px-4 py-3 text-right">Actions</th>
@@ -172,48 +190,62 @@
 
                     <tbody>
                         @forelse($event_session_types as $type)
-                            <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
-                                <td class="px-4 py-3 font-medium">{{ $type->friendly_name }}</td>
-                                <td class="px-4 py-3">
-                                    @if ($type->active)
-                                        <x-admin.status-pill status="success">Active</x-admin.status-pill>
-                                    @else
-                                        <x-admin.status-pill status="danger">Inactive</x-admin.status-pill>
-                                    @endif
-                                </td>
-                                <td class="px-4 py-3 text-right">
-                                    <div class="flex justify-end items-center gap-2">
-                                        <x-admin.table-action-button
-                                            type="link"
-                                            :href="route('admin.events.event-sessions.types.edit', ['event' => $event->id, 'type' => $type->id])"
-                                            icon="pencil-square"
-                                            label="Edit"
-                                        />
 
-                                        @if($type->sessions->isEmpty())
-                                            <x-admin.table-action-button
-                                                type="button"
-                                                wireClick="deleteType({{ $type->id }})"
-                                                confirm="Are you sure you want to delete this session type?"
-                                                icon="trash"
-                                                label="Delete"
-                                                danger="true"
-                                            />
-                                        @endif
-                                    </div>
-                                </td>
-                            </tr>
+                        <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
+
+                            <td class="px-4 py-3 font-medium">{{ $type->friendly_name }}</td>
+
+                            <td class="px-4 py-3">
+                                @if ($type->active)
+                                <x-admin.status-pill status="success">Active</x-admin.status-pill>
+                                @else
+                                <x-admin.status-pill status="danger">Inactive</x-admin.status-pill>
+                                @endif
+                            </td>
+
+                            <td class="px-4 py-3 text-right">
+                                <div class="flex justify-end items-center gap-2">
+
+                                    <x-admin.table-action-button
+                                        type="link"
+                                        :href="route('admin.events.event-sessions.types.edit', [
+                                                'event' => $event->id,
+                                                'type' => $type->id
+                                            ])"
+                                        icon="pencil-square"
+                                        label="Edit" />
+
+                                    @if($type->sessions->isEmpty())
+                                    <x-admin.table-action-button
+                                        type="button"
+                                        wireClick="deleteType({{ $type->id }})"
+                                        confirm="Delete this session type?"
+                                        icon="trash"
+                                        label="Delete"
+                                        danger="true" />
+                                    @endif
+
+                                </div>
+                            </td>
+
+                        </tr>
+
                         @empty
-                            <tr>
-                                <td colspan="3" class="px-4 py-6 text-center text-[var(--color-text-light)]">
-                                    No session types found.
-                                </td>
-                            </tr>
+
+                        <tr>
+                            <td colspan="3" class="px-4 py-6 text-center text-[var(--color-text-light)]">
+                                No session types found.
+                            </td>
+                        </tr>
+
                         @endforelse
                     </tbody>
+
                 </table>
-            </div>
-        </div>
+            </x-admin.table>
+
+        </x-admin.card>
+
     </div>
 
 </div>

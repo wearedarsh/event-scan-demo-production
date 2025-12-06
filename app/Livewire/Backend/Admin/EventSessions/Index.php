@@ -12,10 +12,35 @@ use App\Models\Event;
 class Index extends Component
 {
     public Event $event;
+    public $orders = [];
+    public $event_session_groups;
 
     public function mount(Event $event){
         $this->event = $event;
+
+        $this->event_session_groups = $this->event->eventSessionGroups()
+        ->orderBy('display_order')
+        ->get();
+
+        $this->orders = $this->event_session_groups
+        ->pluck('display_order', 'id')
+        ->toArray();
     }
+
+    public function updateSessionGroupOrder($id, $value)
+    {
+        $value = max(1, (int) $value);
+
+        \App\Models\EventSessionGroup::where('id', $id)->update([
+            'display_order' => $value
+        ]);
+
+        $this->orders[$id] = $value;
+
+        $this->dispatch('notify', 'Display order updated.');
+    }
+
+
 
     public function deleteGroup(int $group_id)
     {
@@ -37,7 +62,7 @@ class Index extends Component
     {
         $event_session_types = EventSessionType::orderBy('friendly_name')->get();
 
-        $event_session_groups = EventSessionGroup::where('event_id', $this->event->id)
+        $this->event_session_groups = EventSessionGroup::where('event_id', $this->event->id)
             ->with(['sessions' => fn ($q) => $q->orderBy('display_order')->orderBy('start_time')])
             ->orderBy('display_order')
             ->orderBy('friendly_name')
@@ -45,7 +70,6 @@ class Index extends Component
 
         return view('livewire.backend.admin.event-sessions.index', [
             'event_session_types'  => $event_session_types,
-            'event_session_groups' => $event_session_groups,
             'event'               => $this->event,
         ]);
     }

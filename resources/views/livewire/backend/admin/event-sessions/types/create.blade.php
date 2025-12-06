@@ -7,38 +7,28 @@
         ['label' => 'Create Session Type'],
     ]" />
 
-    <!-- Header -->
-    <div class="px-6">
-        <h1 class="text-2xl font-semibold text-[var(--color-text)]">Create Session Type</h1>
-        <p class="text-sm text-[var(--color-text-light)] mt-1">
-            Define a reusable type for your event sessions.
-        </p>
-    </div>
+    <!-- Page Header -->
+    <x-admin.page-header
+        title="Create Session Type"
+        subtitle="Define a reusable type for your event sessions."
+    />
 
     <!-- Alerts -->
     @if($errors->any())
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-warning)]">
-                <p class="text-sm text-[var(--color-warning)]">{{ $errors->first() }}</p>
-            </div>
-        </div>
+        <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
 
-    @if(session()->has('success'))
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-success)]">
-                <p class="text-sm text-[var(--color-success)]">{{ session('success') }}</p>
-            </div>
-        </div>
+    @if(session('success'))
+        <x-admin.alert type="success" :message="session('success')" />
     @endif
 
 
-    <!-- FORM -->
-    <div class="px-6">
+    <!-- Form -->
+    <div class="px-6 space-y-6">
 
-        <div class="soft-card p-6 space-y-6">
+        <x-admin.section-title title="Session type details" />
 
-            <x-admin.section-title title="Session type details" />
+        <x-admin.card hover="false" class="p-6 space-y-6">
 
             <form wire:submit.prevent="store" class="space-y-6">
 
@@ -46,18 +36,23 @@
 
                     <!-- Friendly Name -->
                     <div>
-                        <label class="form-label-custom">Friendly Name</label>
-                        <input
-                            type="text"
-                            wire:model.live="friendly_name"
-                            class="input-text"
-                        >
+                        <x-admin.input-label for="friendly_name">
+                            Friendly Name
+                        </x-admin.input-label>
+
+                        <x-admin.input-text
+                            id="friendly_name"
+                            model="friendly_name"
+                        />
                     </div>
 
                     <!-- Active -->
                     <div>
-                        <label class="form-label-custom">Is Active?</label>
-                        <x-admin.select wire:model.live="active">
+                        <x-admin.input-label for="active">
+                            Active
+                        </x-admin.input-label>
+
+                        <x-admin.select id="active" wire:model.live="active">
                             <option value="1">Yes</option>
                             <option value="0">No</option>
                         </x-admin.select>
@@ -68,28 +63,24 @@
                 <!-- Buttons -->
                 <div class="flex items-center gap-3">
 
-                    <!-- Create Button (outline style) -->
-                    <button type="submit"
-                        class="inline-flex items-center rounded-md border border-[var(--color-primary)]
-                               bg-[var(--color-surface)] px-2.5 py-1.5 text-xs md:text-sm font-medium
-                               text-[var(--color-primary)]
-                               hover:bg-[var(--color-primary)] hover:text-white
-                               transition-colors duration-150">
-                        <x-heroicon-o-plus class="h-4 w-4 md:mr-1.5" />
-                        <span class="hidden md:inline">Create session type</span>
-                    </button>
+                    <x-admin.button type="submit" variant="outline">
+                        <x-slot:icon>
+                            <x-heroicon-o-plus class="h-4 w-4" />
+                        </x-slot:icon>
+                        Create session type
+                    </x-admin.button>
 
-                    <!-- Cancel -->
-                    <a href="{{ route('admin.events.event-sessions.index', $event->id) }}"
-                       class="btn-secondary">
+                    <x-admin.button
+                        href="{{ route('admin.events.event-sessions.index', $event->id) }}"
+                        variant="secondary">
                         Cancel
-                    </a>
+                    </x-admin.button>
 
                 </div>
 
             </form>
 
-        </div>
+        </x-admin.card>
 
     </div>
 
