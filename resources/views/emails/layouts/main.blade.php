@@ -99,8 +99,8 @@
                     <tr>
                         <td class="email-masthead">
                             <a href="{{ config('app.url') }}" style="text-decoration: none; display: inline-block;">
-                                <img src="{{ config('app.url') }}/images/frontend/logo-white.png" alt="{{config('config('customer.contact_details.booking_website_company_name') }} Logo">
-                                <p style="color:#fff; font-size:16px; margin-top:10px;">{{config('customer.contact_details.booking_website_company_name') }} events</p>
+                                <img src="{{ config('app.url') }}/images/frontend/logo-white.png" alt="{{ config('customer.contact_details.booking_website_company_name') }} Logo">
+                                <p style="color:#fff; font-size:16px; margin-top:10px;">{{ config('customer.contact_details.booking_website_company_name') }} events</p>
                             </a>
                         </td>
                     </tr>
