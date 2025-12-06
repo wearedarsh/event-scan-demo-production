@@ -8,99 +8,121 @@
     ]" />
 
     <!-- Page Header -->
-    <div class="px-6">
-        <h1 class="text-2xl font-semibold text-[var(--color-text)]">Create testimonial</h1>
-        <p class="text-sm text-[var(--color-text-light)] mt-1">
-            Add a new testimonial to display on the website.
-        </p>
-    </div>
+    <x-admin.page-header
+        title="Create testimonial"
+        subtitle="Add a new testimonial to display on the website."
+    />
 
     <!-- Alerts -->
     @if($errors->any())
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-warning)]">
-                <p class="text-sm text-[var(--color-warning)] font-medium">
-                    {{ $errors->first() }}
-                </p>
-            </div>
-        </div>
+        <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
 
     @if (session()->has('success'))
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-success)]">
-                <p class="text-sm text-[var(--color-success)] font-medium">
-                    {{ session('success') }}
-                </p>
-            </div>
-        </div>
+        <x-admin.alert type="success" :message="session('success')" />
     @endif
 
-    <div class="px-6">
+
+    <!-- Main Form -->
+    <div class="px-6 space-y-6">
+
         <form wire:submit.prevent="store" class="space-y-6">
 
-            <!-- Basic Info -->
+            <!-- Basic Information -->
             <x-admin.section-title title="Basic information" />
 
-            <div class="soft-card p-6 space-y-4">
+            <x-admin.card hover="false" class="p-6 space-y-6">
+
                 <div class="grid md:grid-cols-2 gap-6">
 
+                    <!-- Title -->
                     <div>
-                        <label class="form-label-custom">Title</label>
-                        <input wire:model.live="title"
-                               type="text"
-                               class="input-text"
-                               placeholder="e.g. Puskás Attila" />
+                        <x-admin.input-label for="title">
+                            Title
+                        </x-admin.input-label>
+                        <x-admin.input-text
+                            id="title"
+                            model="title"
+                            placeholder="e.g. Full Name"
+                        />
                     </div>
 
+                    <!-- Subtitle -->
                     <div>
-                        <label class="form-label-custom">Subtitle</label>
-                        <input wire:model.live="sub_title"
-                               type="text"
-                               class="input-text"
-                               placeholder="e.g. MD, PhD" />
+                        <x-admin.input-label for="sub_title">
+                            Subtitle
+                        </x-admin.input-label>
+                        <x-admin.input-text
+                            id="sub_title"
+                            model="sub_title"
+                            placeholder="e.g. Job title or company"
+                        />
                     </div>
 
                 </div>
 
+                <!-- Content -->
                 <div>
-                    <label class="form-label-custom">Content</label>
-                    <textarea wire:model.live="content"
-                              rows="5"
-                              class="input-textarea"
-                              placeholder="Enter testimonial content"></textarea>
+                    <x-admin.input-label for="content">
+                        Content
+                    </x-admin.input-label>
+
+                    <x-admin.input-textarea
+                        id="content"
+                        model="content"
+                        rows="5"
+                        placeholder="Enter testimonial content"
+                    />
                 </div>
-            </div>
+
+            </x-admin.card>
+
 
             <!-- Display Settings -->
             <x-admin.section-title title="Display settings" />
 
-            <div class="soft-card p-6 space-y-4">
+            <x-admin.card hover="false" class="p-6 space-y-6">
 
                 <div class="grid md:grid-cols-2 gap-6">
 
+                    <!-- Star Rating -->
                     <div>
-                        <label class="form-label-custom">Star rating (1–5)</label>
-                        <input wire:model.live="star_rating"
-                               type="number"
-                               min="1"
-                               max="5"
-                               step="1"
-                               class="input-text"
-                               placeholder="Enter star rating" />
+                        <x-admin.input-label for="star_rating">
+                            Star rating (1–5)
+                        </x-admin.input-label>
+
+                        <x-admin.input-text
+                            id="star_rating"
+                            model="star_rating"
+                            type="number"
+                            min="1"
+                            max="5"
+                            step="1"
+                            placeholder="Enter star rating"
+                        />
                     </div>
 
+                    <!-- Display Order -->
                     <div>
-                        <label class="form-label-custom">Display order</label>
-                        <input wire:model.live="display_order"
-                               type="number"
-                               class="input-text"
-                               placeholder="Order for sorting" />
+                        <x-admin.input-label for="display_order">
+                            Display order
+                        </x-admin.input-label>
+
+                        <x-admin.input-text
+                            id="display_order"
+                            model="display_order"
+                            type="number"
+                            placeholder="Order for sorting"
+                        />
                     </div>
 
+                    <!-- Active -->
                     <div>
-                        <label class="form-label-custom">Active</label>
-                        <x-admin.select wire:model.live="active">
+                        <x-admin.input-label for="active">
+                            Active
+                        </x-admin.input-label>
+
+                        <x-admin.select id="active" wire:model.live="active">
                             <option value="1">Yes</option>
                             <option value="0">No</option>
                         </x-admin.select>
@@ -108,30 +130,28 @@
 
                 </div>
 
-            </div>
+            </x-admin.card>
+
 
             <!-- Buttons -->
-            <div class="soft-card p-6">
+            <x-admin.card hover="false" class="p-6 space-y-4">
                 <div class="flex items-center gap-3">
 
-                    <button type="submit"
-                            class="inline-flex items-center rounded-md border border-[var(--color-primary)]
-                                   bg-[var(--color-surface)] px-3 py-2 text-sm font-medium
-                                   text-[var(--color-primary)]
-                                   hover:bg-[var(--color-primary)] hover:text-white
-                                   transition">
+                    <x-admin.button type="submit" variant="outline">
                         Create testimonial
-                    </button>
+                    </x-admin.button>
 
-                    <a href="{{ route('admin.website.testimonials.index') }}"
-                       class="btn-secondary">
+                    <x-admin.button
+                        href="{{ route('admin.website.testimonials.index') }}"
+                        variant="secondary">
                         Cancel
-                    </a>
+                    </x-admin.button>
 
                 </div>
-            </div>
+            </x-admin.card>
 
         </form>
+
     </div>
 
 </div>

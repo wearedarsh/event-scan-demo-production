@@ -8,102 +8,121 @@
     ]" />
 
     <!-- Page Header -->
-    <div class="px-6 flex items-center justify-between">
-        <div>
-            <h1 class="text-2xl font-semibold text-[var(--color-text)]">Edit Testimonial</h1>
-            <p class="text-sm text-[var(--color-text-light)] mt-1">
-                Update testimonial content and display configuration.
-            </p>
-        </div>
-    </div>
+    <x-admin.page-header
+        title="Edit Testimonial"
+        subtitle="Update testimonial content and display configuration."
+    />
 
     <!-- Alerts -->
     @if($errors->any())
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-warning)]">
-                <p class="text-sm text-[var(--color-warning)] font-medium">
-                    {{ $errors->first() }}
-                </p>
-            </div>
-        </div>
+        <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
 
     @if(session('success'))
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-success)]">
-                <p class="text-sm text-[var(--color-success)] font-medium">
-                    {{ session('success') }}
-                </p>
-            </div>
-        </div>
+        <x-admin.alert type="success" :message="session('success')" />
     @endif
 
 
-    <!-- ============================================================= -->
     <!-- FORM WRAPPER -->
-    <!-- ============================================================= -->
-    <div class="px-6">
+    <div class="px-6 space-y-6">
+
         <form wire:submit.prevent="update" class="space-y-6">
 
-
-            <!-- ============================================================= -->
             <!-- BASIC INFORMATION -->
-            <!-- ============================================================= -->
             <x-admin.section-title title="Basic Information" />
 
-            <div class="soft-card p-6 space-y-3">
+            <x-admin.card hover="false" class="p-6 space-y-6">
 
                 <div class="grid md:grid-cols-2 gap-6">
 
                     <!-- Title -->
                     <div>
-                        <label class="form-label-custom">Title</label>
-                        <input wire:model.live="title" type="text" class="input-text" placeholder="e.g. Puskás Attila" />
+                        <x-admin.input-label for="title">
+                            Title
+                        </x-admin.input-label>
+
+                        <x-admin.input-text
+                            id="title"
+                            model="title"
+                            placeholder="e.g. Puskás Attila"
+                        />
                     </div>
 
                     <!-- Subtitle -->
                     <div>
-                        <label class="form-label-custom">Subtitle</label>
-                        <input wire:model.live="sub_title" type="text" class="input-text" placeholder="e.g. MD, PhD" />
+                        <x-admin.input-label for="sub_title">
+                            Subtitle
+                        </x-admin.input-label>
+
+                        <x-admin.input-text
+                            id="sub_title"
+                            model="sub_title"
+                            placeholder="e.g. MD, PhD"
+                        />
                     </div>
 
                 </div>
 
                 <!-- Content -->
                 <div>
-                    <label class="form-label-custom">Content</label>
-                    <textarea wire:model.live="content" rows="5" class="input-textarea"></textarea>
+                    <x-admin.input-label for="content">
+                        Content
+                    </x-admin.input-label>
+
+                    <x-admin.input-textarea
+                        id="content"
+                        model="content"
+                        rows="5"
+                        placeholder="Enter testimonial content"
+                    />
                 </div>
 
-            </div>
+            </x-admin.card>
 
 
-
-            <!-- ============================================================= -->
             <!-- DISPLAY SETTINGS -->
-            <!-- ============================================================= -->
             <x-admin.section-title title="Display Settings" />
 
-            <div class="soft-card p-6 space-y-3">
+            <x-admin.card hover="false" class="p-6 space-y-6">
 
                 <div class="grid md:grid-cols-2 gap-6">
 
                     <!-- Star Rating -->
                     <div>
-                        <label class="form-label-custom">Star Rating (1–5)</label>
-                        <input wire:model.live="star_rating" type="number" min="1" max="5" step="1" class="input-text" />
+                        <x-admin.input-label for="star_rating">
+                            Star Rating (1–5)
+                        </x-admin.input-label>
+
+                        <x-admin.input-text
+                            id="star_rating"
+                            model="star_rating"
+                            type="number"
+                            min="1"
+                            max="5"
+                            step="1"
+                        />
                     </div>
 
                     <!-- Display Order -->
                     <div>
-                        <label class="form-label-custom">Display Order</label>
-                        <input wire:model.live="display_order" type="number" class="input-text" />
+                        <x-admin.input-label for="display_order">
+                            Display Order
+                        </x-admin.input-label>
+
+                        <x-admin.input-text
+                            id="display_order"
+                            model="display_order"
+                            type="number"
+                        />
                     </div>
 
                     <!-- Active -->
                     <div>
-                        <label class="form-label-custom">Active</label>
-                        <x-admin.select wire:model.live="active">
+                        <x-admin.input-label for="active">
+                            Active
+                        </x-admin.input-label>
+
+                        <x-admin.select id="active" wire:model.live="active">
                             <option value="1">Yes</option>
                             <option value="0">No</option>
                         </x-admin.select>
@@ -111,31 +130,28 @@
 
                 </div>
 
-            </div>
+            </x-admin.card>
 
 
-
-            <!-- ============================================================= -->
             <!-- ACTION BUTTONS -->
-            <!-- ============================================================= -->
-            <div class="soft-card p-6 space-y-3">
+            <x-admin.card hover="false" class="p-6 space-y-4">
                 <div class="flex items-center gap-3">
-                    <button type="submit" class="flex items-center px-3 py-1.5 rounded-md text-sm font-medium
-                                border border-[var(--color-primary)] text-[var(--color-primary)]
-                                hover:bg-[var(--color-primary)] hover:text-white
-                                transition">
-                    Update testimonial
-                    </button>
 
-                    <!-- Cancel Button -->
-                    <a href="{{ route('admin.website.testimonials.index') }}" class="btn-secondary">
+                    <x-admin.button type="submit" variant="outline">
+                        Update testimonial
+                    </x-admin.button>
+
+                    <x-admin.button
+                        href="{{ route('admin.website.testimonials.index') }}"
+                        variant="secondary">
                         Cancel
-                    </a>
+                    </x-admin.button>
 
                 </div>
-            </div>
+            </x-admin.card>
 
         </form>
+
     </div>
 
 </div>

@@ -30,9 +30,7 @@ class Index extends Component
         ]);
 
         // Refresh the collection
-        $this->testimonials = Testimonial::orderBy('display_order', 'asc')->get();
-        $this->orders = $this->testimonials->pluck('display_order', 'id')->toArray();
-
+        $this->orders[$id] = $value;
         $this->dispatch('notify', 'Display order updated.');
     }
 
@@ -48,7 +46,7 @@ class Index extends Component
 
     public function render()
     {
-
+        $this->testimonials = Testimonial::orderBy('display_order')->get();
         return view('livewire.backend.admin.website.testimonials.index');
     }
 }

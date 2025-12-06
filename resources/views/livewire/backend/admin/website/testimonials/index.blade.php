@@ -8,71 +8,52 @@
     ]" />
 
     <!-- Page Header -->
-    <div class="px-6 flex items-center justify-between">
+    <x-admin.page-header
+        title="Testimonials"
+        subtitle="Manage all website testimonials."
+    >
+    </x-admin.page-header>
 
-        <div>
-            <h1 class="text-2xl font-semibold text-[var(--color-text)]">Testimonials</h1>
-            <p class="text-sm text-[var(--color-text-light)] mt-1">
-                Manage all website testimonials.
-            </p>
-        </div>
-
-        <!-- Right side: Add Testimonial -->
-        <div class="flex items-center gap-3">
-
-            <a href="{{ route('admin.website.testimonials.create') }}"
-                class="inline-flex items-center rounded-md border border-[var(--color-primary)]
-                      bg-[var(--color-surface)] px-2.5 py-1.5 text-xs md:text-sm font-medium
-                      text-[var(--color-primary)]
-                      hover:bg-[var(--color-primary)] hover:text-white
-                      transition-colors duration-150">
-                <x-heroicon-o-plus class="h-4 w-4 md:mr-1.5" />
-                <span class="hidden md:inline">Create testimonial</span>
-            </a>
-
-        </div>
-    </div>
 
     <!-- Alerts -->
     @if($errors->any())
-    <div class="px-6">
-        <div class="soft-card p-4 border-l-4 border-[var(--color-warning)]">
-            <p class="text-sm text-[var(--color-warning)] font-medium">
-                {{ $errors->first() }}
-            </p>
-        </div>
-    </div>
+        <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
 
-    @if (session()->has('success'))
-    <div class="px-6">
-        <div class="soft-card p-4 border-l-4 border-[var(--color-success)]">
-            <p class="text-sm text-[var(--color-success)] font-medium">
-                {{ session('success') }}
-            </p>
-        </div>
-    </div>
+    @if(session('success'))
+        <x-admin.alert type="success" :message="session('success')" />
     @endif
 
-    <!-- Main card -->
-    <div class="soft-card p-6 mx-6 space-y-4">
 
-        <!-- Section title -->
+    <!-- Main Table Section -->
+    <div class="px-6 space-y-4">
+
         <x-admin.section-title title="Testimonials" />
 
-        <!-- Table Container -->
-        <div class="relative">
+        <x-admin.card class="p-5 space-y-4">
 
-            <!-- Scroll Fade -->
-            <div class="pointer-events-none absolute top-0 right-0 h-full w-8 
-                bg-gradient-to-l from-[var(--color-surface)] to-transparent"></div>
+            <!-- Header Actions -->
+            <div class="flex items-center justify-between">
 
-            <div class="overflow-x-auto">
+                <h3 class="font-medium">All Testimonials</h3>
+
+                <x-admin.outline-btn-icon
+                    :href="route('admin.website.testimonials.create')"
+                    icon="heroicon-o-plus">
+                    Add testimonial
+                </x-admin.outline-btn-icon>
+
+            </div>
+
+
+            <!-- Table -->
+            <x-admin.table>
                 <table class="min-w-full text-sm text-left">
+
                     <thead>
-                        <tr class="text-[var(--color-text-light)] uppercase text-xs border-b border-[var(--color-border)]">
+                        <tr class="text-xs uppercase text-[var(--color-text-light)] border-b border-[var(--color-border)]">
                             <th class="px-4 py-3">Title</th>
-                            <th class="px-4 py-3">Order</th>
+                            <th class="px-4 py-3 w-24">Order</th>
                             <th class="px-4 py-3">Status</th>
                             <th class="px-4 py-3 text-right">Actions</th>
                         </tr>
@@ -83,28 +64,28 @@
                         @forelse($testimonials as $t)
 
                         <!-- Main Row -->
-                        <tr x-data
-                            class="group border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
+                        <tr x-data class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
 
                             <!-- Title -->
                             <td class="px-4 py-3">
                                 {{ $t->title }}
                             </td>
 
-                            <!-- Order -->
+                            <!-- Order Input -->
                             <td class="px-4 py-3 w-20">
-                                <input type="text"
-                                    class="w-16 input-text p-1 text-center"
+                                <x-admin.input-text
+                                    class="w-20 text-center p-1"
                                     wire:model.lazy="orders.{{ $t->id }}"
-                                    wire:change="updateOrder({{ $t->id }}, $event.target.value)" />
+                                    wire:change="updateOrder({{ $t->id }}, $event.target.value)"
+                                />
                             </td>
 
                             <!-- Status -->
                             <td class="px-4 py-3">
                                 @if ($t->active)
-                                <x-admin.status-pill status="success">Active</x-admin.status-pill>
+                                    <x-admin.status-pill status="success">Active</x-admin.status-pill>
                                 @else
-                                <x-admin.status-pill status="danger">Inactive</x-admin.status-pill>
+                                    <x-admin.status-pill status="danger">Inactive</x-admin.status-pill>
                                 @endif
                             </td>
 
@@ -112,25 +93,30 @@
                             <td class="px-4 py-3 text-right">
                                 <div class="flex justify-end items-center gap-2">
 
+                                    <!-- Edit -->
                                     <x-admin.table-action-button
                                         type="link"
                                         :href="route('admin.website.testimonials.edit', $t->id)"
                                         icon="pencil-square"
-                                        label="Edit" />
+                                        label="Edit"
+                                    />
 
+                                    <!-- Toggle -->
                                     <x-admin.table-actions-toggle :row-id="$t->id" />
 
                                 </div>
                             </td>
                         </tr>
 
-                        <!-- Expanded Action Bar -->
+
+                        <!-- Expanded Action Row -->
                         <tr x-cloak
                             x-show="openRow === {{ $t->id }}"
                             x-transition.duration.150ms
                             class="bg-[var(--color-surface-hover)] border-b border-[var(--color-border)]">
 
                             <td colspan="4" class="px-4 py-4">
+
                                 <div class="flex flex-wrap items-center justify-end gap-3">
 
                                     <x-admin.table-action-button
@@ -139,17 +125,18 @@
                                         confirm="Delete this testimonial?"
                                         icon="trash"
                                         label="Delete"
-                                        danger="true" />
+                                        danger="true"
+                                    />
 
                                 </div>
+
                             </td>
                         </tr>
 
                         @empty
 
                         <tr>
-                            <td colspan="4"
-                                class="px-4 py-6 text-center text-[var(--color-text-light)]">
+                            <td colspan="4" class="px-4 py-6 text-center text-[var(--color-text-light)]">
                                 No testimonials found.
                             </td>
                         </tr>
@@ -159,22 +146,15 @@
                     </tbody>
 
                 </table>
-            </div>
-        </div>
+            </x-admin.table>
 
 
-        <!-- Pagination (optional if using paginate()) -->
-        @if(method_exists($testimonials, 'links'))
-        <div class="mt-4 flex items-center justify-between">
-            <div class="text-xs text-[var(--color-text-light)] ms-4">
-                Showing {{ $testimonials->firstItem() }}–{{ $testimonials->lastItem() }} of {{ $testimonials->total() }}
-            </div>
+            <!-- Pagination -->
+            @if(method_exists($testimonials, 'links'))
+                <x-admin.pagination :paginator="$testimonials" />
+            @endif
 
-            <div>
-                {{ $testimonials->links('pagination::tailwind') }}
-            </div>
-        </div>
-        @endif
+        </x-admin.card>
 
     </div>
 
