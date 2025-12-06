@@ -30,6 +30,8 @@ class Index extends Component
     public $groupFilter = '';
     public $ticketFilter = '';
     protected string $paginationTheme = 'bootstrap';
+    public $groupSelections = [];
+    public $groups = [];
 
     #[Computed]
     public function roleKey(): string
@@ -39,9 +41,28 @@ class Index extends Component
 
     public function mount(Event $event)
     {
+
         $this->event = $event;
         $this->currency_symbol = config('app.currency_symbol', '€');
+        $this->groups = $this->event->attendeeGroups()->orderBy('title')->get();
+
+        foreach ($this->event->attendees as $a) {
+            $this->groupSelections[$a->id] = $a->attendee_group_id;
+        }
     }
+
+    public function updateGroup($attendeeId, $groupId)
+    {
+        $attendee = Registration::find($attendeeId);
+
+        if (! $attendee) return;
+
+        $attendee->attendee_group_id = $groupId ?: null;
+        $attendee->save();
+
+        $this->dispatch('notify', 'Group updated.');
+    }
+
 
     public function updatingSearch()
     {
@@ -78,8 +99,8 @@ class Index extends Component
     public function render()
     {
         $attendees = $this->event->attendees()
-            ->with(['user','country','eventPaymentMethod','attendeeGroup', 'registrationTickets'])
-            ->where(function($query) {
+            ->with(['user', 'country', 'eventPaymentMethod', 'attendeeGroup', 'registrationTickets'])
+            ->where(function ($query) {
                 $query->whereHas('user', fn($q) => $q->where('email', 'like', "%{$this->search}%"))
                     ->orWhere('last_name', 'like', "%{$this->search}%");
             })
@@ -97,7 +118,9 @@ class Index extends Component
                 if ($this->ticketFilter === 'none') {
                     $query->doesntHave('registrationTickets');
                 } else {
-                    $query->whereHas('registrationTickets', fn($q) =>
+                    $query->whereHas(
+                        'registrationTickets',
+                        fn($q) =>
                         $q->where('ticket_id', (int) $this->ticketFilter)
                     );
                 }
@@ -116,13 +139,17 @@ class Index extends Component
         $has_groups = $all_attendee_groups->isNotEmpty();
 
         $tickets = $this->event->allTickets()
-            ->select('id','name', 'price')
+            ->select('id', 'name', 'price')
             ->orderBy('ticket_group_id')
             ->orderBy('name')
             ->get();
 
         return view('livewire.backend.admin.attendees.index', compact(
-            'attendees', 'attendee_groups', 'all_attendee_groups', 'has_groups', 'tickets'
+            'attendees',
+            'attendee_groups',
+            'all_attendee_groups',
+            'has_groups',
+            'tickets'
         ));
     }
 
@@ -138,9 +165,9 @@ class Index extends Component
 
     public function deleteAttendeeGroup(int $id)
     {
-        
+
         $attendee_group = AttendeeGroup::findOrFail($id);
-        
+
         $attendee_group->delete();
 
         session()->flash('success', 'Attendee group deleted successfully.');

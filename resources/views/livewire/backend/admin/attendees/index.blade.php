@@ -10,21 +10,19 @@
     <!-- Header -->
     <x-admin.page-header
         title="Attendees"
-        subtitle="Manage attendees, groups, communication and reports."
-    >
-        <x-admin.stat-card 
+        subtitle="Manage attendees, groups, communication and reports.">
+        <x-admin.stat-card
             label="Total attendees"
-            :value="$event->attendees->count()" 
-        />
+            :value="$event->attendees->count()" />
     </x-admin.page-header>
 
     <!-- Alerts -->
     @if($errors->any())
-        <x-admin.alert type="danger" :message="$errors->first()" />
+    <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
 
     @if(session()->has('success'))
-        <x-admin.alert type="success" :message="session('success')" />
+    <x-admin.alert type="success" :message="session('success')" />
     @endif
 
 
@@ -35,8 +33,7 @@
 
         <x-admin.action-card
             title="Email"
-            description="Send targeted emails to attendees."
-        >
+            description="Send targeted emails to attendees.">
             <x-link-arrow href="{{ route('admin.events.emails.send-email', [
                 'event' => $event->id,
                 'audience' => 'attendees_paid'
@@ -54,9 +51,8 @@
             <!-- Groups -->
             <x-admin.tile-card
                 title="Groups"
-                description="Create and edit attendee groups."
-            >
-                <x-link-arrow 
+                description="Create and edit attendee groups.">
+                <x-link-arrow
                     href="{{ route('admin.events.attendees.groups.index', $event->id) }}">
                     Manage groups
                 </x-link-arrow>
@@ -65,21 +61,20 @@
             <!-- Tools -->
             <x-admin.tile-card
                 title="Tools"
-                description="Export datasets and view reports."
-            >
-                <x-link-arrow 
-                    href="#" 
+                description="Export datasets and view reports.">
+                <x-link-arrow
+                    href="#"
                     wire:click.prevent="exportAttendeeSpecialRequirements">
                     Special requirements XLSX
                 </x-link-arrow><br>
 
-                <x-link-arrow 
+                <x-link-arrow
                     class="mt-1"
                     href="{{ route('admin.events.reports.payments.export', $event->id) }}">
                     Payment data XLSX
                 </x-link-arrow><br>
 
-                <x-link-arrow 
+                <x-link-arrow
                     class="mt-1"
                     href="{{ route('admin.events.reports.attendees.view', $event->id) }}">
                     Attendee reports
@@ -89,13 +84,12 @@
             <!-- Badges -->
             <x-admin.tile-card
                 title="Badges"
-                description="Print badges and blank templates."
-            >
+                description="Print badges and blank templates.">
                 <x-link-arrow href="{{ route('admin.events.attendees.badges.export', $event->id) }}">
                     Print badges
                 </x-link-arrow><br>
 
-                <x-link-arrow 
+                <x-link-arrow
                     class="mt-1"
                     href="{{ route('admin.events.attendees.blank-badge.export', $event->id) }}">
                     Blank badge
@@ -129,25 +123,25 @@
 
             <!-- Group filter pills -->
             @if($has_groups)
-                <div class="flex flex-wrap items-center gap-2 mb-2">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
 
-                    <x-admin.filter-pill :active="$groupFilter === ''" wire:click="$set('groupFilter','')">
-                        All Groups
-                    </x-admin.filter-pill>
+                <x-admin.filter-pill :active="$groupFilter === ''" wire:click="$set('groupFilter','')">
+                    All Groups
+                </x-admin.filter-pill>
 
-                    <x-admin.filter-pill :active="$groupFilter === 'none'" wire:click="$set('groupFilter','none')">
-                        No Group
-                    </x-admin.filter-pill>
+                <x-admin.filter-pill :active="$groupFilter === 'none'" wire:click="$set('groupFilter','none')">
+                    No Group
+                </x-admin.filter-pill>
 
-                    @foreach($all_attendee_groups as $g)
-                        <x-admin.filter-pill 
-                            :active="$groupFilter == $g->id"
-                            wire:click="$set('groupFilter', {{ $g->id }})">
-                            {{ $g->title }}
-                        </x-admin.filter-pill>
-                    @endforeach
+                @foreach($all_attendee_groups as $g)
+                <x-admin.filter-pill
+                    :active="$groupFilter == $g->id"
+                    wire:click="$set('groupFilter', {{ $g->id }})">
+                    {{ $g->title }}
+                </x-admin.filter-pill>
+                @endforeach
 
-                </div>
+            </div>
             @endif
 
             <!-- Ticket filter pills -->
@@ -158,11 +152,11 @@
                 </x-admin.filter-pill>
 
                 @foreach($tickets as $ticket)
-                    <x-admin.filter-pill 
-                        :active="$ticketFilter == $ticket->id"
-                        wire:click="$set('ticketFilter', {{ $ticket->id }})">
-                        {{ $currency_symbol }}{{ $ticket->price }} — {{ $ticket->name }}
-                    </x-admin.filter-pill>
+                <x-admin.filter-pill
+                    :active="$ticketFilter == $ticket->id"
+                    wire:click="$set('ticketFilter', {{ $ticket->id }})">
+                    {{ $currency_symbol }}{{ $ticket->price }} — {{ $ticket->name }}
+                </x-admin.filter-pill>
                 @endforeach
 
             </div>
@@ -170,8 +164,7 @@
             <!-- Search -->
             <x-admin.search-input
                 wire:model.live.debounce.300ms="search"
-                placeholder="Search attendee name, email or phone"
-            />
+                placeholder="Search attendee name, email or phone" />
 
 
             <!-- Table -->
@@ -201,24 +194,24 @@
                         <tr class="group border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
 
                             @if ($this->roleKey === 'developer')
-                                <td class="px-4 py-3">{{ $attendee->id }}</td>
+                            <td class="px-4 py-3">{{ $attendee->id }}</td>
                             @endif
 
                             <td class="px-4 py-3 font-medium">
                                 {{ $attendee->title }} {{ $attendee->last_name }}
                             </td>
 
-                            <td class="px-4 py-3">
-                                @if($attendee->attendeeGroup)
-                                    <span class="px-2 py-0.5 rounded text-xs font-medium shadow-sm"
-                                        style="background-color: {{ $attendee->attendeeGroup->colour }};
-                                               color: {{ $attendee->attendeeGroup->label_colour }};">
-                                        {{ $attendee->attendeeGroup->title }}
-                                    </span>
-                                @else
-                                    <span class="text-[var(--color-text-light)] text-xs">No group</span>
-                                @endif
+                            <td class="px-4 py-3 w-40">
+                                <x-admin.select
+                                    wire:model.live="groupSelections.{{ $attendee->id }}"
+                                    wire:change="updateGroup({{ $attendee->id }}, $event.target.value)">
+                                    <option value="">No group</option>
+                                    @foreach($groups as $group)
+                                    <option value="{{ $group->id }}">{{ $group->title }}</option>
+                                    @endforeach
+                                </x-admin.select>
                             </td>
+
 
                             <td class="px-4 py-3">
                                 <a href="mailto:{{ $attendee->user->email }}" class="hover:underline underline-offset-2">
@@ -274,11 +267,11 @@
                         </tr>
 
                         @empty
-                            <tr>
-                                <td colspan="8" class="px-4 py-6 text-center text-[var(--color-text-light)]">
-                                    No attendees found.
-                                </td>
-                            </tr>
+                        <tr>
+                            <td colspan="8" class="px-4 py-6 text-center text-[var(--color-text-light)]">
+                                No attendees found.
+                            </td>
+                        </tr>
                         @endforelse
 
                     </tbody>

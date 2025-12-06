@@ -1,6 +1,6 @@
 <div class="space-y-6">
 
-    <!-- Breadcrumbs (NO dashboard) -->
+    <!-- Breadcrumbs -->
     <x-admin.breadcrumb :items="[
         ['label' => 'Website', 'href' => route('admin.website.index')],
         ['label' => 'Testimonials', 'href' => route('admin.website.testimonials.index')],
@@ -36,21 +36,15 @@
         </div>
     @endif
 
-
-    <!-- ============================================================= -->
-    <!-- FORM WRAPPER -->
-    <!-- ============================================================= -->
     <div class="px-6">
         <form wire:submit.prevent="store" class="space-y-6">
 
-            <!-- BASIC INFORMATION -->
-            <x-admin.section-title title="Basic Information" />
+            <!-- Basic Info -->
+            <x-admin.section-title title="Basic information" />
 
-            <div class="soft-card p-6 space-y-3">
-
+            <div class="soft-card p-6 space-y-4">
                 <div class="grid md:grid-cols-2 gap-6">
 
-                    <!-- Title -->
                     <div>
                         <label class="form-label-custom">Title</label>
                         <input wire:model.live="title"
@@ -59,7 +53,6 @@
                                placeholder="e.g. Puskás Attila" />
                     </div>
 
-                    <!-- Subtitle -->
                     <div>
                         <label class="form-label-custom">Subtitle</label>
                         <input wire:model.live="sub_title"
@@ -70,7 +63,6 @@
 
                 </div>
 
-                <!-- Content -->
                 <div>
                     <label class="form-label-custom">Content</label>
                     <textarea wire:model.live="content"
@@ -78,21 +70,17 @@
                               class="input-textarea"
                               placeholder="Enter testimonial content"></textarea>
                 </div>
-
             </div>
 
+            <!-- Display Settings -->
+            <x-admin.section-title title="Display settings" />
 
-
-            <!-- DISPLAY SETTINGS -->
-            <x-admin.section-title title="Display Settings" />
-
-            <div class="soft-card p-6 space-y-3">
+            <div class="soft-card p-6 space-y-4">
 
                 <div class="grid md:grid-cols-2 gap-6">
 
-                    <!-- Star Rating -->
                     <div>
-                        <label class="form-label-custom">Star Rating (1–5)</label>
+                        <label class="form-label-custom">Star rating (1–5)</label>
                         <input wire:model.live="star_rating"
                                type="number"
                                min="1"
@@ -102,16 +90,14 @@
                                placeholder="Enter star rating" />
                     </div>
 
-                    <!-- Display Order -->
                     <div>
-                        <label class="form-label-custom">Display Order</label>
+                        <label class="form-label-custom">Display order</label>
                         <input wire:model.live="display_order"
                                type="number"
                                class="input-text"
                                placeholder="Order for sorting" />
                     </div>
 
-                    <!-- Active -->
                     <div>
                         <label class="form-label-custom">Active</label>
                         <x-admin.select wire:model.live="active">
@@ -124,22 +110,19 @@
 
             </div>
 
-
-
-            <!-- ACTION BUTTONS -->
-            <div class="soft-card p-6 space-y-3">
+            <!-- Buttons -->
+            <div class="soft-card p-6">
                 <div class="flex items-center gap-3">
 
-                    <!-- Create Button (outlined primary) -->
                     <button type="submit"
-                            class="flex items-center px-3 py-1.5 rounded-md text-sm font-medium
-                                   border border-[var(--color-primary)] text-[var(--color-primary)]
+                            class="inline-flex items-center rounded-md border border-[var(--color-primary)]
+                                   bg-[var(--color-surface)] px-3 py-2 text-sm font-medium
+                                   text-[var(--color-primary)]
                                    hover:bg-[var(--color-primary)] hover:text-white
                                    transition">
                         Create testimonial
                     </button>
 
-                    <!-- Cancel -->
                     <a href="{{ route('admin.website.testimonials.index') }}"
                        class="btn-secondary">
                         Cancel

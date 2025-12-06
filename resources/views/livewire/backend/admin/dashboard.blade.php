@@ -1,31 +1,25 @@
 <div class="space-y-6">
 
-    <!-- Breadcrumbs -->
+    <!-- Breadcrumb -->
     <x-admin.breadcrumb :items="[
         ['label' => 'Home'],
     ]" />
 
-    <!-- Page Header -->
-    <div class="px-6 flex items-center justify-between">
+    <!-- Header -->
+    <x-admin.page-header
+        title="Welcome, {{ Auth::user()->first_name }}"
+        subtitle="Quick overview and tools for managing your events.">
+        
+        <x-admin.outline-btn-icon
+            :href="route('admin.events.create')"
+            icon="heroicon-o-plus">
+            Create event
+        </x-admin.outline-btn-icon>
 
-        <div>
-            <h1 class="text-2xl font-semibold text-[var(--color-text)]">Welcome, {{ Auth::user()->first_name }}</h1>
-        </div>
+    </x-admin.page-header>
 
-        <!-- Right: Create Event -->
-        <div class="flex items-center gap-3">
-            <a href="{{ route('admin.events.create') }}"
-               class="inline-flex items-center rounded-md border border-[var(--color-primary)]
-                      bg-[var(--color-surface)] px-2.5 py-1.5 text-xs md:text-sm font-medium
-                      text-[var(--color-primary)]
-                      hover:bg-[var(--color-primary)] hover:text-white
-                      transition-colors duration-150">
-                <x-heroicon-o-plus class="h-4 w-4 md:mr-1.5" />
-                <span class="hidden md:inline">Create event</span>
-            </a>
-        </div>
-    </div>
 
+    <!-- Quick links -->
     <div class="px-6">
         <x-admin.section-title title="Quick links" />
     </div>
@@ -33,42 +27,47 @@
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 px-6">
 
         <!-- Events -->
-        <div class="soft-card p-5 hover:shadow-md hover:-translate-y-0.5 transition block">
-            <h3 class="font-medium mb-2">Events</h3>
-            <p class="text-sm text-[var(--color-text-light)] mb-2">Manage and create events.</p>
+        <x-admin.tile-card
+            title="Events"
+            description="Manage your existing events or create new ones.">
 
             <x-link-arrow href="{{ route('admin.events.index') }}">
-                Manage
+                Manage events
             </x-link-arrow><br>
 
-            <x-link-arrow href="{{ route('admin.events.create') }}">
-                Create
+            <x-link-arrow href="{{ route('admin.events.create') }}" class="mt-1">
+                Create event
             </x-link-arrow>
-        </div>
+
+        </x-admin.tile-card>
+
 
         <!-- Settings -->
-        <div class="soft-card p-5 hover:shadow-md hover:-translate-y-0.5 transition block">
-            <h3 class="font-medium mb-2">Settings</h3>
-            <p class="text-sm text-[var(--color-text-light)] mb-2">Manage your team and website.</p>
+        <x-admin.tile-card
+            title="Settings"
+            description="Manage your team members and website content.">
 
             <x-link-arrow href="{{ route('admin.users.index') }}">
                 Team members
             </x-link-arrow><br>
 
-            <x-link-arrow href="{{ route('admin.website.index') }}">
+            <x-link-arrow href="{{ route('admin.website.index') }}" class="mt-1">
                 Website
             </x-link-arrow>
-        </div>
 
-        <!-- Check-In App -->
-        <div class="soft-card p-5 hover:shadow-md hover:-translate-y-0.5 transition block">
-            <h3 class="font-medium mb-2">Check-in app</h3>
-            <p class="text-sm text-[var(--color-text-light)] mb-2">Download for Android or Apple.</p>
+        </x-admin.tile-card>
+
+
+        <!-- Check-in App -->
+        <x-admin.tile-card
+            title="Check-in app"
+            description="Install the mobile check-in app for Android or iOS.">
 
             <x-link-arrow href="{{ route('admin.app.index') }}">
-                Install
+                Install app
             </x-link-arrow>
-        </div>
+
+        </x-admin.tile-card>
 
     </div>
 
