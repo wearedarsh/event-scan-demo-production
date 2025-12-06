@@ -8,59 +8,74 @@
     ]" />
 
     <!-- Page Header -->
-    <div class="px-6">
-        <h1 class="text-2xl font-semibold text-[var(--color-text)]">Add Personnel</h1>
-        <p class="text-sm text-[var(--color-text-light)] mt-1">
-            Create a new personnel record for this event.
-        </p>
-    </div>
+    <x-admin.page-header
+        title="Add personnel"
+        subtitle="Create a new personnel record for this event."
+    />
 
 
     <!-- Alerts -->
     @if ($errors->any())
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-warning)]">
-                <p class="text-sm text-[var(--color-warning)]">{{ $errors->first() }}</p>
-            </div>
-        </div>
+        <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
 
 
-    <!-- ============================================================= -->
-    <!-- FORM WRAPPER -->
-    <!-- ============================================================= -->
-	  
-    <div class="px-6">
-		
-       
+    <!-- Form -->
+    <div class="px-6 space-y-6">
 
-        <div class="soft-card p-6 space-y-6">
-			<x-admin.section-title title="Create personnel" />
+        <x-admin.section-title title="Personnel details" />
+
+        <x-admin.card hover="false" class="p-6 space-y-6">
 
             <form wire:submit.prevent="store" class="space-y-6">
 
-                <!-- 2 columns -->
+                <!-- Two-column layout -->
                 <div class="grid md:grid-cols-2 gap-6">
 
+                    <!-- Line 1 -->
                     <div>
-                        <label class="form-label-custom">Line 1</label>
-                        <input type="text" class="input-text" wire:model.live="line_1">
+                        <x-admin.input-label for="line_1">
+                            Line 1
+                        </x-admin.input-label>
+
+                        <x-admin.input-text
+                            id="line_1"
+                            model="line_1"
+                        />
                     </div>
 
+                    <!-- Line 2 -->
                     <div>
-                        <label class="form-label-custom">Line 2</label>
-                        <input type="text" class="input-text" wire:model.live="line_2">
+                        <x-admin.input-label for="line_2">
+                            Line 2
+                        </x-admin.input-label>
+
+                        <x-admin.input-text
+                            id="line_2"
+                            model="line_2"
+                        />
                     </div>
 
+                    <!-- Line 3 -->
                     <div>
-                        <label class="form-label-custom">Line 3</label>
-                        <input type="text" class="input-text" wire:model.live="line_3">
+                        <x-admin.input-label for="line_3">
+                            Line 3
+                        </x-admin.input-label>
+
+                        <x-admin.input-text
+                            id="line_3"
+                            model="line_3"
+                        />
                     </div>
 
+                    <!-- Group -->
                     <div>
-                        <label class="form-label-custom">Group</label>
-                        <x-admin.select wire:model.live="personnel_group_id">
-                            <option value="">Select a group</option>
+                        <x-admin.input-label for="personnel_group_id">
+                            Group
+                        </x-admin.input-label>
+
+                        <x-admin.select id="personnel_group_id" wire:model.live="personnel_group_id">
+                            <option value="">Select group</option>
                             @foreach($groups as $group)
                                 <option value="{{ $group->id }}">{{ $group->title }}</option>
                             @endforeach
@@ -71,26 +86,25 @@
 
                 <!-- Buttons -->
                 <div class="flex items-center gap-3 pt-2">
-					<!-- Add Personnel -->
-				<button type="submit"
-					class="inline-flex items-center rounded-md border border-[var(--color-primary)]
-                  bg-[var(--color-surface)] px-2.5 py-1.5 text-xs md:text-sm font-medium
-                  text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white
-                  transition-colors duration-150">
-					<x-heroicon-o-plus class="h-4 w-4 md:mr-1.5" />
-					<span class="hidden md:inline">Create</span>
-	</button>
 
-                    <a href="{{ route('admin.events.personnel.index', $event->id) }}"
-                       class="btn-secondary">
+                    <x-admin.button type="submit" variant="outline">
+                        <x-slot:icon>
+                            <x-heroicon-o-plus class="h-4 w-4" />
+                        </x-slot:icon>
+                        Create personnel
+                    </x-admin.button>
+
+                    <x-admin.button
+                        href="{{ route('admin.events.personnel.index', $event->id) }}"
+                        variant="secondary">
                         Cancel
-                    </a>
+                    </x-admin.button>
 
                 </div>
 
             </form>
 
-        </div>
+        </x-admin.card>
 
     </div>
 

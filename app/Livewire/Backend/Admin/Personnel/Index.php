@@ -19,6 +19,11 @@ class Index extends Component
 	public Event $event;
 	public string $search = '';
 	public string $group_filter = '';
+	public bool $showLabelModal      = false;
+	// Label modal
+    public string $slot = '';
+    public string $mode = '80mm_80mm';
+	public $selected_personnel_id = null;
 
 	#[Computed]
 	public function personnelGroups()
@@ -35,6 +40,39 @@ class Index extends Component
 	{
 		$this->resetPage();
 	}
+
+	public function openLabelModal($personnel_id): void
+    {
+        $this->resetErrorBag();
+        $this->slot = '';
+        $this->mode = '80mm_80mm';
+		$this->selected_personnel_id = $personnel_id;
+        $this->showLabelModal = true;
+    }
+
+	public function updateSlot($slot)
+    {
+        $this->slot = $slot;
+    }
+
+
+	public function downloadLabel()
+    {
+        if (!$this->slot) {
+            $this->addError('slot', 'Please select a label position.');
+            return;
+        }
+
+        return redirect()->route(
+            'admin.events.personnel.label.export',
+            [
+                $this->event->id,
+                'personnel' => $this->selected_personnel_id,
+                'slot' => $this->slot,
+                'mode' => $this->mode,
+            ]
+        );
+    }
 
 	public function updatingGroupFilter()
 	{

@@ -4,68 +4,72 @@
     <x-admin.breadcrumb :items="[
         ['label' => 'Events', 'href' => route('admin.events.index')],
         ['label' => $event->title, 'href' => route('admin.events.manage', $event->id)],
-        ['label' => 'Create Personnel Group'],
+        ['label' => 'Personnel Groups', 'href' => route('admin.events.personnel.index', $event->id)],
+        ['label' => 'Create Group'],
     ]" />
 
-    <!-- Header -->
-    <div class="px-6">
-        <h1 class="text-2xl font-semibold text-[var(--color-text)]">Create Personnel Group</h1>
-        <p class="text-sm text-[var(--color-text-light)] mt-1">
-            Add a new personnel group for organising badges and categories.
-        </p>
-    </div>
+    <!-- Page Header -->
+    <x-admin.page-header
+        title="Create personnel group"
+        subtitle="Add a new personnel group for organising badges and categories."
+    />
 
 
     <!-- Alerts -->
     @if($errors->any())
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-warning)]">
-                <p class="text-sm text-[var(--color-warning)]">{{ $errors->first() }}</p>
-            </div>
-        </div>
+        <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
 
     @if(session()->has('success'))
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-success)]">
-                <p class="text-sm text-[var(--color-success)]">{{ session('success') }}</p>
-            </div>
-        </div>
+        <x-admin.alert type="success" :message="session('success')" />
     @endif
 
 
-    <!-- ============================================================= -->
-    <!-- FORM -->
-    <!-- ============================================================= -->
-    <div class="px-6">
+    <!-- Form -->
+    <div class="px-6 space-y-6">
 
         <x-admin.section-title title="Group details" />
 
-        <div class="soft-card p-6 space-y-6">
-
+        <x-admin.card hover="false" class="p-6">
             <form wire:submit.prevent="store" class="space-y-6">
 
                 <div class="grid md:grid-cols-2 gap-6">
 
-                    <!-- Title -->
-                    <div class="md:col-span-1">
-                        <label class="form-label-custom">Group name</label>
-                        <input type="text" wire:model.live="title" class="input-text">
+                    <!-- Group name -->
+                    <div>
+                        <x-admin.input-label for="title">
+                            Group name
+                        </x-admin.input-label>
+
+                        <x-admin.input-text
+                            id="title"
+                            model="title"
+                        />
                     </div>
 
                     <!-- Colours -->
-                    <div class="grid grid-cols-2 gap-6 md:col-span-1">
+                    <div class="grid grid-cols-2 gap-6">
 
+                        <!-- Background colour -->
                         <div>
-                            <label class="form-label-custom">Label background</label>
+                            <x-admin.input-label for="label_background_colour">
+                                Label background
+                            </x-admin.input-label>
+
                             <input type="color"
+                                   id="label_background_colour"
                                    wire:model.live="label_background_colour"
                                    class="h-16 w-16 rounded-md border border-[var(--color-border)] p-0 cursor-pointer" />
                         </div>
 
+                        <!-- Text colour -->
                         <div>
-                            <label class="form-label-custom">Label text colour</label>
+                            <x-admin.input-label for="label_colour">
+                                Label text colour
+                            </x-admin.input-label>
+
                             <input type="color"
+                                   id="label_colour"
                                    wire:model.live="label_colour"
                                    class="h-16 w-16 rounded-md border border-[var(--color-border)] p-0 cursor-pointer" />
                         </div>
@@ -75,30 +79,26 @@
                 </div>
 
 
-                <!-- Buttons -->
+                <!-- Action Buttons -->
                 <div class="flex items-center gap-3 pt-2">
 
-                    <!-- Outline Create button -->
-                    <button type="submit"
-                            class="inline-flex items-center rounded-md border border-[var(--color-primary)]
-                                   bg-[var(--color-surface)] px-3 py-2 text-sm font-medium
-                                   text-[var(--color-primary)]
-                                   hover:bg-[var(--color-primary)] hover:text-white
-                                   transition-colors duration-150">
-                        <x-heroicon-o-plus class="h-4 w-4 mr-1.5" />
+                    <x-admin.button type="submit" variant="outline">
+                        <x-slot:icon>
+                            <x-heroicon-o-plus class="h-4 w-4" />
+                        </x-slot:icon>
                         Create group
-                    </button>
+                    </x-admin.button>
 
-                    <a href="{{ route('admin.events.personnel.index', $event->id) }}"
-                       class="btn-secondary">
+                    <x-admin.button
+                        href="{{ route('admin.events.personnel.index', $event->id) }}"
+                        variant="secondary">
                         Cancel
-                    </a>
+                    </x-admin.button>
 
                 </div>
 
             </form>
-
-        </div>
+        </x-admin.card>
 
     </div>
 

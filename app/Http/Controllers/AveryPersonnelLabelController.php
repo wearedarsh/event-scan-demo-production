@@ -1,74 +1,67 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Models\Personnel;
 use App\Models\Event;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Vinkla\Hashids\Facades\Hashids;
 
 class AveryPersonnelLabelController extends Controller
 {
     public function export(Request $request, Event $event, Personnel $personnel)
     {
-        $slot = max(1, min(4, (int) $request->get('slot', 1)));
-        $mode = in_array($request->get('mode'), ['75mm_110mm','a6_full']) ? $request->get('mode') : '75mm_110mm';
+        $mode = $request->get('mode', '80mm_80mm');
+        $slot = (int) $request->get('slot', 1);
 
-        $cells = [
-            1 => ['x' => 0.0,   'y' => 0.0],
-            2 => ['x' => 105.0, 'y' => 0.0],
-            3 => ['x' => 0.0,   'y' => 148.0],
-            4 => ['x' => 105.0, 'y' => 148.0],
-        ];
+        $cells = [];
 
-        if ($mode === 'a6_full') {
-            $label_w = 105.0; $label_h = 148.0;
-            $offset_x = $cells[$slot]['x'];
-            $offset_y = $cells[$slot]['y'];
-        } else {
-
-            $label_w = 81.0; //3mm bleed
-            $label_h = 116.0; //3mm bleed
+        if ($mode === '80mm_80mm') {
+            $label_w = 86.0;
+            $label_h = 86.0;
 
             $cells = [
-                1 => ['x' => 23.0,  'y' => 33.0],   // top-left
-                2 => ['x' => 107, 'y' => 33.0],   // top-right
-                3 => ['x' => 23.0,  'y' => 153.0],  // bottom-left
-                4 => ['x' => 107, 'y' => 153.0],  // bottom-right
+                1 => ['x' => 19.0,  'y' => 19.5],
+                2 => ['x' => 105.0, 'y' => 19.5],
+                3 => ['x' => 19.0,  'y' => 105.5],
+                4 => ['x' => 105.0, 'y' => 105.5],
+                5 => ['x' => 19.0,  'y' => 191.5],
+                6 => ['x' => 105.0, 'y' => 191.5],
             ];
-
-            $offset_x = $cells[$slot]['x'];
-            $offset_y = $cells[$slot]['y'];
         }
 
-        $vm = (object)[
-            'line_1'       => $personnel->line_1 ?? '',
-            'line_2'        => $personnel->line_2 ?? '',
-            'line_3'          => $personnel->line_3 ?? '',
-            'group_label'      => $personnel->group->title ?? '',
-            'group_color'      => $personnel->group->label_background_colour ?? '#FFFFFF',
-            'group_text_color' => $personnel->group->label_colour ?? '#000000',
-            'bg_color'         => '#FFFFFF',
+        $offset_x = $cells[$slot]['x'];
+        $offset_y = $cells[$slot]['y'];
+
+        // PERSONAL -> DISPLAY LINES ON LABEL
+        $labelData = (object)[
+            'line_1' => $personnel->line_1,
+            'line_2' => $personnel->line_2,
+            'line_3' => $personnel->line_3,
+            'group_label' => optional($personnel->group)->title ?? '',
+            'group_color' => optional($personnel->group)->label_background_colour ?? '#FFFFFF',
+            'group_text_color' => optional($personnel->group)->label_colour ?? '#000000',
         ];
 
         $pdf = Pdf::setOptions([
-                'chroot'                 => base_path(),
-                'fontDir'                => storage_path('fonts'),
-                'fontCache'              => storage_path('fonts'),
-                'enable_font_subsetting' => true,
-            ])
+            'chroot'                 => base_path(),
+            'fontDir'                => resource_path('fonts'),
+            'fontCache'              => storage_path('fonts'),
+            'enable_font_subsetting' => true,
+        ])
             ->loadView('livewire.backend.admin.personnel.labels.avery', [
-                'slot'      => $slot,
-                'mode'      => $mode,
                 'label_w'   => $label_w,
                 'label_h'   => $label_h,
                 'offset_x'  => $offset_x,
                 'offset_y'  => $offset_y,
-                'vm'        => $vm,
-                'header_logo_url' => resource_path('badges/header-logo.jpg'),
-                'event_title' => $event->title
+                'slot'      => $slot,
+                'mode'      => $mode,
+                'personnel' => $labelData,
+                'event_title' => $event->title,
             ])
             ->setPaper('A4', 'portrait');
 
-        return $pdf->download(sprintf('label-%s-slot-%d.pdf', $mode, $slot));
+        return $pdf->download(sprintf('personnel-label-%s-slot-%d.pdf', $mode, $slot));
     }
 }

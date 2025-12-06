@@ -1,60 +1,104 @@
-<div>
-    <div class="flex-row d-flex flex-1 rounded-2 p-3 align-items-center">
-        <h2 class="fs-4 text-brand-dark p-0 m-0">Edit Personnel Group</h2>
-    </div>
+<div class="space-y-6">
 
-    <div class="flex-row d-flex flex-1 bg-white rounded-2 p-3">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb d-flex flex-row align-items-center">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.events.index') }}">Events</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.events.manage', $event->id) }}">{{ $event->title }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Edit Personnel Group</li>
-            </ol>
-        </nav>
-    </div>
+    <!-- Breadcrumbs -->
+    <x-admin.breadcrumb :items="[
+        ['label' => 'Events', 'href' => route('admin.events.index')],
+        ['label' => $event->title, 'href' => route('admin.events.manage', $event->id)],
+        ['label' => 'Personnel Groups', 'href' => route('admin.events.personnel.index', $event->id)],
+        ['label' => 'Edit Group'],
+    ]" />
 
-    <div class="flex-column d-flex p-3 bg-white rounded-2 mt-3">
-        <div class="container mt-2">
-            <h4 class="mb-3">Edit Personnel Group</h4>
 
-            @if($errors->any())
-                <div class="col-12">
-                    <div class="alert alert-info" role="alert">
-                        <span class="font-m">{{ $errors->first() }}</span>
+    <!-- Page Header -->
+    <x-admin.page-header
+        title="Edit personnel group"
+        subtitle="Update group name and label styles for personnel badges."
+    />
+
+
+    <!-- Alerts -->
+    @if($errors->any())
+        <x-admin.alert type="danger" :message="$errors->first()" />
+    @endif
+
+    @if(session()->has('success'))
+        <x-admin.alert type="success" :message="session('success')" />
+    @endif
+
+
+    <!-- Form -->
+    <div class="px-6 space-y-6">
+
+        <x-admin.section-title title="Group details" />
+
+        <x-admin.card hover="false" class="p-6">
+            <form wire:submit.prevent="update" class="space-y-6">
+
+                <div class="grid md:grid-cols-2 gap-6">
+
+                    <!-- Group name -->
+                    <div>
+                        <x-admin.input-label for="title">
+                            Group name
+                        </x-admin.input-label>
+
+                        <x-admin.input-text
+                            id="title"
+                            model="title"
+                        />
                     </div>
-                </div>
-            @endif
 
-            @if (session()->has('success'))
-                <div class="col-12">
-                    <div class="alert alert-success" role="alert">
-                        <span class="font-m">{{ session('success') }}</span>
+                    <!-- Colours -->
+                    <div class="grid grid-cols-2 gap-6">
+
+                        <div>
+                            <x-admin.input-label for="label_background_colour">
+                                Label background
+                            </x-admin.input-label>
+
+                            <input type="color"
+                                id="label_background_colour"
+                                wire:model.live="label_background_colour"
+                                class="h-16 w-16 rounded-md border border-[var(--color-border)] p-0 cursor-pointer" />
+                        </div>
+
+                        <div>
+                            <x-admin.input-label for="label_colour">
+                                Label text colour
+                            </x-admin.input-label>
+
+                            <input type="color"
+                                id="label_colour"
+                                wire:model.live="label_colour"
+                                class="h-16 w-16 rounded-md border border-[var(--color-border)] p-0 cursor-pointer" />
+                        </div>
+
                     </div>
-                </div>
-            @endif
 
-            <form wire:submit.prevent="update" class="row g-3">
-                <div class="col-md-6">
-                    <label for="title" class="form-label">Group Name</label>
-                    <input wire:model.live="title" type="text" class="form-control" id="title">
                 </div>
 
-                <div class="col-md-3">
-                    <label for="label_background_colour" class="form-label">Label Background</label>
-                    <input type="color" wire:model.live="label_background_colour" class="form-control" id="label_background_colour" style="width:80px;height:80px;">
+
+                <!-- Action buttons -->
+                <div class="flex items-center gap-3 pt-2">
+
+                    <x-admin.button type="submit" variant="outline">
+                        <x-slot:icon>
+                            <x-heroicon-o-check class="h-4 w-4" />
+                        </x-slot:icon>
+                        Update group
+                    </x-admin.button>
+
+                    <x-admin.button
+                        href="{{ route('admin.events.personnel.index', $event->id) }}"
+                        variant="secondary">
+                        Cancel
+                    </x-admin.button>
+
                 </div>
 
-                <div class="col-md-3">
-                    <label for="label_colour" class="form-label">Label Text Colour</label>
-                    <input type="color" wire:model.live="label_colour" class="form-control" id="label_colour" style="width:80px;height:80px;">
-                </div>
-
-                <div class="col-12">
-                    <button type="submit" class="btn bg-brand-secondary">Update Group</button>
-                    <a href="{{ route('admin.events.personnel.index', $event->id) }}" class="btn btn-light"><span class="text-brand-dark">Cancel</span></a>
-                </div>
             </form>
-        </div>
+        </x-admin.card>
+
     </div>
+
 </div>
