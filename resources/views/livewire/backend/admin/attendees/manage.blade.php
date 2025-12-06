@@ -427,12 +427,14 @@
                     Mark as paid
                 </x-admin.outline-btn-icon>
 
+                @if($attendee->eventPaymentMethod->payment_method === 'bank_transfer')
                 <x-admin.outline-btn-icon
                     icon="heroicon-o-envelope"
                     wire:confirm="Send bank transfer details?"
                     wire:click.prevent="sendBankTransferInfo">
                     Send bank transfer details
                 </x-admin.outline-btn-icon>
+                @endif
 
                 <x-admin.outline-btn-icon
                     icon="heroicon-o-envelope-open"
