@@ -1,171 +1,167 @@
 <div class="space-y-6">
 
-    <!-- ============================================================= -->
-    <!-- Breadcrumbs -->
-    <!-- ============================================================= -->
+    <!-- Breadcrumb -->
     <x-admin.breadcrumb :items="[
         ['label' => 'Events', 'href' => route('admin.events.index')],
-        ['label' => $event->title, 'href' => route('admin.events.manage', $event->id)],
-        ['label' => 'Registrations', 'href' => route('admin.events.registrations.index', $event->id)],
+        ['label' => $event->title, 'href' => route('admin.events.registrations.index', $event->id)],
         ['label' => $attendee->title . ' ' . $attendee->last_name, 'href' => route('admin.events.registrations.manage', [$event->id, $attendee->id])],
-        ['label' => 'Edit'],
+        ['label' => 'Edit registration'],
     ]" />
 
+    <!-- Header -->
+    <x-admin.page-header
+        title="{{ $attendee->title }} {{ $attendee->last_name }}"
+        subtitle="Edit registration contact information and professional details."
+    />
 
-    <!-- ============================================================= -->
-    <!-- Page Header -->
-    <!-- ============================================================= -->
-    <div class="px-6">
-        <h1 class="text-2xl font-semibold text-[var(--color-text)]">
-            Edit registration
-        </h1>
-    </div>
-
-
-    <!-- ============================================================= -->
     <!-- Alerts -->
-    <!-- ============================================================= -->
     @if($errors->any())
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-warning)]">
-                <p class="text-sm text-[var(--color-warning)]">{{ $errors->first() }}</p>
-            </div>
-        </div>
+        <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
 
-    @if(session()->has('success'))
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-success)]">
-                <p class="text-sm text-[var(--color-success)]">{{ session('success') }}</p>
-            </div>
-        </div>
+    @if (session()->has('success'))
+        <x-admin.alert type="success" :message="session('success')" />
     @endif
 
 
-
-    <!-- ============================================================= -->
-    <!-- FORM WRAPPER -->
-    <!-- ============================================================= -->
-    <div class="px-6">
+    <!-- MAIN FORM -->
+    <div class="px-6 space-y-6">
 
         <form wire:submit.prevent="update" class="space-y-6">
 
 
-            <!-- ============================================================= -->
-            <!-- CONTACT DETAILS -->
-            <!-- ============================================================= -->
+            <!-- Contact Details -->
             <x-admin.section-title title="Contact details" />
 
-            <div class="soft-card p-6 grid md:grid-cols-2 gap-6">
+            <x-admin.card hover="false" class="p-6 space-y-6">
 
-                <!-- Mobile -->
-                <div>
-                    <label class="form-label-custom">Mobile country code</label>
-                    <input 
-                        type="text"
-                        wire:model.live="mobile_country_code"
-                        class="input-text"
-                    />
+                <div class="grid md:grid-cols-2 gap-6">
+
+                    <!-- Mobile Country Code -->
+                    <div>
+                        <x-admin.input-label for="mobile_country_code">
+                            Mobile Country Code
+                        </x-admin.input-label>
+
+                        <x-admin.input-text
+                            id="mobile_country_code"
+                            model="mobile_country_code"
+                        />
+                    </div>
+
+                    <!-- Mobile Number -->
+                    <div>
+                        <x-admin.input-label for="mobile_number">
+                            Mobile Number
+                        </x-admin.input-label>
+
+                        <x-admin.input-text
+                            id="mobile_number"
+                            model="mobile_number"
+                        />
+                    </div>
+
+                    <!-- Address Line One -->
+                    <div>
+                        <x-admin.input-label for="address_line_one">
+                            Address Line One
+                        </x-admin.input-label>
+
+                        <x-admin.input-text
+                            id="address_line_one"
+                            model="address_line_one"
+                        />
+                    </div>
+
+                    <!-- Town -->
+                    <div>
+                        <x-admin.input-label for="town">
+                            Town / City
+                        </x-admin.input-label>
+
+                        <x-admin.input-text
+                            id="town"
+                            model="town"
+                        />
+                    </div>
+
+                    <!-- Postcode -->
+                    <div>
+                        <x-admin.input-label for="postcode">
+                            Postcode
+                        </x-admin.input-label>
+
+                        <x-admin.input-text
+                            id="postcode"
+                            model="postcode"
+                        />
+                    </div>
+
                 </div>
 
-                <div>
-                    <label class="form-label-custom">Mobile number</label>
-                    <input 
-                        type="text"
-                        wire:model.live="mobile_number"
-                        class="input-text"
-                    />
-                </div>
-
-                <!-- Address -->
-                <div>
-                    <label class="form-label-custom">Address line one</label>
-                    <input 
-                        type="text"
-                        wire:model.live="address_line_one"
-                        class="input-text"
-                    />
-                </div>
-
-                <div>
-                    <label class="form-label-custom">Town / City</label>
-                    <input 
-                        type="text"
-                        wire:model.live="town"
-                        class="input-text"
-                    />
-                </div>
-
-                <div>
-                    <label class="form-label-custom">Postcode</label>
-                    <input 
-                        type="text"
-                        wire:model.live="postcode"
-                        class="input-text"
-                    />
-                </div>
-
-            </div>
+            </x-admin.card>
 
 
 
-            <!-- ============================================================= -->
-            <!-- PROFESSIONAL DETAILS -->
-            <!-- ============================================================= -->
+            <!-- Professional Details -->
             <x-admin.section-title title="Professional details" />
 
-            <div class="soft-card p-6 grid md:grid-cols-2 gap-6">
+            <x-admin.card hover="false" class="p-6 space-y-6">
 
-                <!-- Position -->
-                <div>
-                    <label class="form-label-custom">Company</label>
-                    <input 
-                        type="text"
-                        wire:model.live="currently_held_position"
-                        class="input-text"
-                    />
+                <div class="grid md:grid-cols-2 gap-6">
+
+                    <!-- Company / Position -->
+                    <div>
+                        <x-admin.input-label for="currently_held_position">
+                            Company
+                        </x-admin.input-label>
+
+                        <x-admin.input-text
+                            id="currently_held_position"
+                            model="currently_held_position"
+                        />
+                    </div>
+
+                    <!-- Profession -->
+                    <div>
+                        <x-admin.input-label for="attendee_type_id">
+                            Profession
+                        </x-admin.input-label>
+
+                        <x-admin.select id="attendee_type_id" wire:model="attendee_type_id">
+                            <option value="">Select attendee type</option>
+                            @foreach ($attendeeTypes as $attendeeType)
+                                <option value="{{ $attendeeType->id }}">
+                                    {{ $attendeeType->name }}
+                                </option>
+                            @endforeach
+                        </x-admin.select>
+                    </div>
+
                 </div>
 
-                <!-- Attendee type -->
-                <div>
-                    <label class="form-label-custom">Profession</label>
-                    <x-admin.select wire:model.live="attendee_type_id">
-                        <option value="">Select attendee type</option>
-                        @foreach ($attendeeTypes as $attendeeType)
-                            <option value="{{ $attendeeType->id }}">
-                                {{ $attendeeType->name }}
-                            </option>
-                        @endforeach
-                    </x-admin.select>
+            </x-admin.card>
+
+
+
+            <!-- Action buttons -->
+            <x-admin.card hover="false" class="p-6 space-y-4">
+
+                <div class="flex items-center gap-3">
+
+                    <x-admin.button type="submit" variant="outline">
+                        Update registration
+                    </x-admin.button>
+
+                    <x-admin.button
+                        href="{{ route('admin.events.registrations.manage', [$event->id, $attendee->id]) }}"
+                        variant="secondary">
+                        Cancel
+                    </x-admin.button>
+
                 </div>
 
-            </div>
-
-
-
-            <!-- ============================================================= -->
-            <!-- ACTION BUTTONS -->
-            <!-- ============================================================= -->
-            <div class="soft-card p-6 flex items-center gap-3">
-
-                <!-- Save button -->
-                <button type="submit"
-                    class="inline-flex items-center rounded-md border border-[var(--color-primary)]
-                           bg-[var(--color-surface)] px-3 py-1.5 text-sm font-medium
-                           text-[var(--color-primary)]
-                           hover:bg-[var(--color-primary)] hover:text-white
-                           transition">
-                    Update registration
-                </button>
-
-                <!-- Cancel -->
-                <a href="{{ route('admin.events.registrations.manage', [$event->id, $attendee->id]) }}"
-                   class="btn-secondary">
-                    Cancel
-                </a>
-
-            </div>
-
+            </x-admin.card>
 
         </form>
 

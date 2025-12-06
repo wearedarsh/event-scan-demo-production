@@ -54,8 +54,7 @@ class Manage extends Component
     public function render()
     {
         $email_sends = EmailSend::where('recipient_id', $this->attendee->user_id)
-            ->latest()
-            ->get();
+            ->latest()->paginate(20);
 
         return view('livewire.backend.admin.registrations.manage', [
             'attendee'     => $this->attendee,

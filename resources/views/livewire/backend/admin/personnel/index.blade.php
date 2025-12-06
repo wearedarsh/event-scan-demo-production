@@ -1,277 +1,248 @@
 <div class="space-y-6">
 
-	<!-- Breadcrumbs -->
-	<x-admin.breadcrumb :items="[
+    <!-- Breadcrumbs -->
+    <x-admin.breadcrumb :items="[
         ['label' => 'Events', 'href' => route('admin.events.index')],
         ['label' => $event->title, 'href' => route('admin.events.manage', $event->id)],
         ['label' => 'Personnel'],
     ]" />
 
 
-	<!-- Page Header -->
-	<div class="px-6">
-		<h1 class="text-2xl font-semibold text-[var(--color-text)]">Personnel</h1>
-		<p class="text-sm text-[var(--color-text-light)] mt-1">
-			Manage personnel groups and individual personnel.
-		</p>
-	</div>
+    <!-- Page Header -->
+    <x-admin.page-header
+        title="Personnel"
+        subtitle="Manage personnel groups and individual personnel."
+    >
+        <x-admin.stat-card 
+            label="Total personnel"
+            :value="$personnel->total()"  
+        />
+    </x-admin.page-header>
 
 
-	<!-- Alerts -->
-	@if($errors->any())
-	<div class="px-6">
-		<div class="soft-card p-4 border-l-4 border-[var(--color-warning)]">
-			<p class="text-sm text-[var(--color-warning)]">{{ $errors->first() }}</p>
-		</div>
-	</div>
-	@endif
+    <!-- Alerts -->
+    @if($errors->any())
+        <x-admin.alert type="danger" :message="$errors->first()" />
+    @endif
 
-	@if (session()->has('success'))
-	<div class="px-6">
-		<div class="soft-card p-4 border-l-4 border-[var(--color-success)]">
-			<p class="text-sm text-[var(--color-success)]">{{ session('success') }}</p>
-		</div>
-	</div>
-	@endif
+    @if (session()->has('success'))
+        <x-admin.alert type="success" :message="session('success')" />
+    @endif
 
 
 
-	<!-- ============================================================= -->
-	<!-- BADGES -->
-	<!-- ============================================================= -->
-	<div class="px-6">
-		<div class="soft-card p-5 flex items-center justify-between hover:shadow-md hover:-translate-y-0.5 transition">
-
-			<div>
-				<h3 class="font-medium">Badges</h3>
-				<p class="text-sm text-[var(--color-text-light)]">
-					Export print-ready personnel badges.
-				</p>
-			</div>
-
-			<x-link-arrow href="{{ route('admin.events.personnel.badges.export', $event->id) }}">
-				Print badges
-			</x-link-arrow>
-
-		</div>
-	</div>
+    <!-- Badges -->
+    <div class="px-6">
+        <x-admin.action-card
+            title="Badges"
+            description="Export print-ready personnel badges."
+        >
+            <x-link-arrow href="{{ route('admin.events.personnel.badges.export', $event->id) }}">
+                Print badges
+            </x-link-arrow>
+        </x-admin.action-card>
+    </div>
 
 
 
-	<!-- ============================================================= -->
-	<!-- PERSONNEL GROUPS -->
-	<!-- ============================================================= -->
-	<div class="px-6 space-y-4">
+    <!-- Personnel Groups -->
+    <div class="px-6 space-y-4">
 
-		<x-admin.section-title title="Personnel groups" />
+        <x-admin.section-title title="Personnel groups" />
 
-		<div class="soft-card p-5 space-y-4">
+        <x-admin.card class="p-5 space-y-4">
 
-			<div class="flex items-center justify-between">
-				<h3 class="font-medium">Groups</h3>
+            <div class="flex items-center justify-between">
+                <h3 class="font-medium">Groups</h3>
 
-				<!-- Add Group -->
-				<a href="{{ route('admin.events.personnel.groups.create', $event->id) }}"
-					class="inline-flex items-center rounded-md border border-[var(--color-primary)]
-                  bg-[var(--color-surface)] px-2.5 py-1.5 text-xs md:text-sm font-medium
-                  text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white
-                  transition-colors duration-150">
-					<x-heroicon-o-plus class="h-4 w-4 md:mr-1.5" />
-					<span class="hidden md:inline">Add group</span>
-				</a>
-			</div>
+                <!-- Add Group -->
+                <x-admin.button-link 
+                    :href="route('admin.events.personnel.groups.create', $event->id)"
+                    icon="plus"
+                    label="Add group"
+                />
+            </div>
 
 
-			<!-- Table -->
-			<div class="relative overflow-x-auto">
-				<div class="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-white pointer-events-none"></div>
+            <!-- Table -->
+            <x-admin.table>
+                <table class="min-w-full text-sm text-left">
 
-				<table class="min-w-full text-sm text-left">
-					<thead>
-						<tr class="text-xs uppercase text-[var(--color-text-light)] border-b border-[var(--color-border)]">
-							<th class="px-4 py-3">Group</th>
-							<th class="px-4 py-3">Label</th>
-							<th class="px-4 py-3 text-right">Actions</th>
-						</tr>
-					</thead>
+                    <thead>
+                        <tr class="text-xs uppercase text-[var(--color-text-light)] border-b border-[var(--color-border)]">
+                            <th class="px-4 py-3">Group</th>
+                            <th class="px-4 py-3">Label</th>
+                            <th class="px-4 py-3 text-right">Actions</th>
+                        </tr>
+                    </thead>
 
-					<tbody>
-						@forelse($this->personnelGroups as $group)
+                    <tbody>
+                        @forelse($this->personnelGroups as $group)
 
-						<tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
-							<td class="px-4 py-3">{{ $group->title }}</td>
+                            <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
+                                
+                                <td class="px-4 py-3">{{ $group->title }}</td>
 
-							<td class="px-4 py-3">
-								<span class="px-2 py-1 rounded text-xs"
-									style="background: {{ $group->label_background_colour }};
-                                                 color: {{ $group->label_colour }};">
-									{{ $group->title }}
-								</span>
-							</td>
+                                <td class="px-4 py-3">
+                                    <span class="px-2 py-1 rounded text-xs font-medium shadow-sm"
+                                        style="background: {{ $group->label_background_colour }};
+                                               color: {{ $group->label_colour }};">
+                                        {{ $group->title }}
+                                    </span>
+                                </td>
 
-							<td class="px-4 py-3 text-right">
-								<div class="flex items-center justify-end gap-2">
+                                <td class="px-4 py-3 text-right">
+                                    <div class="flex items-center justify-end gap-2">
 
-									<x-admin.table-action-button
-										type="link"
-										:href="route('admin.events.personnel.groups.edit', [
-                                                'event' => $event->id,
-                                                'personnel_group' => $group->id
-                                            ])"
-										icon="pencil-square"
-										label="Edit" />
+                                        <x-admin.table-action-button
+                                            type="link"
+                                            :href="route('admin.events.personnel.groups.edit', [$event->id, $group->id])"
+                                            icon="pencil-square"
+                                            label="Edit"
+                                        />
 
-									@if($group->personnel->count() === 0)
-									<x-admin.table-action-button
-										type="button"
-										confirm="Delete this group?"
-										wireClick="deletePersonnelGroup({{ $group->id }})"
-										icon="trash"
-										label="Delete"
-										danger="true" />
-									@else
-									<span class="text-xs text-[var(--color-text-light)]">
-										In use
-									</span>
-									@endif
+                                        @if($group->personnel->count() === 0)
+                                            <x-admin.table-action-button
+                                                type="button"
+                                                danger="true"
+                                                confirm="Delete this group?"
+                                                wireClick="deletePersonnelGroup({{ $group->id }})"
+                                                icon="trash"
+                                                label="Delete"
+                                            />
+                                        @else
+                                            <span class="text-xs text-[var(--color-text-light)]">In use</span>
+                                        @endif
 
-								</div>
-							</td>
-						</tr>
+                                    </div>
+                                </td>
 
-						@empty
-						<tr>
-							<td colspan="3" class="px-4 py-6 text-center text-[var(--color-text-light)]">
-								No groups found.
-							</td>
-						</tr>
-						@endforelse
-					</tbody>
-				</table>
-			</div>
+                            </tr>
 
-		</div>
-	</div>
+                        @empty
+                            <tr>
+                                <td colspan="3" class="px-4 py-6 text-center text-[var(--color-text-light)]">
+                                    No groups found.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+
+                </table>
+            </x-admin.table>
+
+        </x-admin.card>
+
+    </div>
 
 
 
-	<!-- ============================================================= -->
-	<!-- PERSONNEL LIST -->
-	<!-- ============================================================= -->
-	<div class="px-6 space-y-4">
+    <!-- Personnel List -->
+    <div class="px-6 space-y-4">
 
-		<x-admin.section-title title="Personnel" />
+        <x-admin.section-title title="Personnel" />
 
-		<div class="soft-card p-5 space-y-4">
+        <x-admin.card class="p-5 space-y-4">
 
+            <!-- Filters -->
+            <div class="grid sm:grid-cols-3 gap-4">
 
-			<!-- Filters -->
-			<div class="grid sm:grid-cols-3 gap-4">
-				<input
-					type="text"
-					wire:model.live.debounce.300ms="search"
-					placeholder="Search name or group"
-					class="input-text">
+                <x-admin.search-input
+                    wire:model.live.debounce.300ms="search"
+                    placeholder="Search name or group"
+                />
 
-				<x-admin.select wire:model.live="group_filter">
-					<option value="">All Groups</option>
-					@foreach($this->personnelGroups as $group)
-					<option value="{{ $group->id }}">{{ $group->title }}</option>
-					@endforeach
-				</x-admin.select>
+                <x-admin.select wire:model.live="group_filter">
+                    <option value="">All Groups</option>
+                    @foreach($this->personnelGroups as $group)
+                        <option value="{{ $group->id }}">{{ $group->title }}</option>
+                    @endforeach
+                </x-admin.select>
 
-				<!-- Add Personnel -->
-				<a href="{{ route('admin.events.personnel.create', $event->id) }}"
-					class="inline-flex items-center rounded-md border border-[var(--color-primary)]
-                  bg-[var(--color-surface)] px-2.5 py-1.5 text-xs md:text-sm font-medium
-                  text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white
-                  transition-colors duration-150">
-					<x-heroicon-o-plus class="h-4 w-4 md:mr-1.5" />
-					<span class="hidden md:inline">Add personnel</span>
-				</a>
-			</div>
+                <!-- Add Personnel -->
+                <x-admin.button-link 
+                    :href="route('admin.events.personnel.create', $event->id)"
+                    icon="plus"
+                    label="Add personnel"
+                />
+            </div>
 
 
-			<!-- Table -->
-			<div class="relative overflow-x-auto">
-				<div class="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-white pointer-events-none"></div>
+            <!-- Table -->
+            <x-admin.table>
+                <table class="min-w-full text-sm text-left">
 
-				<table class="min-w-full text-sm text-left">
-					<thead>
-						<tr class="text-xs uppercase text-[var(--color-text-light)]
-                                   border-b border-[var(--color-border)]">
-							<th class="px-4 py-3">Line 1</th>
-							<th class="px-4 py-3">Line 2</th>
-							<th class="px-4 py-3">Line 3</th>
-							<th class="px-4 py-3">Group</th>
-							<th class="px-4 py-3 text-right">Actions</th>
-						</tr>
-					</thead>
+                    <thead>
+                        <tr class="text-xs uppercase text-[var(--color-text-light)] border-b border-[var(--color-border)]">
+                            <th class="px-4 py-3">Line 1</th>
+                            <th class="px-4 py-3">Line 2</th>
+                            <th class="px-4 py-3">Line 3</th>
+                            <th class="px-4 py-3">Group</th>
+                            <th class="px-4 py-3 text-right">Actions</th>
+                        </tr>
+                    </thead>
 
-					<tbody>
-						@forelse($personnel as $person)
+                    <tbody>
+                        @forelse($personnel as $person)
 
-						<tr class="border-b border-[var(--color-border)]
-                                       hover:bg-[var(--color-surface-hover)] transition">
+                            <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
 
-							<td class="px-4 py-3">{{ $person->line_1 }}</td>
-							<td class="px-4 py-3">{{ $person->line_2 }}</td>
-							<td class="px-4 py-3">{{ $person->line_3 }}</td>
+                                <td class="px-4 py-3">{{ $person->line_1 }}</td>
+                                <td class="px-4 py-3">{{ $person->line_2 }}</td>
+                                <td class="px-4 py-3">{{ $person->line_3 }}</td>
 
-							<td class="px-4 py-3">
-								@if($person->group)
-								<span class="px-2 py-1 rounded text-xs"
-									style="background: {{ $person->group->label_background_colour }};
-                                                     color: {{ $person->group->label_colour }};">
-									{{ $person->group->title }}
-								</span>
-								@endif
-							</td>
+                                <td class="px-4 py-3">
+                                    @if($person->group)
+                                        <span class="px-2 py-1 rounded text-xs font-medium shadow-sm"
+                                            style="background: {{ $person->group->label_background_colour }};
+                                                   color: {{ $person->group->label_colour }};">
+                                            {{ $person->group->title }}
+                                        </span>
+                                    @endif
+                                </td>
 
-							<td class="px-4 py-3 text-right">
-								<div class="flex justify-end items-center gap-2">
+                                <td class="px-4 py-3 text-right">
+                                    <div class="flex justify-end items-center gap-2">
 
-									<x-admin.table-action-button
-										type="link"
-										:href="route('admin.events.personnel.edit', [
-                                                'event' => $event->id,
-                                                'personnel' => $person->id
-                                            ])"
-										icon="pencil-square"
-										label="Edit" />
+                                        <x-admin.table-action-button
+                                            type="link"
+                                            :href="route('admin.events.personnel.edit', [$event->id, $person->id])"
+                                            icon="pencil-square"
+                                            label="Edit"
+                                        />
 
-									<x-admin.table-action-button
-										type="button"
-										danger="true"
-										confirm="Delete this personnel?"
-										wireClick="delete({{ $person->id }})"
-										icon="trash"
-										label="Delete" />
+                                        <x-admin.table-action-button
+                                            type="button"
+                                            danger="true"
+                                            confirm="Delete this personnel?"
+                                            wireClick="delete({{ $person->id }})"
+                                            icon="trash"
+                                            label="Delete"
+                                        />
 
-								</div>
-							</td>
+                                    </div>
+                                </td>
 
-						</tr>
+                            </tr>
 
-						@empty
-						<tr>
-							<td colspan="5" class="px-4 py-6 text-center text-[var(--color-text-light)]">
-								No personnel found.
-							</td>
-						</tr>
-						@endforelse
-					</tbody>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="px-4 py-6 text-center text-[var(--color-text-light)]">
+                                    No personnel found.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
 
-				</table>
-			</div>
+                </table>
+            </x-admin.table>
 
 
-			<!-- Pagination -->
-			<div>
-				{{ $personnel->links() }}
-			</div>
+            <!-- Pagination -->
+            <x-admin.pagination :paginator="$personnel" />
 
-		</div>
-	</div>
+        </x-admin.card>
+
+    </div>
 
 </div>
