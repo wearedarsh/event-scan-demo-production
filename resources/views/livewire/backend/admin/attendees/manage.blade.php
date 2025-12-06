@@ -94,12 +94,15 @@
                     Send bank transfer details
                 </x-link-arrow>
 
-                <x-link-arrow
-                    class="mt-1"
-                    href="#"
-                    wire:click.prevent="openMarkPaidModal">
-                    Mark as paid
-                </x-link-arrow>
+                    @if($attendee->payment_status !== 'paid')
+                        <x-link-arrow
+                            class="mt-1"
+                            href="#"
+                            wire:click.prevent="openMarkPaidModal">
+                            Mark as paid
+                        </x-link-arrow>
+                    @endif
+
                 @endif
             </x-admin.tile-card>
 
@@ -212,6 +215,7 @@
 
                     <x-admin.outline-btn-icon
                         wire:click.prevent="sendWelcome"
+                        wire:confirm="Send welcome email?"
                         icon="heroicon-o-envelope">
                         Send welcome email
                     </x-admin.outline-btn-icon>
