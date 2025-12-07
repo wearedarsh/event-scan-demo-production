@@ -1,126 +1,166 @@
-<div>
-    <div class="flex-row d-flex flex-1 rounded-2 p-3 align-items-center">
-        <h2 class="fs-4 text-brand-dark p-0 m-0">
-            Check-ins Report
-            <br>
-            <span class="font-m">{{ $event->title }}</span>
-        </h2>
-    </div>
+<div class="space-y-6">
 
-    <div class="flex-row d-flex flex-1 bg-white rounded-2 p-3 mt-3">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb d-flex flex-row align-items-center">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.events.index') }}">Events</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.events.manage', $event->id) }}">{{ $event->title }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.events.reports.index', $event->id) }}">Reports</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Check-ins</li>
-            </ol>
-        </nav>
-    </div>
+    <!-- Breadcrumbs -->
+    <x-admin.breadcrumb :items="[
+        ['label' => 'Dashboard', 'href' => route('admin.dashboard')],
+        ['label' => 'Events', 'href' => route('admin.events.index')],
+        ['label' => $event->title, 'href' => route('admin.events.manage', $event->id)],
+        ['label' => 'Reports', 'href' => route('admin.events.reports.index', $event->id)],
+        ['label' => 'Check-ins'],
+    ]" />
 
-	<div class="flex-row d-flex flex-1 bg-white rounded-2 p-3 mb-3">
-		<div class="col-12">
-			<h5>Tools</h5>
-			<a href="{{ route('admin.events.reports.checkin.pdf.export', [$event->id]) }}"
-			   class="btn bg-brand-secondary d-inline-flex align-items-center mb-2">
-				<span class="cil-arrow-right me-2"></span>
-				<span class="text-brand-light">Export PDF</span>
-			</a>
-		</div>
-	</div>
+    <!-- Header -->
+    <x-admin.page-header
+        title="Check-ins Report"
+        subtitle="{{ $event->title }}"
+    />
 
-    {{-- BY ROUTE --}}
-    <div class="flex-column d-flex p-3 bg-white rounded-2 mt-3">
-        <h5 class="mb-3">Check-ins by route</h5>
 
-        <div class="table-responsive">
-            <table class="table table-bordered align-middle font-m">
-                <thead class="table-light">
-                    <tr>
-                        <th>Route</th>
-                        <th class="text-end">Check-ins</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse(($report['by_route'] ?? []) as $route => $count)
-                        <tr>
-                            <td>{{ ucfirst($route) }}</td>
-                            <td class="text-end">{{ $count }}</td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="2" class="text-center">No check-ins recorded.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+    <!-- Tools -->
+    <div class="px-6">
+        <x-admin.card class="p-6 space-y-4">
+
+            <x-admin.section-title title="Tools" />
+
+            <div class="flex flex-wrap items-center gap-3">
+
+                <x-admin.outline-btn-icon
+                    icon="heroicon-o-arrow-down-tray"
+                    :href="route('admin.events.reports.checkin.pdf.export', $event->id)">
+                    Export PDF
+                </x-admin.outline-btn-icon>
+
+            </div>
+
+        </x-admin.card>
     </div>
 
 
-    {{-- BY USER --}}
-    <div class="flex-column d-flex p-3 bg-white rounded-2 mt-3">
-        <h5 class="mb-3">Check-ins by user</h5>
+    <!-- Check-ins by route -->
+    <div class="px-6">
+        <x-admin.card class="p-6 space-y-4">
 
-        <div class="table-responsive">
-            <table class="table table-bordered align-middle font-m">
-                <thead class="table-light">
-                    <tr>
-                        <th>User</th>
-                        <th class="text-end">Check-ins</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse(($report['by_user'] ?? []) as $row)
-                        <tr>
-                            <td>{{ $row['label'] }}</td>
-                            <td class="text-end">{{ $row['count'] }}</td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="2" class="text-center">No check-ins found.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </div>
+            <x-admin.section-title title="Check-ins by route" />
 
-    @foreach(($report['by_groups'] ?? []) as $group)
-        <div class="flex-column d-flex p-3 bg-white rounded-2 mt-3">
-            <h5 class="mb-3">{{ $group['group'] }}</h5>
+            <x-admin.table>
+                <table class="min-w-full text-sm text-left">
 
-            <div class="table-responsive">
-                <table class="table table-bordered align-middle font-m">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Session</th>
-                            <th class="text-end">Check-ins</th>
-                            <th class="text-end">% of all attendees</th>
+                    <thead>
+                        <tr class="text-[var(--color-text-light)] uppercase text-xs border-b border-[var(--color-border)]">
+                            <th class="px-4 py-3">Route</th>
+                            <th class="px-4 py-3 text-right">Check-ins</th>
                         </tr>
                     </thead>
+
                     <tbody>
-                        @forelse(($group['rows'] ?? []) as $row)
-                            <tr>
-                                <td>{{ $row['session'] }}</td>
-                                <td class="text-end">{{ $row['count'] }}</td>
-                                <td class="text-end">{{ $row['pct'] }}%</td>
+                        @forelse($report['by_route'] ?? [] as $route => $count)
+                            <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)]">
+                                <td class="px-4 py-3">{{ ucfirst($route) }}</td>
+                                <td class="px-4 py-3 text-right">{{ $count }}</td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="3" class="text-center">No sessions found in this group.</td>
+                                <td colspan="2" class="px-4 py-6 text-center text-[var(--color-text-light)]">
+                                    No check-ins recorded.
+                                </td>
                             </tr>
                         @endforelse
                     </tbody>
+
                 </table>
-            </div>
+            </x-admin.table>
+
+        </x-admin.card>
+    </div>
+
+
+    <!-- Check-ins by user -->
+    <div class="px-6">
+        <x-admin.card class="p-6 space-y-4">
+
+            <x-admin.section-title title="Check-ins by user" />
+
+            <x-admin.table>
+                <table class="min-w-full text-sm text-left">
+
+                    <thead>
+                        <tr class="text-[var(--color-text-light)] uppercase text-xs border-b border-[var(--color-border)]">
+                            <th class="px-4 py-3">User</th>
+                            <th class="px-4 py-3 text-right">Check-ins</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @forelse($report['by_user'] ?? [] as $row)
+                            <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)]">
+                                <td class="px-4 py-3">{{ $row['label'] }}</td>
+                                <td class="px-4 py-3 text-right">{{ $row['count'] }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="2" class="px-4 py-6 text-center text-[var(--color-text-light)]">
+                                    No check-ins found.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+
+                </table>
+            </x-admin.table>
+
+        </x-admin.card>
+    </div>
+
+
+    <!-- Session groups -->
+    @foreach($report['by_groups'] ?? [] as $group)
+        <div class="px-6">
+            <x-admin.card class="p-6 space-y-4">
+
+                <x-admin.section-title :title="$group['group']" />
+
+                <x-admin.table>
+                    <table class="min-w-full text-sm text-left">
+
+                        <thead>
+                            <tr class="text-[var(--color-text-light)] uppercase text-xs border-b border-[var(--color-border)]">
+                                <th class="px-4 py-3">Session</th>
+                                <th class="px-4 py-3 text-right">Check-ins</th>
+                                <th class="px-4 py-3 text-right">% of all attendees</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @forelse($group['rows'] ?? [] as $row)
+                                <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)]">
+                                    <td class="px-4 py-3">{{ $row['session'] }}</td>
+                                    <td class="px-4 py-3 text-right">{{ $row['count'] }}</td>
+                                    <td class="px-4 py-3 text-right">{{ number_format($row['pct'], 1) }}%</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="3" class="px-4 py-6 text-center text-[var(--color-text-light)]">
+                                        No sessions found in this group.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+
+                    </table>
+                </x-admin.table>
+
+            </x-admin.card>
         </div>
     @endforeach
 
+
+    <!-- No groups -->
     @if(empty($report['by_groups']))
-        <div class="flex-column d-flex p-3 bg-white rounded-2 mt-3">
-            <span class="font-m">No session groups found.</span>
+        <div class="px-6">
+            <x-admin.card class="p-6">
+                <span class="text-sm text-[var(--color-text-light)]">No session groups found.</span>
+            </x-admin.card>
         </div>
     @endif
+
 </div>

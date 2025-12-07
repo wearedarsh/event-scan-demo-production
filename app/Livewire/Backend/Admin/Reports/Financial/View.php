@@ -84,10 +84,10 @@ class View extends Component
         ];
 
         $this->charts = [
-            ['id'=>'chart-tickets-count','type'=>'bar','title'=>'Tickets • quantity','labels'=>$tickets['labels'],'data'=>$tickets['counts']],
-            ['id'=>'chart-tickets-value','type'=>'bar','title'=>'Tickets • value','labels'=>$tickets['labels'],'data'=>$tickets['totals']],
-            ['id'=>'chart-payments-count','type'=>'bar','title'=>'Payment methods • count','labels'=>$payments['labels'],'data'=>$payments['counts']],
-            ['id'=>'chart-payments-value','type'=>'bar','title'=>'Payment methods • value','labels'=>$payments['labels'],'data'=>$payments['totals']],
+            ['id'=>'chart-tickets-count','type'=>'bar','title'=>'Tickets quantity','labels'=>$tickets['labels'],'data'=>$tickets['counts']],
+            ['id'=>'chart-tickets-value','type'=>'bar','title'=>'Tickets value','labels'=>$tickets['labels'],'data'=>$tickets['totals']],
+            ['id'=>'chart-payments-count','type'=>'bar','title'=>'Payment methods count','labels'=>$payments['labels'],'data'=>$payments['counts']],
+            ['id'=>'chart-payments-value','type'=>'bar','title'=>'Payment methods value','labels'=>$payments['labels'],'data'=>$payments['totals']],
         ];
 
     	$this->dispatch('financial-charts:update', charts: $this->charts);

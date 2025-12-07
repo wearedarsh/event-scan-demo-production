@@ -1,21 +1,21 @@
-@props([
-    'charts' => [],
-    'event' => null,
-])
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+@props(['charts' => [], 'event' => null])
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    window.ReportCharts.render(@json($charts));
+queueMicrotask(() => {
+    if (window.ReportCharts) {
+        window.ReportCharts.render(@json($charts, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT));
+    }
 });
+</script>
 
 @if($event)
-    window.addEventListener('{{ $event }}', (e) => {
-        setTimeout(() => {
+<script>
+window.addEventListener('{{ $event }}', e => {
+    queueMicrotask(() => {
+        if (window.ReportCharts) {
             window.ReportCharts.render(e.detail.charts || []);
-        }, 0);
+        }
     });
-@endif
+});
 </script>
+@endif

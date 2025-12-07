@@ -1,54 +1,85 @@
-if (!window.ReportCharts) {
-    window.ReportCharts = {
-        instances: {},
+import Chart from 'chart.js/auto';
+import { jsPDF } from 'jspdf';
 
-        render(charts) {
-            if (!Array.isArray(charts)) return;
+window.Chart = Chart;
+window.jspdf = { jsPDF };
 
-            charts.forEach(cfg => {
-                const el = document.getElementById(cfg.id);
-                if (!el) return;
 
-                if (window.ReportCharts.instances[cfg.id]) {
-                    window.ReportCharts.instances[cfg.id].destroy();
+window.ReportCharts = {
+    instances: {},
+
+    render(charts) {
+        if (!Array.isArray(charts)) return;
+
+        charts.forEach(cfg => {
+            const el = document.getElementById(cfg.id);
+            if (!el) return;
+
+            // Destroy previous chart
+            if (this.instances[cfg.id]) {
+                this.instances[cfg.id].destroy();
+            }
+
+            const isHorizontal = cfg.type === 'horizontal-bar';
+            const chartType = isHorizontal ? 'bar' : cfg.type;
+
+            const options = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: cfg.showLegend ?? (cfg.type !== 'bar') },
+                    tooltip: { enabled: true }
                 }
+            };
 
-                window.ReportCharts.instances[cfg.id] = new Chart(el, {
-                    type: cfg.type,
-                    data: {
-                        labels: cfg.labels,
-                        datasets: [{
-                            label: cfg.title,
-                            data: cfg.data
-                        }]
+            // Only bar/line need scales
+            if (['bar', 'line'].includes(chartType)) {
+                options.scales = {
+                    x: { 
+                        ticks: { autoSkip: true, maxRotation: 45 },
                     },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: { display: false },
-                            tooltip: { enabled: true }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                ticks: { precision: 0 }
-                            },
-                            x: {
-                                ticks: { autoSkip: true, maxRotation: 45 }
-                            }
-                        }
-                    }
-                });
+                    y: { beginAtZero: true }
+                };
+            }
+
+            // Horizontal bar support
+            if (isHorizontal) {
+                options.indexAxis = 'y';
+            }
+
+            this.instances[cfg.id] = new window.Chart(el, {
+                type: chartType,
+                data: {
+                    labels: cfg.labels,
+                    datasets: [{
+                        label: cfg.title,
+                        data: cfg.data,
+                        backgroundColor: cfg.backgroundColor || this.defaultColors(cfg.labels.length),
+                        borderColor: cfg.borderColor || '#3b82f6',
+                        borderWidth: 1
+                    }]
+                },
+                options
             });
-        }
-    };
-}
+        });
+    },
 
+    defaultColors(n) {
+        const base = [
+            '#60a5fa', '#34d399', '#f472b6',
+            '#facc15', '#fb7185', '#a78bfa'
+        ];
+        return Array.from({ length: n }, (_, i) => base[i % base.length] + '66');
+    }
+};
 
+/**
+ * File download helpers
+ */
 window.downloadChartPNG = function (id, filename = 'chart.png') {
     const el = document.getElementById(id);
     if (!el) return;
+
     const a = document.createElement('a');
     a.href = el.toDataURL('image/png', 1.0);
     a.download = filename;
@@ -74,18 +105,23 @@ window.downloadChartJPG = function (id, filename = 'chart.jpg') {
     a.click();
 };
 
-window.downloadChartPDF = async function (id, filename = 'chart.pdf') {
+window.downloadChartPDF = function (id, filename = 'chart.pdf') {
     const el = document.getElementById(id);
     if (!el) return;
 
     const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF({ orientation: 'landscape', unit: 'pt', format: 'a4' });
+    const pdf = new jsPDF({
+        orientation: 'landscape',
+        unit: 'pt',
+        format: 'a4'
+    });
 
     const imgData = el.toDataURL('image/png', 1.0);
+
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
-
     const margin = 24;
+
     const maxW = pageWidth - margin * 2;
     const maxH = pageHeight - margin * 2;
 
