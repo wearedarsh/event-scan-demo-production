@@ -26,15 +26,12 @@
     <!-- Session Groups -->
     <div class="px-6 space-y-4">
 
-        <x-admin.section-title title="Session Groups" />
+
 
         <x-admin.card class="p-5 space-y-4">
 
             <div class="flex items-center justify-between">
-                <p class="text-sm text-[var(--color-text-light)]">
-                    Manage all groups of sessions that belong to this event.
-                </p>
-
+                <x-admin.section-title title="Session Groups" />
                 <x-admin.outline-btn-icon
                     :href="route('admin.events.event-sessions.groups.create', ['event' => $event->id])"
                     icon="heroicon-o-plus">
@@ -76,7 +73,8 @@
                                 <div class="flex items-center gap-2">
                                     <x-admin.table-order-input
                                         wire:model.defer="orders.{{ $group->id }}"
-                                        class="rounded-sm text-xs"  />
+                                        wire:keydown.enter="updateOrder({{ $group->id }})"
+                                        class="rounded-sm text-xs" />
 
                                     <x-admin.table-order-input-enter
                                         :id="$group->id"
@@ -84,7 +82,6 @@
                                 </div>
                             </td>
 
-                            {{-- STATUS --}}
                             <td class="px-4 py-3">
                                 @if ($group->active)
                                 <x-admin.status-pill status="success">Active</x-admin.status-pill>
@@ -93,7 +90,6 @@
                                 @endif
                             </td>
 
-                            {{-- ACTIONS --}}
                             <td class="px-4 py-3 text-right">
                                 <div class="flex justify-end items-center gap-2">
 
@@ -106,19 +102,12 @@
                                         icon="rectangle-stack"
                                         label="Manage sessions" />
 
-                                    {{-- Toggle expands hidden row --}}
-                                    <button
-                                        type="button"
-                                        @click="openRow = openRow === {{ $group->id }} ? null : {{ $group->id }}"
-                                        class="text-[var(--color-text-light)] hover:text-[var(--color-text)]">
-                                        <x-heroicon-o-chevron-down class="w-4 h-4" />
-                                    </button>
+                                    <x-admin.table-actions-toggle :row-id="$group->id" />
 
                                 </div>
                             </td>
                         </tr>
 
-                        {{-- EXPANDED ROW (HIDDEN SECTION) --}}
                         <tr
                             wire:key="group-row-expanded-{{ $group->id }}"
                             x-cloak
@@ -158,11 +147,6 @@
                 </table>
             </x-admin.table>
 
-
-
-
-
-
         </x-admin.card>
 
     </div>
@@ -172,15 +156,12 @@
     <!-- Session Types -->
     <div class="px-6 space-y-4">
 
-        <x-admin.section-title title="Session Types" />
+
 
         <x-admin.card class="p-5 space-y-4">
 
             <div class="flex items-center justify-between">
-                <p class="text-sm text-[var(--color-text-light)]">
-                    Manage available types of sessions for this event.
-                </p>
-
+                <x-admin.section-title title="Session Types" />
                 <x-admin.outline-btn-icon
                     :href="route('admin.events.event-sessions.types.create', ['event' => $event->id])"
                     icon="heroicon-o-plus">
