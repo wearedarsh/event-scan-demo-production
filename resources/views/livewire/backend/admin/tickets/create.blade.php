@@ -1,109 +1,143 @@
-<div>
-    <div class="flex-row d-flex flex-1 rounded-2 p-3 align-items-center">
-        <h2 class="fs-4 text-brand-dark p-0 m-0">Create Ticket</h2>
-    </div>
+<div class="space-y-6">
 
-    <div class="flex-row d-flex flex-1 bg-white rounded-2 p-3">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb d-flex flex-row align-items-center">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.events.index') }}">Events</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.events.manage', $event->id) }}">{{ $event->title }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Create Ticket</li>
-            </ol>
-        </nav>
-    </div>
+    <!-- Breadcrumbs -->
+    <x-admin.breadcrumb :items="[
+        ['label' => 'Events', 'href' => route('admin.events.index')],
+        ['label' => $event->title, 'href' => route('admin.events.manage', $event->id)],
+        ['label' => 'Tickets', 'href' => route('admin.events.tickets.index', $event->id)],
+        ['label' => 'Create Ticket'],
+    ]" />
 
-    <div class="flex-column d-flex p-3 bg-white rounded-2 mt-3">
-        <div class="container mt-2">
-            <h4 class="mb-3">Create Ticket</h4>
+    <!-- Page Header -->
+    <x-admin.page-header
+        title="Create Ticket"
+        subtitle="Define a new ticket for {{ $event->title }}."
+    />
 
-            @if($errors->any())
-                <div class="col-12">
-                    <div class="alert alert-info" role="alert">
-                        <span class="font-m">{{ $errors->first() }}</span>
+    <!-- Alerts -->
+    @if($errors->any())
+        <x-admin.alert type="danger" :message="$errors->first()" />
+    @endif
+
+    @if (session()->has('success'))
+        <x-admin.alert type="success" :message="session('success')" />
+    @endif
+
+
+    <!-- Form Container -->
+    <div class="px-6">
+
+        <x-admin.card class="p-6 space-y-6">
+
+            <x-admin.section-title title="Ticket Details" />
+
+            <form wire:submit.prevent="store" class="space-y-6">
+
+                <div class="grid md:grid-cols-2 gap-6">
+
+                    <!-- Ticket Name -->
+                    <x-admin.input-text
+                        label="Ticket Name"
+                        model="name"
+                        class="w-full"
+                    />
+
+                    <!-- Price -->
+                    <x-admin.input-text
+                        label="Price (e.g., 600.00)"
+                        model="price"
+                        type="number"
+                        step="0.01"
+                        class="w-full"
+                    />
+
+                    <!-- Max Volume -->
+                    <x-admin.input-text
+                        label="Maximum Volume"
+                        model="max_volume"
+                        type="number"
+                        class="w-full"
+                    />
+
+                    <!-- Display Order -->
+                    <x-admin.input-text
+                        label="Display Order"
+                        model="display_order"
+                        type="number"
+                        class="w-full"
+                    />
+
+                    <!-- Ticket Group -->
+                    <div>
+                        <label class="form-label-custom">Ticket Group</label>
+                        <x-admin.select wire:model.live="ticket_group_id">
+                            <option value="">Select a Group</option>
+                            @foreach ($ticket_groups as $group)
+                                <option value="{{ $group->id }}">
+                                    {{ $group->name }}
+                                </option>
+                            @endforeach
+                        </x-admin.select>
                     </div>
-                </div>
-            @endif
 
-            @if (session()->has('success'))
-                <div class="col-12">
-                    <div class="alert alert-success" role="alert">
-                        <span class="font-m">{{ session('success') }}</span>
+                    <!-- Requires Document Upload -->
+                    <div>
+                        <label class="form-label-custom">Requires Document Upload?</label>
+                        <x-admin.select wire:model.live="requires_document_upload">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </x-admin.select>
                     </div>
-                </div>
-            @endif
 
-            <form wire:submit.prevent="store" class="row g-3">
-                <div class="col-md-6">
-                    <label for="name" class="form-label">Ticket Name</label>
-                    <input wire:model.live="name" type="text" class="form-control" id="name" placeholder="eg. Attendee">
-                </div>
+                    <!-- Document Upload Copy -->
+                    <div>
+                        <label class="form-label-custom">Document Upload Copy</label>
+                        <textarea
+                            wire:model.live="requires_document_copy"
+                            rows="4"
+                            class="input-text min-h-[120px]"
+                        ></textarea>
+                    </div>
 
-                <div class="col-md-6">
-                    <label for="price" class="form-label">Price</label>
-                    <span class="badge text-bg-light cursor-pointer font-s ms-2 px-2 py-1 rounded-5" data-coreui-toggle="tooltip" data-coreui-placement="top" title="Please ensure you use a decimal eg 600.00"><span class="text-brand-dark">more info</span></span>
-                    <input wire:model.live="price" type="text" class="form-control" id="price" placeholder="eg. 600.00">
-                </div>
-                
-                <div class="col-md-6">
-                    <label for="max_volume" class="form-label">Maximum Volume</label>
-                    <span class="badge text-bg-light cursor-pointer font-s ms-2 px-2 py-1 rounded-5" data-coreui-toggle="tooltip" data-coreui-placement="top" title="This is the maximum volume of this ticket a single person can purchase"><span class="text-brand-dark">more info</span></span>
-                    <input wire:model.live="max_volume" type="text" class="form-control" id="max_volume">
-                </div>
+                    <!-- Active -->
+                    <div>
+                        <label class="form-label-custom">Active?</label>
+                        <x-admin.select wire:model.live="active">
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </x-admin.select>
+                    </div>
 
-                <div class="col-md-6">
-                    <label for="display_order" class="form-label">Display order</label>
-                    <input wire:model.live="display_order" type="text" class="form-control" id="display_order">
-                </div>
+                    <!-- Display on FE -->
+                    <div>
+                        <label class="form-label-custom">Display on Event Info Page?</label>
+                        <x-admin.select wire:model.live="display_front_end">
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </x-admin.select>
+                    </div>
 
-                <div class="col-md-6">
-                    <label for="ticket_group_id" class="form-label">Ticket Group</label>
-                    <select wire:model.live="ticket_group_id" class="form-select">
-                        <option value="">Select a Group</option>
-                        @foreach ($ticket_groups as $group)
-                            <option value="{{ $group->id }}">{{ $group->name }}</option>
-                        @endforeach
-                    </select>
                 </div>
 
-                <div class="col-md-6">
-                    <label for="requires_document_upload" class="form-label">Requires Document Upload?</label>
-                    <span class="badge text-bg-light cursor-pointer font-s ms-2 px-2 py-1 rounded-5" data-coreui-toggle="tooltip" data-coreui-placement="top" title="Set this to yes if this ticket requires a document to be uploaded by the registrant upon purchase"><span class="text-brand-dark">more info</span></span>
-                    <select wire:model.live="requires_document_upload" class="form-select">
-                        <option value="0">No</option>
-                        <option value="1">Yes</option>
-                    </select>
+                <!-- Save Buttons -->
+                <div class="flex items-center gap-3 pt-4">
+                    <x-admin.button type="submit" variant="outline">
+                        <x-slot:icon>
+                            <x-heroicon-o-check class="h-4 w-4" />
+                        </x-slot:icon>
+                        Create Ticket
+                    </x-admin.button>
+
+                    <a href="{{ route('admin.events.tickets.index', $event->id) }}"
+                       class="btn-secondary">
+                        Cancel
+                    </a>
                 </div>
 
-                <div class="col-md-6">
-                    <label for="requires_document_copy" class="form-label">Document upload copy</label>
-                    <span class="badge text-bg-light cursor-pointer font-s ms-2 px-2 py-1 rounded-5" data-coreui-toggle="tooltip" data-coreui-placement="top" title="This is only required if this ticket requires a document to be uploaded upon purchase"><span class="text-brand-dark">more info</span></span>
-                    <textarea wire:model.live="requires_document_copy" class="form-control" id="requires_document_copy" rows="4"></textarea>
-                </div>
-
-                <div class="col-md-6">
-                    <label for="active" class="form-label">Active</label>
-                    <select wire:model.live="active" class="form-select">
-                        <option value="1">Yes</option>
-                        <option value="0">No</option>
-                    </select>
-                </div>
-
-                <div class="col-md-6">
-                    <label for="display_front_end" class="form-label">Display on event information page</label>
-                    <span class="badge text-bg-light cursor-pointer font-s ms-2 px-2 py-1 rounded-5" data-coreui-toggle="tooltip" data-coreui-placement="top" title="If this is one of your core tickets select yes for this to be displayed on the event information pages"><span class="text-brand-dark">more info</span></span>
-                    <select wire:model.live="display_front_end" class="form-select">
-                        <option value="1">Yes</option>
-                        <option value="0">No</option>
-                    </select>
-                </div>
-
-                <div class="col-12">
-                    <button type="submit" class="btn bg-brand-secondary">Create Ticket</button>
-                    <a href="{{ route('admin.events.tickets.index', $event->id) }}" class="btn btn-light"><span class="text-brand-dark">Cancel</span></a>
-                </div>
             </form>
-        </div>
+
+        </x-admin.card>
+
     </div>
+
 </div>

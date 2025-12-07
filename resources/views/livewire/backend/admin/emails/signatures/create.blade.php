@@ -1,15 +1,15 @@
 <div class="space-y-6">
 
-    <!-- Breadcrumbs -->
+    <!-- Breadcrumb -->
     <x-admin.breadcrumb :items="[
         ['label' => 'Email Signatures', 'href' => route('admin.emails.signatures.index')],
-        ['label' => 'Edit Signature'],
+        ['label' => 'Create Signature'],
     ]" />
 
     <!-- Page Header -->
     <x-admin.page-header
-        title="Edit Email Signature"
-        subtitle="Update the title and HTML content of this email signature."
+        title="Create Email Signature"
+        subtitle="Add a new reusable signature for outgoing emails." 
     />
 
 
@@ -30,8 +30,7 @@
 
             <x-admin.section-title title="Signature Details" />
 
-
-            <form wire:submit.prevent="update" class="space-y-6">
+            <form wire:submit.prevent="store" class="space-y-6">
 
                 <!-- Title -->
                 <x-admin.input-text
@@ -62,13 +61,13 @@
                 </div>
 
                 <!-- Buttons -->
-                <div class="flex items-center gap-3 pt-4">
+                <div class="flex items-center gap-3 pt-2">
 
                     <x-admin.button type="submit" variant="outline">
                         <x-slot:icon>
                             <x-heroicon-o-check class="h-4 w-4" />
                         </x-slot:icon>
-                        Update Signature
+                        Create Signature
                     </x-admin.button>
 
                     <a href="{{ route('admin.emails.signatures.index') }}" class="btn-secondary">

@@ -1,147 +1,278 @@
-<div>
-    <div class="flex-row d-flex flex-1 rounded-2 p-3 align-items-center">
-        <h2 class="fs-4 text-brand-dark p-0 m-0">Content for {{ $event->title }}</h2>
-    </div>
+<div class="space-y-6">
 
+    <!-- Breadcrumbs -->
+    <x-admin.breadcrumb :items="[
+        ['label' => 'Events', 'href' => route('admin.events.index')],
+        ['label' => $event->title, 'href' => route('admin.events.manage', $event->id)],
+        ['label' => 'Content'],
+    ]" />
+
+    <!-- Page Header -->
+    <x-admin.page-header
+        title="Content for {{ $event->title }}"
+        subtitle="Manage website content and downloads for this event."
+    />
+
+    <!-- Alerts -->
     @if($errors->any())
-        <div class="row">
-            <div class="col-12">
-                <div class="alert alert-info" role="alert">
-                    <span class="font-m">{{ $errors->first() }}</span>           
-                </div>
-            </div>
-        </div>
+        <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
 
-    @if (session()->has('success'))
-        <div class="row">
-            <div class="col-12">
-                <div class="alert alert-success" role="alert">
-                    <span class="font-m">{{ session('success') }}</span>           
-                </div>
-            </div>
-        </div>
+    @if(session('success'))
+        <x-admin.alert type="success" :message="session('success')" />
     @endif
 
-    <div class="flex-row d-flex flex-1 bg-white rounded-2 p-3">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb d-flex flex-row align-items-center">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.events.index') }}">Events</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.events.manage', $event->id) }}">{{$event->title}}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Content</li>
-            </ol>
-        </nav>
-    </div>
 
-    <div class="flex-column d-flex p-3 bg-white rounded-2 mt-3">
-        <div class="row mb-3">
-            <div class="col-sm-9">
-                <h3>Event content</h3>
+    <!-- EVENT CONTENT -->
+    <div class="px-6 space-y-4">
+
+        <x-admin.card class="p-5 space-y-4">
+
+            <div class="flex items-center justify-between">
+                <x-admin.section-title title="Event Content" />
+                <x-admin.outline-btn-icon
+                    :href="route('admin.events.content.create', ['event' => $event->id])"
+                    icon="heroicon-o-plus">
+                    Add Content
+                </x-admin.outline-btn-icon>
             </div>
-            <div class="col-sm-3">
-                <a class="btn bg-brand-secondary d-flex align-items-center justify-content-center width-auto" href="{{ route('admin.events.content.create', ['event' => $event->id]) }}"><span class="cil-plus me-1"></span>Add Event Content</a>
-            </div>
-        </div>
-        
-        <div class="table-responsive">
-            <table class="table table-bordered align-middle font-m">
-                <thead class="table-light">
-                    <tr>
-                        <th>Content title</th>
-                        <th>Order</th>
-                        <th>Status</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($event->contentAll as $content)
-                        <tr>
-                            <td>{{ $content->title }}</td>
-                            <td>
-                                {{$content->order}}
+
+            <x-admin.table>
+                <table class="min-w-full text-sm text-left">
+
+                    <thead>
+                        <tr class="text-xs uppercase text-[var(--color-text-light)] border-b border-[var(--color-border)]">
+                            <th class="px-4 py-3 w-6"></th>
+                            <th class="px-4 py-3">Title</th>
+                            <th class="px-4 py-3 w-28">Order</th>
+                            <th class="px-4 py-3">Status</th>
+                            <th class="px-4 py-3 text-right">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody x-data="{ openRow: null }">
+
+                        @foreach($event_contents as $content)
+
+                        <tr
+                            wire:key="content-row-{{ $content->id }}"
+                            class="hover:bg-[var(--color-surface-hover)] transition border-b border-[var(--color-border)]">
+
+                            <!-- Arrows -->
+                            <td class="px-2 py-3">
+                                <x-admin.table-order-up-down
+                                    :order="$orders['content'][$content->id]"
+                                    :id="$content->id"
+                                    type="content"
+                                />
                             </td>
-                            <td>
+
+                            <!-- Title -->
+                            <td class="px-4 py-3 font-medium">
+                                {{ $content->title }}
+                            </td>
+
+                            <!-- Order input -->
+                            <td class="px-4 py-3">
+                                <div class="flex items-center gap-2">
+                                    <x-admin.table-order-input
+                                        wire:model.defer="orders.content.{{ $content->id }}"
+                                        wire:keydown.enter="updateContentOrder({{ $content->id }})"
+                                        class="rounded-sm text-xs"
+                                    />
+
+                                    <x-admin.table-order-input-enter
+                                        :id="$content->id"
+                                        method="updateContentOrder"
+                                    />
+                                </div>
+                            </td>
+
+                            <!-- Status -->
+                            <td class="px-4 py-3">
                                 @if($content->active)
-                                    <span class="badge text-bg-success font-s fw-normal"><span class="text-brand-light">Active</span></span>
+                                    <x-admin.status-pill status="success">Active</x-admin.status-pill>
                                 @else
-                                    <span class="badge text-bg-danger font-s fw-normal"><span class="text-brand-light">Inactive</span></span>
+                                    <x-admin.status-pill status="danger">Inactive</x-admin.status-pill>
                                 @endif
                             </td>
-                            <td>
-                                <div class="dropdown">
-                                    <button class="btn bg-brand-secondary dropdown-toggle" type="button" data-coreui-toggle="dropdown" aria-expanded="false">
-                                        Action
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item font-m" href="{{route('admin.events.content.edit', ['event' => $event->id, 'content' => $content->id])}}">Edit</a></li>
-                                        <li><a class="dropdown-item font-m cursor-pointer" wire:confirm="Are you sure you want to delete this content?" wire:click.prevent="delete({{$content->id}})">Delete</a></li> 
-                                    </ul>
+
+                            <!-- Actions -->
+                            <td class="px-4 py-3 text-right">
+                                <div class="flex justify-end items-center gap-2">
+                                    <x-admin.table-action-button
+                                        type="link"
+                                        :href="route('admin.events.content.edit', [
+                                            'event' => $event->id,
+                                            'content' => $content->id
+                                        ])"
+                                        icon="pencil-square"
+                                        label="Edit"
+                                    />
+
+                                    <x-admin.table-actions-toggle :row-id="$content->id" />
+                                </div>
+                            </td>
+
+                        </tr>
+
+                        <!-- Expanded Row -->
+                        <tr
+                            wire:key="content-expanded-{{ $content->id }}"
+                            x-cloak
+                            x-show="openRow === {{ $content->id }}"
+                            x-transition.duration.150ms
+                            class="bg-[var(--color-surface-hover)] border-b border-[var(--color-border)]">
+
+                            <td colspan="5" class="px-4 py-4">
+                                <div class="flex justify-end gap-3">
+
+                                    <x-admin.table-action-button
+                                        type="button"
+                                        wireClick="deleteContent({{ $content->id }})"
+                                        confirm="Delete this content?"
+                                        icon="trash"
+                                        label="Delete"
+                                        danger="true"
+                                    />
+
                                 </div>
                             </td>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="3" class="text-center">No content found.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+
+                        @endforeach
+
+                    </tbody>
+                </table>
+            </x-admin.table>
+
+        </x-admin.card>
+
     </div>
 
-    <div class="flex-column d-flex p-3 bg-white rounded-2 mt-3">
-        <div class="row mb-3">
-            <div class="col-sm-9">
-                <h3>Event Downloads</h3>
+
+    <!-- EVENT DOWNLOADS -->
+    <div class="px-6 space-y-4">
+
+        <x-admin.card class="p-5 space-y-4">
+
+            <div class="flex items-center justify-between">
+                <x-admin.section-title title="Event Downloads" />
+                <x-admin.outline-btn-icon
+                    :href="route('admin.events.downloads.create', ['event' => $event->id])"
+                    icon="heroicon-o-plus">
+                    Add Download
+                </x-admin.outline-btn-icon>
             </div>
-            <div class="col-sm-3">
-                <a class="btn bg-brand-secondary d-flex align-items-center justify-content-center width-auto" href="{{route('admin.events.downloads.create', ['event' => $event->id])}}"><span class="cil-plus me-1"></span>Add Event Download</a>
-            </div>
-        </div>
-        
-        <div class="table-responsive">
-            <table class="table table-bordered align-middle font-m">
-                <thead class="table-light">
-                    <tr>
-                        <th>Download title</th>
-                        <th>Order</th>
-                        <th>Status</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($downloads as $download)
-                        <tr>
-                            <td>{{ $download->title }}</td>
-                            <td>{{ $download->display_order }}</td>
-                            <td>
+
+            <x-admin.table>
+                <table class="min-w-full text-sm text-left">
+
+                    <thead>
+                        <tr class="text-xs uppercase text-[var(--color-text-light)] border-b border-[var(--color-border)]">
+                            <th class="px-4 py-3 w-6"></th>
+                            <th class="px-4 py-3">Title</th>
+                            <th class="px-4 py-3 w-28">Order</th>
+                            <th class="px-4 py-3">Status</th>
+                            <th class="px-4 py-3 text-right">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody x-data="{ openRow: null }">
+
+                        @foreach($downloads as $download)
+
+                        <tr
+                            wire:key="download-row-{{ $download->id }}"
+                            class="hover:bg-[var(--color-surface-hover)] transition border-b border-[var(--color-border)]">
+
+                            <!-- Arrows -->
+                            <td class="px-2 py-3">
+                                <x-admin.table-order-up-down
+                                    :order="$orders['downloads'][$download->id] ?? $download->display_order ?? 0"
+                                    :id="$download->id"
+                                    type="downloads"
+                                />
+                            </td>
+
+                            <td class="px-4 py-3 font-medium">
+                                {{ $download->title }}
+                            </td>
+
+                            <td class="px-4 py-3">
+                                <div class="flex items-center gap-2">
+                                    <x-admin.table-order-input
+                                        wire:model.defer="orders.downloads.{{ $download->id }}"
+                                        wire:keydown.enter="updateDownloadOrder({{ $download->id }})"
+                                        class="rounded-sm text-xs"
+                                    />
+
+                                    <x-admin.table-order-input-enter
+                                        :id="$download->id"
+                                        method="updateDownloadOrder"
+                                    />
+                                </div>
+                            </td>
+
+                            <td class="px-4 py-3">
                                 @if($download->active)
-                                    <span class="badge text-bg-success font-s fw-normal"><span class="text-brand-light">Active</span></span>
+                                    <x-admin.status-pill status="success">Active</x-admin.status-pill>
                                 @else
-                                    <span class="badge text-bg-danger font-s fw-normal"><span class="text-brand-light">Inactive</span></span>
+                                    <x-admin.status-pill status="danger">Inactive</x-admin.status-pill>
                                 @endif
                             </td>
-                            <td>
-                                <div class="dropdown">
-                                    <button class="btn bg-brand-secondary dropdown-toggle" type="button" data-coreui-toggle="dropdown" aria-expanded="false">
-                                        Action
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item font-m" href="{{ route('admin.events.downloads.edit', ['event' => $event->id, 'download' => $download->id]) }}">Edit</a></li>
-                                        <li><a class="dropdown-item font-m cursor-pointer" wire:confirm="Are you sure you want to delete this download?" wire:click.prevent="deleteDownload({{ $download->id }})">Delete</a></li> 
-                                    </ul>
+
+                            <td class="px-4 py-3 text-right">
+                                <div class="flex justify-end items-center gap-2">
+
+                                    <x-admin.table-action-button
+                                        type="link"
+                                        :href="route('admin.events.downloads.edit', [
+                                            'event' => $event->id,
+                                            'download' => $download->id
+                                        ])"
+                                        icon="pencil-square"
+                                        label="Edit"
+                                    />
+
+                                    <x-admin.table-actions-toggle :row-id="$download->id" />
+
+                                </div>
+                            </td>
+
+                        </tr>
+
+                        <tr
+                            wire:key="download-expanded-{{ $download->id }}"
+                            x-cloak
+                            x-show="openRow === {{ $download->id }}"
+                            x-transition.duration.150ms
+                            class="bg-[var(--color-surface-hover)] border-b border-[var(--color-border)]">
+
+                            <td colspan="5" class="px-4 py-4">
+                                <div class="flex justify-end gap-3">
+
+                                    <x-admin.table-action-button
+                                        type="button"
+                                        wireClick="deleteDownload({{ $download->id }})"
+                                        confirm="Delete this download?"
+                                        icon="trash"
+                                        label="Delete"
+                                        danger="true"
+                                    />
+
                                 </div>
                             </td>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="3" class="text-center">No downloads found.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+
+                        @endforeach
+
+                    </tbody>
+                </table>
+            </x-admin.table>
+
+        </x-admin.card>
+
     </div>
+
 </div>
-    

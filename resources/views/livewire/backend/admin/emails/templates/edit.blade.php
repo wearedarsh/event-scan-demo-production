@@ -2,134 +2,67 @@
 
     <!-- Breadcrumb -->
     <x-admin.breadcrumb :items="[
-        ['label' => 'Email templates', 'href' => route('admin.emails.templates.index')],
-        ['label' => 'Edit email'],
+        ['label' => 'Email Templates', 'href' => route('admin.emails.templates.index')],
+        ['label' => 'Edit Template'],
     ]" />
 
     <!-- Page Header -->
-    <div class="px-6 flex items-center justify-between">
-        <div>
-            <h1 class="text-2xl font-semibold text-[var(--color-text)]">
-                Edit email template
-            </h1>
-            <p class="text-sm text-[var(--color-text-light)] mt-1">
-                Update the content of this email template.
-            </p>
-        </div>
-    </div>
+    <x-admin.page-header
+        title="Edit Email Template"
+        subtitle="Update the HTML used in this system email template."
+    />
 
     <!-- Alerts -->
     @if($errors->any())
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-warning)]">
-                <p class="text-sm text-[var(--color-warning)]">
-                    {{ $errors->first() }}
-                </p>
-            </div>
-        </div>
+        <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
 
-    @if (session()->has('success'))
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-success)]">
-                <p class="text-sm text-[var(--color-success)]">
-                    {{ session('success') }}
-                </p>
-            </div>
-        </div>
+    @if (session('success'))
+        <x-admin.alert type="success" :message="session('success')" />
     @endif
 
 
-    <!-- ============================================================= -->
-    <!-- MAIN EDIT FORM -->
-    <!-- ============================================================= -->
+    <!-- Main Form -->
     <div class="px-6">
 
-       
+        <x-admin.card class="p-6 space-y-6">
 
-        <form wire:submit.prevent="update" class="soft-card p-6 space-y-6">
-             <x-admin.section-title title="Email content" />
+            <x-admin.section-title title="Template content" />
 
-            <!-- Content Editor -->
-            <div>
-                <p class="text-xs text-[var(--color-text-light)] mb-2">
-                    Need help using the editor?
-                    <a href="https://guide.eventscan.co.uk/guide-content-editor"
-                       class="text-[var(--color-primary)] underline"
-                       target="_blank">View our guide</a>
-                </p>
+            <form wire:submit.prevent="update" class="space-y-6">
 
-                <div wire:ignore>
-                    <textarea id="editor" wire:model="html_content"></textarea>
+
+
+                <!-- Editor -->
+                <div class="space-y-2">
+
+                    <div wire:ignore>
+                        <x-admin.editor
+                            model="html_content"
+                        />
+                    </div>
                 </div>
 
-                <!-- CKEditor -->
-                <script src="https://cdn.ckeditor.com/ckeditor5/45.0.0/ckeditor5.umd.js"></script>
 
-                <script>
-                    const {
-                        ClassicEditor,
-                        Essentials,
-                        Bold,
-                        Paragraph,
-                        Link,
-                        List,
-                        Heading
-                    } = CKEDITOR;
+                <!-- Buttons -->
+                <div class="flex items-center gap-3 pt-4">
 
-                    ClassicEditor
-                        .create(document.querySelector('#editor'), {
-                            licenseKey: '{{ $ck_apikey }}',
-                            plugins: [
-                                Essentials,
-                                Bold,
-                                Paragraph,
-                                Link,
-                                List,
-                                Heading
-                            ],
-                            toolbar: [
-                                'undo', 'redo', '|',
-                                'heading', '|',
-                                'bold', '|',
-                                'link', '|',
-                                'numberedList', 'bulletedList'
-                            ],
-                            heading: {
-                                options: [
-                                    { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-                                    { model: 'heading', view: 'h3', title: 'Heading', class: 'ck-heading_heading' },
-                                ]
-                            },
-                            initialData: @js($html_content)
-                        })
-                        .then(editor => {
-                            editor.model.document.on('change:data', () => {
-                                @this.set('html_content', editor.getData())
-                            })
-                        })
-                        .catch(error => {
-                            console.error(error);
-                        });
-                </script>
-            </div>
+                    <x-admin.button type="submit" variant="outline">
+                        <x-slot:icon>
+                            <x-heroicon-o-check class="h-4 w-4" />
+                        </x-slot:icon>
+                        Update Template
+                    </x-admin.button>
 
-            <!-- Buttons -->
-            <div class="flex items-center gap-3 pt-4">
-                <button type="submit" class="flex items-center px-3 py-1.5 rounded-md text-sm font-medium
-                                border border-[var(--color-primary)] text-[var(--color-primary)]
-                                hover:bg-[var(--color-primary)] hover:text-white
-                                transition">
-                    Update email
-                </button>
+                    <a href="{{ route('admin.emails.templates.index') }}" class="btn-secondary">
+                        Cancel
+                    </a>
 
-                <a href="{{ route('admin.emails.templates.index') }}"
-                   class="btn-secondary">
-                    Cancel
-                </a>
-            </div>
+                </div>
 
-        </form>
+            </form>
+
+        </x-admin.card>
 
     </div>
 

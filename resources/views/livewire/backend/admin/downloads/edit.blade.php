@@ -1,32 +1,107 @@
-<div>
-    <div class="flex-row d-flex flex-1 rounded-2 p-3 align-items-center">
-        <h2 class="fs-4 text-brand-dark p-0 m-0">Edit Event Download</h2>
+<div class="space-y-6">
+
+    <!-- Breadcrumbs -->
+    <x-admin.breadcrumb :items="[
+        ['label' => 'Events', 'href' => route('admin.events.index')],
+        ['label' => $event->title, 'href' => route('admin.events.manage', $event->id)],
+        ['label' => 'Content', 'href' => route('admin.events.content.index', $event->id)],
+        ['label' => 'Edit Download'],
+    ]" />
+
+    <!-- Page Header -->
+    <x-admin.page-header
+        title="Edit Event Download"
+        subtitle="Update the details for this downloadable file."
+    />
+
+    <!-- Alerts -->
+    @if($errors->any())
+        <x-admin.alert type="danger" :message="$errors->first()" />
+    @endif
+
+    @if (session()->has('success'))
+        <x-admin.alert type="success" :message="session('success')" />
+    @endif
+
+
+    <div class="px-6">
+        <x-admin.card class="p-6 space-y-6">
+
+            <x-admin.section-title title="Download Details" />
+
+            <form wire:submit.prevent="update" class="space-y-6">
+
+                <div class="grid md:grid-cols-2 gap-6">
+
+                    <!-- Title -->
+                    <x-admin.input-text
+                        label="Title"
+                        model="title"
+                        class="w-full"
+                    />
+
+                    <!-- Display Order -->
+                    <x-admin.input-text
+                        label="Display Order"
+                        model="display_order"
+                        type="number"
+                        class="w-full"
+                    />
+
+                    <!-- Active -->
+                    <div>
+                        <label class="form-label-custom">Active?</label>
+                        <x-admin.select wire:model.live="active">
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </x-admin.select>
+                    </div>
+
+                </div>
+
+
+                <!-- Upload New File -->
+                <div class="space-y-2">
+
+                    <label class="form-label-custom">Replace File</label>
+
+                    <input
+                        type="file"
+                        wire:model="new_file"
+                        class="input-text p-2"
+                    />
+
+                    @error('new_file')
+                        <x-admin.input-error :message="$message" />
+                    @enderror
+
+                    @if ($new_file)
+                        <p class="text-xs text-[var(--color-text-light)]">
+                            New file selected: <strong>{{ $new_file->getClientOriginalName() }}</strong>
+                        </p>
+                    @endif
+
+                </div>
+
+
+                <!-- Buttons -->
+                <div class="flex items-center gap-3">
+                    <x-admin.button type="submit" variant="outline">
+                        <x-slot:icon>
+                            <x-heroicon-o-check class="h-4 w-4" />
+                        </x-slot:icon>
+                        Update Download
+                    </x-admin.button>
+
+                    <a href="{{ route('admin.events.content.index', $event->id) }}"
+                       class="btn-secondary">
+                        Cancel
+                    </a>
+                </div>
+
+            </form>
+
+        </x-admin.card>
     </div>
 
-    <div class="flex-column d-flex p-3 bg-white rounded-2 mt-3">
-        <form wire:submit.prevent="update" class="row g-3">
-            <div class="col-md-6">
-                <label for="title" class="form-label">Title</label>
-                <input wire:model.defer="title" type="text" class="form-control" id="title">
-            </div>
-
-            <div class="col-md-6">
-                <label for="display_order" class="form-label">Display Order</label>
-                <input wire:model.defer="display_order" type="number" class="form-control" id="display_order">
-            </div>
-
-            <div class="col-md-6">
-                <label for="active" class="form-label">Active</label>
-                <select wire:model="active" class="form-select">
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
-                </select>
-            </div>
-
-            <div class="col-12">
-                <button type="submit" class="btn bg-brand-secondary">Update Download</button>
-                <a href="{{ route('admin.events.content.index', $event->id) }}" class="btn btn-light"><span class="text-brand-dark">Cancel</span></a>
-            </div>
-        </form>
-    </div>
 </div>

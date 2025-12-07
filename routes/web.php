@@ -226,6 +226,7 @@ Route::middleware(['auth', HasAdminAccess::class])
         Route::get('emails/send-email', App\Livewire\Backend\Admin\Emails\SendEmail::class)->name('emails.send-email');
         Route::get('emails/templates/{email_html_content}/edit', App\Livewire\Backend\Admin\Emails\Templates\Edit::class)->name('emails.templates.edit');
         Route::get('emails/signatures/{signature_html_content}/edit', App\Livewire\Backend\Admin\Emails\Signatures\Edit::class)->name('emails.signatures.edit');
+        Route::get('emails/signatures/create', App\Livewire\Backend\Admin\Emails\Signatures\Create::class)->name('emails.signatures.create');
 
         Route::get('emails/broadcasts/index', App\Livewire\Backend\Admin\Emails\Broadcasts\Index::class)->name('emails.broadcasts.index');
         Route::get('{event}/emails/broadcasts/{email_send}/view', App\Livewire\Backend\Admin\Emails\Broadcasts\View::class)->name('emails.broadcasts.view');

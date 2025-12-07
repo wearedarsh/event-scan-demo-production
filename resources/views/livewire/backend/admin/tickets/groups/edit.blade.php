@@ -89,12 +89,12 @@
                 <!-- Buttons -->
                 <div class="flex items-center gap-3">
 
-                    <x-admin.outline-btn-icon
-                        type="submit"
-                        icon="heroicon-o-check"
-                    >
-                        Update Ticket Group
-                    </x-admin.outline-btn-icon>
+                    <x-admin.button type="submit" variant="outline">
+                        <x-slot:icon>
+                            <x-heroicon-o-check class="h-4 w-4" />
+                        </x-slot:icon>
+                        Update
+                    </x-admin.button>
 
                     <a href="{{ route('admin.events.tickets.index', $event->id) }}"
                        class="btn-secondary">

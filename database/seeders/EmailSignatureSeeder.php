@@ -16,7 +16,7 @@ class EmailSignatureSeeder extends Seeder
     {
         
         $email_signatures = [
-            ['key_name' => 'event_scan', 
+            ['key_name' => 'john_doe', 
                 'title' => 'John Doe', 
                 'html_content' => '<p><strong>Many thanks<br>Eventscan</p>',
                 'active' => true

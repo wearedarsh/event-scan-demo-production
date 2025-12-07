@@ -12,9 +12,8 @@ use App\Models\TicketGroup;
 class Index extends Component
 {
     public Event $event;
-    public $currency_symbol;
+    public string $currency_symbol;
 
-    // Holds only UI values – never overwritten by hydration
     public $orders = [
         'groups' => [],
         'tickets' => [],
@@ -30,7 +29,6 @@ class Index extends Component
 
     private function loadOrders()
     {
-        // Load display order values into UI state
         $this->orders['groups'] = $this->event->allTicketGroups
             ->pluck('display_order', 'id')
             ->toArray();
@@ -40,31 +38,79 @@ class Index extends Component
             ->toArray();
     }
 
-    public function updateGroupOrder($groupId, $value)
+    public function moveGroupUp($id)
     {
-        $value = max(1, (int) $value);
+        $group = TicketGroup::findOrFail($id);
 
-        TicketGroup::where('id', $groupId)->update([
-            'display_order' => $value
-        ]);
+        if ($group->display_order <= 1) {
+            return;
+        }
 
-        $this->orders['groups'][$groupId] = $value;
+        $group->decrement('display_order', 1);
 
-        $this->dispatch('notify', 'Group display order updated.');
+        $this->loadOrders();
     }
 
-    public function updateTicketOrder($ticketId, $value)
+    public function moveGroupDown($id)
     {
-        $value = max(1, (int) $value);
+        $group = TicketGroup::findOrFail($id);
 
-        Ticket::where('id', $ticketId)->update([
-            'display_order' => $value
-        ]);
+        $group->increment('display_order', 1);
 
-        $this->orders['tickets'][$ticketId] = $value;
-
-        $this->dispatch('notify', 'Ticket display order updated.');
+        $this->loadOrders();
     }
+
+    public function updateGroupOrder($id)
+    {
+        if (!isset($this->orders['groups'][$id])) {
+            return;
+        }
+
+        $newOrder = max(1, (int) $this->orders['groups'][$id]);
+
+        TicketGroup::where('id', $id)
+            ->update(['display_order' => $newOrder]);
+
+        $this->loadOrders();
+    }
+
+
+    public function moveTicketUp($id)
+    {
+        $ticket = Ticket::findOrFail($id);
+
+        if ($ticket->display_order <= 1) {
+            return;
+        }
+
+        $ticket->decrement('display_order', 1);
+
+        $this->loadOrders();
+    }
+
+    public function moveTicketDown($id)
+    {
+        $ticket = Ticket::findOrFail($id);
+
+        $ticket->increment('display_order', 1);
+
+        $this->loadOrders();
+    }
+
+    public function updateTicketOrder($id)
+    {
+        if (!isset($this->orders['tickets'][$id])) {
+            return;
+        }
+
+        $newOrder = max(1, (int) $this->orders['tickets'][$id]);
+
+        Ticket::where('id', $id)
+            ->update(['display_order' => $newOrder]);
+
+        $this->loadOrders();
+    }
+
 
     public function deleteTicket(int $id)
     {
@@ -78,7 +124,6 @@ class Index extends Component
     {
         $group = TicketGroup::findOrFail($id);
 
-        // Soft delete tickets in group
         $group->tickets()->update(['deleted_at' => now()]);
         $group->delete();
 
@@ -86,31 +131,20 @@ class Index extends Component
         $this->loadOrders();
     }
 
+
     public function render()
     {
+        $groups = TicketGroup::where('event_id', $this->event->id)->get()
+            ->sortBy(fn($g) => $this->orders['groups'][$g->id] ?? $g->display_order);
 
-        $freshGroups = TicketGroup::where('event_id', $this->event->id)
-            ->orderBy('name')
-            ->get();
-
-        $freshTickets = Ticket::where('event_id', $this->event->id)
-            ->orderBy('name')
-            ->get();
-
-        $sortedGroups = $freshGroups->sortBy(
-            fn ($g) => $this->orders['groups'][$g->id] ?? $g->display_order
-        );
-
-        $sortedTickets = $freshTickets->sortBy(
-            fn ($t) => $this->orders['tickets'][$t->id] ?? $t->display_order
-        );
+        $tickets = Ticket::where('event_id', $this->event->id)->get()
+            ->sortBy(fn($t) => $this->orders['tickets'][$t->id] ?? $t->display_order);
 
         return view('livewire.backend.admin.tickets.index', [
             'event' => $this->event,
             'currency_symbol' => $this->currency_symbol,
-            'event_ticket_groups' => $sortedGroups,
-            'event_tickets' => $sortedTickets,
+            'event_ticket_groups' => $groups,
+            'event_tickets' => $tickets,
         ]);
     }
-
 }

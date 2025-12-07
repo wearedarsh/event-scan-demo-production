@@ -10,21 +10,27 @@ use App\Models\EmailSignature;
 class Edit extends Component
 {
     public EmailSignature $signature_html_content;
-    public $html_content;
+
+    public string $title = '';
+    public string $html_content = '';
 
     public function mount(EmailSignature $signature_html_content)
     {
         $this->signature_html_content = $signature_html_content;
+
+        $this->title = $signature_html_content->title;
         $this->html_content = $signature_html_content->html_content;
     }
 
     public function update()
     {
         $this->validate([
+            'title' => 'required|string|max:255',
             'html_content' => 'required|string',
         ]);
 
         $this->signature_html_content->update([
+            'title' => $this->title,
             'html_content' => $this->html_content,
         ]);
 
@@ -32,12 +38,8 @@ class Edit extends Component
         return redirect()->route('admin.emails.signatures.index');
     }
 
-    
-
     public function render()
     {
-        return view('livewire.backend.admin.emails.signatures.edit', [
-            'ck_apikey' => config('services.ckeditor.api_key')
-        ]);
+        return view('livewire.backend.admin.emails.signatures.edit');
     }
 }
