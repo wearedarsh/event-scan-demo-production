@@ -8,164 +8,82 @@
         ['label' => 'Reports'],
     ]" />
 
-    <!-- Page Header -->
-    <div class="px-6 flex items-center justify-between">
-        <div>
-            <h1 class="text-2xl font-semibold text-[var(--color-text)]">Reports</h1>
-            <p class="text-sm text-[var(--color-text-light)] mt-1">
-                View all reporting available for this event.
-            </p>
-        </div>
-    </div>
+    <!-- Header -->
+    <x-admin.page-header
+        title="Reports"
+        subtitle="View reporting and analytics for this event."
+    />
 
     <!-- Alerts -->
     @if($errors->any())
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-warning)]">
-                <p class="text-sm text-[var(--color-warning)] font-medium">
-                    {{ $errors->first() }}
-                </p>
-            </div>
-        </div>
+        <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
 
-    @if (session()->has('success'))
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-success)]">
-                <p class="text-sm text-[var(--color-success)] font-medium">
-                    {{ session('success') }}
-                </p>
-            </div>
-        </div>
+    @if(session('success'))
+        <x-admin.alert type="success" :message="session('success')" />
     @endif
 
 
-    <!-- ================================ -->
-    <!-- REPORT CARDS                     -->
-    <!-- ================================ -->
+    <!-- Attendee Reports (top action card) -->
+    <div class="px-6">
+        <x-admin.action-card
+            title="Attendee reports"
+            description="View and export all attendees for this event."
+        >
+            <x-link-arrow href="{{ route('admin.events.reports.attendees.view', $event->id) }}">
+                View attendees
+            </x-link-arrow>
+        </x-admin.action-card>
+    </div>
 
-    <!-- Feedback & Demographics -->
-    <div class="soft-card p-6 mx-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <!-- Tile cards -->
+    <div class="px-6 space-y-4">
+
+        <div class="grid md:grid-cols-2 gap-6">
 
             <!-- Feedback -->
-            <div class="p-5 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]">
-                <div class="flex items-center gap-2">
-                    <x-heroicon-o-chat-bubble-left-right class="h-5 w-5 text-[var(--color-primary)]" />
-                    <h5 class="text-base font-semibold text-[var(--color-text)]">Feedback forms</h5>
-                </div>
-
-                <p class="text-sm text-[var(--color-text-light)] mt-2">
-                    View the feedback form responses for this event.
-                </p>
-
-                <a href="{{ route('admin.events.reports.feedback.index', $event->id) }}"
-                   class="inline-flex items-center gap-2 mt-4 px-3 py-1.5 rounded-md
-                          bg-[var(--color-primary)] text-white text-sm
-                          hover:bg-[var(--color-primary-dark)] transition">
-                    <x-heroicon-o-arrow-right class="h-4 w-4" />
-                    View
-                </a>
-            </div>
+            <x-admin.tile-card
+                title="Feedback forms"
+                description="View feedback responses submitted by attendees."
+            >
+                <x-link-arrow href="{{ route('admin.events.reports.feedback.index', $event->id) }}">
+                    View feedback
+                </x-link-arrow>
+            </x-admin.tile-card>
 
             <!-- Demographics -->
-            <div class="p-5 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]">
-                <div class="flex items-center gap-2">
-                    <x-heroicon-o-chart-pie class="h-5 w-5 text-[var(--color-primary)]" />
-                    <h5 class="text-base font-semibold text-[var(--color-text)]">Demographics</h5>
-                </div>
-
-                <p class="text-sm text-[var(--color-text-light)] mt-2">
-                    View the demographics of attendees for this event.
-                </p>
-
-                <a href="{{ route('admin.events.reports.demographics.view', $event->id) }}"
-                   class="inline-flex items-center gap-2 mt-4 px-3 py-1.5 rounded-md
-                          bg-[var(--color-primary)] text-white text-sm
-                          hover:bg-[var(--color-primary-dark)] transition">
-                    <x-heroicon-o-arrow-right class="h-4 w-4" />
-                    View
-                </a>
-            </div>
-
-        </div>
-    </div>
-
-
-
-    <!-- Financial & Check-ins -->
-    <div class="soft-card p-6 mx-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <x-admin.tile-card
+                title="Demographics"
+                description="See demographic breakdowns for attendees."
+            >
+                <x-link-arrow href="{{ route('admin.events.reports.demographics.view', $event->id) }}">
+                    View demographics
+                </x-link-arrow>
+            </x-admin.tile-card>
 
             <!-- Financial -->
-            <div class="p-5 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]">
-                <div class="flex items-center gap-2">
-                    <x-heroicon-o-banknotes class="h-5 w-5 text-[var(--color-primary)]" />
-                    <h5 class="text-base font-semibold text-[var(--color-text)]">Financial</h5>
-                </div>
-
-                <p class="text-sm text-[var(--color-text-light)] mt-2">
-                    View the financial reporting for this event.
-                </p>
-
-                <a href="{{ route('admin.events.reports.financial.view', $event->id) }}"
-                   class="inline-flex items-center gap-2 mt-4 px-3 py-1.5 rounded-md
-                          bg-[var(--color-primary)] text-white text-sm
-                          hover:bg-[var(--color-primary-dark)] transition">
-                    <x-heroicon-o-arrow-right class="h-4 w-4" />
-                    View
-                </a>
-            </div>
+            <x-admin.tile-card
+                title="Financial"
+                description="Review revenue, orders, and financial activity."
+            >
+                <x-link-arrow href="{{ route('admin.events.reports.financial.view', $event->id) }}">
+                    View financial report
+                </x-link-arrow>
+            </x-admin.tile-card>
 
             <!-- Check-ins -->
-            <div class="p-5 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]">
-                <div class="flex items-center gap-2">
-                    <x-heroicon-o-check-circle class="h-5 w-5 text-[var(--color-primary)]" />
-                    <h5 class="text-base font-semibold text-[var(--color-text)]">Check ins</h5>
-                </div>
-
-                <p class="text-sm text-[var(--color-text-light)] mt-2">
-                    View the check-in reporting for this event.
-                </p>
-
-                <a href="{{ route('admin.events.reports.checkin.view', $event->id) }}"
-                   class="inline-flex items-center gap-2 mt-4 px-3 py-1.5 rounded-md
-                          bg-[var(--color-primary)] text-white text-sm
-                          hover:bg-[var(--color-primary-dark)] transition">
-                    <x-heroicon-o-arrow-right class="h-4 w-4" />
-                    View
-                </a>
-            </div>
+            <x-admin.tile-card
+                title="Check-ins"
+                description="Analyse check-in activity and scanning performance."
+            >
+                <x-link-arrow href="{{ route('admin.events.reports.checkin.view', $event->id) }}">
+                    View check-in activity
+                </x-link-arrow>
+            </x-admin.tile-card>
 
         </div>
-    </div>
 
-
-    <!-- Attendees -->
-    <div class="soft-card p-6 mx-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-            <!-- Attendees -->
-            <div class="p-5 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]">
-                <div class="flex items-center gap-2">
-                    <x-heroicon-o-users class="h-5 w-5 text-[var(--color-primary)]" />
-                    <h5 class="text-base font-semibold text-[var(--color-text)]">Attendees</h5>
-                </div>
-
-                <p class="text-sm text-[var(--color-text-light)] mt-2">
-                    View and export all attendees for this event.
-                </p>
-
-                <a href="{{ route('admin.events.reports.attendees.view', $event->id) }}"
-                   class="inline-flex items-center gap-2 mt-4 px-3 py-1.5 rounded-md
-                          bg-[var(--color-primary)] text-white text-sm
-                          hover:bg-[var(--color-primary-dark)] transition">
-                    <x-heroicon-o-arrow-right class="h-4 w-4" />
-                    View
-                </a>
-            </div>
-
-        </div>
     </div>
 
 </div>

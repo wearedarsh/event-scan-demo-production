@@ -15,11 +15,9 @@
         subtitle="{{ $event->title }}"
     />
 
-
     <!-- Filters -->
     <div class="px-6">
         <x-admin.card class="p-6 space-y-6">
-
             <x-admin.section-title title="Filters" />
 
             <div class="grid md:grid-cols-2 gap-6">
@@ -43,27 +41,22 @@
                 </div>
 
             </div>
-
         </x-admin.card>
     </div>
-
 
     <!-- Tools -->
     <div class="px-6">
         <x-admin.card class="p-6 space-y-4">
-
             <x-admin.section-title title="Tools" />
 
             <div class="flex flex-wrap items-center gap-3">
 
-                <!-- PDF export -->
                 <x-admin.outline-btn-icon
                     icon="heroicon-o-arrow-down-tray"
                     :href="route('admin.events.reports.financial.pdf.export', $event->id) . '?date_from=' . $date_from . '&date_to=' . $date_to">
                     Export PDF
                 </x-admin.outline-btn-icon>
 
-                <!-- XLSX export -->
                 <x-admin.outline-btn-icon
                     icon="heroicon-o-arrow-down-tray"
                     :href="route('admin.events.reports.payments.export', $event->id) . '?date_from=' . $date_from . '&date_to=' . $date_to">
@@ -71,15 +64,12 @@
                 </x-admin.outline-btn-icon>
 
             </div>
-
         </x-admin.card>
     </div>
-
 
     <!-- Totals -->
     <div class="px-6">
         <x-admin.card class="p-6">
-
             <x-admin.section-title title="Overview" />
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -101,53 +91,23 @@
                 />
 
             </div>
-
         </x-admin.card>
     </div>
 
-
-    <!-- Ticket Charts -->
+    <!-- Tickets -->
     <div class="px-6">
         <x-admin.card class="p-6 space-y-6">
-
             <x-admin.section-title title="Tickets" />
 
             <div class="grid md:grid-cols-2 gap-6">
 
                 <!-- Chart: quantity -->
-                <div class="space-y-3">
-                    <div class="flex items-center justify-between">
-                        <span class="text-sm text-[var(--color-text-light)]">Quantity</span>
+                <x-reports.chart-block
+                    id="chart-tickets-count"
+                    label="Quantity"
+                />
 
-                        <div class="flex items-center gap-2">
-                            <x-admin.icon-link
-                                icon="heroicon-o-arrow-down-tray"
-                                onclick="downloadChartJPG('chart-tickets-count','tickets-count.jpg')"
-							
-                            >
-							<p>JPG</P>
-							</x-admin.icon-link>
-                            <x-admin.icon-link
-                                icon="heroicon-o-arrow-down-tray"
-                                onclick="downloadChartPNG('chart-tickets-count','tickets-count.png')"
-                            >
-							<p>PNG</P>
-							</x-admin.icon-link>
-                            <x-admin.icon-link
-                                icon="heroicon-o-arrow-down-tray"
-                                onclick="downloadChartPDF('chart-tickets-count','tickets-count.pdf')"
-                            >
-							<p>PDF</P>
-							</x-admin.icon-link>
-                        </div>
-                    </div>
-
-                    <div class="chart-container h-[340px]">
-                        <canvas id="chart-tickets-count" wire:ignore></canvas>
-                    </div>
-                </div>
-
-                <!-- Ticket breakdown list -->
+                <!-- Ticket breakdown -->
                 <div>
                     <ul class="space-y-2">
                         @php $tk = $report['tickets'] ?? ['labels'=>[],'counts'=>[],'totals'=>[]]; @endphp
@@ -168,75 +128,31 @@
 
             </div>
 
-
-            <!-- Chart: value -->
             <div class="grid md:grid-cols-2 gap-6">
 
-                <div class="space-y-3">
-                    <div class="flex items-center justify-between">
-                        <span class="text-sm text-[var(--color-text-light)]">Value</span>
-
-                        <div class="flex items-center gap-2">
-                            <x-admin.icon-link icon="heroicon-o-arrow-down-tray"
-                                onclick="downloadChartJPG('chart-tickets-value','tickets-value.jpg')">
-								<p>JPG</p>
-							</x-admin.icon-link>
-                            <x-admin.icon-link icon="heroicon-o-arrow-down-tray"
-                                onclick="downloadChartPNG('chart-tickets-value','tickets-value.png')">
-								<p>PNG</P>
-							</x-admin.icon-link>
-                            <x-admin.icon-link icon="heroicon-o-arrow-down-tray"
-                                onclick="downloadChartPDF('chart-tickets-value','tickets-value.pdf')">
-								<p>PDF</p>
-							</x-admin.icon-link>
-                        </div>
-                    </div>
-
-                    <div class="chart-container h-[340px]">
-                        <canvas id="chart-tickets-value" wire:ignore></canvas>
-                    </div>
-                </div>
+                <!-- Chart: value -->
+                <x-reports.chart-block
+                    id="chart-tickets-value"
+                    label="Value"
+                />
 
             </div>
 
         </x-admin.card>
     </div>
 
-
     <!-- Payment Methods -->
     <div class="px-6">
         <x-admin.card class="p-6 space-y-6">
-
             <x-admin.section-title title="Payment methods" />
-
 
             <!-- Payment totals -->
             <div class="grid md:grid-cols-2 gap-6">
 
-                <div class="space-y-3">
-                    <div class="flex items-center justify-between">
-                        <span class="text-sm text-[var(--color-text-light)]">Total value</span>
-
-                        <div class="flex items-center gap-2">
-                            <x-admin.icon-link icon="heroicon-o-arrow-down-tray"
-                                onclick="downloadChartJPG('chart-payments-value','payments-value.jpg')">
-								<p>JPG</p>
-							</x-admin.icon-link>
-                            <x-admin.icon-link icon="heroicon-o-arrow-down-tray"
-                                onclick="downloadChartPNG('chart-payments-value','payments-value.png')">
-								<p>PNG</p>
-							</x-admin.icon-link>
-                            <x-admin.icon-link icon="heroicon-o-arrow-down-tray"
-                                onclick="downloadChartPDF('chart-payments-value','payments-value.pdf')">
-								<p>PDF</p>
-							</x-admin.icon-link>
-                        </div>
-                    </div>
-
-                    <div class="chart-container h-[340px]">
-                        <canvas id="chart-payments-value" wire:ignore></canvas>
-                    </div>
-                </div>
+                <x-reports.chart-block
+                    id="chart-payments-value"
+                    label="Total value"
+                />
 
                 <!-- Breakdown list -->
                 <div>
@@ -257,40 +173,20 @@
 
             </div>
 
-
             <!-- Payment counts -->
             <div class="grid md:grid-cols-2 gap-6">
 
-                <div class="space-y-3">
-                    <div class="flex items-center justify-between">
-                        <span class="text-sm text-[var(--color-text-light)]">Count</span>
-
-                        <div class="flex items-center gap-2">
-                            <x-admin.icon-link icon="heroicon-o-arrow-down-tray"
-                                onclick="downloadChartJPG('chart-payments-count','payments-count.jpg')">
-								<p>JPG</p>
-							</x-admin.icon-link>
-                            <x-admin.icon-link icon="heroicon-o-arrow-down-tray"
-                                onclick="downloadChartPNG('chart-payments-count','payments-count.png')">
-								<p>PNG</p>
-							</x-admin.icon-link>
-                            <x-admin.icon-link icon="heroicon-o-arrow-down-tray"
-                                onclick="downloadChartPDF('chart-payments-count','payments-count.pdf')">
-								<p>PDF</p>
-							</x-admin.icon-link>
-                        </div>
-                    </div>
-
-                    <div class="chart-container h-[340px]">
-                        <canvas id="chart-payments-count" wire:ignore></canvas>
-                    </div>
-                </div>
+                <x-reports.chart-block
+                    id="chart-payments-count"
+                    label="Count"
+                />
 
             </div>
 
         </x-admin.card>
     </div>
 
-	<x-reports.charts-js :charts="$charts" event="financial-charts:update" />
+    <!-- Global JS for charts -->
+    <x-reports.charts-js :charts="$charts" event="financial-charts:update" />
 
 </div>
