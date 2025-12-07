@@ -1,23 +1,14 @@
 @props([
-    'model' => null, // wire:model target like "orders.5"
-    'min' => 1,
-    'max' => null,
     'step' => 1,
 ])
 
-<div class="space-y-1 w-20">
+<div class="space-y-1 w-12">
     <input
-        type="number"
-        min="{{ $min }}"
-        @if($max) max="{{ $max }}" @endif
         step="{{ $step }}"
-        @if($model) wire:model.lazy="{{ $model }}" @endif
-        {{ $attributes->merge(['class' => 'input-text text-center p-1']) }}
+        {{ $attributes->merge(['class' => 'rounded-sm text-xs text-center p-0.5 border border-[var(--color-border)] bg-white']) }}
     />
 
-    @if($model)
-        @error($model)
-            <x-admin.input-error :message="$message" />
-        @enderror
-    @endif
+    @error($attributes->wire('model'))
+        <x-admin.input-error :message="$message" />
+    @enderror
 </div>

@@ -47,31 +47,44 @@
 
                     <thead>
                         <tr class="text-xs uppercase text-[var(--color-text-light)] border-b border-[var(--color-border)]">
+                            <th class="px-4 py-3 w-6"></th>
                             <th class="px-4 py-3">Name</th>
-                            <th class="px-4 py-3 w-24">Order</th>
+                            <th class="px-4 py-3 w-28">Order</th>
                             <th class="px-4 py-3">Status</th>
                             <th class="px-4 py-3 text-right">Actions</th>
                         </tr>
                     </thead>
 
-                    <tbody x-data="{ openRow: null }" @click.away="openRow = null">
+                    <tbody x-data="{ openRow: null }">
 
-                        @forelse($event_session_groups as $group)
+                        @foreach ($event_session_groups as $group)
 
-                        <!-- Main Row -->
-                        <tr class="group border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
+                        <tr
+                            wire:key="group-row-{{ $group->id }}"
+                            class="hover:bg-[var(--color-surface-hover)] transition border-b border-[var(--color-border)]">
+                            <td class="px-2 py-3">
+                                <x-admin.table-order-up-down
+                                    :order="$orders[$group->id]"
+                                    :id="$group->id" />
+                            </td>
 
                             <td class="px-4 py-3 font-medium">
                                 {{ $group->friendly_name }}
                             </td>
 
                             <td class="px-4 py-3">
-                                <x-admin.table-order-input
-                                    model="orders.{{ $group->id }}"
-                                    wire:change="updateSessionGroupOrder({{ $group->id }}, $event.target.value)"
-                                />
+                                <div class="flex items-center gap-2">
+                                    <x-admin.table-order-input
+                                        wire:model.defer="orders.{{ $group->id }}"
+                                        class="rounded-sm text-xs"  />
+
+                                    <x-admin.table-order-input-enter
+                                        :id="$group->id"
+                                        method="updateOrder" />
+                                </div>
                             </td>
 
+                            {{-- STATUS --}}
                             <td class="px-4 py-3">
                                 @if ($group->active)
                                 <x-admin.status-pill status="success">Active</x-admin.status-pill>
@@ -80,48 +93,50 @@
                                 @endif
                             </td>
 
+                            {{-- ACTIONS --}}
                             <td class="px-4 py-3 text-right">
                                 <div class="flex justify-end items-center gap-2">
 
-                                    <!-- Priority CTA: Manage Sessions -->
                                     <x-admin.table-action-button
                                         type="link"
                                         :href="route('admin.events.event-sessions.manage', [
-                                            'event' => $event->id,
-                                            'group' => $group->id
-                                        ])"
+                                'event' => $event->id,
+                                'group' => $group->id
+                            ])"
                                         icon="rectangle-stack"
                                         label="Manage sessions" />
 
-                                    <!-- Toggle for advanced actions -->
-                                    <x-admin.table-actions-toggle :row-id="$group->id" />
+                                    {{-- Toggle expands hidden row --}}
+                                    <button
+                                        type="button"
+                                        @click="openRow = openRow === {{ $group->id }} ? null : {{ $group->id }}"
+                                        class="text-[var(--color-text-light)] hover:text-[var(--color-text)]">
+                                        <x-heroicon-o-chevron-down class="w-4 h-4" />
+                                    </button>
 
                                 </div>
                             </td>
-
                         </tr>
 
-                        <!-- Hidden Expanded Row -->
-                        <tr x-cloak
+                        {{-- EXPANDED ROW (HIDDEN SECTION) --}}
+                        <tr
+                            wire:key="group-row-expanded-{{ $group->id }}"
+                            x-cloak
                             x-show="openRow === {{ $group->id }}"
                             x-transition.duration.150ms
                             class="bg-[var(--color-surface-hover)] border-b border-[var(--color-border)]">
-
-                            <td colspan="4" class="px-4 py-4">
-
+                            <td colspan="5" class="px-4 py-4">
                                 <div class="flex flex-wrap items-center justify-end gap-3">
 
-                                    <!-- Edit -->
                                     <x-admin.table-action-button
                                         type="link"
                                         :href="route('admin.events.event-sessions.groups.edit', [
-                                            'event' => $event->id,
-                                            'group' => $group->id
-                                        ])"
+                                'event' => $event->id,
+                                'group' => $group->id
+                            ])"
                                         icon="pencil-square"
                                         label="Edit" />
 
-                                    <!-- Delete -->
                                     @if($group->sessions->isEmpty())
                                     <x-admin.table-action-button
                                         type="button"
@@ -133,24 +148,20 @@
                                     @endif
 
                                 </div>
-
                             </td>
                         </tr>
 
-                        @empty
-
-                        <tr>
-                            <td colspan="4" class="px-4 py-6 text-center text-[var(--color-text-light)]">
-                                No session groups found.
-                            </td>
-                        </tr>
-
-                        @endforelse
+                        @endforeach
 
                     </tbody>
 
                 </table>
             </x-admin.table>
+
+
+
+
+
 
         </x-admin.card>
 
@@ -188,7 +199,7 @@
                         </tr>
                     </thead>
 
-                    <tbody>
+                    <tbody wire:sortable="reorderSessionGroups">
                         @forelse($event_session_types as $type)
 
                         <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">

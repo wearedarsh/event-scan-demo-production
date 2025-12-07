@@ -24,6 +24,7 @@
     },
     "devDependencies": {
         "autoprefixer": "^10.4.21",
+        "livewire-sortable": "^1.0.0",
         "postcss": "^8.5.6",
         "sass": "^1.86.3",
         "tailwindcss": "^4.1.17"
