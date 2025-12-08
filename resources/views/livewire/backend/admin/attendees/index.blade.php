@@ -98,11 +98,15 @@
 
         </div>
 
-
+        
         <!-- Attendees table -->
         <x-admin.section-title title="Attendees" />
+        
 
         <x-admin.card hover="false" class="p-6 space-y-4">
+            @if(session()->has('group'))
+                <x-admin.alert type="success" :message="session('group')" />
+            @endif
 
             <!-- Payment method filters -->
             <div class="flex flex-wrap items-center gap-2 mb-2">

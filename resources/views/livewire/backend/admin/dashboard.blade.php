@@ -1,11 +1,6 @@
-<div class="space-y-6">
-
-    <!-- Breadcrumb -->
-    <x-admin.breadcrumb :items="[
-        ['label' => 'Home'],
-    ]" />
-
+<div class="">
     <!-- Header -->
+    <div class="my-6">
     <x-admin.page-header
         title="Welcome, {{ Auth::user()->first_name }}"
         subtitle="Quick overview and tools for managing your events.">
@@ -17,6 +12,7 @@
         </x-admin.outline-btn-icon>
 
     </x-admin.page-header>
+    </div>
 
 
     <!-- Quick links -->

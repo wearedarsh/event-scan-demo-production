@@ -11,30 +11,27 @@
     <x-admin.page-header
         title="Testimonials"
         subtitle="Manage all website testimonials."
-    >
-    </x-admin.page-header>
-
+    />
 
     <!-- Alerts -->
-    @if($errors->any())
+    @if ($errors->any())
         <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
 
-    @if(session('success'))
+    @if (session('success'))
         <x-admin.alert type="success" :message="session('success')" />
     @endif
 
 
-    <!-- Main Table Section -->
+    <!-- Main Section -->
     <div class="px-6 space-y-4">
 
         <x-admin.section-title title="Testimonials" />
 
         <x-admin.card class="p-5 space-y-4">
 
-            <!-- Header Actions -->
+            <!-- Header Row -->
             <div class="flex items-center justify-between">
-
                 <h3 class="font-medium">All Testimonials</h3>
 
                 <x-admin.outline-btn-icon
@@ -42,7 +39,6 @@
                     icon="heroicon-o-plus">
                     Add testimonial
                 </x-admin.outline-btn-icon>
-
             </div>
 
 
@@ -52,6 +48,7 @@
 
                     <thead>
                         <tr class="text-xs uppercase text-[var(--color-text-light)] border-b border-[var(--color-border)]">
+                            <th class="px-4 py-3 w-6"></th>
                             <th class="px-4 py-3">Title</th>
                             <th class="px-4 py-3 w-24">Order</th>
                             <th class="px-4 py-3">Status</th>
@@ -63,21 +60,41 @@
 
                         @forelse($testimonials as $t)
 
-                        <!-- Main Row -->
-                        <tr x-data class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
+                        <!-- MAIN ROW -->
+                        <tr
+                            wire:key="testimonial-row-{{ $t->id }}"
+                            class="hover:bg-[var(--color-surface-hover)] transition border-b border-[var(--color-border)]"
+                        >
+
+                            <!-- Up/Down Order Buttons (matches session groups) -->
+                            <td class="px-2 py-3">
+                                <x-admin.table-order-up-down
+                                    :order="$orders[$t->id]"
+                                    :id="$t->id"
+                                    moveUp="moveUp"
+                                    moveDown="moveDown"
+                                />
+                            </td>
 
                             <!-- Title -->
-                            <td class="px-4 py-3">
+                            <td class="px-4 py-3 font-medium">
                                 {{ $t->title }}
                             </td>
 
                             <!-- Order Input -->
-                            <td class="px-4 py-3 w-20">
-                                <x-admin.table-order-input
-                                    model="orders.{{ $t->id }}"
-                                    wire:change="updateOrder({{ $t->id }}, $event.target.value)"
-                                />
-                                
+                            <td class="px-4 py-3">
+                                <div class="flex items-center gap-2">
+                                    <x-admin.table-order-input
+                                        wire:model.defer="orders.{{ $t->id }}"
+                                        wire:keydown.enter="updateOrder({{ $t->id }})"
+                                        class="rounded-sm text-xs"
+                                    />
+
+                                    <x-admin.table-order-input-enter
+                                        :id="$t->id"
+                                        method="updateOrder"
+                                    />
+                                </div>
                             </td>
 
                             <!-- Status -->
@@ -93,30 +110,30 @@
                             <td class="px-4 py-3 text-right">
                                 <div class="flex justify-end items-center gap-2">
 
-                                    <!-- Edit -->
                                     <x-admin.table-action-button
                                         type="link"
                                         :href="route('admin.website.testimonials.edit', $t->id)"
                                         icon="pencil-square"
-                                        label="Edit"
-                                    />
+                                        label="Edit" />
 
-                                    <!-- Toggle -->
+                                    <!-- Toggle row -->
                                     <x-admin.table-actions-toggle :row-id="$t->id" />
 
                                 </div>
                             </td>
+
                         </tr>
 
 
-                        <!-- Expanded Action Row -->
-                        <tr x-cloak
+                        <!-- EXPANDED ROW -->
+                        <tr
+                            wire:key="testimonial-row-expanded-{{ $t->id }}"
+                            x-cloak
                             x-show="openRow === {{ $t->id }}"
                             x-transition.duration.150ms
-                            class="bg-[var(--color-surface-hover)] border-b border-[var(--color-border)]">
-
-                            <td colspan="4" class="px-4 py-4">
-
+                            class="bg-[var(--color-surface-hover)] border-b border-[var(--color-border)]"
+                        >
+                            <td colspan="5" class="px-4 py-4">
                                 <div class="flex flex-wrap items-center justify-end gap-3">
 
                                     <x-admin.table-action-button
@@ -129,14 +146,13 @@
                                     />
 
                                 </div>
-
                             </td>
                         </tr>
 
                         @empty
 
                         <tr>
-                            <td colspan="4" class="px-4 py-6 text-center text-[var(--color-text-light)]">
+                            <td colspan="5" class="px-4 py-6 text-center text-[var(--color-text-light)]">
                                 No testimonials found.
                             </td>
                         </tr>
@@ -149,7 +165,7 @@
             </x-admin.table>
 
 
-            <!-- Pagination -->
+            <!-- Pagination (if using paginate instead of get()) -->
             @if(method_exists($testimonials, 'links'))
                 <x-admin.pagination :paginator="$testimonials" />
             @endif

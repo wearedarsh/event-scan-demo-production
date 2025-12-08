@@ -14,39 +14,66 @@ class Index extends Component
 
     public function mount()
     {
-        $this->testimonials = Testimonial::orderBy('display_order', 'asc')->get();
+        $this->loadTestimonials();
+    }
+
+    private function loadTestimonials()
+    {
+        $this->testimonials = Testimonial::orderBy('display_order')->get();
 
         $this->orders = $this->testimonials
             ->pluck('display_order', 'id')
             ->toArray();
     }
 
-    public function updateOrder($id, $value)
+    public function moveUp($id)
     {
-        $value = max(1, (int) $value);
+        $item = Testimonial::findOrFail($id);
 
-        Testimonial::where('id', $id)->update([
-            'display_order' => $value
-        ]);
+        if ($item->display_order <= 1) {
+            return;
+        }
 
-        // Refresh the collection
-        $this->orders[$id] = $value;
-        $this->dispatch('notify', 'Display order updated.');
+        $item->decrement('display_order', 1);
+
+        $this->loadTestimonials();
     }
 
+    public function moveDown($id)
+    {
+        $item = Testimonial::findOrFail($id);
 
+        $item->increment('display_order', 1);
 
+        $this->loadTestimonials();
+    }
+
+    public function updateOrder($id)
+    {
+        if (!isset($this->orders[$id])) {
+            return;
+        }
+
+        $newOrder = max(1, (int)$this->orders[$id]);
+
+        Testimonial::where('id', $id)->update([
+            'display_order' => $newOrder,
+        ]);
+
+        $this->loadTestimonials();
+        session()->flash('success', 'Order updated');
+    }
 
     public function delete(int $id)
     {
-        $content = Testimonial::findOrFail($id);
-        $content->delete();
+        Testimonial::findOrFail($id)->delete();
+
         session()->flash('success', 'Testimonial deleted successfully.');
+        $this->loadTestimonials();
     }
 
     public function render()
     {
-        $this->testimonials = Testimonial::orderBy('display_order')->get();
         return view('livewire.backend.admin.website.testimonials.index');
     }
 }

@@ -42,11 +42,6 @@
                     </x-admin.button>
                     @endif
 
-                    <x-admin.button variant="outline" :href="https://">
-                    <x-slot:icon><x-heroicon-o-device-phone-mobile class="h-4 w-4" /></x-slot:icon>
-                    Apple
-                </x-admin.button>
-
             </div>
 
 

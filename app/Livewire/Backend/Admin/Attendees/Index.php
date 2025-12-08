@@ -60,7 +60,7 @@ class Index extends Component
         $attendee->attendee_group_id = $groupId ?: null;
         $attendee->save();
 
-        $this->dispatch('notify', 'Group updated.');
+        session()->flash('group', 'Group updated');
     }
 
 
