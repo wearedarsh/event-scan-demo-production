@@ -11,7 +11,13 @@
     <x-admin.page-header
         title="Testimonials"
         subtitle="Manage all website testimonials."
-    />
+    >
+<x-admin.outline-btn-icon
+                    :href="route('admin.website.testimonials.create')"
+                    icon="heroicon-o-plus">
+                    Add testimonial
+                </x-admin.outline-btn-icon>
+    </x-admin.page-header>
 
     <!-- Alerts -->
     @if ($errors->any())
@@ -26,21 +32,7 @@
     <!-- Main Section -->
     <div class="px-6 space-y-4">
 
-        <x-admin.section-title title="Testimonials" />
-
         <x-admin.card class="p-5 space-y-4">
-
-            <!-- Header Row -->
-            <div class="flex items-center justify-between">
-                <h3 class="font-medium">All Testimonials</h3>
-
-                <x-admin.outline-btn-icon
-                    :href="route('admin.website.testimonials.create')"
-                    icon="heroicon-o-plus">
-                    Add testimonial
-                </x-admin.outline-btn-icon>
-            </div>
-
 
             <!-- Table -->
             <x-admin.table>

@@ -7,7 +7,7 @@
     @if($for) for="{{ $for }}" @endif
     {{ $attributes->merge(['class' => 'form-label-custom flex items-center gap-1']) }}
 >
-    {{ $slot }}
+    <p class="text-xs">{{ $slot }}</p>
 
     @if($required)
         <span class="text-[var(--color-danger)]">*</span>

@@ -1,98 +1,190 @@
-<div>
+<div class="space-y-6">
 
-    <div class="flex-row d-flex flex-1 rounded-2 p-3 align-items-center">
-        <h2 class="fs-4 text-brand-dark p-0 m-0">Feedback Forms</h2>
-    </div>
+    <!-- Breadcrumbs -->
+    <x-admin.breadcrumb :items="[
+        ['label' => 'Home', 'href' => route('admin.dashboard')],
+        ['label' => 'Events', 'href' => route('admin.events.index')],
+        ['label' => $event->title, 'href' => route('admin.events.manage', $event->id)],
+        ['label' => 'Feedback Forms'],
+    ]" />
 
+
+    <!-- Page Header -->
+    <x-admin.page-header
+        title="Feedback Forms"
+        subtitle="Manage all feedback forms for this event."
+    />
+
+
+    <!-- Alerts -->
     @if($errors->any())
-        <div class="row">
-            <div class="col-12">
-                <div class="alert alert-info" role="alert">
-                    <span class="font-m">{{ $errors->first() }}</span>           
-                </div>
-            </div>
-        </div>
+        <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
 
-    @if (session()->has('success'))
-        <div class="row">
-            <div class="col-12">
-                <div class="alert alert-success" role="alert">
-                    <span class="font-m">{{ session('success') }}</span>           
-                </div>
-            </div>
-        </div>
+    @if(session('success'))
+        <x-admin.alert type="success" :message="session('success')" />
     @endif
 
-    <div class="flex-row d-flex flex-1 bg-white rounded-2 p-3">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb d-flex flex-row align-items-center">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.events.index') }}">Events</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.events.manage', $event->id) }}">{{ $event->title }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Feedback Forms</li>
-            </ol>
-        </nav>
+
+    <!-- Communication Block -->
+    <div class="px-6">
+        <x-admin.card class="p-5 space-y-4">
+
+            <x-admin.section-title title="Communication" />
+
+            <x-admin.outline-btn-icon
+                :href="route('admin.events.emails.send-email', [
+                    'event' => $event->id,
+                    'audience' => 'attendees_incomplete_feedback',
+                    'lock' => 1
+                ])"
+                icon="heroicon-o-envelope"
+            >
+                Send email reminder
+            </x-admin.outline-btn-icon>
+
+        </x-admin.card>
     </div>
 
-    <div class="flex-row d-flex flex-1 bg-white rounded-2 p-3 mb-3">
-        <div class="col-12">
-            <h5>Communication</h5>
-                <a class="btn bg-brand-secondary"
-                    href="{{ route('admin.events.emails.send-email', ['event' => $event->id, 'audience' => 'attendees_incomplete_feedback', 'lock' => 1]) }}">
-                    <span class="cil-envelope-closed me-2"></span><span class="text-brand-light">Send email reminder</span>
-                </a>
-        </div>
-    </div>
 
-    <div class="flex-column d-flex p-3 bg-white rounded-2 mt-3">
+    <!-- Feedback Forms Table -->
+    <div class="px-6 space-y-4">
+        
+        <x-admin.section-title title="Feedback Forms" />
 
-        <div class="table-responsive">
-            <table class="table table-bordered align-middle font-m" style="margin-bottom:150px;">
-                <thead class="table-light">
-                    <tr>
-                        <th>Title</th>
-                        <th>Status</th>
-                        <th style="width: 150px;"></th>
+        <x-admin.card class="p-5 space-y-4">
+
+            <x-admin.table>
+                <table class="min-w-full text-sm text-left">
+
+                    <thead>
+                    <tr class="text-xs uppercase text-[var(--color-text-light)]
+                               border-b border-[var(--color-border)]">
+                        <th class="px-4 py-3">Title</th>
+                        <th class="px-4 py-3">Status</th>
+                        <th class="px-4 py-3 w-32 text-right">Actions</th>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+
+                    <tbody x-data="{ openRow: null }" @click.away="openRow = null">
+
                     @forelse($event->feedbackFormsAll as $form)
-                        <tr>
-                            <td>{{ $form->title }}</td>
-                            <td>
+
+                        <!-- Row -->
+                        <tr
+                            class="border-b border-[var(--color-border)]
+                                   hover:bg-[var(--color-surface-hover)] transition">
+
+                            <!-- Title -->
+                            <td class="px-4 py-3 font-medium">
+                                {{ $form->title }}
+                            </td>
+
+                            <!-- Status -->
+                            <td class="px-4 py-3">
                                 @if($form->active)
-                                    <span class="badge text-bg-success font-m"><span class="font-s text-white fw-normal">Active</span></span>
+                                    <x-admin.status-pill status="success">Active</x-admin.status-pill>
                                 @else
-                                    <span class="badge text-bg-danger font-m"><span class="font-s text-white fw-normal">Inactive</span></span>
+                                    <x-admin.status-pill status="danger">Inactive</x-admin.status-pill>
                                 @endif
                             </td>
-                            <td>
-                                
 
-                                <div class="dropdown">
-                                    <button class="btn bg-brand-secondary dropdown-toggle" type="button" data-coreui-toggle="dropdown" aria-expanded="false">
-                                        Action
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item font-m" href="{{ route('admin.events.feedback-form.manage', [$event->id, $form->id]) }}">Manage</a></li>
-                                        <li><a class="dropdown-item font-m" href="{{ route('admin.events.feedback-form.preview.index', [$event->id, $form->id]) }}">Preview</a></li>
-                                        <li><a class="dropdown-item font-m" href="{{ route('admin.events.reports.feedback.pdf.export', [$event->id, $form->id]) }}">Download report</a></li>
-                                        <li><a class="dropdown-item font-m" href="{{ route('admin.events.reports.feedback.view', ['event' => $event->id, 'feedback_form' => $form->id]) }}">View report</a></li>
-                                        
-                                        <li><a class="dropdown-item font-m" href="{{ route('admin.events.feedback-form.edit', [$event->id, $form->id]) }}">Edit</a></li>
-                                    </ul>
+                            <!-- Actions -->
+                            <td class="px-4 py-3 text-right">
+                                <div class="flex justify-end items-center gap-2">
+
+                                    <!-- Quick link: View results -->
+                                    <x-admin.table-action-button
+                                        type="link"
+                                        icon="chart-bar"
+                                        label="View"
+                                        :href="route('admin.events.reports.feedback.view', [
+                                            'event' => $event->id,
+                                            'feedback_form' => $form->id
+                                        ])"
+                                    />
+
+                                    <!-- Toggle for expanded actions -->
+                                    <x-admin.table-actions-toggle :row-id="$form->id" />
+
                                 </div>
                             </td>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="3" class="text-center">No feedback forms found for this event.</td>
+
+
+                        <!-- Expanded Action Row -->
+                        <tr x-cloak
+                            x-show="openRow === {{ $form->id }}"
+                            x-transition.duration.150ms
+                            class="bg-[var(--color-surface-hover)]
+                                   border-b border-[var(--color-border)]">
+                            <td colspan="3" class="px-4 py-4">
+
+                                <div class="flex flex-wrap justify-end gap-3">
+
+                                    <x-admin.table-action-button
+                                        type="link"
+                                        icon="eye"
+                                        label="Preview"
+                                        :href="route('admin.events.feedback-form.preview.index', [
+                                            $event->id,
+                                            $form->id
+                                        ])"
+                                    />
+
+                                    <x-admin.table-action-button
+                                        type="link"
+                                        icon="document-arrow-down"
+                                        label="Download report"
+                                        :href="route('admin.events.reports.feedback.pdf.export', [
+                                            $event->id,
+                                            $form->id
+                                        ])"
+                                    />
+
+                                    <x-admin.table-action-button
+                                        type="link"
+                                        icon="chart-bar"
+                                        label="View report"
+                                        :href="route('admin.events.reports.feedback.view', [
+                                            'event' => $event->id,
+                                            'feedback_form' => $form->id
+                                        ])"
+                                    />
+
+                                    <x-admin.table-action-button
+                                        type="link"
+                                        icon="pencil-square"
+                                        label="Edit"
+                                        :href="route('admin.events.feedback-form.edit', [
+                                            $event->id,
+                                            $form->id
+                                        ])"
+                                    />
+
+                                </div>
+
+                            </td>
                         </tr>
+
+                    @empty
+
+                        <tr>
+                            <td colspan="3"
+                                class="px-4 py-6 text-center text-[var(--color-text-light)]">
+                                No feedback forms found for this event.
+                            </td>
+                        </tr>
+
                     @endforelse
-                </tbody>
-            </table>
-        </div>
+
+                    </tbody>
+
+                </table>
+            </x-admin.table>
+
+        </x-admin.card>
 
     </div>
+
 </div>

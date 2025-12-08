@@ -3,11 +3,11 @@
     <!-- Header -->
     <x-admin.page-header
         title="Manual Check-In"
-        subtitle="{{ $event->title }} – {{ $group->friendly_name }}"
+        subtitle="{{ $event->title }} / {{ $group->friendly_name }}"
     />
 
     <!-- Back Link -->
-    <div class="px-6 -mt-4">
+    <div class="px-6 mt-4">
         <x-admin.icon-link
             :href="route('admin.events.manual-check-in.groups', $event->id)"
             icon="heroicon-o-arrow-left"
@@ -47,7 +47,7 @@
 
         @endif
 
-        <div class="pt-2">
+        <div class="pt-4">
             <x-admin.icon-link
                 :href="route('admin.events.manual-check-in.groups', $event->id)"
                 icon="heroicon-o-arrow-left"

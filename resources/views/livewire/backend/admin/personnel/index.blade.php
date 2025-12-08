@@ -50,7 +50,6 @@
         <x-admin.card class="p-5 space-y-4">
 
             <div class="flex items-center justify-between">
-                <h3 class="font-medium">Groups</h3>
 
                 <!-- Add Group -->
                 <x-admin.outline-btn-icon

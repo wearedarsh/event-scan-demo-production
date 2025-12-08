@@ -69,7 +69,7 @@ class ReportFinancialExportController extends Controller
 				'event'      => $event,
 				'report'      => $report,
 				'brand_color' => '#142B54',
-				'logo_path'   => resource_path('brand/logo.jpg'),
+				'logo_path'   => resource_path('brand/logo.png'),
 				'exported_at'  => $exportedAt,
     			'date_from_uk' => $dateFromUk,
     			'date_to_uk'   => $dateToUk,
