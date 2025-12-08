@@ -1,49 +1,61 @@
 <div class="space-y-6">
 
     <!-- Header -->
-    <div class="px-6">
-        <h1 class="text-2xl font-semibold text-[var(--color-text)]">Manual Check-In</h1>
-        <p class="text-sm text-[var(--color-text-light)] mt-1">
-            {{ $event->title }} – {{ $group->friendly_name }}
-        </p>
+    <x-admin.page-header
+        title="Manual Check-In"
+        subtitle="{{ $event->title }} – {{ $group->friendly_name }}"
+    />
 
-        <a href="{{ route('admin.events.manual-check-in.groups', $event->id) }}"
-           class="inline-flex items-center text-sm text-[var(--color-primary)] hover:underline mt-3">
-            ← Back to groups
-        </a>
+    <!-- Back Link -->
+    <div class="px-6 -mt-4">
+        <x-admin.icon-link
+            :href="route('admin.events.manual-check-in.groups', $event->id)"
+            icon="heroicon-o-arrow-left"
+        >
+            Back to groups
+        </x-admin.icon-link>
     </div>
 
 
-    <!-- Session List -->
-    <div class="px-6">
-        <div class="soft-card p-5 space-y-4">
+    <!-- Sessions -->
+    <div class="px-6 space-y-4">
 
-            <h3 class="font-medium">Select a Session</h3>
+        <x-admin.section-title title="Select a session" />
 
-            <div class="space-y-2">
+        @if($sessions->isEmpty())
+            <p class="text-sm text-[var(--color-text-light)]">
+                No sessions found in this group.
+            </p>
+        @else
 
-                @forelse($sessions as $s)
-                    <a href="{{ route('admin.events.manual-check-in.guestlist', [
-                        'event' => $event->id,
-                        'group' => $group->id,
-                        'session' => $s->id
-                    ]) }}"
-                       class="soft-card p-4 flex items-center justify-between hover:shadow-md hover:-translate-y-0.5 transition">
-                        <span class="font-medium">{{ $s->title }}</span>
-                        <x-heroicon-o-arrow-right class="w-5 h-5 text-[var(--color-primary)]" />
-                    </a>
-                @empty
-                    <p class="text-sm text-[var(--color-text-light)]">No sessions found in this group.</p>
-                @endforelse
+            <x-admin.link-list>
 
-            </div>
+                @foreach($sessions as $session)
+                    <x-admin.link-tile
+                        :href="route('admin.events.manual-check-in.guestlist', [
+                            'event' => $event->id,
+                            'group' => $group->id,
+                            'session' => $session->id
+                        ])"
+                        icon="heroicon-o-arrow-right"
+                    >
+                        {{ $session->title }}
+                    </x-admin.link-tile>
+                @endforeach
 
-            <a href="{{ route('admin.events.manual-check-in.groups', $event->id) }}"
-               class="inline-flex items-center text-sm text-[var(--color-primary)] hover:underline">
-                ← Back to groups
-            </a>
+            </x-admin.link-list>
 
+        @endif
+
+        <div class="pt-2">
+            <x-admin.icon-link
+                :href="route('admin.events.manual-check-in.groups', $event->id)"
+                icon="heroicon-o-arrow-left"
+            >
+                Back to groups
+            </x-admin.icon-link>
         </div>
+
     </div>
 
 </div>
