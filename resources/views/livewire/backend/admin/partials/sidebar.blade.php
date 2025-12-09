@@ -18,7 +18,7 @@
             <img
                 src="{{ asset('images/backend/logo.png') }}"
                 class="object-contain
-                       w-40 md:w-50"
+                       w-40 lg:w-50"
             alt="Logo"
             />
         </a>
