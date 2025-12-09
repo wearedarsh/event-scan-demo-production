@@ -28,9 +28,10 @@
 
     <!-- Communication Block -->
     <div class="px-6">
+        <x-admin.section-title title="Communication" />
         <x-admin.card class="p-5 space-y-4">
 
-            <x-admin.section-title title="Communication" />
+            
 
             <x-admin.outline-btn-icon
                 :href="route('admin.events.emails.send-email', [
@@ -97,8 +98,8 @@
                                     <x-admin.table-action-button
                                         type="link"
                                         icon="chart-bar"
-                                        label="View"
-                                        :href="route('admin.events.reports.feedback.view', [
+                                        label="Manage"
+                                        :href="route('admin.events.feedback-form.manage', [
                                             'event' => $event->id,
                                             'feedback_form' => $form->id
                                         ])"

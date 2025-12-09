@@ -16,32 +16,75 @@ class Manage extends Component
     public Event $event;
     public FeedbackForm $feedback_form;
 
+    /** @var array<int,int> */
+    public array $stepOrders = [];
+
+    /** @var array<int,int> */
+    public array $groupOrders = [];
+
+
     public function mount(Event $event, FeedbackForm $feedback_form)
     {
         $this->event = $event;
         $this->feedback_form = $feedback_form;
+
+        $this->loadOrders();
     }
 
-    public function deleteGroup(int $id){ 
+
+    /**
+     * Load all steps + groups into order arrays
+     */
+    protected function loadOrders(): void
+    {
+        $this->stepOrders = $this->feedback_form
+            ->steps()
+            ->orderBy('order')
+            ->pluck('order', 'id')
+            ->toArray();
+
+        $this->groupOrders = $this->feedback_form
+            ->groups()
+            ->orderBy('order')
+            ->pluck('order', 'id')
+            ->toArray();
+    }
+
+
+    public function deleteGroup(int $id)
+    {
         FeedbackFormGroup::findOrFail($id)->delete();
-        session()->flash('success', 'Question group has been deleted');
-        return redirect()->route('admin.events.feedback-form.manage', ['event' => $this->event->id, 'feedback_form' => $this->feedback_form->id]);
+
+        session()->flash('success', 'Question group deleted.');
+        $this->loadOrders();
     }
 
-    public function deleteQuestion(int $id){
-        FeedbackFormQuestion::findOrFail($id)->delete();
-        session()->flash('success', 'Question has been deleted');
-        return redirect()->route('admin.events.feedback-form.manage', ['event' => $this->event->id, 'feedback_form' => $this->feedback_form->id]);
-    }
 
-    public function deleteStep(int $id){
+    public function deleteStep(int $id)
+    {
         FeedbackFormStep::findOrFail($id)->delete();
-        session()->flash('success', 'Step has been deleted');
-        return redirect()->route('admin.events.feedback-form.manage', ['event' => $this->event->id, 'feedback_form' => $this->feedback_form->id]);
+
+        session()->flash('success', 'Step deleted.');
+        $this->loadOrders();
     }
+
+
+    /**
+     * Delete question
+     */
+    public function deleteQuestion(int $id)
+    {
+        FeedbackFormQuestion::findOrFail($id)->delete();
+
+        session()->flash('success', 'Question deleted.');
+    }
+
 
     public function render()
     {
-        return view('livewire.backend.admin.feedback-form.manage');
+        return view('livewire.backend.admin.feedback-form.manage', [
+            'steps' => $this->feedback_form->steps()->orderBy('order')->get(),
+            'groups' => $this->feedback_form->groups()->orderBy('order')->get(),
+        ]);
     }
 }
