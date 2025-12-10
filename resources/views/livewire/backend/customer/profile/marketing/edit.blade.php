@@ -38,7 +38,7 @@
 
             <form wire:submit.prevent="update" class="row g-3">
                 <div class="col-12">
-                    <label for="email_marketing_opt_in" class="form-label">Would you like to receive emails from EVF relating to future events and events?</label>
+                    <label for="email_marketing_opt_in" class="form-label">Would you like to receive emails relating to future events and events?</label>
                 </div>
                 <div class="col-3 mb-3">
                         <select wire:model="email_marketing_opt_in" class="form-control">

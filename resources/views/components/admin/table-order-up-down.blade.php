@@ -7,7 +7,7 @@
 
     @if($order > 0)
         <button 
-            class="text-[var(--color-primary)] bg-[var(--color-primary)]/10 rounded-sm p-0.5"
+            class="text-[var(--color-primary)]/80 bg-[var(--color-primary)]/5 rounded-sm p-0.5"
             type="button"
             wire:click="moveUp({{ $id }})"
             title="Move Up">
@@ -18,7 +18,7 @@
     <button 
         type="button"
         wire:click="moveDown({{ $id }})"
-        class="text-[var(--color-primary)] bg-[var(--color-primary)]/10 rounded-sm p-0.5"
+        class="text-[var(--color-primary)]/80 bg-[var(--color-primary)]/5 rounded-sm p-0.5"
         title="Move Down">
         <x-heroicon-o-chevron-down class="w-3 h-3" />
     </button>

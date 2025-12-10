@@ -1,4 +1,4 @@
-<div class="space-y-6"> <!-- Single root wrapper -->
+<div class="space-y-4"> <!-- Single root wrapper -->
 
     <!-- Step Indicator -->
     <div class="bg-[var(--color-surface)] py-3 px-6 mt-6 rounded-lg shadow-sm flex items-center gap-4">

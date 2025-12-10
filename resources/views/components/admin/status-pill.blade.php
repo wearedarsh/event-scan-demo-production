@@ -29,7 +29,7 @@
     $c = $colors[$status] ?? $colors['neutral'];
 @endphp
 
-<span class="inline-flex items-center px-2.5 py-0.5 rounded-sm text-xs font-medium"
+<span class="inline-flex items-center px-1.5 py-0.5 rounded-sm text-[11px] font-medium"
       style="color: {{ $c['text'] }}; border: 1px solid {{ $c['border'] }}; background: {{ $c['bg'] }};">
     {{ $slot }}
 </span>

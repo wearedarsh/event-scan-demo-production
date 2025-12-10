@@ -22,7 +22,7 @@ class CustomResetPasswordNotification extends Notification
             config('mail.transactional.address'),
             config('mail.transactional.name')
         )
-            ->subject('Reset your EVF HOW password')
+            ->subject('Reset your password')
             ->view('emails.auth.reset-password', [
                 'url' => $resetUrl,
                 'user' => $notifiable,

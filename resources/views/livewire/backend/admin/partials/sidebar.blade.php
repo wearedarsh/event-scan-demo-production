@@ -28,11 +28,10 @@
                 lg:hidden flex items-center gap-2
                 text-[var(--color-text-light)]
                 hover:text-[var(--color-primary)]
-                bg-[var(--color-primary)]/5
-                px-2 py-2 rounded-md 
+                px-2 py-2
                 transition
             ">
-            <x-heroicon-o-x-mark class="h-5 w-5" />
+            <x-heroicon-o-x-mark class="h-6 w-6" />
         </button>
     </div>
 

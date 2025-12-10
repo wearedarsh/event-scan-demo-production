@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'how-booking-staging.evfvip.com'),
+    'url' => env('APP_URL', 'demo.eventscan.co.uk'),
 
     'name' => env('APP_NAME', 'Laravel'),
 

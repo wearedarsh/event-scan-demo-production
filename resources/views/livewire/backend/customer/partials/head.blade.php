@@ -6,7 +6,7 @@
 <link href="https://cdn.jsdelivr.net/npm/@coreui/icons/css/all.min.css" rel="stylesheet">
 
 @livewireStyles
-<title>EVF HOW Management</title>
+<title>Medical Foundry</title>
 
 @if(Route::is('login'))
 <style>

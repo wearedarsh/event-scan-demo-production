@@ -21,7 +21,7 @@ class WelcomeEmailCustomer extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Welcome to EVF HOW Events'
+            subject: 'Welcome to our events'
         );
     }
 

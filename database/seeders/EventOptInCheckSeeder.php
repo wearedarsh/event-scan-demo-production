@@ -21,7 +21,7 @@ class EventOptInCheckSeeder extends Seeder
                 'event_id' => 1, 
                 'name' => 'photography',
                 'friendly_name' => 'Photography consent',
-                'description' => 'I give consent for any photographs taken during the EVF HOW Event to be used on EVF websites and social media platforms',
+                'description' => 'I give consent for any photographs taken during the event to be used on websites and social media platforms',
                 'sort_order' => 2
             ],
             [

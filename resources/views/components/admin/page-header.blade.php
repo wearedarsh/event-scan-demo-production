@@ -3,7 +3,7 @@
     'subtitle' => null,
 ])
 
-<div class="px-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="px-6 flex flex-col md:flex-row md:items-center justify-between gap-4 ml-0.5">
 
     <!-- Left: Title + Subtitle -->
     <div>

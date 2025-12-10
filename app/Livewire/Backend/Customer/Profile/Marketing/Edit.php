@@ -48,7 +48,7 @@ class Edit extends Component
                 ->causedBy($this->user)
                 ->log('Opted in to future email marketing');
 
-            session()->flash('success', 'You have been added to the EVF email marketing list');
+            session()->flash('success', 'You have been added to the email marketing list');
 
 
         } else {
@@ -64,7 +64,7 @@ class Edit extends Component
                 ->causedBy($this->user)
                 ->log('Opted out of future email marketing');
 
-            session()->flash('success', 'You have been removed from the EVF email marketing list');
+            session()->flash('success', 'You have been removed from the email marketing list');
 
         }
     }

@@ -1,4 +1,4 @@
-<div class="space-y-6">
+<div class="space-y-4">
 
     <!-- Breadcrumbs -->
     <x-admin.breadcrumb :items="[
@@ -43,9 +43,6 @@
                     <div>
                         <div class="flex items-center gap-1">
                             <x-admin.input-label for="date_start">Start Date</x-admin.input-label>
-                            <x-admin.tooltip text="Enter date using dd-mm-yyyy format">
-                                <x-admin.icon-info />
-                            </x-admin.tooltip>
                         </div>
                         <x-admin.input-text
                             id="date_start"
@@ -53,14 +50,12 @@
                             class="datepicker"
                             autocomplete="off" 
                         />
+                        <x-admin.input-help>Enter dd-mm-yyyy format</x-admin.input-help>
                     </div>
 
                     <div>
                         <div class="flex items-center gap-1">
                             <x-admin.input-label for="date_end">End Date</x-admin.input-label>
-                            <x-admin.tooltip text="Enter date using dd-mm-yyyy format">
-                                <x-admin.icon-info />
-                            </x-admin.tooltip>
                         </div>
                         <x-admin.input-text
                             id="date_end"
@@ -68,6 +63,7 @@
                             class="datepicker"
                             autocomplete="off"
                         />
+                        <x-admin.input-help>Enter dd-mm-yyyy format</x-admin.input-help>
                     </div>
 
                     <div>
@@ -96,6 +92,7 @@
                             <option value="1">Yes</option>
                             <option value="0">No</option>
                         </x-admin.select>
+                        <x-admin.input-help>Active events are shown on the booking site</x-admin.input-help>
                     </div>
 
                     <div>
@@ -104,6 +101,7 @@
                             <option value="1">Yes</option>
                             <option value="0">No</option>
                         </x-admin.select>
+                        <x-admin.input-help>Full events will show on the booking site but will not be bookable</x-admin.input-help>
                     </div>
 
                     <div>
@@ -112,6 +110,7 @@
                             <option value="1">Yes</option>
                             <option value="0">No</option>
                         </x-admin.select>
+                        <x-admin.input-help>A provisional event shows on the booking site but is not bookable</x-admin.input-help>
                     </div>
 
                     <div>
@@ -120,6 +119,7 @@
                             <option value="1">Yes</option>
                             <option value="0">No</option>
                         </x-admin.select>
+                        <x-admin.input-help>Template events can be duplicated</x-admin.input-help>
                     </div>
 
                 </div>

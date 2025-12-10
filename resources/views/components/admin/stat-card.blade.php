@@ -16,7 +16,7 @@
     $color = $colors[$type] ?? $colors['default'];
 @endphp
 
-<div class="soft-card px-4 py-2 flex flex-col items-center">
+<div class="soft-card px-4 py-2 flex flex-col items-center min-h-[60px]">
 
     <!-- Label -->
     <span class="text-xs text-[var(--color-text-light)]">
@@ -27,7 +27,7 @@
     <div class="flex items-center gap-2 mt-1">
 
         @if($value !== null)
-            <span class="text-sm font-semibold"
+            <span class="text-sm font-regular"
                   style="color: {{ $color }}">
                 {{ $value }}
             </span>

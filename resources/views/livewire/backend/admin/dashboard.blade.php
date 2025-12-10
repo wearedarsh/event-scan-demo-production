@@ -1,30 +1,26 @@
 <div class="">
     <!-- Header -->
-    <div class="my-6">
-    <x-admin.page-header
-        title="Welcome, {{ Auth::user()->first_name }}"
-        subtitle="Quick overview and tools for managing your events.">
-        
-        <x-admin.outline-btn-icon
-            :href="route('admin.events.create')"
-            icon="heroicon-o-plus">
-            Create event
-        </x-admin.outline-btn-icon>
+    <div class="my-2 mb-4">
+        <x-admin.page-header
+            title="Welcome, {{ Auth::user()->first_name }}"
+            subtitle="Quick overview and tools for managing your events.">
+            
+            <x-admin.outline-btn-icon
+                :href="route('admin.events.create')"
+                icon="heroicon-o-plus">
+                Create event
+            </x-admin.outline-btn-icon>
 
-    </x-admin.page-header>
+        </x-admin.page-header>
     </div>
 
-
-    <!-- Quick links -->
-    <div class="px-6">
-        <x-admin.section-title title="Quick links" />
-    </div>
-
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 px-6">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-2 gap-6 px-6">
 
         <!-- Events -->
         <x-admin.tile-card
             title="Events"
+            icon="heroicon-o-calendar-days"
+            :micro="['title' => 'Primary Actions']"
             description="Manage your existing events or create new ones.">
 
             <x-link-arrow href="{{ route('admin.events.index') }}">
@@ -40,8 +36,11 @@
 
         <!-- Settings -->
         <x-admin.tile-card
+            icon="heroicon-o-cog-6-tooth"
             title="Settings"
-            description="Manage your team members and website content.">
+            description="Manage your team members and website content."
+            :micro="[
+        'title' => 'Primary Actions']">
 
             <x-link-arrow href="{{ route('admin.users.index') }}">
                 Team members
@@ -54,8 +53,13 @@
         </x-admin.tile-card>
 
 
-        <!-- Check-in App -->
-        <x-admin.tile-card
+        
+
+    </div>
+    
+    <div class="px-6 pt-4">
+        <x-admin.action-card
+        icon="heroicon-o-qr-code"
             title="Check-in app"
             description="Install the mobile check-in app for Android or iOS.">
 
@@ -63,8 +67,7 @@
                 Install app
             </x-link-arrow>
 
-        </x-admin.tile-card>
-
+        </x-admin.action-card>
     </div>
 
 </div>

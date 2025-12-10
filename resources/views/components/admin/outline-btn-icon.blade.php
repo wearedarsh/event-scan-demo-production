@@ -19,7 +19,7 @@
         />
     @endif
 
-    <span class="hidden md:inline">
+    <span class="">
         {{ $slot }}
     </span>
 </a>

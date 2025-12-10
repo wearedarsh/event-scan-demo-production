@@ -16,22 +16,22 @@
     <div class="relative inline-flex items-center">
 
         {{-- Background --}}
-        <div class="w-8 h-4 rounded-full transition-colors duration-300
+        <div class="w-6 h-3 rounded-full transition-colors duration-300
             {{ $active ? 'bg-[var(--color-success)]' : 'bg-gray-300' }}">
         </div>
 
         {{-- Knob --}}
-        <div class="absolute left-0 top-0 h-4 w-4 bg-white rounded-full shadow 
+        <div class="absolute left-0 top-0 h-3 w-3 bg-white rounded-full shadow 
             transform transition-transform duration-300
-            {{ $active ? 'translate-x-5' : '' }}">
+            {{ $active ? 'translate-x-3' : '' }}">
         </div>
 
     </div>
 
     {{-- Optional Status Label --}}
     @if($showLabel)
-        <span class="text-sm font-semibold
-            {{ $active ? 'text-[var(--color-success)]' : 'text-[var(--color-danger)]' }}">
+        <span class="text-sm font-regular
+            {{ $active ? 'text-[var(--color-text)]' : 'text-[var(--color-text)]' }}">
             {{ $active ? $labelOn : $labelOff }}
         </span>
     @endif

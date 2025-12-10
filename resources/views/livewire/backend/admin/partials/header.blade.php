@@ -8,13 +8,18 @@
         <!-- Sidebar toggle -->
         <button id="sidebar-toggle-open"
             class=" lg:hidden flex items-center text-[var(--color-text-light)] hover:text-[var(--color-primary)] transition">
-            <x-heroicon-o-bars-3 class="h-5 w-5 mr-2" />
-            <span class="hidden sm:inline font-medium">Menu</span>
+            <x-heroicon-o-bars-3 class="h-6 w-6 mr-2" />
+            
         </button>
+
+        <div class="hidden lg:block w-full ml-1 flex items-center">
+            <livewire:backend.admin.header-search />
+        </div>
     </div>
 
     <!-- Right side -->
     <div class="flex items-center gap-4">
+
 
         <!-- Settings -->
         <x-admin.tooltip text="Settings">

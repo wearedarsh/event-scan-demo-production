@@ -1,4 +1,4 @@
-<div class="space-y-6">
+<div class="space-y-4">
 
     <!-- Breadcrumbs -->
     <x-admin.breadcrumb :items="[
@@ -33,6 +33,7 @@
     <div class="px-6">
         <x-admin.action-card
             title="Badges"
+            icon="heroicon-o-identification"
             description="Export print-ready personnel badges.">
             <x-link-arrow href="{{ route('admin.events.personnel.badges.export', $event->id) }}">
                 Print badges

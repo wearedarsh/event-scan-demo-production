@@ -1,4 +1,4 @@
-<div class="space-y-6">
+<div class="space-y-4">
 
     <!-- Header -->
     <x-admin.page-header

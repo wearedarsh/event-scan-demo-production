@@ -1,4 +1,4 @@
-<div class="space-y-6">
+<div class="space-y-4">
 
     <!-- Breadcrumbs -->
     <x-admin.breadcrumb :items="[
@@ -15,12 +15,6 @@
         <div class="flex flex-wrap md:flex-nowrap items-center gap-3">
             <!-- Link + Copy -->
             <x-admin.stat-card label="Link">
-                <!-- Copy to clipboard -->
-                <x-admin.icon-link
-                    icon="heroicon-o-clipboard"
-                    @click="copyToClipboard('{{ route('event', ['event' => $event->id]) }}'); $dispatch('copied')">
-                    Copy
-                </x-admin.icon-link>
                 <!-- View -->
                 <x-admin.icon-link
                     href="{{ route('event', $event->id) }}"
@@ -49,7 +43,6 @@
             <!-- Unpaid -->
             <x-admin.stat-card
                 label="Unpaid"
-                type="warning"
                 :value="$event->registrations->count()" />
         </div>
     </x-admin.page-header>
@@ -69,20 +62,24 @@
         <x-admin.section-title title="Settings" />
         <x-admin.action-card
             title="General Settings"
+            icon="heroicon-o-cog-6-tooth"
             description="Core event details such as title, dates, visibility, and pricing."
         >
             <x-link-arrow href="{{ route('admin.events.edit', $event->id) }}">Edit settings</x-link-arrow>
         </x-admin.action-card>
 
         <!-- Primary actions -->
-        <x-admin.section-title title="Primary actions" />
+        <x-admin.section-title title="People and content" />
         <!-- Row: 3 columns -->
         <div class="grid md:grid-cols-2 gap-6">
 
             <!-- People -->
             <x-admin.tile-card
+            icon="heroicon-o-users"
                 title="People"
                 description="Manage attendees, registrations, and personnel."
+                :micro="[
+        'title' => 'Primary Actions']"
             >
                 <x-link-arrow href="{{ route('admin.events.attendees.index', $event->id) }}">
                     Attendees
@@ -99,8 +96,11 @@
 
             <!-- Content -->
             <x-admin.tile-card
+            icon="heroicon-o-document-text"
                 title="Content"
                 description="Manage sessions, tickets, and website content."
+                :micro="[
+        'title' => 'Primary Actions']"
             >
                 <x-link-arrow href="{{ route('admin.events.event-sessions.index', $event->id) }}">
                     Manage sessions
@@ -116,8 +116,9 @@
             </x-admin.tile-card>
         </div>
 
-        <!-- Badges -->
+        <x-admin.section-title title="Badges and scanning" />
         <x-admin.action-card
+        icon="heroicon-o-identification"
             title="Badges"
             description="Print-ready badges and blank badge templates."
         >
@@ -130,11 +131,25 @@
             </x-link-arrow>
         </x-admin.action-card>
 
-        <!-- Event content -->
-        <x-admin.section-title title="Event content" />
+        <x-admin.action-card
+        icon="heroicon-o-qr-code"
+            title="Check-In App"
+            description="Set up your mobile app and manage manual check-ins."
+        >
+            <x-link-arrow href="{{ route('admin.app.index') }}">
+                Install app
+            </x-link-arrow>
+
+            <x-link-arrow href="{{ route('admin.events.manual-check-in.groups', $event->id) }}">
+                Manual guestlist
+            </x-link-arrow>
+        </x-admin.action-card>
+
+        <x-admin.section-title title="Tools" />
         <div class="grid md:grid-cols-3 gap-6">
             <!-- Communication -->
             <x-admin.tile-card
+            icon="heroicon-o-envelope"
                 title="Communication"
                 description="Send targeted email messages to attendees or registrants."
             >
@@ -148,6 +163,7 @@
 
             <!-- Downloads -->
             <x-admin.tile-card
+                icon="heroicon-o-arrow-down-tray"
                 title="Downloads"
                 description="Export attendee requirements and payment information."
             >
@@ -162,6 +178,7 @@
 
             <!-- Feedback & Analytics -->
             <x-admin.tile-card
+                icon="heroicon-o-chart-bar"
                 title="Feedback & Analytics"
                 description="Manage feedback forms and access reporting tools."
             >
@@ -174,20 +191,7 @@
                 </x-link-arrow>
             </x-admin.tile-card>
         </div>
-
-        <!-- Check in app -->
-        <x-admin.action-card
-            title="Check-In App"
-            description="Set up your mobile app and manage manual check-ins."
-        >
-            <x-link-arrow href="{{ route('admin.app.index') }}">
-                Install app
-            </x-link-arrow>
-
-            <x-link-arrow href="{{ route('admin.events.manual-check-in.groups', $event->id) }}">
-                Manual guestlist
-            </x-link-arrow>
-        </x-admin.action-card>
+        
 
     </div>
 

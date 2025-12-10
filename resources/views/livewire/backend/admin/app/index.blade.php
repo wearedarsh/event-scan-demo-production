@@ -1,4 +1,4 @@
-<div class="space-y-6">
+<div class="space-y-4">
 @php
     $role = auth()->user()?->role?->key_name;
     $agent = new \Jenssegers\Agent\Agent();

@@ -1,5 +1,5 @@
 <!-- Step 3: Account Details -->
-<div class="space-y-6">
+<div class="space-y-4">
 
     <!-- Step Indicator -->
     <div class="bg-[var(--color-surface)] py-3 px-6 mt-6 rounded-lg shadow-sm flex items-center gap-4">

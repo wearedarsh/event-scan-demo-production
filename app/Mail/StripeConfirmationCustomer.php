@@ -17,7 +17,7 @@ class StripeConfirmationCustomer extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Thank you for your EVF HOW event booking'
+            subject: 'Thank you for your event booking'
         );
     }
 
@@ -29,7 +29,7 @@ class StripeConfirmationCustomer extends Mailable
                 'registration' => $this->registration,
                 'registration_total' => $this->registration_total,
                 'currency_symbol' => '€',
-                'title' => 'Thank you for your EVF HOW event booking',
+                'title' => 'Thank you for your event booking',
                 'preheader' => 'We look forward to seeing you at...',
             ]
         );

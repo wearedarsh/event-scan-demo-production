@@ -1,4 +1,4 @@
-<div class="space-y-6">
+<div class="space-y-4">
 
     <!-- Breadcrumbs -->
     <x-admin.breadcrumb :items="[
@@ -38,6 +38,7 @@
 
         <x-admin.action-card
             title="Communication"
+            icon="heroicon-o-envelope"
             description="Send emails to unpaid registrations."
         >
             <x-link-arrow
@@ -113,8 +114,7 @@
                             @endif
 
                             <th class="px-4 py-3">Name</th>
-                            <th class="px-4 py-3">Email</th>
-                            <th class="px-4 py-3">Phone</th>
+                            <th class="px-4 py-3">Contact</th>
                             <th class="px-4 py-3">Country</th>
                             <th class="px-4 py-3">Payment</th>
                             <th class="px-4 py-3 text-right">Actions</th>
@@ -139,11 +139,9 @@
                                 <td class="px-4 py-3">
                                     <a href="mailto:{{ $reg->user->email }}" class="hover:underline underline-offset-2">
                                         {{ $reg->user->email }}
-                                    </a>
-                                </td>
-
-                                <td class="px-4 py-3">
-                                    {{ $reg->mobile_country_code }}{{ $reg->mobile_number }}
+                                    </a><br>
+                                        {{ $reg->mobile_country_code }}{{ $reg->mobile_number }}
+                                    
                                 </td>
 
                                 <td class="px-4 py-3">

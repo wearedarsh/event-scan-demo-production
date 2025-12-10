@@ -18,5 +18,5 @@
 </p>
 
 <p>Kind regards,<br>
-The EVF HOW Team</p>
+The Medical Foundry Team</p>
 @endsection

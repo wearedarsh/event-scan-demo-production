@@ -1,4 +1,4 @@
-<div class="space-y-6">
+<div class="space-y-4">
 
     <!-- Breadcrumbs -->
     <x-admin.breadcrumb :items="[
@@ -33,6 +33,7 @@
 
         <x-admin.action-card
             title="Email"
+            icon="heroicon-o-envelope"
             description="Send targeted emails to attendees.">
             <x-link-arrow href="{{ route('admin.events.emails.send-email', [
                 'event' => $event->id,
@@ -51,7 +52,10 @@
             <!-- Groups -->
             <x-admin.tile-card
                 title="Groups"
-                description="Create and edit attendee groups.">
+                icon="heroicon-o-users"
+                description="Create and edit attendee groups."
+                :micro="['title' => 'Primary Actions']"
+                >
                 <x-link-arrow
                     href="{{ route('admin.events.attendees.groups.index', $event->id) }}">
                     Manage groups
@@ -61,6 +65,8 @@
             <!-- Tools -->
             <x-admin.tile-card
                 title="Tools"
+                icon="heroicon-o-wrench"
+                :micro="['title' => 'Primary actions']"
                 description="Export datasets and view reports.">
                 <x-link-arrow
                     href="#"
@@ -84,6 +90,8 @@
             <!-- Badges -->
             <x-admin.tile-card
                 title="Badges"
+                icon="heroicon-o-identification"
+                :micro="['title' => 'Primary actions']"
                 description="Print badges and blank templates.">
                 <x-link-arrow href="{{ route('admin.events.attendees.badges.export', $event->id) }}">
                     Print badges

@@ -496,7 +496,7 @@ class RegistrationForm extends Component
     {
         $registration = Registration::find($this->registration_id);
         $randomNumber = random_int(1000, 9999);
-        $booking_reference = 'EVF-' . $randomNumber . '-' . $registration->user_id . '-' . $registration->event_id;
+        $booking_reference = config('customer.invoice_prefix') . '-' . $randomNumber . '-' . $registration->user_id . '-' . $registration->event_id;
         
         $registration_total = 0;
         $registration->update([

@@ -56,7 +56,7 @@ organized by the European Venous Forum has been accredited by the European Accre
             'img_url'   => resource_path('certificates/certificate-of-attendance-bgr.jpg'),
         ])->setPaper('A4', 'portrait');
 
-        $file_name = $booking->user->title . '-' . $booking->user->last_name . '-EVF-HOW-certificate-of-attendance.pdf';
+        $file_name = $booking->user->title . '-' . $booking->user->last_name . 'certificate-of-attendance.pdf';
 
 
         return $pdf->download($file_name);

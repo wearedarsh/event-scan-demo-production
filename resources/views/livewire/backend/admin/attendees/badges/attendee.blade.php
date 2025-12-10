@@ -87,7 +87,7 @@
   <div class="badge" style="background: {{ $attendee->bg_color }};">
     <div class="badge__header">
       <!-- <div class="badge__punch"></div> -->
-      <img class="badge__logo" src="file://{{ $header_logo_url }}" alt="EVF HOW" />
+      <img class="badge__logo" src="file://{{ $header_logo_url }}" alt="Logo" />
       <p class="badge__event">{{ $event_title }}</p>
       <!-- <p class="badge__location">{{ $event_location }}</p> -->
     </div>

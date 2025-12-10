@@ -52,6 +52,6 @@
 <p>If you have any questions, feel free to <a href="mailto:admin@europeanvenousforum.org">email us</a>.</p>
 
 <p>Kind regards,<br>
-The EVF HOW Team</p>
+The Medical Foundry Team</p>
 
 @endsection

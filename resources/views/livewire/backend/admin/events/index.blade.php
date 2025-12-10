@@ -1,4 +1,4 @@
-<div class="space-y-6">
+<div class="space-y-4">
 
     <!-- Breadcrumbs -->
     <x-admin.breadcrumb :items="[
@@ -74,7 +74,7 @@
         <x-admin.table>
             <table class="min-w-full text-sm text-left">
                 <thead>
-                    <tr class="text-[var(--color-text-light)] uppercase text-xs border-b border-[var(--color-border)]">
+                    <tr class="text-[var(--color-text-light)] font-light uppercase text-xs border-b border-[var(--color-border)]">
                         <th class="px-4 py-3">Title</th>
                         <th class="px-4 py-3">Status</th>
                         <th class="px-4 py-3 text-right">Actions</th>

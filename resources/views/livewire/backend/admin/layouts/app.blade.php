@@ -25,7 +25,7 @@
 
             @include('livewire.backend.admin.partials.header')
 
-            <div class="flex flex-col min-h-screen p-4">
+            <div class="flex flex-col min-h-screen p-2">
                 {{ $slot }}
             </div>
 

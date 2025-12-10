@@ -1,4 +1,4 @@
-<div class="space-y-6">
+<div class="space-y-4">
 
     <!-- Breadcrumb -->
     <x-admin.breadcrumb :items="[
@@ -27,31 +27,20 @@
     @endif
 
 
-    <!-- Website Content -->
     <div class="px-6 space-y-4">
 
-        <x-admin.section-title title="Website content" />
-
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
             <!-- Testimonials -->
-            <x-admin.tile-card
+            <x-admin.action-card
                 title="Testimonials"
+                icon="heroicon-o-chat-bubble-left-right"
                 description="Manage the testimonials displayed on your public booking website.">
 
                 <x-link-arrow href="{{ route('admin.website.testimonials.index') }}">
                     Manage testimonials
                 </x-link-arrow>
 
-            </x-admin.tile-card>
+            </x-admin.action-card>
 
-            <!-- Future cards go here -->
-            {{-- 
-            <x-admin.tile-card title="FAQ" description="Manage your FAQ section."></x-admin.tile-card>
-            <x-admin.tile-card title="SEO" description="Update metadata and SEO content."></x-admin.tile-card>
-            --}}
-
-        </div>
 
     </div>
 

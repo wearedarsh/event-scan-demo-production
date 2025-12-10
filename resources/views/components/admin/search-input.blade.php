@@ -2,7 +2,7 @@
     'placeholder' => 'Search…',
 ])
 
-<div class="mb-2">
+<div>
     <div class="relative w-full">
 
     <!-- Icon -->

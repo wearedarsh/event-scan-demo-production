@@ -47,7 +47,7 @@ class StripeWebhookController extends Controller
                     });
                     
                     $randomNumber = random_int(1000, 9999);
-                    $booking_reference = 'EVF-' . $randomNumber . '-' . $registration->user_id . '-' . $registration->event_id;
+                    $booking_reference = config('customer.invoice_prefix') . '-' . $randomNumber . '-' . $registration->user_id . '-' . $registration->event_id;
 
                     $registration->update([
                         'payment_status' => 'paid',
