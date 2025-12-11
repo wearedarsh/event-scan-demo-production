@@ -51,7 +51,7 @@
         label="Manage events"
         href="{{ route('admin.events.index') }}"
         icon="heroicon-o-calendar"
-        :active="request()->routeIs('admin.events.*')" />
+        :active="request()->routeIs('admin.events.index')" />
 
     <x-admin.sidebar-link
         label="Create event"
