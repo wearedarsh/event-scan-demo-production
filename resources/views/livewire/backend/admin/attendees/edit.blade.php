@@ -29,6 +29,30 @@
         <form wire:submit.prevent="update" class="space-y-6">
 
             <!-- Contact Information -->
+            <x-admin.section-title title="Groups" />
+            <x-admin.card hover="false" class="p-6 space-y-6">
+                <!-- Attendee Group -->
+                <div>
+                    <x-admin.input-label for="attendee_group_id">
+                        Attendee Group (optional)
+                    </x-admin.input-label>
+
+                    <x-admin.select id="attendee_group_id" wire:model="attendee_group_id">
+                        <option value="">No group allocated</option>
+                        @foreach ($attendeeGroups as $group)
+                            <option value="{{ $group->id }}">
+                                {{ $group->title }}
+                            </option>
+                        @endforeach
+                    </x-admin.select>
+
+                    @error('attendee_group_id')
+                        <x-admin.input-error :message="$message" />
+                    @enderror
+                </div>
+            </x-admin.card>
+
+            <!-- Contact Information -->
             <x-admin.section-title title="Contact information" />
 
             <x-admin.card hover="false" class="p-6 space-y-6">
@@ -129,33 +153,13 @@
                         </x-admin.select>
                     </div>
 
-                    <!-- Attendee Group -->
-                    <div>
-                        <x-admin.input-label for="attendee_group_id">
-                            Attendee Group (optional)
-                        </x-admin.input-label>
-
-                        <x-admin.select id="attendee_group_id" wire:model="attendee_group_id">
-                            <option value="">No group allocated</option>
-                            @foreach ($attendeeGroups as $group)
-                                <option value="{{ $group->id }}">
-                                    {{ $group->title }}
-                                </option>
-                            @endforeach
-                        </x-admin.select>
-
-                        @error('attendee_group_id')
-                            <x-admin.input-error :message="$message" />
-                        @enderror
-                    </div>
-
                 </div>
 
             </x-admin.card>
 
 
             <!-- Action buttons -->
-            <x-admin.card hover="false" class="p-6 space-y-4">
+            <x-admin.card hover="false" class="p-6">
                 <div class="flex items-center gap-3">
 
                     <x-admin.button type="submit" variant="outline">
@@ -171,6 +175,8 @@
                 </div>
             </x-admin.card>
 
+
+            
         </form>
 
     </div>

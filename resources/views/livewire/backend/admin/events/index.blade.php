@@ -12,7 +12,8 @@
         subtitle="Manage and organise all platform events.">
         <x-admin.outline-btn-icon
             :href="route('admin.events.create')"
-            icon="heroicon-o-plus">
+            icon="heroicon-o-plus"
+            soft>
             Create event
         </x-admin.outline-btn-icon>
     </x-admin.page-header>
@@ -29,39 +30,41 @@
 
     <!-- Main card -->
     <x-admin.card hover="false" class="p-6 mx-6 space-y-4">
-        
+
         <!-- Filters row -->
         <div class="flex flex-wrap items-center gap-2 mb-2">
 
             <x-admin.filter-pill
                 :active="$filter === 'all'"
                 wire:click="setFilter('all')">
-                All
+                All ({{ $counts['all'] }})
             </x-admin.filter-pill>
+
 
             <x-admin.filter-pill
                 :active="$filter === 'active'"
                 wire:click="setFilter('active')">
-                Active
+                Active ({{ $counts['active'] }})
             </x-admin.filter-pill>
 
             <x-admin.filter-pill
                 :active="$filter === 'inactive'"
                 wire:click="setFilter('inactive')">
-                Inactive
+                Inactive ({{ $counts['inactive'] }})
             </x-admin.filter-pill>
 
             <x-admin.filter-pill
                 :active="$filter === 'template'"
                 wire:click="setFilter('template')">
-                Templates
+                Templates ({{ $counts['template'] }})
             </x-admin.filter-pill>
 
-            <x-admin.filter-pill
+            <!-- <x-admin.filter-pill
                 :active="$filter === 'archived'"
                 wire:click="setFilter('archived')">
-                Archived
-            </x-admin.filter-pill>
+                Archived ({{ $counts['archived'] }})
+            </x-admin.filter-pill> -->
+
         </div>
 
         <!-- Search -->
@@ -93,9 +96,10 @@
                         <td class="px-4 py-3">
                             {{ $event->title }}
                             @if($event->template)
-                            <x-admin.status-pill status="info">
+                            <br>
+                            <p class="text-xs text-[var(--color-text)]/40">
                                 Template
-                            </x-admin.status-pill>
+                            </p>
                             @endif
                         </td>
 
@@ -116,6 +120,7 @@
                                     type="link"
                                     :href="route('admin.events.manage', $event->id)"
                                     icon="arrow-right-circle"
+                                    primary
                                     label="Manage" />
 
                                 <x-admin.table-actions-toggle :row-id="$event->id" />

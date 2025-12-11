@@ -38,13 +38,7 @@
 
       <div class="mt-4 space-y-1 text-[var(--color-text)]">
         <p><strong>Amount:</strong> {{ $currency_symbol }}{{ $this->registration_total }}</p>
-        <p><strong>Bank:</strong> Medical Foundry Finance Trust</p>
-        <p><strong>Address:</strong> 84 Kingsward House, Newbury Lane, London, EC2V 4MN</p>
-        <p><strong>Account Name:</strong> Medical Foundry Ltd</p>
-        <p><strong>Account No:</strong> 20483715</p>
-        <p><strong>Sort Code:</strong> 52-41-73</p>
-        <p><strong>IBAN:</strong> GB21 MDFT 5241 7320 4837 15</p>
-        <p><strong>SWIFT/BIC:</strong> MDFTGB2L</p>
+        {!! config('customer.financial.bank_transfer_details') !!}
       </div>
     </div>
 

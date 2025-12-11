@@ -19,11 +19,11 @@ class Index extends Component
     use WithPagination;
 
     public string $search = '';
-    public string $filter = 'all'; // NEW
+    public string $filter = 'all';
 
     protected $queryString = [
         'search' => ['except' => ''],
-        'filter' => ['except' => 'all'], // NEW → keeps filters in URL
+        'filter' => ['except' => 'all'],
     ];
 
     public function updatingSearch()
@@ -59,7 +59,6 @@ class Index extends Component
             $newEvent->template = false;
             $newEvent->save();
 
-            // 2) Tickets (groups -> tickets)
             $ticketGroupMap = [];
             foreach ($event->ticketGroups as $group) {
                 $newGroup = $group->replicate();
@@ -185,20 +184,22 @@ class Index extends Component
     {
         $query = Event::query();
 
-        /**
-         * ▸ Apply Filter
-         */
+        $counts = [
+            'all'      => Event::count(),
+            'active'   => Event::where('active', 1)->count(),
+            'inactive' => Event::where('active', 0)->count(),
+            'template' => Event::where('template', 1)->count(),
+            'archived' => Event::onlyTrashed()->count(),
+        ];
+
         match ($this->filter) {
             'active'   => $query->where('active', 1),
             'inactive' => $query->where('active', 0),
             'template' => $query->where('template', 1),
             'archived' => $query->onlyTrashed(),
-            default    => null, // all
+            default    => null,
         };
 
-        /**
-         * ▸ Apply Search
-         */
         if ($this->search) {
             $query->where(function ($q) {
                 $q->where('title', 'like', "%{$this->search}%")
@@ -210,6 +211,7 @@ class Index extends Component
 
         return view('livewire.backend.admin.events.index', [
             'events' => $events,
+            'counts' => $counts
         ]);
     }
 }

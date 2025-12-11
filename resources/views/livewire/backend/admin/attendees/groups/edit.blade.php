@@ -8,140 +8,83 @@
         ['label' => 'Edit Group'],
     ]" />
 
-
     <!-- Page Header -->
-    <div class="px-6">
-        <h1 class="text-2xl font-semibold text-[var(--color-text)]">
-            Edit attendee group
-        </h1>
-    </div>
-
+    <x-admin.page-header
+        title="Edit attendee group"
+        subtitle="Modify the group's name, badge colours, and label styling."
+    />
 
     <!-- Alerts -->
     @if($errors->any())
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-warning)]">
-                <p class="text-sm text-[var(--color-warning)] font-medium">
-                    {{ $errors->first() }}
-                </p>
-            </div>
-        </div>
+        <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
 
     @if(session()->has('success'))
-        <div class="px-6">
-            <div class="soft-card p-4 border-l-4 border-[var(--color-success)]">
-                <p class="text-sm text-[var(--color-success)] font-medium">
-                    {{ session('success') }}
-                </p>
-            </div>
-        </div>
+        <x-admin.alert type="success" :message="session('success')" />
     @endif
 
 
-
-    <!-- ============================================================= -->
-    <!-- FORM WRAPPER -->
-    <!-- ============================================================= -->
+    <!-- Form Wrapper -->
     <div class="px-6">
         <form wire:submit.prevent="update" class="space-y-6">
 
+            <x-admin.section-title title="Group name" />
 
-            <!-- ============================================================= -->
-            <!-- GROUP DETAILS -->
-            <!-- ============================================================= -->
-            <x-admin.section-title title="Group details" />
+            <!-- Group Name -->
+            <div class="grid md:grid-cols-2 gap-6">
+                <x-admin.input-text
+                    id="title"
+                    model="title"
+                    placeholder="e.g. Faculty, Speakers, VIP"
+                />
 
-            <div class="soft-card p-6 space-y-6">
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="form-label-custom">Group name</label>
-                        <input 
-                            type="text" 
-                            wire:model.live="title" 
-                            class="input-text"
-                            placeholder="e.g. Faculty, Speakers, VIP"
-                        />
-                    </div>
-                </div>
+                @error('title')
+                    <x-admin.input-error :message="$message" />
+                @enderror
             </div>
 
+            <x-admin.section-title title="Badge appearance" />
 
-
-            <!-- ============================================================= -->
-            <!-- TWO-COLUMN BADGE COLOUR SETTINGS -->
-            <!-- ============================================================= -->
             <div class="grid md:grid-cols-2 gap-6">
 
                 <!-- Background colour -->
-                <div class="soft-card p-6 space-y-4">
-                    <h3 class="font-medium text-[var(--color-text)]">Badge background colour</h3>
+                <x-admin.card hover="false" class="p-6 space-y-4">
+                    <x-admin.color-picker
+                        id="colour"
+                        label="Badge background colour"
+                        help="This sets the background colour for the badge label applied to attendees."
+                        wire:model.live="colour"
+                    />
 
-                    <p class="text-sm text-[var(--color-text-light)] leading-relaxed">
-                        This sets the <strong>background colour</strong> for the group's badge label.
-                    </p>
-
-                    <div>
-                        <label class="form-label-custom">Background colour</label>
-
-                        <div class="w-24 h-12 rounded-lg overflow-hidden border border-[var(--color-border)] bg-[var(--color-surface)] flex items-center justify-center">
-                            <input 
-                                type="color" 
-                                wire:model.live="colour" 
-                                class="appearance-none cursor-pointer w-full h-full border-0 rounded-lg p-0"
-                            />
-                        </div>
-                    </div>
-                </div>
+                </x-admin.card>
 
 
                 <!-- Text colour -->
-                <div class="soft-card p-6 space-y-4">
-                    <h3 class="font-medium text-[var(--color-text)]">Badge text colour</h3>
+                <x-admin.card hover="false" class="p-6 space-y-4">
+                    <x-admin.color-picker
+                        id="colour"
+                        label="Badge text colour"
+                        help="This sets the background colour for the badge label applied to attendees."
+                        wire:model.live="label_colour"
+                    />
 
-                    <p class="text-sm text-[var(--color-text-light)] leading-relaxed">
-                        This sets the <strong>text colour</strong> used inside the badge label.
-                    </p>
-
-                    <div>
-                        <label class="form-label-custom">Text colour</label>
-
-                        <div class="w-24 h-12 rounded-lg overflow-hidden border border-[var(--color-border)] bg-[var(--color-surface)] flex items-center justify-center">
-                            <input 
-                                type="color" 
-                                wire:model.live="label_colour" 
-                                class="appearance-none cursor-pointer w-full h-full border-0 rounded-lg p-0"
-                            />
-                        </div>
-                    </div>
-                </div>
+                </x-admin.card>
 
             </div>
 
+            <x-admin.card hover="false" class="p-6 space-x-4">
 
+                <x-admin.button type="submit" variant="outline">
+                    Update group
+                </x-admin.button>
 
-            <!-- ============================================================= -->
-            <!-- ACTION BUTTONS -->
-            <!-- ============================================================= -->
-            <div class="soft-card p-6">
+                <x-admin.button
+                    href="{{ route('admin.events.attendees.groups.index', $event->id) }}"
+                    variant="secondary">
+                    Cancel
+                </x-admin.button>
 
-                <div class="flex items-center gap-3">
-
-                    <button type="submit"
-                        class="flex items-center px-3 py-1.5 rounded-md text-sm font-medium
-                               border border-[var(--color-primary)] text-[var(--color-primary)]
-                               hover:bg-[var(--color-primary)] hover:text-white transition">
-                        Update group
-                    </button>
-
-                    <a href="{{ route('admin.events.attendees.groups.index', $event->id) }}"
-                       class="btn-secondary">
-                        Cancel
-                    </a>
-
-                </div>
-
-            </div>
+            </x-admin.card>
 
         </form>
     </div>

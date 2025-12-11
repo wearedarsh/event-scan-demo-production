@@ -97,61 +97,100 @@ class Index extends Component
     }
 
     public function render()
-    {
-        $attendees = $this->event->attendees()
-            ->with(['user', 'country', 'eventPaymentMethod', 'attendeeGroup', 'registrationTickets'])
-            ->where(function ($query) {
-                $query->whereHas('user', fn($q) => $q->where('email', 'like', "%{$this->search}%"))
-                    ->orWhere('last_name', 'like', "%{$this->search}%");
-            })
-            ->when($this->paymentMethod, function ($query) {
-                $query->whereHas('eventPaymentMethod', fn($q) => $q->where('payment_method', $this->paymentMethod));
-            })
-            ->when($this->groupFilter !== '', function ($query) {
-                if ($this->groupFilter === 'none') {
-                    $query->whereNull('attendee_group_id');
-                } else {
-                    $query->where('attendee_group_id', (int) $this->groupFilter);
-                }
-            })
-            ->when($this->ticketFilter !== '', function ($query) {
-                if ($this->ticketFilter === 'none') {
-                    $query->doesntHave('registrationTickets');
-                } else {
-                    $query->whereHas(
-                        'registrationTickets',
-                        fn($q) =>
-                        $q->where('ticket_id', (int) $this->ticketFilter)
-                    );
-                }
-            })
-            ->latest()
-            ->paginate(10);
+{
 
-        $attendee_groups = $this->event->attendeeGroups()
-            ->withCount('attendees')
-            ->paginate(5);
+    $attendees = $this->event->attendees()
+        ->with(['user', 'country', 'eventPaymentMethod', 'attendeeGroup', 'registrationTickets'])
+        ->where(function ($query) {
+            $query->whereHas('user', fn($q) => $q->where('email', 'like', "%{$this->search}%"))
+                ->orWhere('last_name', 'like', "%{$this->search}%");
+        })
+        ->when($this->paymentMethod, function ($query) {
+            $query->whereHas('eventPaymentMethod', fn($q) => 
+                $q->where('payment_method', $this->paymentMethod)
+            );
+        })
+        ->when($this->groupFilter !== '', function ($query) {
+            if ($this->groupFilter === 'none') {
+                $query->whereNull('attendee_group_id');
+            } else {
+                $query->where('attendee_group_id', (int) $this->groupFilter);
+            }
+        })
+        ->when($this->ticketFilter !== '', function ($query) {
+            if ($this->ticketFilter === 'none') {
+                $query->doesntHave('registrationTickets');
+            } else {
+                $query->whereHas('registrationTickets', fn($q) =>
+                    $q->where('ticket_id', (int) $this->ticketFilter)
+                );
+            }
+        })
+        ->latest()
+        ->paginate(10);
 
-        $all_attendee_groups = $this->event->attendeeGroups()->get()
-            ->sortBy('title', SORT_NATURAL | SORT_FLAG_CASE)
-            ->values();
+    $counts['all'] = $this->event->attendees()->count();
 
-        $has_groups = $all_attendee_groups->isNotEmpty();
 
-        $tickets = $this->event->allTickets()
-            ->select('id', 'name', 'price')
-            ->orderBy('ticket_group_id')
-            ->orderBy('name')
-            ->get();
+    $counts['payment_methods'] = [
+        'stripe'       => $this->event->attendees()
+                                ->whereHas('eventPaymentMethod', fn($q) => $q->where('payment_method', 'stripe'))
+                                ->count(),
+        'bank_transfer'         => $this->event->attendees()
+                                ->whereHas('eventPaymentMethod', fn($q) => $q->where('payment_method', 'bank_transfer'))
+                                ->count(),
+    ];
+    $counts['payment_methods']['all'] =
+        array_sum($counts['payment_methods']);
 
-        return view('livewire.backend.admin.attendees.index', compact(
-            'attendees',
-            'attendee_groups',
-            'all_attendee_groups',
-            'has_groups',
-            'tickets'
-        ));
+
+    $groupCounts = [];
+    foreach ($this->event->attendeeGroups as $group) {
+        $groupCounts[$group->id] = $group->attendees()->count();
     }
+    $groupCounts['none'] = $this->event->attendees()->whereNull('attendee_group_id')->count();
+    $groupCounts['all'] = $counts['all'];
+    $counts['groups'] = $groupCounts;
+
+
+    $ticketCounts = [];
+    foreach ($this->event->allTickets as $ticket) {
+        $ticketCounts[$ticket->id] =
+            $this->event->attendees()->whereHas('registrationTickets', fn($q) =>
+                $q->where('ticket_id', $ticket->id)
+            )->count();
+    }
+    $ticketCounts['none'] = $this->event->attendees()->doesntHave('registrationTickets')->count();
+    $ticketCounts['all']  = $counts['all'];
+    $counts['tickets'] = $ticketCounts;
+
+
+    $attendee_groups = $this->event->attendeeGroups()
+        ->withCount('attendees')
+        ->paginate(5);
+
+    $all_attendee_groups = $this->event->attendeeGroups()
+        ->orderBy('title')
+        ->get();
+
+    $has_groups = $all_attendee_groups->isNotEmpty();
+
+    $tickets = $this->event->allTickets()
+        ->select('id', 'name', 'price')
+        ->orderBy('ticket_group_id')
+        ->orderBy('name')
+        ->get();
+
+    return view('livewire.backend.admin.attendees.index', compact(
+        'attendees',
+        'attendee_groups',
+        'all_attendee_groups',
+        'has_groups',
+        'tickets',
+        'counts'
+    ));
+}
+
 
     public function delete(int $id)
     {

@@ -1,7 +1,7 @@
 <div class="relative" x-data="{ open: false }" @click.outside="open = false">
 
 <x-admin.search-input
-    wire:model.live="query"
+    wire:model.live.debounce.300ms="query"
     x-on:focusin="open = true"
     x-on:input="open = true"
     placeholder="Search…"

@@ -6,15 +6,14 @@
 
 @php
     $base =
-        'inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md
+        'inline-flex items-center justify-center px-2.5 py-1.5 text-xs font-medium rounded-md
          transition-colors duration-150';
 
     $variants = [
         'primary' => 'bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-hover)]',
         'secondary' => 'bg-[var(--color-surface)] border border-[var(--color-border)]
                         text-[var(--color-text)] hover:bg-[var(--color-surface-hover)]',
-        'outline' => 'border border-[var(--color-primary)] text-[var(--color-primary)]
-                      hover:bg-[var(--color-primary)] hover:text-white',
+        'outline' => 'bg-[var(--color-primary)]/5 text-[var(--color-primary)] border border-[var(--color-primary)]/40 hover:bg-[var(--color-primary)]/20',
         'danger' => 'bg-[var(--color-danger)] text-white hover:bg-red-700',
     ];
 

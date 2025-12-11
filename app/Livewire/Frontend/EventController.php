@@ -31,7 +31,7 @@ class EventController extends Controller
             'testimonials' => $testimonials,
             'page_title' => $event->title,
             'og_title' => $event->title,
-            'og_description' => 'Event organised by the European venous Forum',
+            'og_description' => 'Event organised by the ' . config('customer.custom_details.friendly_name'),
             'event_content' => $event_content,
             'event_display_tickets' => $event_display_tickets,
             'currency_symbol' => $currency_symbol,

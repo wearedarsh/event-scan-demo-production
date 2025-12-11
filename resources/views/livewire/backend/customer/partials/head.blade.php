@@ -6,7 +6,7 @@
 <link href="https://cdn.jsdelivr.net/npm/@coreui/icons/css/all.min.css" rel="stylesheet">
 
 @livewireStyles
-<title>Medical Foundry</title>
+<title>{{ config('customer.custom_details.friendly_name') }}</title>
 
 @if(Route::is('login'))
 <style>

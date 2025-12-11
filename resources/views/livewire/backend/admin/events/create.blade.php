@@ -21,7 +21,6 @@
     @endif
 
 
-    <!-- FORM -->
     <div class="px-6">
         <form wire:submit.prevent="save" class="space-y-3">
 
@@ -29,7 +28,6 @@
             <x-admin.section-title title="Event details" />
 
             <x-admin.card hover="false" class="p-6 space-y-4">
-
                 <div class="grid md:grid-cols-2 gap-6">
 
                     <div>
@@ -43,33 +41,25 @@
                     </div>
 
                     <div>
-                        <div class="flex items-center gap-1">
-                            <x-admin.input-label for="date_start">Start Date</x-admin.input-label>
-                            <x-admin.tooltip text="Enter date using dd-mm-yyyy format">
-                                <x-admin.icon-info />
-                            </x-admin.tooltip>
-                        </div>
+                        <x-admin.input-label for="date_start">Start Date</x-admin.input-label>
                         <x-admin.input-text
                             id="date_start"
                             model="date_start"
                             class="datepicker"
                             autocomplete="off"
                         />
+                        <x-admin.input-help>Enter dd-mm-yyyy format</x-admin.input-help>
                     </div>
 
                     <div>
-                        <div class="flex items-center gap-1">
-                            <x-admin.input-label for="date_end">End Date</x-admin.input-label>
-                            <x-admin.tooltip text="Enter date using dd-mm-yyyy format">
-                                <x-admin.icon-info />
-                            </x-admin.tooltip>
-                        </div>
+                        <x-admin.input-label for="date_end">End Date</x-admin.input-label>
                         <x-admin.input-text
                             id="date_end"
                             model="date_end"
                             class="datepicker"
                             autocomplete="off"
                         />
+                        <x-admin.input-help>Enter dd-mm-yyyy format</x-admin.input-help>
                     </div>
 
                     <div>
@@ -83,16 +73,13 @@
                     </div>
 
                 </div>
-
             </x-admin.card>
-
 
 
             <!-- Event Status -->
             <x-admin.section-title title="Event status" />
 
             <x-admin.card hover="false" class="p-6 space-y-4">
-
                 <div class="grid md:grid-cols-2 gap-6">
 
                     <div>
@@ -101,6 +88,7 @@
                             <option value="1">Yes</option>
                             <option value="0">No</option>
                         </x-admin.select>
+                        <x-admin.input-help>Active events are shown on the booking site</x-admin.input-help>
                     </div>
 
                     <div>
@@ -109,6 +97,7 @@
                             <option value="1">Yes</option>
                             <option value="0">No</option>
                         </x-admin.select>
+                        <x-admin.input-help>Full events are visible but not bookable</x-admin.input-help>
                     </div>
 
                     <div>
@@ -117,6 +106,7 @@
                             <option value="1">Yes</option>
                             <option value="0">No</option>
                         </x-admin.select>
+                        <x-admin.input-help>A provisional event shows on the booking site but is not bookable</x-admin.input-help>
                     </div>
 
                     <div>
@@ -125,12 +115,11 @@
                             <option value="1">Yes</option>
                             <option value="0">No</option>
                         </x-admin.select>
+                        <x-admin.input-help>Template events can be duplicated</x-admin.input-help>
                     </div>
 
                 </div>
-
             </x-admin.card>
-
 
 
             <!-- Email Marketing -->
@@ -146,6 +135,7 @@
                             <option value="1">Yes</option>
                             <option value="0">No</option>
                         </x-admin.select>
+                        <x-admin.input-help>Automatically opts attendees into marketing emails</x-admin.input-help>
                     </div>
 
                     <div>
@@ -154,6 +144,7 @@
                             <option value="1">Yes</option>
                             <option value="0">No</option>
                         </x-admin.select>
+                        <x-admin.input-help>Displays an email marketing consent message during booking</x-admin.input-help>
                     </div>
 
                 </div>
@@ -171,7 +162,6 @@
                 </div>
 
             </x-admin.card>
-
 
 
             <!-- Action Buttons -->

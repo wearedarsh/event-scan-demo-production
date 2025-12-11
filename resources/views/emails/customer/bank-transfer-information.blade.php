@@ -9,14 +9,7 @@
 <p>Please make your bank transfer using the following details:</p>
 
 <p>
-    <strong>Amount:</strong> {{ $currency_symbol }}{{ number_format($registration_total, 2) }}<br>
-    <strong>Bank:</strong> Barclays<br>
-    <strong>Address:</strong> 53 The Broadway, Ealing, London W5 5JS<br>
-    <strong>Account Name:</strong> European Venous Forum Ltd<br>
-    <strong>Account No:</strong> 65205666<br>
-    <strong>Sort Code:</strong> 202749<br>
-    <strong>IBAN:</strong> GB89 BUKB 2027 4965 2056 66<br>
-    <strong>SWIFT/BIC:</strong> BUKBGB22
+    {!! config('customer.financial.bank_transfer_details') !!}
 </p>
 
 <p>Here are your booking details:</p>
@@ -49,9 +42,9 @@
     </tbody>
 </table>
 
-<p>If you have any questions, feel free to <a href="mailto:admin@europeanvenousforum.org">email us</a>.</p>
-
-<p>Kind regards,<br>
-The Medical Foundry Team</p>
+<p style="margin-top: 30px;">
+    If you have any questions, feel free to <a href="mailto:{{config('customer.contact_details.booking_website_support_email}}">email us</a>.
+</p>
+{!! config('customer.email.trasnaction_email_signature') !!}
 
 @endsection

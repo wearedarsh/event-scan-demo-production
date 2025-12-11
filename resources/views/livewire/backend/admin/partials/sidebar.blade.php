@@ -39,7 +39,7 @@
     <x-admin.sidebar-link
         label="Home"
         href="{{ route('admin.dashboard') }}"
-        icon="home"
+        icon="heroicon-o-home"
         :active="request()->routeIs('admin.dashboard')" />
 
     <x-admin.sidebar-separator />
@@ -48,10 +48,16 @@
     <x-admin.sidebar-heading label="Events" />
 
     <x-admin.sidebar-link
-        label="Manage"
+        label="Manage events"
         href="{{ route('admin.events.index') }}"
-        icon="calendar"
+        icon="heroicon-o-calendar"
         :active="request()->routeIs('admin.events.*')" />
+
+    <x-admin.sidebar-link
+        label="Create event"
+        href="{{ route('admin.events.create') }}"
+        icon="heroicon-o-plus-circle"
+        :active="request()->routeIs('admin.events.create')" />
 
     <x-admin.sidebar-separator />
 
@@ -61,13 +67,13 @@
     <x-admin.sidebar-link
         label="Team members"
         href="{{ route('admin.users.index') }}"
-        icon="users"
+        icon="heroicon-o-users"
         :active="request()->routeIs('admin.users.*')" />
 
     <x-admin.sidebar-link
         label="Website"
         href="{{ route('admin.website.index') }}"
-        icon="cog-6-tooth"
+        icon="heroicon-o-cog-6-tooth"
         :active="request()->routeIs('admin.website.*')" />
 
     <x-admin.sidebar-separator />
@@ -78,13 +84,13 @@
     <x-admin.sidebar-link
         label="Signatures"
         href="{{ route('admin.emails.signatures.index') }}"
-        icon="pencil"
+        icon="heroicon-o-pencil"
         :active="request()->routeIs('admin.emails.signatures.*')" />
 
     <x-admin.sidebar-link
         label="Templates"
         href="{{ route('admin.emails.templates.index') }}"
-        icon="document-text"
+        icon="heroicon-o-document-text"
         :active="request()->routeIs('admin.emails.templates.*')" />
 
     <x-admin.sidebar-separator />
@@ -95,7 +101,7 @@
     <x-admin.sidebar-link
         label="Install"
         href="{{ route('admin.app.index') }}"
-        icon="device-phone-mobile"
+        icon="heroicon-o-device-phone-mobile"
         :active="request()->routeIs('admin.app.*')" />
 
 

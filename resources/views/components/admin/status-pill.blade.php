@@ -6,18 +6,18 @@
     $colors = [
         'success' => [
             'text'   => 'var(--color-success)',
-            'border' => 'color-mix(in srgb, var(--color-success) 30%, transparent)',
-            'bg'     => 'color-mix(in srgb, var(--color-success) 12%, transparent)',
+            'border' => 'color-mix(in srgb, var(--color-success) 20%, transparent)',
+            'bg'     => 'color-mix(in srgb, var(--color-success) 8%, transparent)',
         ],
         'danger' => [
             'text'   => 'var(--color-danger)',
-            'border' => 'color-mix(in srgb, var(--color-danger) 30%, transparent)',
-            'bg'     => 'color-mix(in srgb, var(--color-danger) 12%, transparent)',
+            'border' => 'color-mix(in srgb, var(--color-danger) 20%, transparent)',
+            'bg'     => 'color-mix(in srgb, var(--color-danger) 8%, transparent)',
         ],
         'warning' => [
             'text'   => 'var(--color-warning)',
-            'border' => 'color-mix(in srgb, var(--color-warning) 30%, transparent)',
-            'bg'     => 'color-mix(in srgb, var(--color-warning) 12%, transparent)',
+            'border' => 'color-mix(in srgb, var(--color-warning) 20%, transparent)',
+            'bg'     => 'color-mix(in srgb, var(--color-warning) 8%, transparent)',
         ],
         'neutral' => [
             'text'   => 'var(--color-text-light)',
