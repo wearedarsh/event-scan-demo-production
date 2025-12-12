@@ -26,6 +26,6 @@ You are required to set your password before logging in.</p>
 <p style="margin-top: 30px;">
     If you have any questions, feel free to <a href="mailto:{{config('customer.contact_details.booking_website_support_email}}">email us</a>.
 </p>
-{!! config('customer.email.trasnaction_email_signature') !!}
+{!! config('customer.email.transaction_email_signature') !!}
 
 @endsection

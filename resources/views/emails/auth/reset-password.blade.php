@@ -9,5 +9,5 @@
 
     <p>If you didn’t request a password reset, please ignore this email. This link will expire in 60 minutes.</p>
 
-    {!! config('customer.email.trasnaction_email_signature') !!}
+    {!! config('customer.email.transaction_email_signature') !!}
 @endsection
