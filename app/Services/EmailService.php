@@ -49,8 +49,6 @@ class EmailService
                 $html .= '<br><br>' . $signature_html;
             }
 
-            Log::info('Creating email broadcast now');
-
             $broadcast_type = EmailBroadcastType::where('key_name', $type)->firstOrFail();
 
             if(!$broadcast){
