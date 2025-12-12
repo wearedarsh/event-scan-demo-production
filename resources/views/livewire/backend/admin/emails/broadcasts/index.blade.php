@@ -127,7 +127,7 @@
         </x-admin.table>
 
         <!-- Pagination -->
-        <x-admin.pagination :paginator="$email_sends" />
+        <x-admin.pagination :paginator="$broadcasts" />
 
     </x-admin.card>
 
