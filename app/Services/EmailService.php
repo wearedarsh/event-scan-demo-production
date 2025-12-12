@@ -36,7 +36,8 @@ class EmailService
             $sender_id,
             $schedule_at,
             $signature_html,
-            $type
+            $type,
+            $broadcast
         ) {
 
             Log::info('Email service received request');
@@ -56,7 +57,7 @@ class EmailService
 
             $broadcast ??= EmailBroadcast::create([
                 'friendly_name' => $friendly_name,
-                'type' => $broadcast_type->id,
+                'broadcast_type_id' => $broadcast_type->id,
                 'sent_by' => $sender_id,
                 'event_id' => $event_id,
             ]);
