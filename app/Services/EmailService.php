@@ -59,6 +59,7 @@ class EmailService
                     'queued_at' => now(),
                     'event_id' => $event_id,
                 ]);
+            }
             
 
             Log::info('Creating email queued now');
