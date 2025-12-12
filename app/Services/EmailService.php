@@ -16,7 +16,6 @@ class EmailService
 {
     public static function queueMailable(
         Mailable $mailable,
-        ?User $recipient_user = null,
         string $recipient_email,
         string $friendly_name,
         string $type,
@@ -24,7 +23,8 @@ class EmailService
         ?int $sender_id = null,
         ?DateTimeInterface $schedule_at = null,
         ?string $signature_html = null,
-        ?EmailBroadcast $broadcast = null
+        ?EmailBroadcast $broadcast = null,
+        ?User $recipient_user = null
     ): EmailQueuedSend {
         return DB::transaction(function () use (
             $mailable,

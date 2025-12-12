@@ -3,6 +3,8 @@
 namespace App\Livewire\Backend\Admin\Emails;
 
 use App\Mail\CustomEmail;
+use App\Models\EmailBroadcast;
+use App\Models\EmailBroadcastType;
 use App\Models\EmailSignature;
 use App\Models\Event;
 use App\Models\Ticket;
@@ -77,13 +79,21 @@ class SendEmail extends Component
 		foreach ($targets as $reg) {
 			$mailable = new CustomEmail($this->custom_subject, $this->custom_html_content, $signature_html);
 
+			$broadcast = EmailBroadcast::create([
+				'friendly_name' => $friendly,
+				'email_broadcast_type_id' => EmailBroadcastType::where('key_name', 'admin_bulk_send')->firstOrFail()->id,
+				'sent_by' => auth()->id(),
+				'event_id' => $this->event->id,
+			]);
+
 			EmailService::queueMailable(
 				mailable: $mailable,
 				recipient_user: $reg->user,
 				recipient_email: $reg->user?->email ?? '',
 				sender_id: auth()->id(),
 				friendly_name: $friendly,
-				type: 'admin_triggered',
+				broadcast: $broadcast,
+				type: 'admin_bulk_send',
 				event_id: $this->event->id,
 			);
 		}
