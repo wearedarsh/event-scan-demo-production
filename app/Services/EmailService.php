@@ -14,7 +14,6 @@ use DateTimeInterface;
 
 class EmailService
 {
-
     public static function queueMailable(
         Mailable $mailable,
         ?User $recipient_user = null,
@@ -54,12 +53,14 @@ class EmailService
 
             $broadcast_type = EmailBroadcastType::where('key_name', $type)->firstOrFail();
 
-            $broadcast ??= EmailBroadcast::create([
-                'friendly_name' => $friendly_name,
-                'email_broadcast_type_id' => $broadcast_type->id,
-                'sent_by' => $sender_id,
-                'event_id' => $event_id,
-            ]);
+            if(!$broadcast){
+                $broadcast = EmailBroadcast::create([
+                    'friendly_name' => $friendly_name,
+                    'email_broadcast_type_id' => $broadcast_type->id,
+                    'sent_by' => $sender_id,
+                    'event_id' => $event_id,
+                ]);
+            }
 
 
             Log::info('Creating email queued now');
