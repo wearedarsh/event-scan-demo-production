@@ -102,10 +102,7 @@
                         <td class="px-4 py-3 text-right">
                             <x-admin.table-action-button
                                 type="link"
-                                :href="route('admin.emails.broadcasts.view', [
-                    'broadcast' => $broadcast->id,
-                    'event' => $event->id,
-                ])"
+                                :href="#"
                                 icon="arrow-right-circle"
                                 label="{{ $isBulk ? 'View campaign' : 'View email' }}"
                                 primary />
