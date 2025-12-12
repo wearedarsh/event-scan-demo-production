@@ -13,7 +13,7 @@
         ],
         'sm' => [
             'text' => 'text-sm font-regular',
-            'icon' => 'h-4 w-4 ml-1',
+            'icon' => 'h-3 w-3 ml-1',
             'translate' => 'group-hover:translate-x-[4px]',
         ],
     ];
