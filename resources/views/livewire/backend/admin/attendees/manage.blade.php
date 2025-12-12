@@ -487,7 +487,7 @@
                         @forelse($email_sends as $email_send)
                             <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
 
-                                <td class="px-4 py-3">{{ $email_send->broadcast->type }}</td>
+                                <td class="px-4 py-3">{{ $email_send->broadcast->type->label }}</td>
 
                                 <td class="px-4 py-3">{{ $email_send->subject }}</td>
 
