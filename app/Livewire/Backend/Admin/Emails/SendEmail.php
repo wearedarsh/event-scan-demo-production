@@ -76,15 +76,15 @@ class SendEmail extends Component
 			$this->is_ticket_audience() => 'Email paid attendees who bought '.$this->ticket_label(),
 		};
 
-		foreach ($targets as $reg) {
-			$mailable = new CustomEmail($this->custom_subject, $this->custom_html_content, $signature_html);
-
-			$broadcast = EmailBroadcast::create([
+		$broadcast = EmailBroadcast::create([
 				'friendly_name' => $friendly,
 				'email_broadcast_type_id' => EmailBroadcastType::where('key_name', 'admin_bulk_send')->firstOrFail()->id,
 				'sent_by' => auth()->id(),
 				'event_id' => $this->event->id,
 			]);
+
+		foreach ($targets as $reg) {
+			$mailable = new CustomEmail($this->custom_subject, $this->custom_html_content, $signature_html);
 
 			EmailService::queueMailable(
 				mailable: $mailable,
