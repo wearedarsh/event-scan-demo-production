@@ -56,6 +56,7 @@ class EmailService
                     'friendly_name' => $friendly_name,
                     'email_broadcast_type_id' => $broadcast_type->id,
                     'sent_by' => $sender_id,
+                    'queued_at' => now(),
                     'event_id' => $event_id,
                 ]);
             }
