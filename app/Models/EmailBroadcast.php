@@ -8,11 +8,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class EmailBroadcast extends Model
 {
-    protected $fillable = ['friendly_name', 'sent_by', 'sent_at', 'type', 'event_id'];
+    protected $fillable = ['friendly_name', 'sent_by', 'sent_at', 'event_id', 'email_broadcast_type_id'];
 
     protected $casts = [
         'sent_at' => 'datetime',
     ];
+
+    public function sends()
+    {
+        return $this->hasMany(EmailSend::class, 'email_broadcast_id');
+    }
 
     public function sender(): BelongsTo
     {

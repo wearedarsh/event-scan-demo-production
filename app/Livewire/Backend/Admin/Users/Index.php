@@ -69,7 +69,7 @@ class Index extends Component
             recipient_email: $user->email,
             recipient_user: $user,
             friendly_name: $friendly_name,
-            type: 'Admin triggered',
+            type: 'admin_triggered',
             event_id: null,
         );
 

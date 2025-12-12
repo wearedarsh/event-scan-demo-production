@@ -30,7 +30,7 @@ class Index extends Component
             recipient_email: $user->email,
             recipient_user: $user,
             friendly_name: 'App setup instruction admin',
-            type: 'Admin triggered',
+            type: 'admin_triggered',
             event_id: null,
         );
         session()->flash('success', 'App setup instructions sent to your email address');

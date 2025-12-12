@@ -235,7 +235,7 @@ class Manage extends Component
             recipient_user: $this->attendee->user,
             friendly_name: 'Welcome email customer',
             sender_id: auth()->id(),
-            type: 'Admin triggered',
+            type: 'admin_triggered',
             event_id: $this->attendee->event->id,
         );
 
@@ -286,7 +286,7 @@ class Manage extends Component
             recipient_user: $this->attendee->user,
             sender_id: auth()->id(),
             friendly_name: $type,
-            type: 'Admin triggered',
+            type: 'admin_triggered',
             event_id: $this->attendee->event->id,
         );
 

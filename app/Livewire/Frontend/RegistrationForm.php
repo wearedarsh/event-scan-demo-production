@@ -521,7 +521,7 @@ class RegistrationForm extends Component
                 recipient_user: $registration->user,
                 recipient_email: $registration->user->email,
                 friendly_name: 'No payment confirmation customer',
-                type: 'Transactional customer',
+                type: 'transactional_customer',
                 event_id: $registration->event_id,
             );
 
@@ -538,7 +538,7 @@ class RegistrationForm extends Component
             recipient_user: $registration->user,
             recipient_email: $registration->user->email,
             friendly_name: 'Welcome email customer',
-            type: 'Transactional customer',
+            type: 'transactional_customer',
             event_id: $registration->event_id,
         );
 
@@ -559,7 +559,7 @@ class RegistrationForm extends Component
                     recipient_user: null,
                     recipient_email: $email,
                     friendly_name: 'No payment confirmation admin',
-                    type: 'Transactional admin',
+                    type: 'transactional_admin',
                     event_id: $registration->event_id,
                 );
             }
@@ -627,7 +627,7 @@ class RegistrationForm extends Component
                 recipient_user: $registration->user,
                 recipient_email: $registration->user->email,
                 friendly_name: 'Bank transfer information customer',
-                type: 'Transactional customer',
+                type: 'transactional_customer',
                 event_id: $registration->event_id,
             );
             Log::info('Bank transfer information email sent to customer');
@@ -644,7 +644,7 @@ class RegistrationForm extends Component
                     recipient_email: $email,
                     recipient_user: null,
                     friendly_name: 'Bank transfer information admin',
-                    type: 'Transactional admin',
+                    type: 'transactional_admin',
                     event_id: $registration->event_id,
                 );
             }

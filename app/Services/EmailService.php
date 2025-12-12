@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\EmailBroadcast;
+use App\Models\EmailBroadcastType;
 use App\Models\EmailQueuedSend;
 use App\Jobs\SendQueuedEmailJob;
 use Illuminate\Mail\Mailable;
@@ -23,7 +24,8 @@ class EmailService
         ?int $event_id = null,
         ?int $sender_id = null,
         ?DateTimeInterface $schedule_at = null,
-        ?string $signature_html = null
+        ?string $signature_html = null,
+        ?EmailBroadcast $broadcast = null
     ): EmailQueuedSend {
         return DB::transaction(function () use (
             $mailable,
@@ -50,9 +52,11 @@ class EmailService
 
             Log::info('Creating email broadcast now');
 
-            $broadcast = EmailBroadcast::create([
+            $broadcast_type = EmailBroadcastType::where('key_name', $type)->firstOrFail();
+
+            $broadcast ??= EmailBroadcast::create([
                 'friendly_name' => $friendly_name,
-                'type' => $type,
+                'type' => $broadcast_type->id,
                 'sent_by' => $sender_id,
                 'event_id' => $event_id,
             ]);

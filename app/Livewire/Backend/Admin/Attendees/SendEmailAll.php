@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use App\Models\EmailSignature;
+use App\Models\EmailBroadcast;
+use App\Models\EmailBroadcastType;
 use App\Services\EmailService;
 use App\Models\User;
 use App\Models\Event;
@@ -46,6 +48,13 @@ class SendEmailAll extends Component
 
         $attendees = $this->event->attendees;
 
+        $broadcast = EmailBroadcast::create([
+            'friendly_name' => 'Send to all attendees',
+            'email_broadcast_type_id' => EmailBroadcastType::where('key_name', 'admin_bulk_send')->first()->id,
+            'sent_by' => auth()->id(),
+            'event_id' => $this->event->id,
+        ]);
+
         foreach ($attendees as $attendee) {
             $mailable = new CustomEmail($this->custom_subject, $this->custom_html_content, $signature_html);
 
@@ -55,7 +64,8 @@ class SendEmailAll extends Component
                 recipient_email: $attendee->user->email,
                 sender_id: auth()->id(),
                 friendly_name: 'Send to all attendees',
-                type: 'Admin triggered',
+                type: 'admin_bulk_send',
+                broadcast: $broadcast,
                 event_id: $this->event->id,
             );
         }

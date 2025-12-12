@@ -71,7 +71,7 @@ class StripeWebhookController extends Controller
                             recipient_user: $registration->user,
                             recipient_email: $registration->user->email,
                             friendly_name: 'Stripe confirmation customer',
-                            type: 'Transactional customer',
+                            type: 'transactional_customer',
                             event_id: $registration->event_id,
                         );
 
@@ -88,7 +88,7 @@ class StripeWebhookController extends Controller
                         recipient_user: $registration->user,
                         recipient_email: $registration->user->email,
                         friendly_name: 'Welcome email customer',
-                        type: 'Transactional customer',
+                        type: 'transactional_customer',
                         event_id: $registration->event_id,
                     );
 
@@ -111,7 +111,7 @@ class StripeWebhookController extends Controller
                                 recipient_user: null,
                                 recipient_email: $email,
                                 friendly_name: 'Stripe confirmation admin',
-                                type: 'Transactional admin',
+                                type: 'transactional_admin',
                                 event_id: $registration->event_id,
                             );
                         }

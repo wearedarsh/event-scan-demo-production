@@ -83,7 +83,7 @@ class SendEmail extends Component
 				recipient_email: $reg->user?->email ?? '',
 				sender_id: auth()->id(),
 				friendly_name: $friendly,
-				type: 'Admin triggered',
+				type: 'admin_triggered',
 				event_id: $this->event->id,
 			);
 		}
