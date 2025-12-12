@@ -36,7 +36,7 @@
             <table class="min-w-full text-sm text-left">
                 <thead>
                     <tr class="text-[var(--color-text-light)] font-light uppercase text-xs border-b border-[var(--color-border)]">
-                        <th class="px-4 py-3">Type</th>
+                        <th class="px-4 py-3">Detail</th>
                         <th class="px-4 py-3">Recipient</th>
                         <th class="px-4 py-3">Subject</th>
                         <th class="px-4 py-3">Sent</th>
@@ -50,7 +50,10 @@
 
                             <!-- Type -->
                             <td class="px-4 py-3">
-                                {{ optional($email_send->broadcast)->type ?? '—' }}
+                                <p class="text-xs text-[var(--color-text)]/40">
+                                    {{ optional($email_send->broadcast)->type ?? '—' }}<br>
+                                    {{ $email_send->sent_at?->diffForHumans() ?? '—' }}
+                                </p> 
                             </td>
 
                             <!-- Recipient -->
