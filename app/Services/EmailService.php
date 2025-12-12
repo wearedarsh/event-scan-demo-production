@@ -46,7 +46,6 @@ class EmailService
 
             $html = $mailable->render();
 
-
             if ($signature_html) {
                 $html .= '<br><br>' . $signature_html;
             }
@@ -57,7 +56,7 @@ class EmailService
 
             $broadcast ??= EmailBroadcast::create([
                 'friendly_name' => $friendly_name,
-                'broadcast_type_id' => $broadcast_type->id,
+                'email_broadcast_type_id' => $broadcast_type->id,
                 'sent_by' => $sender_id,
                 'event_id' => $event_id,
             ]);
