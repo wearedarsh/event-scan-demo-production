@@ -65,7 +65,7 @@ class SendEmailAll extends Component
                 sender_id: auth()->id(),
                 friendly_name: 'Send to all attendees',
                 type: 'admin_bulk_send',
-                bulk: true,
+                broadcast: $broadcast,
                 event_id: $this->event->id,
             );
         }
