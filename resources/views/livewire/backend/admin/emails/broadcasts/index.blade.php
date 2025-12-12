@@ -1,5 +1,5 @@
 <div class="space-y-4">
-
+    @php use Illuminate\Support\Str; @endphp
     <!-- Breadcrumbs -->
     <x-admin.breadcrumb :items="[
         ['label' => 'Home', 'href' => route('admin.dashboard')],
