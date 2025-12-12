@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class EmailBroadcast extends Model
 {
-    protected $fillable = ['friendly_name', 'sent_by', 'sent_at', 'event_id', 'email_broadcast_type_id'];
+    protected $fillable = ['friendly_name', 'sent_by', 'queued_at', 'event_id', 'email_broadcast_type_id'];
 
     protected $casts = [
         'sent_at' => 'datetime',

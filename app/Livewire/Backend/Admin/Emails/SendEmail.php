@@ -79,6 +79,7 @@ class SendEmail extends Component
 		$broadcast = EmailBroadcast::create([
 				'friendly_name' => $friendly,
 				'email_broadcast_type_id' => EmailBroadcastType::where('key_name', 'admin_bulk_send')->firstOrFail()->id,
+				'sent_at' =>
 				'sent_by' => auth()->id(),
 				'event_id' => $this->event->id,
 			]);
