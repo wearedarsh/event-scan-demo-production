@@ -81,7 +81,7 @@
                             <span class="text-xs text-[var(--color-text)]/40">
                                 {{-- Bulk send: show first/last --}}
                                 @if($isBulk)
-                                
+                                    <p>Tommy</p>
                                 @else
                                 {{-- Single send: just show timestamp --}}
                                 Sent {{ $broadcast->sends()->first()?->sent_at?->diffForHumans() ?? '—' }}
