@@ -188,7 +188,7 @@
 
                 <x-link-arrow href="{{ route('admin.events.reports.index', $event->id) }}">
                     View reports
-                </x-link-arrow>
+                </x-link-arrow><br>
 
                 <x-link-arrow href="{{ route('admin.events.emails.broadcasts.index', $event->id) }}">
                     View email broadcasts
