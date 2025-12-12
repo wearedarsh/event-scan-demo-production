@@ -11,7 +11,7 @@
 
     <!-- Header -->
     <x-admin.page-header
-        title="Check-ins Report"
+        title="Check ins report"
         subtitle="{{ $event->title }}"
     />
 

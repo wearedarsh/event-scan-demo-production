@@ -11,7 +11,7 @@
 
     <!-- Header -->
     <x-admin.page-header
-        title="Edit Feedback Form"
+        title="Edit feedback form"
         subtitle="{{ $event->title }}"
     />
 

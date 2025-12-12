@@ -8,14 +8,13 @@
 
     <!-- Page Header -->
     <x-admin.page-header
-        title="Email Signatures"
+        title="Email signatures"
         subtitle="Manage reusable signatures for outgoing emails."
     >
-        <x-admin.outline-btn-icon
-            :href="route('admin.emails.signatures.create')"
-            icon="heroicon-o-plus">
-            New Signature
-        </x-admin.outline-btn-icon>
+        <x-admin.button variant="outline" href="{{ route('admin.emails.signatures.create') }}">
+            <x-heroicon-o-plus class="h-4 w-4 mr-1" />
+            New signature
+        </x-admin.button>
     </x-admin.page-header>
 
 
@@ -33,8 +32,6 @@
     <div class="px-6">
 
         <x-admin.card class="p-5 space-y-4">
-
-            <x-admin.section-title title="Signatures" />
 
             <x-admin.table>
                 <table class="min-w-full text-sm text-left">
@@ -65,6 +62,7 @@
                                             type="link"
                                             :href="route('admin.emails.signatures.edit', $signature->id)"
                                             icon="pencil-square"
+                                            primary
                                             label="Edit"
                                         />
 

@@ -10,7 +10,7 @@
 
     <!-- Page Header -->
     <x-admin.page-header
-        title="Edit Content Section"
+        title="Edit content section"
         subtitle="Update the website content displayed on the event page." />
 
     <!-- Alerts -->
@@ -28,28 +28,35 @@
 
         <x-admin.card class="p-6 space-y-6">
 
-            <x-admin.section-title title="Content Details" />
-
             <form wire:submit.prevent="update" class="space-y-6">
 
                 <div class="grid md:grid-cols-2 gap-6">
 
                     <!-- Title -->
-                    <x-admin.input-text
-                        label="Section Title"
-                        model="title"
-                        class="w-full" />
+                    <div>
+                        <x-admin.input-label for="title">
+                            Section title
+                        </x-admin.input-label>
+                        <x-admin.input-text
+                            model="title"
+                            class="w-full" />
+                    </div>
 
                     <!-- Display Order -->
-                    <x-admin.input-text
-                        label="Display Order"
-                        model="order"
-                        type="number"
-                        class="w-full" />
-
+                    <div>
+                        <x-admin.input-label for="order">
+                            Display order
+                        </x-admin.input-label>
+                        <x-admin.input-text
+                            model="order"
+                            type="number"
+                            class="w-full" />
+                    </div>
                     <!-- Active -->
                     <div>
-                        <label class="form-label-custom">Active?</label>
+                        <x-admin.input-label for="order">
+                            Active?
+                        </x-admin.input-label>
                         <x-admin.select wire:model.live="active">
                             <option value="1">Yes</option>
                             <option value="0">No</option>
@@ -60,8 +67,10 @@
 
 
                 <!-- Content Editor -->
-                <div class="space-y-2">
-
+                <div>
+                    <x-admin.input-label for="order">
+                            Active?
+                        </x-admin.input-label>
                     <x-admin.editor
                         label="Content"
                         model="html_content"
@@ -71,19 +80,10 @@
 
 
                 <!-- Buttons -->
-                <div class="flex items-center gap-3">
-                    <x-admin.button type="submit" variant="outline">
-                        <x-slot:icon>
-                            <x-heroicon-o-check class="h-4 w-4" />
-                        </x-slot:icon>
-                        Update Content Section
-                    </x-admin.button>
-
-                    <a href="{{ route('admin.events.content.index', $event->id) }}"
-                       class="btn-secondary">
-                        Cancel
-                    </a>
-                </div>
+                <x-admin.form-actions
+                    submit-text="Update event"
+                    :cancel-href="route('admin.events.content.index', $event->id)"
+                />
 
             </form>
 

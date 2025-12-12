@@ -9,7 +9,7 @@
 
     <!-- Page Header -->
     <x-admin.page-header
-        title="Create Session Type"
+        title="Create session type"
         subtitle="Define a reusable type for your event sessions."
     />
 

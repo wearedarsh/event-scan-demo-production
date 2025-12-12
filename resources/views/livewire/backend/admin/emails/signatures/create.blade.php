@@ -8,7 +8,7 @@
 
     <!-- Page Header -->
     <x-admin.page-header
-        title="Create Email Signature"
+        title="Create email signature"
         subtitle="Add a new reusable signature for outgoing emails." 
     />
 
@@ -63,16 +63,10 @@
                 <!-- Buttons -->
                 <div class="flex items-center gap-3 pt-2">
 
-                    <x-admin.button type="submit" variant="outline">
-                        <x-slot:icon>
-                            <x-heroicon-o-check class="h-4 w-4" />
-                        </x-slot:icon>
-                        Create Signature
-                    </x-admin.button>
-
-                    <a href="{{ route('admin.emails.signatures.index') }}" class="btn-secondary">
-                        Cancel
-                    </a>
+                    <x-admin.form-actions
+                        submit-text="Create signature"
+                        :cancel-href="route('admin.emails.signatures.index')"
+                    />
 
                 </div>
 

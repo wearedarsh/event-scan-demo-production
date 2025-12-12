@@ -12,7 +12,7 @@
 
     <!-- Header -->
     <x-admin.page-header
-        title="Feedback Report"
+        title="Feedback report"
         subtitle="{{ $report['form']['title'] }}"
     />
 

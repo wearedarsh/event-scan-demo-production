@@ -9,7 +9,7 @@
 
     <!-- Page Header -->
     <x-admin.page-header
-        title="Edit Session Type"
+        title="Edit session type"
         subtitle="Update this session type’s details."
     />
 

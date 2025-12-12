@@ -106,6 +106,7 @@
                                             'event' => $event->id,
                                             'content' => $content->id
                                         ])"
+                                        primary
                                         icon="pencil-square"
                                         label="Edit"
                                     />
@@ -231,6 +232,7 @@
                                             'event' => $event->id,
                                             'download' => $download->id
                                         ])"
+                                        primary
                                         icon="pencil-square"
                                         label="Edit"
                                     />

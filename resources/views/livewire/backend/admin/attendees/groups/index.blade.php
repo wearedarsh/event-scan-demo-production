@@ -9,7 +9,7 @@
 
     <!-- Header -->
     <x-admin.page-header
-        title="Attendee Groups"
+        title="Attendee groups"
         subtitle="Manage attendee segmentation, colours, and group assignments.">
         <x-admin.outline-btn-icon
             :href="route('admin.events.attendees.groups.create', $event->id)"

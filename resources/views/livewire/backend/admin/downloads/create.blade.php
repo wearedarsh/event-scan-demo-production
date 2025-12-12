@@ -10,7 +10,7 @@
 
     <!-- Page Header -->
     <x-admin.page-header
-        title="Create Event Download"
+        title="Create event download"
         subtitle="Upload a downloadable file for {{ $event->title }}."
     />
 
@@ -35,23 +35,33 @@
                 <div class="grid md:grid-cols-2 gap-6">
 
                     <!-- Title -->
-                    <x-admin.input-text
-                        label="Title"
-                        model="title"
-                        class="w-full"
-                    />
+                    <div>
+                        <x-admin.input-label for="title">
+                            Title
+                        </x-admin.input-label>
+                        <x-admin.input-text
+                            model="title"
+                            class="w-full"
+                        />
+                    </div>
 
                     <!-- Display Order -->
-                    <x-admin.input-text
-                        label="Display Order"
-                        type="number"
-                        model="display_order"
-                        class="w-full"
-                    />
-
-                    <!-- Active? -->
                     <div>
-                        <label class="form-label-custom">Active?</label>
+                        <x-admin.input-label for="display_order">
+                            Display order
+                        </x-admin.input-label>
+                        <x-admin.input-text
+                            model="display_order"
+                            type="number"
+                            class="w-full"
+                        />
+                    </div>
+
+                    <!-- Active -->
+                    <div>
+                        <x-admin.input-label for="active">
+                            Active?
+                        </x-admin.input-label>
                         <x-admin.select wire:model.live="active">
                             <option value="1">Yes</option>
                             <option value="0">No</option>
@@ -61,32 +71,28 @@
                 </div>
 
                 <!-- File Upload -->
-                <div>
-                    <label class="form-label-custom">File Upload</label>
+                <div class="space-y-2">
+                    <x-admin.input-label for="file">
+                        File upload
+                    </x-admin.input-label>
+
                     <input
-                        wire:model="file"
                         type="file"
+                        wire:model="file"
                         class="input-text p-2"
                     />
+
                     @error('file')
                         <x-admin.input-error :message="$message" />
                     @enderror
                 </div>
 
                 <!-- Buttons -->
-                <div class="flex items-center gap-3">
-                    <x-admin.button type="submit" variant="outline">
-                        <x-slot:icon>
-                            <x-heroicon-o-check class="h-4 w-4" />
-                        </x-slot:icon>
-                        Create Download
-                    </x-admin.button>
-
-                    <a href="{{ route('admin.events.content.index', $event->id) }}"
-                        class="btn-secondary">
-                        Cancel
-                    </a>
-                </div>
+                <x-admin.form-actions
+                    submit-text="Create download"
+                    :cancel-href="route('admin.events.content.index', $event->id)"
+                />
+                
 
             </form>
 

@@ -10,7 +10,7 @@
 
     <!-- Page Header -->
     <x-admin.page-header
-        title="Edit Ticket"
+        title="Edit ticket"
         subtitle="Update ticket details for {{ $event->title }}."
     />
 

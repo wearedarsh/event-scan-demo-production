@@ -11,7 +11,7 @@
 
     <!-- Header -->
     <x-admin.page-header
-        title="Financial Report"
+        title="Financial report"
         subtitle="{{ $event->title }}"
     />
 

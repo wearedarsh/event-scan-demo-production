@@ -5,7 +5,7 @@
 
 <div class="flex flex-col items-center gap-1">
 
-    @if($order > 0)
+    @if($order > 1)
         <button 
             class="text-[var(--color-primary)]/80 bg-[var(--color-primary)]/5 rounded-sm p-0.5"
             type="button"

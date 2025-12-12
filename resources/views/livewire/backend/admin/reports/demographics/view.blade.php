@@ -11,7 +11,7 @@
 
     <!-- Header -->
     <x-admin.page-header
-        title="Demographics Report"
+        title="Demographics report"
         subtitle="{{ $event->title }}"
     />
 

@@ -9,7 +9,7 @@
 
     <!-- Page Header -->
     <x-admin.page-header
-        title="Edit Session Group"
+        title="Edit session group"
         subtitle="Update the details of this session group."
     />
 

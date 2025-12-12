@@ -7,17 +7,16 @@
 
     <!-- Page Header -->
     <x-admin.page-header
-        title="Email Templates"
-        subtitle="Manage reusable system-wide HTML email templates."
-    />
+        title="Email templates"
+        subtitle="Manage reusable system-wide HTML email templates." />
 
     <!-- Alerts -->
     @if($errors->any())
-        <x-admin.alert type="danger" :message="$errors->first()" />
+    <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
 
     @if(session('success'))
-        <x-admin.alert type="success" :message="session('success')" />
+    <x-admin.alert type="success" :message="session('success')" />
     @endif
 
 
@@ -42,39 +41,39 @@
 
                         @forelse ($emails as $email)
 
-                            <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
+                        <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
 
-                                <!-- Template Title -->
-                                <td class="px-4 py-3">
-                                    {{ $email->title }}
-                                </td>
+                            <!-- Template Title -->
+                            <td class="px-4 py-3">
+                                {{ $email->title }}
+                            </td>
 
-                                <!-- Actions -->
-                                <td class="px-4 py-3 text-right">
-                                    <div class="flex justify-end items-center gap-2">
+                            <!-- Actions -->
+                            <td class="px-4 py-3 text-right">
+                                <div class="flex justify-end items-center gap-2">
 
-                                        <x-admin.table-action-button
-                                            type="link"
-                                            :href="route('admin.emails.templates.edit', [
+                                    <x-admin.table-action-button
+                                        type="link"
+                                        :href="route('admin.emails.templates.edit', [
                                                 'email_html_content' => $email->id
                                             ])"
-                                            icon="pencil-square"
-                                            label="Edit"
-                                        />
+                                        icon="pencil-square"
+                                        primary
+                                        label="Edit" />
 
-                                    </div>
-                                </td>
+                                </div>
+                            </td>
 
-                            </tr>
+                        </tr>
 
                         @empty
 
-                            <tr>
-                                <td colspan="2"
-                                    class="px-4 py-6 text-center text-[var(--color-text-light)]">
-                                    No email templates found.
-                                </td>
-                            </tr>
+                        <tr>
+                            <td colspan="2"
+                                class="px-4 py-6 text-center text-[var(--color-text-light)]">
+                                No email templates found.
+                            </td>
+                        </tr>
 
                         @endforelse
 
@@ -86,9 +85,9 @@
 
             <!-- Pagination -->
             @if (method_exists($emails, 'links'))
-                <div class="pt-4 flex items-center justify-end">
-                    {{ $emails->links('pagination::tailwind') }}
-                </div>
+            <div class="pt-4 flex items-center justify-end">
+                {{ $emails->links('pagination::tailwind') }}
+            </div>
             @endif
 
         </x-admin.card>

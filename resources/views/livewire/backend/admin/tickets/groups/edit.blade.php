@@ -10,7 +10,7 @@
 
     <!-- Page Header -->
     <x-admin.page-header
-        title="Edit Ticket Group"
+        title="Edit ticket group"
         subtitle="Update details for this ticket group."
     />
 

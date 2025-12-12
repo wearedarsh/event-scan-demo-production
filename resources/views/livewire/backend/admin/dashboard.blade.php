@@ -5,11 +5,11 @@
             title="Welcome, {{ Auth::user()->first_name }}"
             subtitle="Quick overview and tools for managing your events.">
             
-            <x-admin.outline-btn-icon
-                :href="route('admin.events.create')"
-                icon="heroicon-o-plus">
+
+            <x-admin.button variant="outline" href="{{ route('admin.events.create') }}">
+                <x-heroicon-o-plus class="h-4 w-4 mr-1" />
                 Create event
-            </x-admin.outline-btn-icon>
+            </x-admin.button>
 
         </x-admin.page-header>
     </div>

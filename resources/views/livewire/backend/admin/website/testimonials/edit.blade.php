@@ -9,7 +9,7 @@
 
     <!-- Page Header -->
     <x-admin.page-header
-        title="Edit Testimonial"
+        title="Edit testimonial"
         subtitle="Update testimonial content and display configuration."
     />
 

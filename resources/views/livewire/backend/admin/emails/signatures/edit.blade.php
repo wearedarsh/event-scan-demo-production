@@ -8,7 +8,7 @@
 
     <!-- Page Header -->
     <x-admin.page-header
-        title="Edit Email Signature"
+        title="Edit email signature"
         subtitle="Update the title and HTML content of this email signature."
     />
 
@@ -27,55 +27,41 @@
     <div class="px-6">
 
         <x-admin.card class="p-6 space-y-6">
-
-            <x-admin.section-title title="Signature Details" />
-
-
             <form wire:submit.prevent="update" class="space-y-6">
 
                 <!-- Title -->
+                <x-admin.input-label for="title">
+                    Title
+                </x-admin.input-label>
                 <x-admin.input-text
-                    label="Title"
                     model="title"
                     class="w-full"
                 />
 
                 <!-- HTML Editor -->
                 <div class="space-y-2">
-
-                    <p class="text-xs text-[var(--color-text-light)]">
-                        Need help using the editor?
-                        <a href="https://guide.eventscan.co.uk/guide-content-editor"
-                           target="_blank"
-                           class="text-[var(--color-primary)] underline">
-                            View our guide
-                        </a>
-                    </p>
-
+                    <x-admin.input-label for="html_content">
+                            HTML Content
+                        </x-admin.input-label>
+                        <x-admin.help-link
+                        text="Need help using the editor?"
+                        link-text="view our guide"
+                        href="https://guide.eventscan.co.uk/guide-content-editor"
+                        />
                     <div wire:ignore>
+                        
                         <x-admin.editor
                             model="html_content"
-                            label="Signature HTML"
                         />
                     </div>
 
                 </div>
 
                 <!-- Buttons -->
-                <div class="flex items-center gap-3 pt-4">
-
-                    <x-admin.button type="submit" variant="outline">
-                        <x-slot:icon>
-                            <x-heroicon-o-check class="h-4 w-4" />
-                        </x-slot:icon>
-                        Update Signature
-                    </x-admin.button>
-
-                    <a href="{{ route('admin.emails.signatures.index') }}" class="btn-secondary">
-                        Cancel
-                    </a>
-
-                </div>
+                <x-admin.form-actions
+                    submit-text="Update signature"
+                    :cancel-href="route('admin.emails.signatures.index')"
+                />
 
             </form>
 

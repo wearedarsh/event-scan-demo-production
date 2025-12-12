@@ -10,7 +10,7 @@
 
     <!-- Header -->
     <x-admin.page-header
-        title="Manage Feedback Form"
+        title="Manage feedback form"
         subtitle="{{ $feedback_form->title }}">
 
         <div class="flex items-center gap-3">

@@ -160,23 +160,11 @@
 
             <!-- Action buttons -->
             <x-admin.card hover="false" class="p-6">
-                <div class="flex items-center gap-3">
-
-                    <x-admin.button type="submit" variant="outline">
-                        Update attendee
-                    </x-admin.button>
-
-                    <x-admin.button
-                        href="{{ route('admin.events.attendees.manage', [$event->id, $attendee->id]) }}"
-                        variant="secondary">
-                        Cancel
-                    </x-admin.button>
-
-                </div>
+                <x-admin.form-actions
+                        submit-text="Update attendee"
+                        :cancel-href="route('admin.events.attendees.manage', [$event->id, $attendee->id])"
+                    />
             </x-admin.card>
-
-
-            
         </form>
 
     </div>

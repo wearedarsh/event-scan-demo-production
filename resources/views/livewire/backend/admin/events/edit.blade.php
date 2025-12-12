@@ -8,7 +8,7 @@
 
     <!-- Header -->
     <x-admin.page-header
-        title="Edit Event"
+        title="Edit event"
         subtitle="Update core details and configuration." />
 
     <!-- Alerts -->
@@ -164,21 +164,11 @@
                         rows="4" />
                 </div>
 
-            </x-admin.card>
+                <x-admin.form-actions
+                    submit-text="Update event"
+                    :cancel-href="route('admin.events.manage', $event->id)"
+                />
 
-
-
-            <!-- Action buttons -->
-            <x-admin.card hover="false" class="p-6 space-y-4">
-                <div class="flex items-center gap-3">
-                    <x-admin.button type="submit" variant="outline">
-                        Update Event
-                    </x-admin.button>
-
-                    <x-admin.button href="{{ route('admin.events.manage', $event->id) }}" variant="secondary">
-                        Cancel
-                    </x-admin.button>
-                </div>
             </x-admin.card>
 
         </form>

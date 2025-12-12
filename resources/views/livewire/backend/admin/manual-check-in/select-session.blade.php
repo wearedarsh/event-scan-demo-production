@@ -2,7 +2,7 @@
 
     <!-- Header -->
     <x-admin.page-header
-        title="Manual Check-In"
+        title="Manual check in"
         subtitle="{{ $event->title }} / {{ $group->friendly_name }}"
     />
 

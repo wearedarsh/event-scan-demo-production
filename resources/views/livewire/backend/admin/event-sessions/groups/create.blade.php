@@ -9,7 +9,7 @@
 
     <!-- Page Header -->
     <x-admin.page-header
-        title="Create Session Group"
+        title="Create session group"
         subtitle="Add a new session group for this event."
     />
 

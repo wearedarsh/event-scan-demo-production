@@ -2,7 +2,7 @@
 
     <!-- Header -->
     <x-admin.page-header
-        title="Check-In Attendees"
+        title="Attendee guest list"
         subtitle="{{ $event->title }} / {{ $session->group?->friendly_name }} / {{ $session->title }}" />
 
     <!-- Back Link -->

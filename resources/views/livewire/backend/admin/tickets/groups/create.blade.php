@@ -10,7 +10,7 @@
 
     <!-- Page Header -->
     <x-admin.page-header
-        title="Create Ticket Group"
+        title="Create ticket group"
         subtitle="Define a new ticket group for {{ $event->title }}."
     />
 

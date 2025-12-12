@@ -11,7 +11,7 @@
 
     <!-- Header -->
     <x-admin.page-header
-        title="Feedback Forms"
+        title="Feedback forms"
         subtitle="View summary results for all event feedback forms."
     />
 
