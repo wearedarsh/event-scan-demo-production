@@ -51,7 +51,7 @@
                             <!-- Type -->
                             <td class="px-4 py-3">
                                 <p class="text-xs text-[var(--color-text)]/40">
-                                    {{ optional($email_send->broadcast)->type ?? '—' }}<br>
+                                    <span class="font-medium">{{ optional($email_send->broadcast)->type ?? '—' }}</span><br>
                                     {{ $email_send->sent_at?->diffForHumans() ?? '—' }}
                                 </p> 
                             </td>
@@ -59,12 +59,12 @@
                             <!-- Recipient -->
                             <td class="px-4 py-3">
                                 @if ($email_send->recipient)
-                                    <strong>
                                         {{ $email_send->recipient->title }}
                                         {{ $email_send->recipient->first_name }}
                                         {{ $email_send->recipient->last_name }}
-                                    </strong>
                                     <br>
+                                @else
+                                    Admin
                                 @endif
 
                                 <a
