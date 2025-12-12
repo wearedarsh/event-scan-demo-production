@@ -11,7 +11,7 @@ class EmailBroadcast extends Model
     protected $fillable = ['friendly_name', 'sent_by', 'queued_at', 'event_id', 'email_broadcast_type_id'];
 
     protected $casts = [
-        'sent_at' => 'datetime',
+        'queued_at' => 'datetime',
     ];
 
     public function sends()
@@ -27,11 +27,6 @@ class EmailBroadcast extends Model
     public function sender(): BelongsTo
     {
         return $this->belongsTo(User::class, 'sent_by');
-    }
-
-    public function recipient()
-    {
-        return $this->belongsTo(User::class, 'recipient_id');
     }
 
     public function event()
@@ -52,5 +47,25 @@ class EmailBroadcast extends Model
     public function bounces(): HasMany
     {
         return $this->hasMany(EmailBounce::class);
+    }
+
+    public function sentCount(): int
+    {
+        return $this->sends()->count();
+    }
+
+    public function lastSentAt(): ?Carbon
+    {
+        return $this->sends()->max('sent_at');
+    }
+
+    public function firstSentAt(): ?Carbon
+    {
+        return $this->sends()->min('sent_at');
+    }
+
+    public function subjectPreview(): ?string
+    {
+        return $this->sends()->first()?->subject;
     }
 }

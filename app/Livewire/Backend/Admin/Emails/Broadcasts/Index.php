@@ -5,7 +5,7 @@ namespace App\Livewire\Backend\Admin\Emails\Broadcasts;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\WithPagination;
-use App\Models\EmailSend;
+use App\Models\EmailBroadcast;
 use App\Models\Event;
 
 #[Layout('livewire.backend.admin.layouts.app')]
@@ -14,7 +14,9 @@ class Index extends Component
     use WithPagination;
 
     public Event $event;
+
     public string $search = '';
+    public string $filter = 'all';
 
     public function mount(Event $event)
     {
@@ -26,32 +28,42 @@ class Index extends Component
         $this->resetPage();
     }
 
+    public function setFilter(string $filter)
+    {
+        $this->filter = $filter;
+        $this->resetPage();
+    }
+
     public function render()
     {
-        $query = EmailSend::query()
-            ->with([
-                'recipient:id,title,first_name,last_name',
-                'broadcast.event:id,title',
-            ])
-            ->whereHas('broadcast', fn ($q) =>
-                $q->where('event_id', $this->event->id)
-            );
+        $counts = [
+            'all'   => EmailBroadcast::where('event_id', $this->event->id)->count(),
+            'bulk'  => EmailBroadcast::where('event_id', $this->event->id)->has('sends', '>', 1)->count(),
+            'single'=> EmailBroadcast::where('event_id', $this->event->id)->has('sends', '=', 1)->count(),
+        ];
+
+        $query = EmailBroadcast::query()
+            ->where('event_id', $this->event->id)
+            ->withCount('sends')
+            ->with('type', 'sender');
+
+        match ($this->filter) {
+            'bulk'   => $query->has('sends', '>', 1),
+            'single' => $query->has('sends', '=', 1),
+            default  => null,
+        };
 
         if ($this->search !== '') {
-            $s = '%' . $this->search . '%';
-            $query->where(function ($q) use ($s) {
-                $q->where('email_address', 'like', $s)
-                  ->orWhere('subject', 'like', $s)
-                  ->orWhereHas('recipient', fn ($sub) =>
-                      $sub->where('last_name', 'like', $s)
-                  );
-            });
+            $query->where('friendly_name', 'like', "%{$this->search}%");
         }
 
-        $email_sends = $query->orderByDesc('id')->paginate(30);
+        $broadcasts = $query
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
 
         return view('livewire.backend.admin.emails.broadcasts.index', [
-            'email_sends' => $email_sends,
+            'broadcasts' => $broadcasts,
+            'counts'     => $counts,
             'event'      => $this->event,
         ]);
     }
