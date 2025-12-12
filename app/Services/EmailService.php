@@ -24,7 +24,7 @@ class EmailService
         ?int $sender_id = null,
         ?DateTimeInterface $schedule_at = null,
         ?string $signature_html = null,
-        ?EmailBroadcast $broadcast = null
+        bool $bulk = false
     ): EmailQueuedSend {
         return DB::transaction(function () use (
             $mailable,
@@ -36,7 +36,7 @@ class EmailService
             $schedule_at,
             $signature_html,
             $type,
-            $broadcast
+            $bulk
         ) {
 
             Log::info('Email service received request');
@@ -53,7 +53,7 @@ class EmailService
 
             $broadcast_type = EmailBroadcastType::where('key_name', $type)->firstOrFail();
 
-            if(!$broadcast){
+            if($bulk){
                 $broadcast = EmailBroadcast::create([
                     'friendly_name' => $friendly_name,
                     'email_broadcast_type_id' => $broadcast_type->id,
