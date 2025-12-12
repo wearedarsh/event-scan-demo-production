@@ -39,7 +39,6 @@
                         <th class="px-4 py-3">Detail</th>
                         <th class="px-4 py-3">Recipient</th>
                         <th class="px-4 py-3">Subject</th>
-                        <th class="px-4 py-3">Sent</th>
                         <th class="px-4 py-3 text-right">Actions</th>
                     </tr>
                 </thead>
@@ -64,7 +63,7 @@
                                         {{ $email_send->recipient->last_name }}
                                     <br>
                                 @else
-                                    Admin
+                                    Admin<br>
                                 @endif
 
                                 <a
@@ -79,12 +78,6 @@
                             <td class="px-4 py-3">
                                 {{ $email_send->subject }}
                             </td>
-
-                            <!-- Sent -->
-                            <td class="px-4 py-3">
-                                {{ $email_send->sent_at?->diffForHumans() ?? '—' }}
-                            </td>
-
                             <!-- Actions -->
                             <td class="px-4 py-3 text-right">
                                 <x-admin.table-action-button
