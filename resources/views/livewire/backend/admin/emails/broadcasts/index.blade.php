@@ -69,7 +69,7 @@
                                     @endif
                                 </p>
                             @endif
-                            <span class=" text-[var(--color-text)]/40">
+                            <br><span class="text-xs text-[var(--color-text)]/40">
                             {{ $broadcast->queued_at->diffForHumans() }}
                             </span>
                         </td>
