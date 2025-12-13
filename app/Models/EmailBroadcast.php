@@ -59,5 +59,5 @@ class EmailBroadcast extends Model
     {
         return $this->sends_count > 1;
     }
-    
+
 }

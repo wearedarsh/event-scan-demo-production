@@ -38,7 +38,9 @@ class Index extends Component
     {
 
         $query = EmailBroadcast::query()
-            ->where('event_id', $this->event->id);
+            ->where('event_id', $this->event->id)
+            ->withCount('sends')
+            ->with(['type', 'sender']);
 
         if ($this->search !== '') {
             $query->where('friendly_name', 'like', "%{$this->search}%");
