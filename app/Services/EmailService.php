@@ -54,6 +54,7 @@ class EmailService
             if(!$broadcast){
                 $broadcast = EmailBroadcast::create([
                     'friendly_name' => $friendly_name,
+                    'subject' => $subject,
                     'email_broadcast_type_id' => $broadcast_type->id,
                     'sent_by' => $sender_id,
                     'queued_at' => now(),

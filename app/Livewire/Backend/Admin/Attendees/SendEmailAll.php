@@ -50,6 +50,7 @@ class SendEmailAll extends Component
 
         $broadcast = EmailBroadcast::create([
             'friendly_name' => 'Send to all attendees',
+            'subject' => $this->custom_subject,
             'email_broadcast_type_id' => EmailBroadcastType::where('key_name', 'admin_bulk_send')->first()->id,
             'sent_by' => auth()->id(),
             'event_id' => $this->event->id,

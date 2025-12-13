@@ -78,6 +78,7 @@ class SendEmail extends Component
 
 		$broadcast = EmailBroadcast::create([
 				'friendly_name' => $friendly,
+				'subject' => $this->custom_subject,
 				'email_broadcast_type_id' => EmailBroadcastType::where('key_name', 'admin_bulk_send')->firstOrFail()->id,
 				'queued_at' => now(),
 				'sent_by' => auth()->id(),
