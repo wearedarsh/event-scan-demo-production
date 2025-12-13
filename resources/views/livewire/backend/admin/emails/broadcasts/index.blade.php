@@ -57,7 +57,7 @@
                         <!-- Recipient -->
                         <td class="px-4 py-3">
                             @if($broadcast->isBulk())
-                                Sent to $broadcast->sends_count recipients
+                                Sent to {{ $broadcast->sends_count }} recipients
                             @else
                                 @php $send = $broadcast->sends->first(); @endphp
                                 @if ($send->recipient)
