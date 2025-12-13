@@ -29,15 +29,19 @@
 
             <x-admin.section-title title="Categories" />
 
-            <!-- Global All -->
-            <x-admin.filter-pill
-                :active="$filter === 'all'"
-                wire:click="setFilter('all')">
-                All ({{ $counts['all'] }})
-            </x-admin.filter-pill>
+            <!-- Categories row -->
+            <div class="flex flex-wrap items-start gap-2">
 
-            <!-- Categories grid -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
+                <!-- Global All (treated as a category) -->
+                <div class="space-y-2">
+                    <x-admin.section-title title="All" />
+
+                    <x-admin.filter-pill
+                        :active="$filter === 'all'"
+                        wire:click="setFilter('all')">
+                        All ({{ $counts['all'] }})
+                    </x-admin.filter-pill>
+                </div>
 
                 @foreach ($categories as $category)
                 @php
@@ -49,7 +53,7 @@
 
                     <x-admin.section-title :title="$category->label" />
 
-                    <div class="flex flex-wrap items-center gap-2">
+                    <div class="flex flex-wrap gap-2">
                         @foreach ($category->types as $type)
                         @if (($counts[$type->id] ?? 0) > 0)
                         <x-admin.filter-pill
@@ -67,6 +71,7 @@
 
             </div>
         </div>
+
 
 
 
