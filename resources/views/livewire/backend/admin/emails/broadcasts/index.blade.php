@@ -121,12 +121,16 @@
                         </td>
                         <!-- Actions -->
                         <td class="px-4 py-3 text-right">
+                            @if($broadcast->isBulk())
+
+                            @else
                             <x-admin.table-action-button
                                 type="link"
-                                :href="route('admin.dashboard')"
+                                :href="route('admin.emails.broadcasts.view', ['event' => $event->id, 'email_send' => $send->id)"
                                 icon="arrow-right-circle"
                                 label="View details"
                                 primary />
+                            @endif
                         </td>
 
                     </tr>
