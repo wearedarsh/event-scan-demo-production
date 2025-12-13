@@ -8,8 +8,8 @@
 
     <!-- Header -->
     <x-admin.page-header
-        title="{{ $email_send->subject }}"
-        subtitle="Email send overview">
+        title="{{ $email_send->recipient->title }} {{ $email_send->recipient->first_name }} {{ $email_send->recipient->last_name }}"
+        subtitle="{{ $email_send->email_address }}">
 
         <div class="flex items-center gap-3">
 
