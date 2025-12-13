@@ -25,7 +25,7 @@ class EmailSend extends Model
 
     public function broadcast()
     {
-        return $this->belongsTo(EmailBroadcast::class);
+        return $this->belongsTo(EmailBroadcast::class,  'email_broadcast_id');
     }
 
     public function recipient()
