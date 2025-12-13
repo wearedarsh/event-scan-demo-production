@@ -42,59 +42,42 @@
                 </thead>
 
                 <tbody>
-                    @forelse($broadcasts as $broadcast)
 
-                    @php $isBulk = $broadcast->sends_count > 1; @endphp
 
                     <tr class="border-b hover:bg-[var(--color-surface-hover)] transition">
 
                         <!-- Detail Column -->
                         <td class="px-4 py-3">
 
-                            <strong>{{ $broadcast->friendly_name }}</strong><br>
+                            <strong></strong><br>
 
                             <span class="text-xs text-[var(--color-text)]/40">
-                                {{ $broadcast->type->label }}<br>
-                                Created {{ $broadcast->created_at }}
                             </span>
 
                             
-                            @php $send = $broadcast->sends->first(); @endphp
-
-                            @if($send)
+                            
                             <br><br>
                             <span class="text-xs text-[var(--color-text)]/60">
-                                {{ $send->email_address }}<br>
-                                {{ $send->recipient?->full_name ?? 'Admin' }}
+                
                             </span>
-                            @endif
+
                 
 
                         </td>
 
                         <!-- Stats -->
                         <td class="px-4 py-3">
-                            {{ $broadcast->sends_count }}
+     
                             <br>
 
                             <span class="text-xs text-[var(--color-text)]/40">
-                                {{-- Bulk send: show first/last --}}
-                                @if($isBulk)
-                                    <p>Tommy</p>
-                                @else
-                                {{-- Single send: just show timestamp --}}
-                                Sent 
-                                @endif
+            
                             </span>
                         </td>
 
                         <!-- Subject -->
                         <td class="px-4 py-3">
-                            @if(!$isBulk)
-                            
-                            @else
-                            <span class="text-xs text-[var(--color-text)]/40">Multiple subjects</span>
-                            @endif
+                         
                         </td>
 
                         <!-- Actions -->
@@ -103,19 +86,19 @@
                                 type="link"
                                 :href="#"
                                 icon="arrow-right-circle"
-                                label="{{ $isBulk ? 'View campaign' : 'View email' }}"
+                                label="View"
                                 primary />
                         </td>
 
                     </tr>
 
-                    @empty
+      
                     <tr>
                         <td colspan="4" class="px-4 py-6 text-center text-[var(--color-text-light)]">
                             No broadcasts found for this event.
                         </td>
                     </tr>
-                    @endforelse
+
                 </tbody>
 
             </table>
