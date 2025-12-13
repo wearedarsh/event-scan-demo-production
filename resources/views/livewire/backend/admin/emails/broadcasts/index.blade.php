@@ -36,7 +36,7 @@
                 <thead>
                     <tr class="text-[var(--color-text-light)] font-light uppercase text-xs border-b border-[var(--color-border)]">
                         <th class="px-4 py-3">Detail</th>
-                        <th class="px-4 py-3">Recipient</th>
+                        <th class="px-4 py-3">Sent to</th>
                         <th class="px-4 py-3">Subject</th>
                         <th class="px-4 py-3 text-right">Actions</th>
                     </tr>
@@ -57,14 +57,10 @@
                         <!-- Recipient -->
                         <td class="px-4 py-3">
                             @if($broadcast->isBulk())
-                                <p class="text-xs"><span class="text-[var(--color-text)]/40">Sent to</span><br>
-                                    {{ $broadcast->sends_count }} recipients
-                                </p>
+                                {{ $broadcast->sends_count }} recipients
                             @else
                                 @php $send = $broadcast->sends->first(); @endphp
-                                <p class="text-xs"><span class="text-[var(--color-text)]/40">Sent to</span><br>
                                     @if ($send->recipient)
-                                    
                                         {{ $send->recipient->title }}
                                         {{ $send->recipient->first_name }}
                                         {{ $send->recipient->last_name }}
