@@ -4,13 +4,13 @@
     <x-admin.breadcrumb :items="[
         ['label' => $event->title, 'href' => route('admin.events.manage', $event->id)],
         ['label' => 'Email broadcasts', 'href' => route('admin.events.emails.broadcasts.index', $event->id)],
-        ['label' => $broadcast->subject],
+        ['label' => 'Broadcast with multiple recipients',
     ]" />
 
     <!-- Header -->
     <x-admin.page-header
-        :title="$broadcast->subject"
-        subtitle="Bulk email overview for {{ $event->title }}"
+        :title="Broadcast with multiple recipients"
+        subtitle="All recipients for the broadcast."
     >
         <div class="flex items-center gap-3">
             <x-admin.stat-card label="Recipients"
