@@ -49,8 +49,8 @@
                         <td class="px-4 py-3">
                             <p class="text-xs">
                                 {{ $broadcast->friendly_name }}<br>
-                                <span class=" text-[var(--color-text)]/40">{{ $broadcast->type->label }}<br>
-                                {{ $broadcast->queued_at->diffForHumans() }}</span>
+                                <span class=" text-[var(--color-text)]/40">{{ $broadcast->type->label }}
+                                </span>
                             </p>
                         </td>
 
@@ -69,6 +69,9 @@
                                     @endif
                                 </p>
                             @endif
+                            <span class=" text-[var(--color-text)]/40">
+                            {{ $broadcast->queued_at->diffForHumans() }}
+                            </span>
                         </td>
 
                         <!-- Subject -->
