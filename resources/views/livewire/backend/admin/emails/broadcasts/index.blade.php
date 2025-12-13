@@ -27,21 +27,19 @@
 
         <div class="space-y-4">
 
-            
+            <!-- Top categories (stacked) -->
+            <div class="space-y-4">
+                <x-admin.section-title title="Categories" />
 
-            <!-- Categories row -->
+                <x-admin.filter-pill
+                    :active="$filter === 'all'"
+                    wire:click="setFilter('all')">
+                    All ({{ $counts['all'] }})
+                </x-admin.filter-pill>
+            </div>
+
+            <!-- Other categories looped below -->
             <div class="flex flex-wrap items-start gap-6">
-
-                <div class="space-y-2">
-                    <x-admin.section-title title="Categories" />
-
-                    <x-admin.filter-pill
-                        :active="$filter === 'all'"
-                        wire:click="setFilter('all')">
-                        All ({{ $counts['all'] }})
-                    </x-admin.filter-pill>
-                </div>
-
                 @foreach ($categories as $category)
                 @php
                 $categoryTotal = $category->types->sum(fn($t) => $counts[$t->id] ?? 0);
@@ -49,7 +47,6 @@
 
                 @if ($categoryTotal > 0)
                 <div class="space-y-2">
-
                     <x-admin.section-title :title="$category->label" />
 
                     <div class="flex flex-wrap gap-2">
@@ -63,13 +60,13 @@
                         @endif
                         @endforeach
                     </div>
-
                 </div>
                 @endif
                 @endforeach
-
             </div>
+
         </div>
+
 
 
 
