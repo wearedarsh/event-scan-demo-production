@@ -25,6 +25,25 @@
     <!-- Main Card -->
     <x-admin.card hover="false" class="p-6 mx-6 space-y-4">
 
+        <div class="flex flex-wrap items-center gap-2 mb-2">
+
+            <x-admin.filter-pill
+                :active="$filter === 'all'"
+                wire:click="setFilter('all')">
+                All ({{ $counts['all'] ?? 0 }})
+            </x-admin.filter-pill>
+
+            @foreach ($types as $type)
+                <x-admin.filter-pill
+                    :active="$filter == $type->id"
+                    wire:click="setFilter('{{ $type->id }}')">
+                    {{ $type->label }}
+                    ({{ $counts[$type->id] ?? 0 }})
+                </x-admin.filter-pill>
+            @endforeach
+
+        </div>
+
         <!-- Search -->
         <x-admin.search-input
             wire:model.live.debounce.300ms="search"
