@@ -55,13 +55,13 @@
 
                             <span class="text-xs text-[var(--color-text)]/40">
                                 {{ $broadcast->type->label }}<br>
-                                Created {{ $broadcast->created_at->diffForHumans() }}
+                                Created {{ $broadcast->created_at }}
                             </span>
 
                             
                             @php $send = $broadcast->sends->first(); @endphp
 
-                            @if($send && !$isBulk)
+                            @if($send)
                             <br><br>
                             <span class="text-xs text-[var(--color-text)]/60">
                                 {{ $send->email_address }}<br>
@@ -83,7 +83,7 @@
                                     <p>Tommy</p>
                                 @else
                                 {{-- Single send: just show timestamp --}}
-                                Sent {{ $broadcast->sends()->first()?->sent_at?->diffForHumans() ?? '—' }}
+                                Sent 
                                 @endif
                             </span>
                         </td>
@@ -91,7 +91,7 @@
                         <!-- Subject -->
                         <td class="px-4 py-3">
                             @if(!$isBulk)
-                            {{ $broadcast->sends->first()?->subject }}
+                            
                             @else
                             <span class="text-xs text-[var(--color-text)]/40">Multiple subjects</span>
                             @endif
