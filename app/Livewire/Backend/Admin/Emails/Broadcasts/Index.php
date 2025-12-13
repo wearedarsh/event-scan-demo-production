@@ -80,19 +80,18 @@ class Index extends Component
             $search = $this->search;
 
             $query->where(function ($q) use ($search) {
+                $q->where('subject', 'like', "%{$search}%");
 
-                $q->where('subject', 'like', "%{$search}%")
-
-                    ->orWhere(function ($q) use ($search) {
-                        $q->where('sends_count', 1)
-                            ->whereHas('sends', function ($q) use ($search) {
-                                $q->where('email_address', 'like', "%{$search}%")
-                                    ->orWhereHas('recipient', function ($q) use ($search) {
-                                        $q->where('first_name', 'like', "%{$search}%")
-                                            ->orWhere('last_name', 'like', "%{$search}%");
-                                    });
+                $q->orWhereHas('sends', function ($q) use ($search) {
+                    $q->whereRaw('(select count(*) from email_sends where email_sends.email_broadcast_id = email_broadcasts.id) = 1')
+                    ->where(function ($q) use ($search) {
+                        $q->where('email_address', 'like', "%{$search}%")
+                            ->orWhereHas('recipient', function ($q) use ($search) {
+                                $q->where('first_name', 'like', "%{$search}%")
+                                ->orWhere('last_name', 'like', "%{$search}%");
                             });
                     });
+                });
             });
         }
 
