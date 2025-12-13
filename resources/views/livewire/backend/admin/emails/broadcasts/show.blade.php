@@ -4,7 +4,7 @@
     <x-admin.breadcrumb :items="[
         ['label' => $event->title, 'href' => route('admin.events.manage', $event->id)],
         ['label' => 'Email broadcasts', 'href' => route('admin.events.emails.broadcasts.index', $event->id)],
-        ['label' => 'Broadcast with multiple recipients',
+        ['label' => 'Broadcast with multiple recipients'],
     ]" />
 
     <!-- Header -->
