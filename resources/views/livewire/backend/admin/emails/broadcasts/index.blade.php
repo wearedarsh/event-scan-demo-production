@@ -64,12 +64,14 @@
                                         {{ $send->recipient->title }}
                                         {{ $send->recipient->first_name }}
                                         {{ $send->recipient->last_name }}
+                                        <br>
+                                        <x-link-arrow size="xs" href="mailto:{{ $send->email_address }}">
+                                            {{ $send->email_address }} 
+                                        </x-link-arrow>
                                     @else
                                         Sent to admin
                                     @endif
-                                <br><x-link-arrow size="xs" href="mailto:{{ $send->recipient->email_address }}">
-                                    {{ $send->recipient->email_address }} 
-                                </x-link-arrow>
+                                
                             @endif
                             
                         </td>
