@@ -28,29 +28,33 @@
         <div class="space-y-2">
 
             @foreach ($categories as $category)
-            <div>
-                <p class="text-xs font-semibold text-[var(--color-text-light)] mb-1">
-                    {{ $category->label }}
-                </p>
+                @php
+                    $category_total = $category->types->sum(fn($type) => $counts[$type->id] ?? 0);
+                @endphp
+                @if($category_total > 0)
+                    <div>
+                        <x-admin.section-title :title="$category->label" />
+                        <div class="flex flex-wrap items-center gap-2 mb-2">
+                            <!-- "All" pill for this category -->
+                            <x-admin.filter-pill
+                                :active="$filter === 'all_category_'.$category->id"
+                                wire:click="setFilter('all_category_{{ $category->id }}')">
+                                All ({{ $category->types->sum(fn($type) => $counts[$type->id] ?? 0) }})
+                            </x-admin.filter-pill>
 
-                <div class="flex flex-wrap items-center gap-2 mb-2">
-                    <!-- "All" pill for this category -->
-                    <x-admin.filter-pill
-                        :active="$filter === 'all_category_'.$category->id"
-                        wire:click="setFilter('all_category_{{ $category->id }}')">
-                        All ({{ $category->types->sum(fn($type) => $counts[$type->id] ?? 0) }})
-                    </x-admin.filter-pill>
-
-                    <!-- Pills for each type in this category -->
-                    @foreach ($category->types as $type)
-                    <x-admin.filter-pill
-                        :active="$filter == $type->id"
-                        wire:click="setFilter('{{ $type->id }}')">
-                        {{ $type->label }} ({{ $counts[$type->id] ?? 0 }})
-                    </x-admin.filter-pill>
-                    @endforeach
-                </div>
-            </div>
+                            <!-- Pills for each type in this category -->
+                            @foreach ($category->types as $type)
+                                @if($counts[$type->id] > 0)
+                                <x-admin.filter-pill
+                                    :active="$filter == $type->id"
+                                    wire:click="setFilter('{{ $type->id }}')">
+                                    {{ $type->label }} ({{ $counts[$type->id] ?? 0 }})
+                                </x-admin.filter-pill>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
             @endforeach
 
         </div>
