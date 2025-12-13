@@ -106,7 +106,7 @@
 
         <x-admin.section-title title="Email content" />
 
-        <x-admin.card title="hover="false" class="p-6 space-y-4">
+        <x-admin.card hover="false" class="p-6 space-y-4">
 
             <p class="text-sm">
                 <span class="font-semibold">Subject:</span>
