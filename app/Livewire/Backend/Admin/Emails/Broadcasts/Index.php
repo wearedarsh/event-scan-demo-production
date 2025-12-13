@@ -19,6 +19,7 @@ class Index extends Component
 
     public string $search = '';
     public string $filter = 'all';
+    protected array $specialFilters = ['all', 'bulk', 'single'];
 
     public function mount(Event $event)
     {
@@ -50,7 +51,7 @@ class Index extends Component
             ->clone()
             ->withCount('sends')
             ->get()
-            ->groupBy(fn ($b) => $b->sends_count > 1 ? 'bulk' : 'single')
+            ->groupBy(fn($b) => $b->sends_count > 1 ? 'bulk' : 'single')
             ->map->count();
 
         $counts = [
@@ -70,9 +71,10 @@ class Index extends Component
             default  => null,
         };
 
-        if ($this->filter !== 'all') {
+        if (! in_array($this->filter, $this->specialFilters, true)) {
             $query->where('email_broadcast_type_id', $this->filter);
         }
+
 
         if ($this->search !== '') {
             $query->where('friendly_name', 'like', "%{$this->search}%");
