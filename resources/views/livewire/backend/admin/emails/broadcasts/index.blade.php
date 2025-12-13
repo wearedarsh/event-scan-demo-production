@@ -73,7 +73,7 @@
                                     @endif
                                 </p>
 
-                                <x-link-arrow href="mailto:{{ $send->email_address }}">
+                                <x-link-arrow size="xs" href="mailto:{{ $send->email_address }}">
                                     {{ $send->email_address }}
                                 </x-link-arrow>
                             @endif
