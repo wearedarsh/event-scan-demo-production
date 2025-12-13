@@ -83,7 +83,7 @@
                     @forelse($broadcasts as $broadcast)
                     <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
 
-                        <td class="px-4 py-3">
+                        <td class="px-4 p1-3">
                             <span class="text-xs">
                                 {{ $broadcast->type->category->label }}
                             </span><br>
