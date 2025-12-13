@@ -13,17 +13,14 @@
         subtitle="Bulk email overview for {{ $event->title }}"
     >
         <div class="flex items-center gap-3">
-            <x-admin.stat-card label="Recipients">
-                {{ $broadcast->sends_count }}
-            </x-admin.stat-card>
+            <x-admin.stat-card label="Recipients"
+                :value="$broadcast->sends_count" />
 
-            <x-admin.stat-card label="Opened">
-                {{ $broadcast->sends->sum('opens_count') }}
-            </x-admin.stat-card>
+            <x-admin.stat-card label="Opened"
+                :value="$broadcast->sends->sum('opens_count')" />
 
-            <x-admin.stat-card label="Clicked">
-                {{ $broadcast->sends->sum('clicks_count') }}
-            </x-admin.stat-card>
+            <x-admin.stat-card label="Clicked"
+                :value="$broadcast->sends->sum('clicks_count')" />
         </div>
     </x-admin.page-header>
 
@@ -70,7 +67,7 @@
 
                             <td class="px-4 py-3">{{ $send->opens_count }}</td>
                             <td class="px-4 py-3">{{ $send->clicks_count }}</td>
-                            
+
                             <td class="px-4 py-3 text-right">
                                 <x-admin.table-action-button
                                     type="link"
