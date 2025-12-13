@@ -476,7 +476,7 @@
                 <table class="min-w-full text-sm text-left">
                     <thead>
                         <tr class="text-xs text-[var(--color-text-light)] uppercase border-b border-[var(--color-border)]">
-                            <th class="px-4 py-2">Type</th>
+                            <th class="px-4 py-2">Detail</th>
                             <th class="px-4 py-2">Subject</th>
                             <th class="px-4 py-2">Sent</th>
                             <th class="px-4 py-2 text-right">Actions</th>
@@ -487,11 +487,18 @@
                         @forelse($email_sends as $email_send)
                             <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
 
-                                <td class="px-4 py-3"></td>
+                                <td class="px-4 py-3">
+                                    <span class="text-xs">
+                                        {{ $email_send->broadcast->type->category->label }}
+                                    </span><br>
+                                    <span class="text-xs text-[var(--color-text)]/40">
+                                        {{ $email_send->status }} - {{ $email_send->sent_at->diffForHumans() }}
+                                    </span>
+                                </td>
 
                                 <td class="px-4 py-3">{{ $email_send->subject }}</td>
 
-                                <td class="px-4 py-3">{{ $email_send->sent_at->diffForHumans() }}</td>
+                                <td class="px-4 py-3"></td>
 
                                 <td class="px-4 py-3 text-right">
                                     <div class="inline-flex gap-2">
