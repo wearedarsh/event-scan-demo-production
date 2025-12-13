@@ -75,7 +75,7 @@
                         <!-- Stats -->
                         <td class="px-4 py-3">
                             {{ $broadcast->sends_count }}
-                            {{ Str::plural('recipient', $broadcast->sends_count) }}<br>
+                            <br>
 
                             <span class="text-xs text-[var(--color-text)]/40">
                                 {{-- Bulk send: show first/last --}}
