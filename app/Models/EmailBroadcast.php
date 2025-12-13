@@ -17,7 +17,7 @@ class EmailBroadcast extends Model
 
     public function sends()
     {
-        return $this->hasMany(EmailSend::class, 'email_broadcast_id');
+        return $this->hasMany(EmailSend::class);
     }
 
     public function type()

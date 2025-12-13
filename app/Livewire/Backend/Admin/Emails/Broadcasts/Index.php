@@ -43,9 +43,7 @@ class Index extends Component
         ];
 
         $query = EmailBroadcast::query()
-            ->where('event_id', $this->event->id)
-            ->withCount('sends')
-            ->with('type', 'sender');
+            ->where('event_id', $this->event->id);
 
         match ($this->filter) {
             'bulk'   => $query->has('sends', '>', 1),
