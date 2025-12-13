@@ -82,15 +82,20 @@ class Index extends Component
             $query->where(function ($q) use ($search) {
 
                 $q->where('subject', 'like', "%{$search}%")
-                ->orWhereHas('sends', function ($q) use ($search) {
-                    $q->where('email_address', 'like', "%{$search}%")
-                        ->orWhereHas('recipient', function ($q) use ($search) {
-                            $q->where('first_name', 'like', "%{$search}%")
-                            ->orWhere('last_name', 'like', "%{$search}%");
-                        });
-                });
+
+                    ->orWhere(function ($q) use ($search) {
+                        $q->where('sends_count', 1)
+                            ->whereHas('sends', function ($q) use ($search) {
+                                $q->where('email_address', 'like', "%{$search}%")
+                                    ->orWhereHas('recipient', function ($q) use ($search) {
+                                        $q->where('first_name', 'like', "%{$search}%")
+                                            ->orWhere('last_name', 'like', "%{$search}%");
+                                    });
+                            });
+                    });
             });
         }
+
 
         $broadcasts = $query
             ->orderBy('created_at', 'desc')
