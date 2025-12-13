@@ -27,35 +27,37 @@
 
         <div class="space-y-2">
 
-            @foreach ($categories as $category)
-                @php
-                    $category_total = $category->types->sum(fn($type) => $counts[$type->id] ?? 0);
-                @endphp
-                @if($category_total > 0)
-                    <div>
-                        <x-admin.section-title :title="$category->label" />
-                        <div class="flex flex-wrap items-center gap-2 mb-2">
-                            <!-- "All" pill for this category -->
-                            <x-admin.filter-pill
-                                :active="$filter === 'all_category_'.$category->id"
-                                wire:click="setFilter('all_category_{{ $category->id }}')">
-                                All ({{ $category->types->sum(fn($type) => $counts[$type->id] ?? 0) }})
-                            </x-admin.filter-pill>
+            <!-- Global All -->
+            <x-admin.filter-pill
+                :active="$filter === 'all'"
+                wire:click="setFilter('all')">
+                All ({{ $counts['all'] }})
+            </x-admin.filter-pill>
 
-                            <!-- Pills for each type in this category -->
-                            @foreach ($category->types as $type)
-                                @if($counts[$type->id] > 0)
-                                <x-admin.filter-pill
-                                    :active="$filter == $type->id"
-                                    wire:click="setFilter('{{ $type->id }}')">
-                                    {{ $type->label }} ({{ $counts[$type->id] ?? 0 }})
-                                </x-admin.filter-pill>
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
-                @endif
+            @foreach ($categories as $category)
+            @php
+            $categoryTotal = $category->types->sum(fn($t) => $counts[$t->id] ?? 0);
+            @endphp
+
+            @if ($categoryTotal > 0)
+            <div>
+                <x-admin.section-title :title="$category->label" />
+
+                <div class="flex flex-wrap items-center gap-2 mb-2">
+                    @foreach ($category->types as $type)
+                    @if (($counts[$type->id] ?? 0) > 0)
+                    <x-admin.filter-pill
+                        :active="$filter == $type->id"
+                        wire:click="setFilter('{{ $type->id }}')">
+                        {{ $type->label }} ({{ $counts[$type->id] }})
+                    </x-admin.filter-pill>
+                    @endif
+                    @endforeach
+                </div>
+            </div>
+            @endif
             @endforeach
+
 
         </div>
 
