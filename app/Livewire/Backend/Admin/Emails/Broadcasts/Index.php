@@ -57,9 +57,8 @@ class Index extends Component
             'all'    => $base_query->clone()->count(),
             'bulk'   => $sendCounts['bulk']   ?? 0,
             'single' => $sendCounts['single'] ?? 0,
-        ] + $type_counts;
+        ] + $type_counts->toArray();
 
-        $counts['all'] = $base_query->clone()->count();
 
         $query = $base_query
             ->withCount('sends')
