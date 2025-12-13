@@ -57,7 +57,6 @@
                 >
 
                 <p class="text-sm">
-                    <span class="font-semibold">Email:</span>
                     <x-link-arrow href="mailto:{{ $email_send->email_address }}" class="mt-1">
                         {{ $email_send->email_address }}
                     </x-link-arrow>
@@ -65,7 +64,6 @@
 
                 @if($email_send->recipient)
                     <p class="text-sm">
-                        <span class="font-semibold">Name:</span>
                         {{ $email_send->recipient->title }} {{ $email_send->recipient->first_name }} {{ $email_send->recipient->last_name }}
                     </p>
                 @endif
