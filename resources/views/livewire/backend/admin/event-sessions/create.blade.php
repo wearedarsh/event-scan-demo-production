@@ -30,32 +30,47 @@
 
                 <div class="grid md:grid-cols-2 gap-6">
 
-                    <x-admin.input-text
-                        label="Title"
-                        model="title"
-                    />
+                    <div>
+                        <x-admin.input-label for="title">Title</x-admin.input-label>
+                        <x-admin.input-text
+                            id="title"
+                            model="title"
+                        />
+                    </div>
 
-                    <x-admin.input-time
-                        label="Start Time"
-                        model="start_time"
-                    />
+                    <div>
+                        <x-admin.input-label for="start_time">Start Time</x-admin.input-label>
+                        <x-admin.input-time
+                            id="start_time"
+                            model="start_time"
+                        />
+                    </div>
 
-                    <x-admin.input-time
-                        label="End Time"
-                        model="end_time"
-                    />
+                    <div>
+                        <x-admin.input-label for="end_time">End Time</x-admin.input-label>
+                        <x-admin.input-time
+                            id="end_time"
+                            model="end_time"
+                        />
+                    </div>
 
-                    <x-admin.input-text
-                        label="CME Points"
-                        model="cme_points"
-                        type="text"
-                    />
+                    <div>
+                        <x-admin.input-label for="cme_points">CME Points</x-admin.input-label>
+                        <x-admin.input-text
+                            id="cme_points"
+                            model="cme_points"
+                            type="text"
+                        />
+                    </div>
 
-                    <x-admin.input-text
-                        label="Display Order"
-                        model="display_order"
-                        type="number"
-                    />
+                    <div>
+                        <x-admin.input-label for="display_order">Display Order</x-admin.input-label>
+                        <x-admin.input-text
+                            id="display_order"
+                            model="display_order"
+                            type="number"
+                        />
+                    </div>
 
                     <div>
                         <x-admin.input-label for="event_session_type_id">Session Type</x-admin.input-label>
