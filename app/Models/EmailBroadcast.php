@@ -54,11 +54,5 @@ class EmailBroadcast extends Model
     {
         return $this->sends()->count();
     }
-
-    public function isBulk()
-    {
-        return $this->sentCount() > 1;
-    }
-
     
 }
