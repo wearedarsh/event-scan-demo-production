@@ -14,22 +14,23 @@
         <div class="flex items-center gap-3">
 
             <x-admin.stat-card label="Status" 
-                :value="{{ ucfirst($email_send->status) }}"
+                :value="ucfirst($email_send->status)"
             />
 
             <x-admin.stat-card label="Sent"
-                :value="{{ $email_send->sent_at?->diffForHumans() ?? '—' }}"
+                :value="$email_send->sent_at?->diffForHumans()"
             />
 
             <x-admin.stat-card label="Opens"
-                :value="{{ $email_send->opens_count }}"
+                :value="$email_send->opens_count"
             />
 
             <x-admin.stat-card label="Clicks"
-                :value="{{ $email_send->clicks_count }}"
+                :value="$email_send->clicks_count"
             />
-            
+
         </div>
+
     </x-admin.page-header>
 
     <!-- Alerts -->
