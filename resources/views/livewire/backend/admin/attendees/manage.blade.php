@@ -498,7 +498,9 @@
 
                                 <td class="px-4 py-3">{{ $email_send->subject }}</td>
 
-                                <td class="px-4 py-3">{{ $email_send->status }}</td>
+                                <td class="px-4 py-3">
+                                    <x-admin.status-pill status="neutral">{{ ucfirst($email_send->status) }}</x-admin.status-pill>   
+                                </td>
 
                                 <td class="px-4 py-3 text-right">
                                     <div class="inline-flex gap-2">
