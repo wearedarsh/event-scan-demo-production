@@ -26,8 +26,12 @@
 
     <!-- Card -->
     <x-admin.card hover="false" class="p-6 mx-6 space-y-4">
-        <x-admin.section-title title="Categories" />
-        {{ $broadcast->subject }}
+        <div class="space-y-2">
+        <x-admin.section-title title="Subject" />
+        <p class="text-sm">
+            {{ $broadcast->subject }}
+        </p>
+        </div>
 
         <x-admin.search-input
             wire:model.live.debounce.300ms="search"
