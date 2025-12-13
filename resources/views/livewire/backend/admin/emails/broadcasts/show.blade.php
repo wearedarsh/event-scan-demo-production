@@ -36,14 +36,13 @@
         />
 
         <x-admin.table>
-            <table class="min-w-full text-sm">
+            <table class="min-w-full text-sm text-left">
                 <thead>
                     <tr class="text-xs uppercase text-[var(--color-text-light)] border-b border-[var(--color-border)]">
+                        <th class="px-4 py-3">Details</th>
                         <th class="px-4 py-3">Recipient</th>
-                        <th class="px-4 py-3">Email</th>
                         <th class="px-4 py-3">Opens</th>
                         <th class="px-4 py-3">Clicks</th>
-                        <th class="px-4 py-3">Sent</th>
                         <th class="px-4 py-3 text-right">Actions</th>
                     </tr>
                 </thead>

@@ -13,7 +13,7 @@ class EmailBroadcastTypeCategoriesSeeder extends Seeder
             [
                 'id' => 1,
                 'key_name' => 'transactional',
-                'label' => 'System and transactional',
+                'label' => 'System',
             ],
             [
                 'id' => 2,
