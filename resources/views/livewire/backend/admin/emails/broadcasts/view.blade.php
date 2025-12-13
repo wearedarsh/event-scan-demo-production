@@ -99,61 +99,12 @@
         </div>
     </div>
 
-    <!-- Broadcast -->
-    <div class="px-6 space-y-4">
-
-        <x-admin.section-title title="Broadcast" />
-
-        <div class="grid md:grid-cols-2 gap-6">
-
-            <x-admin.tile-card
-                title="Broadcast details"
-                description="The parent broadcast this email belongs to.">
-
-                <p class="text-sm">
-                    <span class="font-semibold">Type:</span>
-                    {{ $email_send->broadcast?->type?->label ?? '—' }}
-                </p>
-
-                <p class="text-sm">
-                    <span class="font-semibold">Name:</span>
-                    {{ $email_send->broadcast->friendly_name ?? '-' }}
-                </p>
-
-                @if($email_send->broadcast->event)
-                    <p class="text-sm">
-                        <span class="font-semibold">Event:</span>
-                        {{ $email_send->broadcast->event->title ?? '-' }}
-                    </p>
-                @endif
-
-            </x-admin.tile-card>
-
-            <x-admin.tile-card
-                title="Engagement"
-                description="Recipient interaction with this email.">
-
-                <p class="text-sm">
-                    <span class="font-semibold">Opened:</span>
-                    {{ $email_send->opens_count }} {{ Str::plural('time', $email_send->opens_count) }}
-                </p>
-
-                <p class="text-sm">
-                    <span class="font-semibold">Clicked:</span>
-                    {{ $email_send->clicks_count }} {{ Str::plural('time', $email_send->clicks_count) }}
-                </p>
-
-            </x-admin.tile-card>
-
-        </div>
-    </div>
-
     <!-- Content -->
     <div class="px-6 space-y-4">
 
         <x-admin.section-title title="Email content" />
 
-        <x-admin.card hover="false" class="p-6 space-y-4">
+        <x-admin.card title="hover="false" class="p-6 space-y-4">
 
             <p class="text-sm">
                 <span class="font-semibold">Subject:</span>

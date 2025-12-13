@@ -17,25 +17,21 @@
 
             <!-- Payment Status -->
             @php $isPaid = ! empty($attendee->formatted_paid_date); @endphp
-            <x-admin.stat-card label="Status">
-                <span class="text-sm font-semibold {{ $isPaid ? 'text-[var(--color-success)]' : 'text-[var(--color-warning)]' }}">
-                    {{ $isPaid ? 'Paid' : 'Unpaid' }}
-                </span>
-            </x-admin.stat-card>
+            <x-admin.stat-card label="Status"
+                :value="{{ $isPaid ? 'Paid' : 'Unpaid' }}"
+            />
+
 
             <!-- Group -->
-            <x-admin.stat-card label="Group">
-                <span class="text-sm font-semibold">
-                    {{ $attendee->attendeeGroup->title ?? '—' }}
-                </span>
-            </x-admin.stat-card>
+            <x-admin.stat-card label="Group"
+                :value="$attendee->attendeeGroup->title ?? '—'"
+            />
+  
 
             <!-- Tickets -->
-            <x-admin.stat-card label="Tickets">
-                <span class="text-sm font-semibold">
-                    {{ $attendee->registrationTickets->sum('quantity') }}
-                </span>
-            </x-admin.stat-card>
+            <x-admin.stat-card label="Tickets"
+                :value="$attendee->registrationTickets->sum('quantity')"
+            />
 
         </div>
     </x-admin.page-header>
@@ -359,7 +355,7 @@
 
                 <table class="w-full text-sm border-t border-[var(--color-border)]">
                     <thead>
-                        <tr class="text-xs text-[var(--color-primary)] border-b border-[var(--color-border)]">
+                        <tr class="text-xs text-[var(--color-text)]/80 border-b border-[var(--color-border)]">
                             <th class="py-2 text-left">Description</th>
                             <th class="py-2 text-right">Amount</th>
                         </tr>
