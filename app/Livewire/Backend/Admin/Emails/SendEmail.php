@@ -70,10 +70,10 @@ class SendEmail extends Component
 		$targets = $this->queryAudience()->with('user')->get();
 
 		$friendly = match (true) {
-			$this->audience === 'attendees_paid' => 'Email all paid attendees',
-			$this->audience === 'registrations_unpaid_complete' => 'Email all unpaid complete registrations',
-			$this->audience === 'attendees_incomplete_feedback' => 'Email all attendees that have not completed feedback',
-			$this->is_ticket_audience() => 'Email paid attendees who bought '.$this->ticket_label(),
+			$this->audience === 'attendees_paid' => 'All paid attendees',
+			$this->audience === 'registrations_unpaid_complete' => 'All unpaid complete registrations',
+			$this->audience === 'attendees_incomplete_feedback' => 'All attendees that have not completed feedback',
+			$this->is_ticket_audience() => 'All attendees who bought '.$this->ticket_label() . ' ticket',
 		};
 
 		$broadcast = EmailBroadcast::create([
