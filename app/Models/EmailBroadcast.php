@@ -55,18 +55,5 @@ class EmailBroadcast extends Model
         return $this->sends()->count();
     }
 
-    public function lastSentAt(): ?Carbon
-    {
-        return $this->sends()->max('sent_at');
-    }
-
-    public function firstSentAt(): ?Carbon
-    {
-        return $this->sends()->min('sent_at');
-    }
-
-    public function subjectPreview(): ?string
-    {
-        return $this->sends()->first()?->subject;
-    }
+    
 }
