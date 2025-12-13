@@ -37,7 +37,7 @@
             </x-admin.filter-pill>
 
             <!-- Categories grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
 
                 @foreach ($categories as $category)
                 @php
