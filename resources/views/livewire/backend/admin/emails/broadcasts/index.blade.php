@@ -73,7 +73,7 @@
                 <thead>
                     <tr class="text-[var(--color-text-light)] font-light uppercase text-xs border-b border-[var(--color-border)]">
                         <th class="px-4 py-3">Detail</th>
-                        <th class="px-4 py-3">Sent to</th>
+                        <th class="px-4 py-3">Recipients</th>
                         <th class="px-4 py-3">Subject</th>
                         <th class="px-4 py-3 text-right">Actions</th>
                     </tr>
@@ -83,7 +83,7 @@
                     @forelse($broadcasts as $broadcast)
                     <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
 
-                        <td class="px-4 p1-3">
+                        <td class="px-4 py-3">
                             <span class="text-xs">
                                 {{ $broadcast->type->category->label }}
                             </span><br>
@@ -96,6 +96,7 @@
                         <!-- Recipient -->
                         <td class="px-4 py-3">
                             @if($broadcast->isBulk())
+                            <span class="text-xs  text-[var(--color-text)]/40">Sent to</span> 
                             {{ $broadcast->sends_count }} recipients
                             @else
                             @php $send = $broadcast->sends->first(); @endphp
