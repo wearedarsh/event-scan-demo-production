@@ -8,6 +8,7 @@ use Livewire\WithPagination;
 use App\Models\EmailBroadcast;
 use App\Models\EmailBroadcastType;
 use App\Models\Event;
+use Illuminate\Support\Facades\DB;
 
 #[Layout('livewire.backend.admin.layouts.app')]
 class Index extends Component
@@ -34,8 +35,6 @@ class Index extends Component
         $this->filter = $filter;
         $this->resetPage();
     }
-
-    use Illuminate\Support\Facades\DB;
 
     public function render()
     {
