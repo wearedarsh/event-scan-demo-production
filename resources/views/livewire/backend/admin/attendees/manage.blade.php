@@ -492,7 +492,7 @@
                                         {{ $email_send->broadcast->type->category->label }}
                                     </span><br>
                                     <span class="text-xs text-[var(--color-text)]/40">
-                                        {{ $email_send->status }} - {{ $email_send->sent_at->diffForHumans() }}
+                                        {{ $email_send->sent_at->diffForHumans() }}
                                     </span>
                                 </td>
 
