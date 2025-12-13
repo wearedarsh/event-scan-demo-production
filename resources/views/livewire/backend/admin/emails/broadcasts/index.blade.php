@@ -140,7 +140,7 @@
                                 <x-admin.table-action-button
                                     type="link"
                                     :href="route('admin.emails.broadcasts.show', ['event' => $event->id, 'broadcast' => $broadcast->id])"
-                                    icon="arrow-right-circle"
+                                    icon="eye"
                                     label="View details"
                                     primary />
 
@@ -148,7 +148,7 @@
                                 <x-admin.table-action-button
                                     type="link"
                                     :href="route('admin.emails.broadcasts.view', ['event' => $event->id, 'email_send' => $send->id])"
-                                    icon="arrow-right-circle"
+                                    icon="eye"
                                     label="View details"
                                     primary />
                                 @endif

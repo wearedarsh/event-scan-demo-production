@@ -473,7 +473,7 @@
         <x-admin.card hover="false" class="p-6 space-y-4">
 
             <x-admin.table>
-                <table class="min-w-full text-sm">
+                <table class="min-w-full text-sm text-left">
                     <thead>
                         <tr class="text-xs text-[var(--color-text-light)] uppercase border-b border-[var(--color-border)]">
                             <th class="px-4 py-2">Type</th>
@@ -502,6 +502,7 @@
                                                 'email_send' => $email_send->id
                                             ])"
                                             icon="eye"
+                                            primary
                                             label="View" />
 
                                         <x-admin.table-action-button
@@ -542,7 +543,7 @@
         <x-admin.card hover="false" class="p-6 space-y-4">
 
             <x-admin.table>
-                <table class="min-w-full text-sm">
+                <table class="min-w-full text-sm  text-left">
                     <thead>
                         <tr class="text-xs text-[var(--color-text-light)] uppercase border-b border-[var(--color-border)]">
                             <th class="px-4 py-2">Session</th>
@@ -602,7 +603,7 @@
         <x-admin.card hover="false" class="p-6 space-y-4">
 
             <x-admin.table>
-                <table class="min-w-full text-sm">
+                <table class="min-w-full text-sm text-left">
                     <thead>
                         <tr class="text-xs text-[var(--color-text-light)] uppercase border-b border-[var(--color-border)]">
                             <th class="px-4 py-2">Description</th>

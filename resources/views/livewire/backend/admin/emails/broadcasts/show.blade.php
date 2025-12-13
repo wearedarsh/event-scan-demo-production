@@ -77,7 +77,7 @@
                                     <x-admin.table-action-button
                                         type="link"
                                         primary
-                                        icon="arrow-right-circle"
+                                        icon="eye"
                                         label="View"
                                         :href="route('admin.emails.broadcasts.view', [
                                             'event' => $event->id,
