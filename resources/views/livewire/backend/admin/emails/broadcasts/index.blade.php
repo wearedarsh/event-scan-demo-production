@@ -30,7 +30,7 @@
             
 
             <!-- Categories row -->
-            <div class="flex flex-wrap items-start gap-4">
+            <div class="flex flex-wrap items-start gap-6">
 
                 <div class="space-y-2">
                     <x-admin.section-title title="Categories" />
