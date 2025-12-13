@@ -122,7 +122,7 @@
                             </x-link-arrow>
                             @else
                             <span class="text-xs  text-[var(--color-text)]/40">Sent to</span><br>
-                            Team members
+                            Team member
                             @endif
 
                             @endif
