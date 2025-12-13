@@ -52,16 +52,17 @@
                         <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
 
                             <td class="px-4 py-3">
-                                @if($send->recipient)
-                                    {{ $send->recipient->title }}
-                                    {{ $send->recipient->first_name }}
-                                    {{ $send->recipient->last_name }}
-                                @else
-                                    —
-                                @endif
+                                <span class="text-xs">
+                                    {{ $send->status }}</span><br>
+                                <span class="text-xs text-[var(--color-text)]/40">
+                                    {{ $send->sent_at->diffForHumans() }}
+                                </span>
                             </td>
 
                             <td class="px-4 py-3">
+                                {{ $send->recipient->title }}
+                                {{ $send->recipient->first_name }}
+                                {{ $send->recipient->last_name }}
                                 <x-link-arrow size="xs" href="mailto:{{ $send->email_address }}">
                                     {{ $send->email_address }}
                                 </x-link-arrow>
