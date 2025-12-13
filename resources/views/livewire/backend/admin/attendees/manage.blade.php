@@ -478,7 +478,7 @@
                         <tr class="text-xs text-[var(--color-text-light)] uppercase border-b border-[var(--color-border)]">
                             <th class="px-4 py-2">Detail</th>
                             <th class="px-4 py-2">Subject</th>
-                            <th class="px-4 py-2">Sent</th>
+                            <th class="px-4 py-2">Status</th>
                             <th class="px-4 py-2 text-right">Actions</th>
                         </tr>
                     </thead>
@@ -498,7 +498,7 @@
 
                                 <td class="px-4 py-3">{{ $email_send->subject }}</td>
 
-                                <td class="px-4 py-3"></td>
+                                <td class="px-4 py-3">{{ $email_send->status }}</td>
 
                                 <td class="px-4 py-3 text-right">
                                     <div class="inline-flex gap-2">
