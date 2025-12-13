@@ -73,16 +73,18 @@
                             <td class="px-4 py-3">{{ $send->opens_count }} / {{ $send->clicks_count }}</td>
 
                             <td class="px-4 py-3 text-right">
-                                <x-admin.table-action-button
-                                    type="link"
-                                    primary
-                                    icon="arrow-right-circle"
-                                    label="View"
-                                    :href="route('admin.emails.broadcasts.view', [
-                                        'event' => $event->id,
-                                        'email_send' => $send->id
-                                    ])"
-                                />
+                                <div class="flex justify-end items-center gap-2">
+                                    <x-admin.table-action-button
+                                        type="link"
+                                        primary
+                                        icon="arrow-right-circle"
+                                        label="View"
+                                        :href="route('admin.emails.broadcasts.view', [
+                                            'event' => $event->id,
+                                            'email_send' => $send->id
+                                        ])"
+                                    />
+                                    </div>
                             </td>
 
                         </tr>
