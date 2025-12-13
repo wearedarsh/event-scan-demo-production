@@ -82,10 +82,7 @@
                         <td class="px-4 py-3 text-right">
                             <x-admin.table-action-button
                                 type="link"
-                                :href="route('admin.emails.broadcasts.view', [
-                                        'email_send' => $email_send->id,
-                                        'event' => $event->id,
-                                    ])"
+                                :href="route('admin.dashboard')"
                                 icon="arrow-right-circle"
                                 label="View details"
                                 primary />
