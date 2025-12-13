@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('email_broadcast_types', function (Blueprint $table) {
+        Schema::create('email_broadcast_type_categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->nullable()->constrained('email_broadcast_type_categories');
             $table->string('label');
             $table->string('key_name');
             $table->timestamps();
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('email_broadcast_types');
+        Schema::dropIfExists('email_broadcast_type_categories');
     }
 };

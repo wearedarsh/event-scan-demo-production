@@ -12,19 +12,23 @@ class EmailBroadcastTypesSeeder extends Seeder
         $types = [
             [
                 'key_name' => 'transactional_customer',
-                'label' => 'Transactional customer',
+                'label' => 'Customer',
+                'category_id' => 1
             ],
             [
                 'key_name' => 'transactional_admin',
-                'label' => 'Transactional admin',
+                'label' => 'Admin',
+                'category_id' => 1
             ],
             [
                 'key_name' => 'admin_triggered',
-                'label' => 'Admin triggered',
+                'label' => 'Single',
+                'category_id' => 2
             ],
             [
-                'key_name' => 'admin_bulk_send',
-                'label' => 'Admin bulk send',
+                'key_name' => 'admin_triggered_bulk',
+                'label' => 'Bulk',
+                'category_id' => 2
             ],
         ];
 

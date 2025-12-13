@@ -13,4 +13,8 @@ class EmailBroadcastType extends Model
     {
         return $this->hasMany(EmailBroadcast::class);
     }
+
+    public function category(){
+        return $this->belongsTo(EmailBroadcastTypeCategory::class);
+    }
 }
