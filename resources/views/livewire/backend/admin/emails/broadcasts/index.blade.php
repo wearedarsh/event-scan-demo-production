@@ -37,7 +37,7 @@
                     <tr class="text-[var(--color-text-light)] font-light uppercase text-xs border-b border-[var(--color-border)]">
                         <th class="px-4 py-3">Detail</th>
                         <th class="px-4 py-3">Recipient</th>
-                        <th class="px-4 py-3">Content</th>
+                        <th class="px-4 py-3">Subject</th>
                         <th class="px-4 py-3 text-right">Actions</th>
                     </tr>
                 </thead>
@@ -81,6 +81,9 @@
 
                         <!-- Subject -->
                         <td class="px-4 py-3">
+                            <p class="text-xs"><span class="text-[var(--color-text)]/40">{{ $broadcast->friendly_name }}</span><br>
+                                {{ $broadcast->subject }}
+                            </p>
                             
                         </td>
                         <!-- Actions -->
