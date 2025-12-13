@@ -37,8 +37,6 @@ class Index extends Component
     public function render()
     {
 
-        
-
         return view('livewire.backend.admin.emails.broadcasts.index', [
             'event'      => $this->event,
         ]);
