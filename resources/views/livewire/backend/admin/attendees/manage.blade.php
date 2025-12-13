@@ -18,7 +18,7 @@
             <!-- Payment Status -->
             @php $isPaid = ! empty($attendee->formatted_paid_date); @endphp
             <x-admin.stat-card label="Status"
-                :value="{{ $isPaid ? 'Paid' : 'Unpaid' }}"
+                :value="$isPaid ? 'Paid' : 'Unpaid'"
             />
 
 

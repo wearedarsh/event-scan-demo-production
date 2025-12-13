@@ -51,8 +51,10 @@
 
             <!-- Recipient -->
             <x-admin.tile-card
-                title="Recipient"
-                description="Who this email was sent to.">
+                title="Recipient details"
+                description="Who this email was sent to."
+                icon="heroicon-o-users"
+                >
 
                 <p class="text-sm">
                     <span class="font-semibold">Email:</span>
