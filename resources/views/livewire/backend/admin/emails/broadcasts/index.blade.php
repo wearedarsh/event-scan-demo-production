@@ -43,6 +43,26 @@
             @endforeach
 
         </div>
+        <div class="flex flex-wrap items-center gap-2 mb-2">
+            <x-admin.filter-pill
+                :active="$filter === 'all'"
+                wire:click="setFilter('all')">
+                All ({{ $counts['all'] }})
+            </x-admin.filter-pill>
+
+            <x-admin.filter-pill
+                :active="$filter === 'bulk'"
+                wire:click="setFilter('bulk')">
+                Bulk ({{ $counts['bulk'] }})
+            </x-admin.filter-pill>
+
+            <x-admin.filter-pill
+                :active="$filter === 'single'"
+                wire:click="setFilter('single')">
+                Single ({{ $counts['single'] }})
+            </x-admin.filter-pill>
+        </div>
+
 
         <!-- Search -->
         <x-admin.search-input

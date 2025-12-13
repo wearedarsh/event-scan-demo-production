@@ -38,23 +38,38 @@ class Index extends Component
 
     public function render()
     {
-        // Base query
-        $baseQuery = EmailBroadcast::where('event_id', $this->event->id);
+        $base_query = EmailBroadcast::where('event_id', $this->event->id);
 
-        // Counts per type
-        $counts = $baseQuery
+        $type_counts = $base_query
             ->clone()
             ->select('email_broadcast_type_id', DB::raw('count(*) as total'))
             ->groupBy('email_broadcast_type_id')
             ->pluck('total', 'email_broadcast_type_id');
 
-        // All count
-        $counts['all'] = $baseQuery->clone()->count();
+        $sendCounts = $base_query
+            ->clone()
+            ->withCount('sends')
+            ->get()
+            ->groupBy(fn ($b) => $b->sends_count > 1 ? 'bulk' : 'single')
+            ->map->count();
 
-        // Main list query
-        $query = $baseQuery
+        $counts = [
+            'all'    => $base_query->clone()->count(),
+            'bulk'   => $sendCounts['bulk']   ?? 0,
+            'single' => $sendCounts['single'] ?? 0,
+        ] + $type_counts;
+
+        $counts['all'] = $base_query->clone()->count();
+
+        $query = $base_query
             ->withCount('sends')
             ->with(['type', 'sender']);
+
+        match ($this->filter) {
+            'bulk'   => $query->having('sends_count', '>', 1),
+            'single' => $query->having('sends_count', '=', 1),
+            default  => null,
+        };
 
         if ($this->filter !== 'all') {
             $query->where('email_broadcast_type_id', $this->filter);
