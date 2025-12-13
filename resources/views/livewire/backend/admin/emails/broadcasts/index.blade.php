@@ -1,5 +1,4 @@
 <div class="space-y-4">
-    @php use Illuminate\Support\Str; @endphp
     <!-- Breadcrumbs -->
     <x-admin.breadcrumb :items="[
         ['label' => 'Home', 'href' => route('admin.dashboard')],
@@ -59,17 +58,17 @@
                                 Created {{ $broadcast->created_at->diffForHumans() }}
                             </span>
 
-                            @unless($isBulk)
+                            
                             @php $send = $broadcast->sends->first(); @endphp
 
-                            @if($send)
+                            @if($send && !$isBulk)
                             <br><br>
                             <span class="text-xs text-[var(--color-text)]/60">
                                 {{ $send->email_address }}<br>
                                 {{ $send->recipient?->full_name ?? 'Admin' }}
                             </span>
                             @endif
-                            @endunless
+                
 
                         </td>
 
