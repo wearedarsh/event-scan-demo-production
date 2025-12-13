@@ -168,7 +168,11 @@
             </p>
 
             <div class="prose max-w-none">
-                
+                <iframe
+                    class="w-full border rounded-lg bg-white"
+                    style="min-height: 600px"
+                    srcdoc="{{ e($email_send->html_content) }}">
+                </iframe>
             </div>
 
         </x-admin.card>
