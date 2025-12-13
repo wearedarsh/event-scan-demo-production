@@ -9,7 +9,7 @@
 
     <!-- Header -->
     <x-admin.page-header
-        :title="Broadcast with multiple recipients"
+        title="Broadcast with multiple recipients"
         subtitle="All recipients for the broadcast."
     >
         <div class="flex items-center gap-3">
