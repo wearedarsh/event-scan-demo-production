@@ -25,42 +25,34 @@
     <!-- Main Card -->
     <x-admin.card hover="false" class="p-6 mx-6 space-y-4">
 
-        <div class="flex flex-wrap items-center gap-2 mb-2">
+        <div class="space-y-2">
 
-            <x-admin.filter-pill
-                :active="$filter === 'all'"
-                wire:click="setFilter('all')">
-                All ({{ $counts['all'] ?? 0 }})
-            </x-admin.filter-pill>
+            @foreach ($categories as $category)
+            <div>
+                <p class="text-xs font-semibold text-[var(--color-text-light)] mb-1">
+                    {{ $category->label }}
+                </p>
 
-            @foreach ($types as $type)
-                <x-admin.filter-pill
-                    :active="$filter == $type->id"
-                    wire:click="setFilter('{{ $type->id }}')">
-                    {{ $type->label }}
-                    ({{ $counts[$type->id] ?? 0 }})
-                </x-admin.filter-pill>
+                <div class="flex flex-wrap items-center gap-2 mb-2">
+                    <!-- "All" pill for this category -->
+                    <x-admin.filter-pill
+                        :active="$filter === 'all_category_'.$category->id"
+                        wire:click="setFilter('all_category_{{ $category->id }}')">
+                        All ({{ $category->types->sum(fn($type) => $counts[$type->id] ?? 0) }})
+                    </x-admin.filter-pill>
+
+                    <!-- Pills for each type in this category -->
+                    @foreach ($category->types as $type)
+                    <x-admin.filter-pill
+                        :active="$filter == $type->id"
+                        wire:click="setFilter('{{ $type->id }}')">
+                        {{ $type->label }} ({{ $counts[$type->id] ?? 0 }})
+                    </x-admin.filter-pill>
+                    @endforeach
+                </div>
+            </div>
             @endforeach
 
-        </div>
-        <div class="flex flex-wrap items-center gap-2 mb-2">
-            <x-admin.filter-pill
-                :active="$filter === 'all'"
-                wire:click="setFilter('all')">
-                All ({{ $counts['all'] }})
-            </x-admin.filter-pill>
-
-            <x-admin.filter-pill
-                :active="$filter === 'bulk'"
-                wire:click="setFilter('bulk')">
-                Bulk ({{ $counts['bulk'] }})
-            </x-admin.filter-pill>
-
-            <x-admin.filter-pill
-                :active="$filter === 'single'"
-                wire:click="setFilter('single')">
-                Single ({{ $counts['single'] }})
-            </x-admin.filter-pill>
         </div>
 
 
@@ -86,38 +78,38 @@
                     <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
 
                         <td class="px-4 py-3">
-                                {{ $broadcast->friendly_name }}<br>
-                                <span class="text-xs text-[var(--color-text)]/40">
-                                    {{ $broadcast->queued_at->diffForHumans() }}
-                                </span>
+                            {{ $broadcast->friendly_name }}<br>
+                            <span class="text-xs text-[var(--color-text)]/40">
+                                {{ $broadcast->queued_at->diffForHumans() }}
+                            </span>
                             </p>
                         </td>
 
                         <!-- Recipient -->
                         <td class="px-4 py-3">
                             @if($broadcast->isBulk())
-                                {{ $broadcast->sends_count }} recipients
+                            {{ $broadcast->sends_count }} recipients
                             @else
-                                @php $send = $broadcast->sends->first(); @endphp
-                                    @if ($send->recipient)
-                                        {{ $send->recipient->title }}
-                                        {{ $send->recipient->first_name }}
-                                        {{ $send->recipient->last_name }}
-                                        <br>
-                                        <x-link-arrow size="xs" href="mailto:{{ $send->email_address }}">
-                                            {{ $send->email_address }} 
-                                        </x-link-arrow>
-                                    @else
-                                        Sent to admin
-                                    @endif
-                                
+                            @php $send = $broadcast->sends->first(); @endphp
+                            @if ($send->recipient)
+                            {{ $send->recipient->title }}
+                            {{ $send->recipient->first_name }}
+                            {{ $send->recipient->last_name }}
+                            <br>
+                            <x-link-arrow size="xs" href="mailto:{{ $send->email_address }}">
+                                {{ $send->email_address }}
+                            </x-link-arrow>
+                            @else
+                            Sent to admin
                             @endif
-                            
+
+                            @endif
+
                         </td>
 
                         <!-- Subject -->
                         <td class="px-4 py-3">
-                                {{ $broadcast->subject }}
+                            {{ $broadcast->subject }}
                         </td>
                         <!-- Actions -->
                         <td class="px-4 py-3 text-right">
