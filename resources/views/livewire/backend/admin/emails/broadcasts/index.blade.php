@@ -68,19 +68,13 @@
                                         Sent to admin
                                     @endif
                                 </p>
-
-                                <x-link-arrow size="xs" href="mailto:{{ $send->email_address }}">
-                                    {{ $send->email_address }}
-                                </x-link-arrow>
                             @endif
                         </td>
 
                         <!-- Subject -->
                         <td class="px-4 py-3">
-                            <p class="text-xs"><span class="text-[var(--color-text)]/40">{{ $broadcast->friendly_name }}</span><br>
+                            <span class="text-[var(--color-text)]/40">{{ $broadcast->friendly_name }}</span><br>
                                 {{ $broadcast->subject }}
-                            </p>
-                            
                         </td>
                         <!-- Actions -->
                         <td class="px-4 py-3 text-right">
