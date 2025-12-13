@@ -53,7 +53,7 @@
             <x-admin.tile-card
                 title="Recipient details"
                 description="Who this email was sent to."
-                icon="heroicon-o-users"
+                icon="heroicon-o-user"
                 >
 
                 <p class="text-sm">
@@ -75,7 +75,9 @@
             <!-- Meta -->
             <x-admin.tile-card
                 title="Delivery"
-                description="When and how this email was sent.">
+                description="When and how this email was sent."
+                icon="heroicon-o-paper-airplane"
+            >
 
                 <p class="text-sm">
                     <span class="font-semibold">Status:</span>
@@ -106,13 +108,11 @@
 
         <x-admin.section-title title="Email content" />
 
-        <x-admin.card hover="false" class="p-6 space-y-4">
-
-            <p class="text-sm">
-                <span class="font-semibold">Subject:</span>
-                {{ $email_send->subject }}
-            </p>
-
+        <x-admin.card hover="false" class="p-6 space-y-4"
+            title="subject"
+            description="$email_send->subject"
+            icon="heroicon-o-code"
+        >
             <div class="prose max-w-none">
                 <iframe
                     class="w-full rounded-lg bg-white"
