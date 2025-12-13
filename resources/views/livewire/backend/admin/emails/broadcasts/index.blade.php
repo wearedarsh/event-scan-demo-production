@@ -47,9 +47,9 @@
                     <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
 
                         <td class="px-4 py-3">
-                            <p class="text-xs">
                                 {{ $broadcast->friendly_name }}<br>
-                                <span class=" text-[var(--color-text)]/40">{{ $broadcast->type->label }}
+                                <span class="text-xs text-[var(--color-text)]/40">
+                                    {{ $broadcast->queued_at->diffForHumans() }}
                                 </span>
                             </p>
                         </td>
@@ -67,11 +67,11 @@
                                     @else
                                         Sent to admin
                                     @endif
-                                </p>
+                                <x-link-arrow size="xs" href="mailto:{{ $send->recipient->email_address }}">
+                                    $send->recipient->email_address
+                                </x-link-arrow>
                             @endif
-                            <br><span class="text-xs text-[var(--color-text)]/40">
-                            {{ $broadcast->queued_at->diffForHumans() }}
-                            </span>
+                            
                         </td>
 
                         <!-- Subject -->
