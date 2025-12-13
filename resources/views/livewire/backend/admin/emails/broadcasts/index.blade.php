@@ -138,7 +138,7 @@
                                     type="link"
                                     :href="route('admin.emails.broadcasts.show', ['event' => $event->id, 'broadcast' => $broadcast->id])"
                                     icon="eye"
-                                    label="View details"
+                                    label="View"
                                     primary />
 
                                 @else
@@ -146,7 +146,7 @@
                                     type="link"
                                     :href="route('admin.emails.broadcasts.view', ['event' => $event->id, 'email_send' => $send->id])"
                                     icon="eye"
-                                    label="View details"
+                                    label="View"
                                     primary />
                                 @endif
                             </div>
