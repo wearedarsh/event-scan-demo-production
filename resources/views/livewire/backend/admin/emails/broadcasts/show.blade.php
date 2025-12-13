@@ -44,8 +44,7 @@
                     <tr class="text-xs uppercase text-[var(--color-text-light)] border-b border-[var(--color-border)]">
                         <th class="px-4 py-3">Details</th>
                         <th class="px-4 py-3">Recipient</th>
-                        <th class="px-4 py-3">Opens</th>
-                        <th class="px-4 py-3">Clicks</th>
+                        <th class="px-4 py-3">Opens / Clicks</th>
                         <th class="px-4 py-3 text-right">Actions</th>
                     </tr>
                 </thead>
@@ -71,8 +70,7 @@
                                 </x-link-arrow>
                             </td>
 
-                            <td class="px-4 py-3">{{ $send->opens_count }}</td>
-                            <td class="px-4 py-3">{{ $send->clicks_count }}</td>
+                            <td class="px-4 py-3">{{ $send->opens_count }} / {{ $send->clicks_count }}</td>
 
                             <td class="px-4 py-3 text-right">
                                 <x-admin.table-action-button
