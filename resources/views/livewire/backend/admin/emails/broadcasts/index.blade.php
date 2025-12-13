@@ -96,7 +96,7 @@
                         <!-- Recipient -->
                         <td class="px-4 py-3">
                             @if($broadcast->isBulk())
-                            <span class="text-xs  text-[var(--color-text)]/40">Sent to</span> 
+                            <span class="text-xs  text-[var(--color-text)]/40">Sent to</span><br>
                             {{ $broadcast->sends_count }} recipients
                             @else
                             @php $send = $broadcast->sends->first(); @endphp
