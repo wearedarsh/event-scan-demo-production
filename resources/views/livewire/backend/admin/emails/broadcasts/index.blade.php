@@ -109,7 +109,8 @@
                                 {{ $send->email_address }}
                             </x-link-arrow>
                             @else
-                            Sent to admin
+                            <span class="text-xs  text-[var(--color-text)]/40">Sent to</span><br>
+                            Team members
                             @endif
 
                             @endif
