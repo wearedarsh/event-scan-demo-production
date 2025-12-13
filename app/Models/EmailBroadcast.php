@@ -19,7 +19,7 @@ class EmailBroadcast extends Model
 
     public function type()
     {
-        return $this->belongsTo(EmailBroadcastType::class, 'email_broadcast_type_id');
+        return $this->belongsTo(EmailBroadcastType::class);
     }
 
     public function sender()
