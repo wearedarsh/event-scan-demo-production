@@ -23,6 +23,13 @@ class Index extends Component
     public function mount(Event $event)
     {
         $this->event = $event;
+
+        if (! $this->filter || $this->filter === 'all') {
+            $firstCategory = EmailBroadcastTypeCategory::query()->first();
+            $this->filter = $firstCategory
+                ? 'all_category_'.$firstCategory->id
+                : 'all';
+        }
     }
 
     public function updatingSearch()
@@ -42,7 +49,14 @@ class Index extends Component
             ->withCount('sends')
             ->with(['type', 'sender']);
 
-        if ($this->filter && $this->filter !== 'all') {
+        if (str_starts_with($this->filter, 'all_category_')) {
+            $categoryId = (int) str_replace('all_category_', '', $this->filter);
+
+            $base_query->whereHas('type', fn ($q) =>
+                $q->where('category_id', $categoryId)
+            );
+        }
+        elseif (is_numeric($this->filter)) {
             $base_query->where('email_broadcast_type_id', $this->filter);
         }
 
