@@ -36,20 +36,9 @@ class Index extends Component
 
     public function render()
     {
-        $counts = [
-            'all'   => EmailBroadcast::where('event_id', $this->event->id)->count(),
-            'bulk'  => EmailBroadcast::where('event_id', $this->event->id)->has('sends', '>', 1)->count(),
-            'single'=> EmailBroadcast::where('event_id', $this->event->id)->has('sends', '=', 1)->count(),
-        ];
 
         $query = EmailBroadcast::query()
             ->where('event_id', $this->event->id);
-
-        match ($this->filter) {
-            'bulk'   => $query->has('sends', '>', 1),
-            'single' => $query->has('sends', '=', 1),
-            default  => null,
-        };
 
         if ($this->search !== '') {
             $query->where('friendly_name', 'like', "%{$this->search}%");
@@ -61,7 +50,6 @@ class Index extends Component
 
         return view('livewire.backend.admin.emails.broadcasts.index', [
             'broadcasts' => $broadcasts,
-            'counts'     => $counts,
             'event'      => $this->event,
         ]);
     }
