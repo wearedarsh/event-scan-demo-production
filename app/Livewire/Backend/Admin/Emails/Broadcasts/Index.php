@@ -77,7 +77,19 @@ class Index extends Component
 
 
         if ($this->search !== '') {
-            $query->where('friendly_name', 'like', "%{$this->search}%");
+            $search = $this->search;
+
+            $query->where(function ($q) use ($search) {
+
+                $q->where('subject', 'like', "%{$search}%")
+                ->orWhereHas('sends', function ($q) use ($search) {
+                    $q->where('email_address', 'like', "%{$search}%")
+                        ->orWhereHas('recipient', function ($q) use ($search) {
+                            $q->where('first_name', 'like', "%{$search}%")
+                            ->orWhere('last_name', 'like', "%{$search}%");
+                        });
+                });
+            });
         }
 
         $broadcasts = $query
