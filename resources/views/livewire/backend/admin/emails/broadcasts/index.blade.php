@@ -27,14 +27,13 @@
 
         <div class="space-y-4">
 
-            <x-admin.section-title title="Categories" />
+            
 
             <!-- Categories row -->
-            <div class="flex flex-wrap items-start gap-2">
+            <div class="flex flex-wrap items-start gap-4">
 
-                <!-- Global All (treated as a category) -->
                 <div class="space-y-2">
-                    <x-admin.section-title title="All" />
+                    <x-admin.section-title title="Categories" />
 
                     <x-admin.filter-pill
                         :active="$filter === 'all'"
