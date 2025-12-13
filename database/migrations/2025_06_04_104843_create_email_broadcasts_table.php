@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('email_broadcasts', function (Blueprint $table) {
             $table->id();
             $table->string('friendly_name');
+            $table->string('subject')->nullable();
             $table->foreignId('sent_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamp('queued_at')->nullable();
             $table->foreignId('email_broadcast_type_id')->nullable()->constrained('email_broadcast_types')->onDelete('set null');

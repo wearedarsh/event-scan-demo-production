@@ -9,7 +9,7 @@ use Carbon\Carbon;
 
 class EmailBroadcast extends Model
 {
-    protected $fillable = ['friendly_name', 'sent_by', 'queued_at', 'event_id', 'email_broadcast_type_id'];
+    protected $fillable = ['friendly_name', 'sent_by', 'subject', 'queued_at', 'event_id', 'email_broadcast_type_id'];
 
     protected $casts = [
         'queued_at' => 'datetime',
