@@ -2,7 +2,6 @@
 
     <!-- Breadcrumb -->
     <x-admin.breadcrumb :items="[
-        ['label' => 'Dashboard', 'href' => route('admin.dashboard')],
         ['label' => 'Email broadcasts', 'href' => route('admin.events.emails.broadcasts.index', $event->id)],
         ['label' => $email_send->subject],
     ]" />
@@ -169,7 +168,7 @@
             </p>
 
             <div class="prose max-w-none">
-                {!! $email_send->html_content !!}
+                
             </div>
 
         </x-admin.card>
