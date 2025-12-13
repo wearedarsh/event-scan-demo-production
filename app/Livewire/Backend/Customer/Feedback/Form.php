@@ -139,7 +139,7 @@ class Form extends Component
             recipient_user: $this->feedback_form_submission->user,
             friendly_name: 'Certificate of attendance confirmation',
             sender_id: null,
-            type: 'System triggered',
+            type: 'admin_triggered',
             event_id: $this->feedback_form_submission->feedbackForm->event->id,
         );
 

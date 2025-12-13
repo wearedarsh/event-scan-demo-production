@@ -79,7 +79,7 @@ class SendEmail extends Component
 		$broadcast = EmailBroadcast::create([
 				'friendly_name' => $friendly,
 				'subject' => $this->custom_subject,
-				'email_broadcast_type_id' => EmailBroadcastType::where('key_name', 'admin_bulk_send')->firstOrFail()->id,
+				'email_broadcast_type_id' => EmailBroadcastType::where('key_name', 'admin_triggered_bulk')->firstOrFail()->id,
 				'queued_at' => now(),
 				'sent_by' => auth()->id(),
 				'event_id' => $this->event->id,
@@ -95,7 +95,7 @@ class SendEmail extends Component
 				sender_id: auth()->id(),
 				friendly_name: $friendly,
 				broadcast: $broadcast,
-				type: 'admin_bulk_send',
+				type: 'admin_triggered_bulk',
 				event_id: $this->event->id,
 			);
 		}
