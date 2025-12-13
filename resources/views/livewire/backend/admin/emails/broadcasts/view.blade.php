@@ -121,7 +121,7 @@
 
                 <p class="text-sm">
                     <span class="font-semibold">Type:</span>
-                    {{ ucfirst($email_send->broadcast->type) }}
+                    {{ $email_send->broadcast?->type?->label ?? '—' }}
                 </p>
 
                 <p class="text-sm">
