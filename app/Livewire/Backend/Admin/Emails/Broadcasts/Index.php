@@ -36,11 +36,6 @@ class Index extends Component
 
     public function render()
     {
-        $counts = [
-            'all'   => EmailBroadcast::where('event_id', $this->event->id)->count(),
-            'bulk'  => EmailBroadcast::where('event_id', $this->event->id)->has('sends', '>', 1)->count(),
-            'single'=> EmailBroadcast::where('event_id', $this->event->id)->has('sends', '=', 1)->count(),
-        ];
 
         
 
