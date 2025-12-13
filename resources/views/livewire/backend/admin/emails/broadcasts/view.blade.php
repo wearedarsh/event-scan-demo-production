@@ -13,30 +13,22 @@
 
         <div class="flex items-center gap-3">
 
-            <x-admin.stat-card label="Status">
-                <span class="text-sm font-semibold">
-                    {{ ucfirst($email_send->status) }}
-                </span>
-            </x-admin.stat-card>
+            <x-admin.stat-card label="Status" 
+                :value="{{ ucfirst($email_send->status) }}"
+            />
 
-            <x-admin.stat-card label="Sent">
-                <span class="text-sm font-semibold">
-                    {{ $email_send->sent_at?->diffForHumans() ?? '—' }}
-                </span>
-            </x-admin.stat-card>
+            <x-admin.stat-card label="Sent"
+                :value="{{ $email_send->sent_at?->diffForHumans() ?? '—' }}"
+            />
 
-            <x-admin.stat-card label="Opens">
-                <span class="text-sm font-semibold">
-                    {{ $email_send->opens_count }}
-                </span>
-            </x-admin.stat-card>
+            <x-admin.stat-card label="Opens"
+                :value="{{ $email_send->opens_count }}"
+            />
 
-            <x-admin.stat-card label="Clicks">
-                <span class="text-sm font-semibold">
-                    {{ $email_send->clicks_count }}
-                </span>
-            </x-admin.stat-card>
-
+            <x-admin.stat-card label="Clicks"
+                :value="{{ $email_send->clicks_count }}"
+            />
+            
         </div>
     </x-admin.page-header>
 
