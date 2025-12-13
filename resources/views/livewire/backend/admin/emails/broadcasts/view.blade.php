@@ -1,88 +1,181 @@
-<div>
-    <div class="flex-row d-flex flex-1 rounded-2 p-3 align-items-center">
-        <h2 class="fs-4 text-brand-dark p-0 m-0">{{ $email_send->subject }}</h2>
-    </div>
-    
+```blade
+<div class="space-y-4">
+
+    <!-- Breadcrumb -->
+    <x-admin.breadcrumb :items="[
+        ['label' => 'Dashboard', 'href' => route('admin.dashboard')],
+        ['label' => 'Email broadcasts', 'href' => route('admin.events.emails.broadcasts.index', $event->id)],
+        ['label' => $email_send->subject],
+    ]" />
+
+    <!-- Header -->
+    <x-admin.page-header
+        title="{{ $email_send->subject }}"
+        subtitle="Email send overview">
+
+        <div class="flex items-center gap-3">
+
+            <x-admin.stat-card label="Status">
+                <span class="text-sm font-semibold">
+                    {{ ucfirst($email_send->status) }}
+                </span>
+            </x-admin.stat-card>
+
+            <x-admin.stat-card label="Sent">
+                <span class="text-sm font-semibold">
+                    {{ $email_send->sent_at?->diffForHumans() ?? '—' }}
+                </span>
+            </x-admin.stat-card>
+
+            <x-admin.stat-card label="Opens">
+                <span class="text-sm font-semibold">
+                    {{ $email_send->opens_count }}
+                </span>
+            </x-admin.stat-card>
+
+            <x-admin.stat-card label="Clicks">
+                <span class="text-sm font-semibold">
+                    {{ $email_send->clicks_count }}
+                </span>
+            </x-admin.stat-card>
+
+        </div>
+    </x-admin.page-header>
+
+    <!-- Alerts -->
     @if($errors->any())
-        <div class="row">
-            <div class="col-12">
-                <div class="alert alert-info" role="alert">
-                    <span class="font-m">{{ $errors->first() }}</span>           
-                </div>
-            </div>
-        </div>
+        <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
 
-    @if (session()->has('success'))
-        <div class="row">
-            <div class="col-12">
-                <div class="alert alert-success" role="alert">
-                    <span class="font-m">{{ session('success') }}</span>           
-                </div>
-            </div>
-        </div>
+    @if(session()->has('success'))
+        <x-admin.alert type="success" :message="session('success')" />
     @endif
 
-    <div class="flex-row d-flex flex-1 bg-white rounded-2 p-3">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb d-flex flex-row align-items-center">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.events.emails.broadcasts.index', $event->id) }}">Email Broadcasts</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{$email_send->subject}}</li>
-            </ol>
-        </nav>
-    </div>
+    <!-- Details -->
+    <div class="px-6 space-y-4">
 
-    <!-- DETAILS -->
-    <div class="flex-column d-flex bg-white text-brand-dark rounded-2 p-3 mt-3">
-        <div class="row">
-            <div class="col-sm-6 mb-3">
-                <h5 class="mb-3">Recipient details</h5>
-                <p class="font-m"><strong>Email:</strong> <a href="mailto:{{ $email_send->email_address }}">{{ $email_send->email_address }}</a></p>
+        <x-admin.section-title title="Send details" />
+
+        <div class="grid md:grid-cols-2 gap-6">
+
+            <!-- Recipient -->
+            <x-admin.tile-card
+                title="Recipient"
+                description="Who this email was sent to.">
+
+                <p class="text-sm">
+                    <span class="font-semibold">Email:</span>
+                    <a href="mailto:{{ $email_send->email_address }}" class="hover:underline">
+                        {{ $email_send->email_address }}
+                    </a>
+                </p>
+
                 @if($email_send->recipient)
-                    <p class="font-m"><strong>Name:</strong> {{ $email_send->recipient->title }} {{ $email_send->recipient->first_name }} {{ $email_send->recipient->last_name }}</p>
+                    <p class="text-sm">
+                        <span class="font-semibold">Name:</span>
+                        {{ $email_send->recipient->title }} {{ $email_send->recipient->first_name }} {{ $email_send->recipient->last_name }}
+                    </p>
                 @endif
-            </div>
-            <div class="col-sm-6 mb-3">
-                <h5 class="mb-3">Send details</h5>
-                <p class="font-m"><strong>Status:</strong> {{ $email_send->status }}</p>
-                <p class="font-m"><strong>Sent at:</strong> {{ $email_send->sent_at->format('j M Y, H:i') }}</p>
-                @if($email_send->broadcast->sent_by)
-                    <p class="font-m"><strong>Sent by:</strong> {{ $email_send->broadcast->sender->first_name }} {{ $email_send->broadcast->sender->last_name }}</p>
-                @else
-                    <p class="font-m"><strong>Sent by:</strong> Email was sent via the system or does not have a sender</p>
-                @endif
-            </div>
-        </div>   
+
+            </x-admin.tile-card>
+
+            <!-- Meta -->
+            <x-admin.tile-card
+                title="Delivery"
+                description="When and how this email was sent.">
+
+                <p class="text-sm">
+                    <span class="font-semibold">Status:</span>
+                    {{ ucfirst($email_send->status) }}
+                </p>
+
+                <p class="text-sm">
+                    <span class="font-semibold">Sent at:</span>
+                    {{ $email_send->sent_at?->format('d/m/Y H:i') ?? '—' }}
+                </p>
+
+                <p class="text-sm">
+                    <span class="font-semibold">Sent by:</span>
+                    @if($email_send->broadcast?->sender)
+                        {{ $email_send->broadcast->sender->first_name }} {{ $email_send->broadcast->sender->last_name }}
+                    @else
+                        System
+                    @endif
+                </p>
+
+            </x-admin.tile-card>
+
+        </div>
     </div>
 
-    <!-- BROADCAST DETAILS -->
-    <div class="flex-column d-flex bg-white text-brand-dark rounded-2 p-3 mt-3">
-        <div class="row">
-            <div class="col-sm-6 mb-3">
-                <h5 class="mb-3">Broadcast details</h5>
-                <p class="font-m"><strong>Type:</strong> {{ $email_send->broadcast->type }}</p>
-                <p class="font-m"><strong>Name:</strong> {{ $email_send->broadcast->friendly_name }}</p>
+    <!-- Broadcast -->
+    <div class="px-6 space-y-4">
+
+        <x-admin.section-title title="Broadcast" />
+
+        <div class="grid md:grid-cols-2 gap-6">
+
+            <x-admin.tile-card
+                title="Broadcast details"
+                description="The parent broadcast this email belongs to.">
+
+                <p class="text-sm">
+                    <span class="font-semibold">Type:</span>
+                    {{ ucfirst($email_send->broadcast->type) }}
+                </p>
+
+                <p class="text-sm">
+                    <span class="font-semibold">Name:</span>
+                    {{ $email_send->broadcast->friendly_name }}
+                </p>
+
                 @if($email_send->broadcast->event)
-                    <p class="font-m"><strong>Event:</strong> {{ $email_send->broadcast->event->title }}</p>
+                    <p class="text-sm">
+                        <span class="font-semibold">Event:</span>
+                        {{ $email_send->broadcast->event->title }}
+                    </p>
                 @endif
-            </div>
-            <div class="col-sm-6 mb-3">
-                <h5 class="mb-3">Interactions</h5>
-                <p class="font-m"><strong>Opened:</strong> {{ $email_send->opens_count }} @if( $email_send->opens_count != 1) times @else time @endif</p>
-                <p class="font-m"><strong>Clicked:</strong> {{ $email_send->clicks_count }} @if( $email_send->clicks_count != 1) times @else time @endif</p>
-            </div>
-        </div>   
+
+            </x-admin.tile-card>
+
+            <x-admin.tile-card
+                title="Engagement"
+                description="Recipient interaction with this email.">
+
+                <p class="text-sm">
+                    <span class="font-semibold">Opened:</span>
+                    {{ $email_send->opens_count }} {{ Str::plural('time', $email_send->opens_count) }}
+                </p>
+
+                <p class="text-sm">
+                    <span class="font-semibold">Clicked:</span>
+                    {{ $email_send->clicks_count }} {{ Str::plural('time', $email_send->clicks_count) }}
+                </p>
+
+            </x-admin.tile-card>
+
+        </div>
     </div>
 
-    <!-- CONTENT -->
-    <div class="flex-column d-flex bg-white text-brand-dark rounded-2 p-3 mt-3">
-        <div class="row">
-            <div class="col-12 mb-3">
-                <h5 class="mb-3">Email content</h5>
-                <p class="font-m"><strong>Subject:</strong> {{ $email_send->subject }}</p>
+    <!-- Content -->
+    <div class="px-6 space-y-4">
+
+        <x-admin.section-title title="Email content" />
+
+        <x-admin.card hover="false" class="p-6 space-y-4">
+
+            <p class="text-sm">
+                <span class="font-semibold">Subject:</span>
+                {{ $email_send->subject }}
+            </p>
+
+            <div class="prose max-w-none">
                 {!! $email_send->html_content !!}
             </div>
-        </div>   
+
+        </x-admin.card>
+
     </div>
+
 </div>
+```
