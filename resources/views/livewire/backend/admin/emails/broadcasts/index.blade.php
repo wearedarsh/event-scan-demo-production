@@ -49,7 +49,7 @@
                         <!-- Type -->
                         <td class="px-4 py-3">
                             <p class="text-xs text-[var(--color-text)]/40">
-                                <span class="font-medium">{{ $broadcast->type->label }}</span><br>
+                                <span class="font-medium">{{ $broadcast->id }} - {{ $broadcast->type->label }}</span><br>
                                 {{ $broadcast->queued_at->diffForHumans() }}
                             </p>
                         </td>
