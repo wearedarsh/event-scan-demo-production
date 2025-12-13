@@ -25,8 +25,10 @@
     <!-- Main Card -->
     <x-admin.card hover="false" class="p-6 mx-6 space-y-4">
 
-        <div class="space-y-2">
+        <div class="space-y-4">
+
             <x-admin.section-title title="Categories" />
+
             <!-- Global All -->
             <x-admin.filter-pill
                 :active="$filter === 'all'"
@@ -34,32 +36,38 @@
                 All ({{ $counts['all'] }})
             </x-admin.filter-pill>
 
-            @foreach ($categories as $category)
-            @php
-            $categoryTotal = $category->types->sum(fn($t) => $counts[$t->id] ?? 0);
-            @endphp
+            <!-- Categories grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
 
-            @if ($categoryTotal > 0)
-            <div>
-                <x-admin.section-title :title="$category->label" />
+                @foreach ($categories as $category)
+                @php
+                $categoryTotal = $category->types->sum(fn($t) => $counts[$t->id] ?? 0);
+                @endphp
 
-                <div class="flex flex-wrap items-center gap-2 mb-2">
-                    @foreach ($category->types as $type)
-                    @if (($counts[$type->id] ?? 0) > 0)
-                    <x-admin.filter-pill
-                        :active="$filter == $type->id"
-                        wire:click="setFilter('{{ $type->id }}')">
-                        {{ $type->label }} ({{ $counts[$type->id] }})
-                    </x-admin.filter-pill>
-                    @endif
-                    @endforeach
+                @if ($categoryTotal > 0)
+                <div class="space-y-2">
+
+                    <x-admin.section-title :title="$category->label" />
+
+                    <div class="flex flex-wrap items-center gap-2">
+                        @foreach ($category->types as $type)
+                        @if (($counts[$type->id] ?? 0) > 0)
+                        <x-admin.filter-pill
+                            :active="$filter == $type->id"
+                            wire:click="setFilter('{{ $type->id }}')">
+                            {{ $type->label }} ({{ $counts[$type->id] }})
+                        </x-admin.filter-pill>
+                        @endif
+                        @endforeach
+                    </div>
+
                 </div>
+                @endif
+                @endforeach
+
             </div>
-            @endif
-            @endforeach
-
-
         </div>
+
 
 
         <!-- Search -->
@@ -124,22 +132,22 @@
                         <!-- Actions -->
                         <td class="px-4 py-3 text-right">
                             <div class="flex justify-end items-center gap-2">
-                            @if($broadcast->isBulk())
-                            <x-admin.table-action-button
-                                type="link"
-                                :href="route('admin.emails.broadcasts.show', ['event' => $event->id, 'broadcast' => $broadcast->id])"
-                                icon="arrow-right-circle"
-                                label="View details"
-                                primary />
+                                @if($broadcast->isBulk())
+                                <x-admin.table-action-button
+                                    type="link"
+                                    :href="route('admin.emails.broadcasts.show', ['event' => $event->id, 'broadcast' => $broadcast->id])"
+                                    icon="arrow-right-circle"
+                                    label="View details"
+                                    primary />
 
-                            @else
-                            <x-admin.table-action-button
-                                type="link"
-                                :href="route('admin.emails.broadcasts.view', ['event' => $event->id, 'email_send' => $send->id])"
-                                icon="arrow-right-circle"
-                                label="View details"
-                                primary />
-                            @endif
+                                @else
+                                <x-admin.table-action-button
+                                    type="link"
+                                    :href="route('admin.emails.broadcasts.view', ['event' => $event->id, 'email_send' => $send->id])"
+                                    icon="arrow-right-circle"
+                                    label="View details"
+                                    primary />
+                                @endif
                             </div>
                         </td>
 
