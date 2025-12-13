@@ -57,16 +57,21 @@
                         <!-- Recipient -->
                         <td class="px-4 py-3">
                             @if($broadcast->isBulk())
-                                Sent to {{ $broadcast->sends_count }} recipients
+                                <p class="text-xs"><span class="text-[var(--color-text)]/40">Sent to</span><br>
+                                    {{ $broadcast->sends_count }} recipients
+                                </p>
                             @else
                                 @php $send = $broadcast->sends->first(); @endphp
-                                @if ($send->recipient)
-                                    {{ $send->recipient->title }}
-                                    {{ $send->recipient->first_name }}
-                                    {{ $send->recipient->last_name }}
-                                @else
-                                    Sent to admin
-                                @endif
+                                <p class="text-xs"><span class="text-[var(--color-text)]/40">Sent to</span><br>
+                                    @if ($send->recipient)
+                                    
+                                        {{ $send->recipient->title }}
+                                        {{ $send->recipient->first_name }}
+                                        {{ $send->recipient->last_name }}
+                                    @else
+                                        Sent to admin
+                                    @endif
+                                </p>
 
                                 <x-link-arrow href="mailto:{{ $send->email_address }}">
                                     {{ $send->email_address }}
