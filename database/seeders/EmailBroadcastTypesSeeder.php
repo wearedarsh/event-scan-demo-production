@@ -35,7 +35,8 @@ class EmailBroadcastTypesSeeder extends Seeder
         foreach ($types as $type) {
             EmailBroadcastType::updateOrCreate(
                 ['key_name' => $type['key_name']],
-                ['label' => $type['label']]
+                ['label' => $type['label'],
+                'category_id' => $type['category_id']]
             );
         }
     }
