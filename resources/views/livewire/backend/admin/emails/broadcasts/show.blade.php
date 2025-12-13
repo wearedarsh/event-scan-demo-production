@@ -14,7 +14,7 @@
     >
         <div class="flex items-center gap-3">
             <x-admin.stat-card label="Recipients"
-                :value="$broadcast->sends_count" />
+                :value="$broadcast->sentCount()" />
 
             <x-admin.stat-card label="Opened"
                 :value="$broadcast->sends->sum('opens_count')" />
