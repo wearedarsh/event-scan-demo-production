@@ -84,7 +84,9 @@
                     <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
 
                         <td class="px-4 py-3">
-                            {{ $broadcast->type->category->label }}<br>
+                            <span class="text-xs">
+                                {{ $broadcast->type->category->label }}
+                            </span><br>
                             <span class="text-xs text-[var(--color-text)]/40">
                                 {{ $broadcast->queued_at->diffForHumans() }}
                             </span>
