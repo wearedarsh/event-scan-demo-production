@@ -126,13 +126,13 @@
 
                 <p class="text-sm">
                     <span class="font-semibold">Name:</span>
-                    {{ $email_send->broadcast->friendly_name }}
+                    {{ $email_send->broadcast->friendly_name ?? '-' }}
                 </p>
 
                 @if($email_send->broadcast->event)
                     <p class="text-sm">
                         <span class="font-semibold">Event:</span>
-                        {{ $email_send->broadcast->event->title }}
+                        {{ $email_send->broadcast->event->title ?? '-' }}
                     </p>
                 @endif
 
