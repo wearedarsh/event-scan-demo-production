@@ -119,6 +119,7 @@
                         </td>
                         <!-- Actions -->
                         <td class="px-4 py-3 text-right">
+                            <div class="flex justify-end items-center gap-2">
                             @if($broadcast->isBulk())
 
                             @else
@@ -129,6 +130,7 @@
                                 label="View details"
                                 primary />
                             @endif
+                            </div>
                         </td>
 
                     </tr>
