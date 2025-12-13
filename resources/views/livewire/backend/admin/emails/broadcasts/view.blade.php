@@ -58,9 +58,9 @@
 
                 <p class="text-sm">
                     <span class="font-semibold">Email:</span>
-                    <a href="mailto:{{ $email_send->email_address }}" class="hover:underline">
+                    <x-link-arrow href="mailto:{{ $email_send->email_address }}" class="mt-1">
                         {{ $email_send->email_address }}
-                    </a>
+                    </x-link-arrow>
                 </p>
 
                 @if($email_send->recipient)
