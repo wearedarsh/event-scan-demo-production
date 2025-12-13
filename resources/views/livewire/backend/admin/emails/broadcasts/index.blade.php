@@ -26,7 +26,7 @@
     <x-admin.card hover="false" class="p-6 mx-6 space-y-4">
 
         <div class="space-y-2">
-            <x-admin.section-title :title="Categories" />
+            <x-admin.section-title title="Categories" />
             <!-- Global All -->
             <x-admin.filter-pill
                 :active="$filter === 'all'"
