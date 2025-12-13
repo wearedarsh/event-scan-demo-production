@@ -229,6 +229,7 @@ Route::middleware(['auth', HasAdminAccess::class])
         Route::get('emails/signatures/create', App\Livewire\Backend\Admin\Emails\Signatures\Create::class)->name('emails.signatures.create');
 
         Route::get('emails/broadcasts/index', App\Livewire\Backend\Admin\Emails\Broadcasts\Index::class)->name('emails.broadcasts.index');
+        Route::get('{event}/emails/broadcasts/{broadcast}', App\Livewire\Backend\Admin\Emails\Broadcasts\Show::class)->name('emails.broadcasts.show');
         Route::get('{event}/emails/broadcasts/{email_send}/view', App\Livewire\Backend\Admin\Emails\Broadcasts\View::class)->name('emails.broadcasts.view');
 
         Route::prefix('app')->name('app.')->group(function () {

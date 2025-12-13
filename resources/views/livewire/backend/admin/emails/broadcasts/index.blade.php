@@ -125,6 +125,12 @@
                         <td class="px-4 py-3 text-right">
                             <div class="flex justify-end items-center gap-2">
                             @if($broadcast->isBulk())
+                            <x-admin.table-action-button
+                                type="link"
+                                :href="route('admin.emails.broadcasts.show', ['event' => $event->id, 'broadcast' => $broadcast->id])"
+                                icon="arrow-right-circle"
+                                label="View details"
+                                primary />
 
                             @else
                             <x-admin.table-action-button

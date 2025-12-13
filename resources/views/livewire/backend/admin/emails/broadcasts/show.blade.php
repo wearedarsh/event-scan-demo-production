@@ -1,0 +1,107 @@
+<div class="space-y-4">
+
+    <!-- Breadcrumb -->
+    <x-admin.breadcrumb :items="[
+        ['label' => $event->title, 'href' => route('admin.events.manage', $event->id)],
+        ['label' => 'Email broadcasts', 'href' => route('admin.events.emails.broadcasts.index', $event->id)],
+        ['label' => $broadcast->subject],
+    ]" />
+
+    <!-- Header -->
+    <x-admin.page-header
+        :title="$broadcast->subject"
+        subtitle="Bulk email overview for {{ $event->title }}"
+    >
+        <div class="flex items-center gap-3">
+            <x-admin.stat-card label="Recipients">
+                {{ $broadcast->sends_count }}
+            </x-admin.stat-card>
+
+            <x-admin.stat-card label="Opened">
+                {{ $broadcast->sends->sum('opens_count') }}
+            </x-admin.stat-card>
+
+            <x-admin.stat-card label="Clicked">
+                {{ $broadcast->sends->sum('clicks_count') }}
+            </x-admin.stat-card>
+        </div>
+    </x-admin.page-header>
+
+    <!-- Card -->
+    <x-admin.card hover="false" class="p-6 mx-6 space-y-4">
+
+        <x-admin.search-input
+            wire:model.live.debounce.300ms="search"
+            placeholder="Search by name or email"
+        />
+
+        <x-admin.table>
+            <table class="min-w-full text-sm">
+                <thead>
+                    <tr class="text-xs uppercase text-[var(--color-text-light)] border-b border-[var(--color-border)]">
+                        <th class="px-4 py-3">Recipient</th>
+                        <th class="px-4 py-3">Email</th>
+                        <th class="px-4 py-3">Opens</th>
+                        <th class="px-4 py-3">Clicks</th>
+                        <th class="px-4 py-3">Sent</th>
+                        <th class="px-4 py-3 text-right">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @forelse ($sends as $send)
+                        <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
+
+                            <td class="px-4 py-3">
+                                @if($send->recipient)
+                                    {{ $send->recipient->title }}
+                                    {{ $send->recipient->first_name }}
+                                    {{ $send->recipient->last_name }}
+                                @else
+                                    —
+                                @endif
+                            </td>
+
+                            <td class="px-4 py-3">
+                                <x-link-arrow size="xs" href="mailto:{{ $send->email_address }}">
+                                    {{ $send->email_address }}
+                                </x-link-arrow>
+                            </td>
+
+                            <td class="px-4 py-3">{{ $send->opens_count }}</td>
+                            <td class="px-4 py-3">{{ $send->clicks_count }}</td>
+
+                            <td class="px-4 py-3 text-xs text-[var(--color-text)]/40">
+                                {{ $send->sent_at?->diffForHumans() }}
+                            </td>
+
+                            <td class="px-4 py-3 text-right">
+                                <x-admin.table-action-button
+                                    type="link"
+                                    primary
+                                    icon="arrow-right-circle"
+                                    label="View"
+                                    :href="route('admin.emails.broadcasts.view', [
+                                        'event' => $event->id,
+                                        'email_send' => $send->id
+                                    ])"
+                                />
+                            </td>
+
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="px-4 py-6 text-center text-[var(--color-text-light)]">
+                                No recipients found.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </x-admin.table>
+
+        <x-admin.pagination :paginator="$sends" />
+
+    </x-admin.card>
+
+</div>
