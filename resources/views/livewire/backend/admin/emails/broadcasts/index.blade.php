@@ -67,8 +67,8 @@
                                     @else
                                         Sent to admin
                                     @endif
-                                <x-link-arrow size="xs" href="mailto:{{ $send->recipient->email_address }}">
-                                    $send->recipient->email_address
+                                <br><x-link-arrow size="xs" href="mailto:{{ $send->recipient->email_address }}">
+                                    {{ $send->recipient->email_address }} 
                                 </x-link-arrow>
                             @endif
                             
