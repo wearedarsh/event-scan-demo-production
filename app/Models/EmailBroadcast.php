@@ -25,7 +25,7 @@ class EmailBroadcast extends Model
         return $this->belongsTo(EmailBroadcastType::class, 'email_broadcast_type_id');
     }
 
-    public function sender(): BelongsTo
+    public function sender()
     {
         return $this->belongsTo(User::class, 'sent_by');
     }
@@ -35,24 +35,29 @@ class EmailBroadcast extends Model
         return $this->belongsTo(Event::class);
     }
 
-    public function opens(): HasMany
+    public function opens()
     {
         return $this->hasMany(EmailOpen::class);
     }
 
-    public function clicks(): HasMany
+    public function clicks()
     {
         return $this->hasMany(EmailClick::class);
     }
 
-    public function bounces(): HasMany
+    public function bounces()
     {
         return $this->hasMany(EmailBounce::class);
     }
 
-    public function sentCount(): int
+    public function sentCount()
     {
         return $this->sends()->count();
+    }
+
+    public function isBulk()
+    {
+        return $this->sentCount > 1;
     }
 
     

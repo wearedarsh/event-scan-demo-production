@@ -16,7 +16,7 @@ class Index extends Component
     public Event $event;
 
     public string $search = '';
-    public string $filter = 'all'; // ← NEW
+    public string $filter = 'all';
 
     public function mount(Event $event)
     {

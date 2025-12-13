@@ -44,14 +44,18 @@
                 </thead>
 
                 <tbody>
-                    @forelse($email_sends as $email_send)
+                    @forelse($broadcasts as $broadcast)
                         <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
 
                             <!-- Type -->
                             <td class="px-4 py-3">
                                 <p class="text-xs text-[var(--color-text)]/40">
-                                    <span class="font-medium">{{ optional($email_send->broadcast)->type ?? '—' }}</span><br>
-                                    {{ $email_send->sent_at?->diffForHumans() ?? '—' }}
+                                    <span class="font-medium">{{ $broadcast->type->label }}</span><br>
+                                    {{ $broadcast->queued_at->diffForHumans() }}
+                                    @if($broadcast->isBulk)
+                                        3 recipients
+                                    @endif
+                                    
                                 </p> 
                             </td>
 
@@ -82,7 +86,10 @@
                             <td class="px-4 py-3 text-right">
                                 <x-admin.table-action-button
                                     type="link"
-                                    :href="route('admin.dashboard')"
+                                    :href="route('admin.emails.broadcasts.view', [
+                                        'email_send' => $email_send->id,
+                                        'event' => $event->id,
+                                    ])"
                                     icon="arrow-right-circle"
                                     label="View details"
                                     primary
