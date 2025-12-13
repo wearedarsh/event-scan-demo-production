@@ -62,7 +62,7 @@
                             <td class="px-4 py-3">
                                 {{ $send->recipient->title }}
                                 {{ $send->recipient->first_name }}
-                                {{ $send->recipient->last_name }}
+                                {{ $send->recipient->last_name }}<br>
                                 <x-link-arrow size="xs" href="mailto:{{ $send->email_address }}">
                                     {{ $send->email_address }}
                                 </x-link-arrow>
@@ -70,11 +70,7 @@
 
                             <td class="px-4 py-3">{{ $send->opens_count }}</td>
                             <td class="px-4 py-3">{{ $send->clicks_count }}</td>
-
-                            <td class="px-4 py-3 text-xs text-[var(--color-text)]/40">
-                                {{ $send->sent_at?->diffForHumans() }}
-                            </td>
-
+                            
                             <td class="px-4 py-3 text-right">
                                 <x-admin.table-action-button
                                     type="link"
