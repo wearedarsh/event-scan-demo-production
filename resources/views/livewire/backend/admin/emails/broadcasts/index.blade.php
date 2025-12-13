@@ -46,11 +46,11 @@
                     @forelse($broadcasts as $broadcast)
                     <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
 
-                        <!-- Type -->
                         <td class="px-4 py-3">
-                            <p class="text-xs text-[var(--color-text)]/40">
-                                <span class="font-medium">{{ $broadcast->type->label }}</span><br>
-                                {{ $broadcast->queued_at->diffForHumans() }}
+                            <p class="text-xs">
+                                {{ $broadcast->friendly_name }}<br>
+                                <span class=" text-[var(--color-text)]/40">{{ $broadcast->type->label }}<br>
+                                {{ $broadcast->queued_at->diffForHumans() }}</span>
                             </p>
                         </td>
 
@@ -73,7 +73,6 @@
 
                         <!-- Subject -->
                         <td class="px-4 py-3">
-                            <span class="text-[var(--color-text)]/40">{{ $broadcast->friendly_name }}</span><br>
                                 {{ $broadcast->subject }}
                         </td>
                         <!-- Actions -->
