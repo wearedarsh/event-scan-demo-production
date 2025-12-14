@@ -7,12 +7,7 @@
 
 <x-admin.card class="p-5">
 
-    <h3 class="font-medium mb-1 -mt-2 flex items-center gap-2">
-        @if($icon)
-            <x-dynamic-component :component="$icon" class="w-4 h-4 text-gray-500" />
-        @endif
-        {{ $title }}
-    </h3>
+    <x-admin.section-title title="{{$title}}" icon="{{$icon}}" />
 
     @if($description)
         <p class="text-sm text-[var(--color-text-light)] mb-4 font-light">
