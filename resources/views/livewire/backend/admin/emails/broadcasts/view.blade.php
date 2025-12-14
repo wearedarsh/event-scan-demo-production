@@ -107,9 +107,9 @@
         <x-admin.tile-card hover="false" class="p-6 space-y-4"
             title="subject"
             :description="$email_send->subject"
-            icon="heroicon-o-computer-desktop"
+            icon="heroicon-o-pencil-square"
         >
-        <x-admin.section-title-icon title="Email content" icon="hero-o-computer-desktop" />
+        <x-admin.section-title-icon title="Email content" icon="hero-o-code-bracket-square" />
             <div class="prose max-w-none">
                 <x-admin.email-preview-iframe :id="$email_send->id" />
             </div>
