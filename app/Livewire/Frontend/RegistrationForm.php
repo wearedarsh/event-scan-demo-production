@@ -519,7 +519,7 @@ class RegistrationForm extends Component
             EmailService::queueMailable(
                 mailable: $mailable,
                 recipient_user: $registration->user,
-                recipient_email: $registration->user->email,
+                recipient_email: $registration->email,
                 friendly_name: 'No payment confirmation customer',
                 type: 'transactional_customer',
                 event_id: $registration->event_id,
@@ -536,7 +536,7 @@ class RegistrationForm extends Component
         EmailService::queueMailable(
             mailable: $mailable,
             recipient_user: $registration->user,
-            recipient_email: $registration->user->email,
+            recipient_email: $registration->email,
             friendly_name: 'Welcome email customer',
             type: 'transactional_customer',
             event_id: $registration->event_id,
@@ -569,7 +569,7 @@ class RegistrationForm extends Component
 
         if ($registration->event->auto_email_opt_in) {
             $email_subscriber_id = $this->email_service->addToList([
-                'email' => $registration->user->email,
+                'email' => $registration->email,
                 'first_name' => $registration->user->first_name,
                 'last_name' => $registration->user->last_name,
                 'title' => $registration->user->title
@@ -584,7 +584,7 @@ class RegistrationForm extends Component
 
         if ($registration->user->email_marketing_opt_in) {
             $email_subscriber_id = $this->email_service->addToList([
-                'email' => $registration->user->email,
+                'email' => $registration->email,
                 'first_name' => $registration->user->first_name,
                 'last_name' => $registration->user->last_name,
                 'title' => $registration->user->title
@@ -622,7 +622,7 @@ class RegistrationForm extends Component
             EmailService::queueMailable(
                 mailable: $mailable,
                 recipient_user: $registration->user,
-                recipient_email: $registration->user->email,
+                recipient_email: $registration->email,
                 friendly_name: 'Bank transfer information customer',
                 type: 'transactional_customer',
                 event_id: $registration->event_id,
@@ -681,7 +681,7 @@ class RegistrationForm extends Component
             'allow_promotion_codes' => true,
             'success_url' => route('checkout.success', ['registration_id' => $registration->id, 'event' => $this->event]),
             'cancel_url' => route('registration', ['event' => $this->event->id]) . '?step=5&cancelled=true',
-            'customer_email' => $registration->user->email,
+            'customer_email' => $registration->email,
             'metadata' => [
                 'registration_id' => $registration->id,
             ]
