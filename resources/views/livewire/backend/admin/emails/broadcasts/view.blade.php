@@ -47,16 +47,7 @@
 
         <x-admin.section-title title="Send details" />
 
-        <div class="grid md:grid-cols-2 gap-6">
-
-            <!-- Recipient -->
-            <x-admin.action-card
-                title="Subject"
-                description="{{$email_send->subject}}"
-                :micro="['title' => 'Details']"
-                icon="heroicon-o-pencil-square"
-                >
-            </x-admin.action-card>
+        <div class="grid gap-6">
 
             <!-- Meta -->
             <x-admin.tile-card
@@ -65,6 +56,11 @@
                 :micro="['title' => 'Details']"
                 icon="heroicon-o-paper-airplane"
             >
+
+                <p>
+                    <span class="font-semibold">Subject: </span>
+                    {{$email_send->subject}}
+                </p>
 
                 <p class="text-sm">
                     <span class="font-semibold">Sent at: </span>
