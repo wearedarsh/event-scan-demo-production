@@ -7,7 +7,7 @@
 
 <x-admin.card class="p-5">
 
-    <x-admin.section-title title="{{$title}}" icon="{{$icon}}" />
+    <x-admin.section-title-icon title="{{$title}}" icon="{{$icon}}" />
 
     @if($description)
         <p class="text-sm text-[var(--color-text-light)] mb-4 font-light">

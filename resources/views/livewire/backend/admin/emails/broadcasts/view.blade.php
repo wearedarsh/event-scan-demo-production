@@ -109,7 +109,7 @@
             :description="$email_send->subject"
             icon="heroicon-o-computer-desktop"
         >
-        <x-admin.section-title title="Email content" icon="hero-o-computer-desktop" />
+        <x-admin.section-title-icon title="Email content" icon="hero-o-computer-desktop" />
             <div class="prose max-w-none">
                 <x-admin.email-preview-iframe :id="$email_send->id" />
             </div>
