@@ -112,7 +112,7 @@
             icon="heroicon-o-code"
         >
             <div class="prose max-w-none">
-                <x-admin.email-preview-iframe :html-content="$email_send->id" />
+                <x-admin.email-preview-iframe :id="$email_send->id" />
             </div>
 
         </x-admin.card>
