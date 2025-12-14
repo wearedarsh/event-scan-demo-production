@@ -23,6 +23,7 @@ return new class extends Migration
             $table->boolean('email_marketing_opt_in')->default(false);
             $table->foreignId('role_id')->nullable()->constrained()->onDelete('cascade');
             $table->boolean('is_admin')->default(false);
+            $table->boolean('receives_admin_notifications')->default(false)->nullable();
             $table->string('email_marketing_subscriber_id')->nullable();
             $table->rememberToken();
             $table->timestamps();

@@ -25,6 +25,7 @@ class UserSeeder extends Seeder
                 'first_name' => 'Tom', 
                 'last_name' => 'Harley', 
                 'is_admin' => true,
+                'receives_admin_notifications' => true,
                 'role_id' => 4,
                 'active' => true
             ]
