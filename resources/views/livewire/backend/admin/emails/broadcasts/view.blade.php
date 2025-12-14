@@ -92,18 +92,14 @@
 
         <x-admin.section-title title="Email content" />
 
-        <x-admin.tile-card hover="false" class="p-6 space-y-4"
-            title="Subject"
-            :description="$email_send->subject"
-            icon="heroicon-o-pencil-square"
-        >
+        <x-admin.card hover="false" class="p-6 space-y-4">
         
             <div class="prose max-w-none" class="mt-2 space-y-4">
                 <x-admin.section-title-icon title="Email content" icon="heroicon-o-computer-desktop" />
                 <x-admin.email-preview-iframe :id="$email_send->id" />
             </div>
 
-        </x-admin.tile-card>
+        </x-admin.card>
 
     </div>
 
