@@ -6,7 +6,7 @@
 <p>Please make your bank transfer using the following details:</p>
 
 <p>
-    {!! config('customer.financial.bank_transfer_details') !!}
+    //bank transfer details to go here//
 </p>
 
 <p>Here are your booking details:</p>
