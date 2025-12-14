@@ -112,11 +112,7 @@
             icon="heroicon-o-code"
         >
             <div class="prose max-w-none">
-                <iframe
-                    class="w-full rounded-lg bg-white"
-                    style="min-height: 600px"
-                    srcdoc="{!! $email_send->html_content !!}">
-                </iframe>
+                <iframe srcdoc="{{ e($email_send->html_content) }}" class="w-full border rounded" sandbox ></iframe>
             </div>
 
         </x-admin.card>
