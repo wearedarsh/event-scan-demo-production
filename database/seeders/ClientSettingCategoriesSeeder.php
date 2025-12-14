@@ -3,13 +3,13 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\ClientSettingsCategory;
+use App\Models\ClientSettingCategory;
 
 class ClientSettingCategoriesSeeder extends Seeder
 {
     public function run(): void
     {
-        ClientSettingsCategory::insert([
+        ClientSettingCategory::insert([
             [
                 'id' => 1,
                 'key_name' => 'email',
