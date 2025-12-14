@@ -116,16 +116,14 @@
                                     {{ $send->recipient->title }}
                                     {{ $send->recipient->first_name }}
                                     {{ $send->recipient->last_name }}
-                                    </span
-                                @endif
-                            <br>
-                            <x-link-arrow size="xs" href="mailto:{{ $send->email_address }}">
-                                {{ $send->email_address }}
-                            </x-link-arrow>
-                            @else
-                            <span class="text-xs  text-[var(--color-text)]/40">Sent to</span><br>
-                            Team member
-                            @endif
+                                    </span><br>
+                                    <x-link-arrow size="xs" href="mailto:{{ $send->email_address }}">
+                                        {{ $send->email_address }}
+                                    </x-link-arrow>
+                                    @else
+                                    <span class="text-xs  text-[var(--color-text)]/40">Sent to</span><br>
+                                    Team member
+                                    @endif
 
                             @endif
 
