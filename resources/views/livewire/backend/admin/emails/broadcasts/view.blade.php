@@ -50,31 +50,13 @@
         <div class="grid md:grid-cols-2 gap-6">
 
             <!-- Recipient -->
-            <x-admin.tile-card
-                title="Recipient"
-                description="Who this email was sent to."
+            <x-admin.action-card
+                title="Subject"
+                description="{{email_send->subject}}"
                 :micro="['title' => 'Details']"
-                icon="heroicon-o-user"
+                icon="heroicon-o-pencil-square"
                 >
-
-                <p class="text-sm">
-                    <x-link-arrow href="mailto:{{ $email_send->email_address }}" class="mt-1">
-                        {{ $email_send->email_address }}
-                    </x-link-arrow>
-                </p>
-
-                @if($email_send->recipient)
-                    <p class="text-sm">
-                        {{ $email_send->recipient->title }} {{ $email_send->recipient->first_name }} {{ $email_send->recipient->last_name }}
-                    </p>
-                    @if($email_send->recipient->trashed())
-                        <x-admin.status-pill status="neutral">Attendee deleted</x-admin.status-pill><br>
-                    @endif
-                @else
-                    Sent to team
-                @endif
-
-            </x-admin.tile-card>
+            </x-admin.action-card>
 
             <!-- Meta -->
             <x-admin.tile-card
