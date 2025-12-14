@@ -30,7 +30,7 @@ class EmailSend extends Model
 
     public function recipient()
     {
-        return $this->belongsTo(User::class, 'recipient_id');
+        return $this->belongsTo(User::class, 'recipient_id')->withTrashed();
     }
 
     public function clicks()
