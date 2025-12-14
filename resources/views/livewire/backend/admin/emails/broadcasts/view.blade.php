@@ -106,7 +106,7 @@
 
         <x-admin.tile-card hover="false" class="p-6 space-y-4"
             title="subject"
-            description="$email_send->subject"
+            :description="$email_send->subject"
             icon="heroicon-o-command-line"
         >
             <div class="prose max-w-none">
