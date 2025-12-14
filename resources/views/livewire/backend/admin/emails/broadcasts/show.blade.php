@@ -54,8 +54,7 @@
                         <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
 
                             <td class="px-4 py-3">
-                                <span class="text-xs">
-                                    {{ $send->status }}</span><br>
+                                <x-admin.status-pill status="neutral">{{ $send->status }}</x-admin.status-pill><br>
                                 <span class="text-xs text-[var(--color-text)]/40">
                                     {{ $send->sent_at->diffForHumans() }}
                                 </span>
