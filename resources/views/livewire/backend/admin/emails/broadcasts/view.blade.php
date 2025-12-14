@@ -53,7 +53,7 @@
             <x-admin.tile-card
                 title="Recipient"
                 description="Who this email was sent to."
-                micro="Details"
+                :micro="['title' => 'Details']"
                 icon="heroicon-o-user"
                 >
 
@@ -75,7 +75,7 @@
             <x-admin.tile-card
                 title="Delivery"
                 description="When and how this email was sent."
-                micro="details"
+                :micro="['title' => 'Details']"
                 icon="heroicon-o-paper-airplane"
             >
             <x-admin.status-pill status="neutral">{{ ucfirst($email_send->status) }}</x-admin.status-pill>
