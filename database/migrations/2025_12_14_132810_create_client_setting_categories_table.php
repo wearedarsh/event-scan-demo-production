@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('client_settings_categories', function (Blueprint $table) {
+        Schema::create('client_setting_categories', function (Blueprint $table) {
             $table->id();
             $table->string('key_name')->unique(); // api, booking, admin
             $table->string('label');
@@ -18,7 +18,7 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('client_settings_categories');
+        Schema::dropIfExists('client_setting_categories');
     }
 };
 
