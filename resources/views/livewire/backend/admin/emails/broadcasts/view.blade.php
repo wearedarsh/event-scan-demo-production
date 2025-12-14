@@ -105,7 +105,7 @@
         <x-admin.section-title title="Email content" />
 
         <x-admin.tile-card hover="false" class="p-6 space-y-4"
-            title="subject"
+            title="Subject"
             :description="$email_send->subject"
             icon="heroicon-o-pencil-square"
         >
