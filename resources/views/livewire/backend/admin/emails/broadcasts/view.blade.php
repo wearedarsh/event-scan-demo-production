@@ -113,7 +113,7 @@
                 <x-admin.email-preview-iframe :id="$email_send->id" />
             </div>
 
-        </x-admin.card>
+        </x-admin.tile-card>
 
     </div>
 
