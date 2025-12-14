@@ -39,7 +39,7 @@
             </div>
 
             <!-- Other categories looped below -->
-            <div class="flex flex-wrap items-start gap-6">
+            <div class="flex flex-wrap items-start gap-4">
                 @foreach ($categories as $category)
                 @php
                 $categoryTotal = $category->types->sum(fn($t) => $counts[$t->id] ?? 0);
