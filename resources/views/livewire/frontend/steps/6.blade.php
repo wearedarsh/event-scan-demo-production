@@ -29,7 +29,7 @@
           {{ $this->registration->title }} {{ $this->registration->first_name }} {{ $this->registration->last_name }}
         </div>
         <div class="bg-[var(--color-bg)] rounded-lg px-4 py-2">
-          {{ $this->registration->user->email }}
+          {{ $this->registration->email }}
         </div>
       </div>
 
