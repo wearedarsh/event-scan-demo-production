@@ -134,11 +134,12 @@
                                     <x-link-arrow size="xs" href="mailto:{{ $send->email_address }}">
                                         {{ $send->email_address }}
                                     </x-link-arrow>
-                                    @else
-                                        <span class="text-xs  text-[var(--color-text)]/40">Sent to</span><br>
-                                        Team member
-                                    @endif
-
+                                @else
+                                    Team member
+                                @endif
+                                <x-link-arrow size="xs" href="mailto:{{ $send->email_address }}">
+                                        {{ $send->email_address }}
+                                </x-link-arrow>
                             @endif
 
                         </td>
