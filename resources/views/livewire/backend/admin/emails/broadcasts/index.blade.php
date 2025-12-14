@@ -98,7 +98,9 @@
                                 $send = $broadcast->sends->first(); 
                             @endphp
                         @else
-                            @php $is_bulk = false;
+                            @php 
+                                $is_bulk = false; 
+                            @endphp
                         @endif
 
                     <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
