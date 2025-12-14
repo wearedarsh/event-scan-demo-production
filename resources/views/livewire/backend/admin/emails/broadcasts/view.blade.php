@@ -93,9 +93,10 @@
         <x-admin.section-title title="Email content" />
 
         <x-admin.card hover="false" class="p-6 space-y-4">
-        
+            <div>
+                <x-admin.section-title-icon title="Preview" icon="heroicon-o-computer-desktop" />
+            </div>
             <div class="prose max-w-none" class="mt-2 space-y-4">
-                <x-admin.section-title-icon title="Email content" icon="heroicon-o-computer-desktop" />
                 <x-admin.email-preview-iframe :id="$email_send->id" />
             </div>
 
