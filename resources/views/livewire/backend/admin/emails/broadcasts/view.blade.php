@@ -64,12 +64,12 @@
                 </p>
 
                 @if($email_send->recipient)
-                    @if($email_send->recipient->trashed())
-                        <x-admin.status-pill status="neutral">Attendee deleted</x-admin.status-pill><br>
-                    @endif
                     <p class="text-sm">
                         {{ $email_send->recipient->title }} {{ $email_send->recipient->first_name }} {{ $email_send->recipient->last_name }}
                     </p>
+                    @if($email_send->recipient->trashed())
+                        <x-admin.status-pill status="neutral">Attendee deleted</x-admin.status-pill><br>
+                    @endif
                 @else
                     Sent to team
                 @endif
