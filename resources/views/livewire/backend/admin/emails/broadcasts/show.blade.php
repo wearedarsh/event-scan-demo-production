@@ -10,7 +10,7 @@
     <!-- Header -->
     <x-admin.page-header
         title="Broadcast with multiple recipients"
-        subtitle="All recipients for the broadcast."
+        subtitle="{{ 'Subject: ' . $broadcast->subject }}"
     >
         <div class="flex items-center gap-3">
             <x-admin.stat-card label="Recipients"
@@ -26,12 +26,7 @@
 
     <!-- Card -->
     <x-admin.card hover="false" class="p-6 mx-6 space-y-4">
-        <div class="space-y-2">
-        <x-admin.section-title title="Subject" />
-        <p class="text-sm">
-            {{ $broadcast->subject }}
-        </p>
-        </div>
+
 
         <x-admin.search-input
             wire:model.live.debounce.300ms="search"
