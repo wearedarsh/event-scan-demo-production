@@ -80,12 +80,12 @@
             >
             <x-admin.status-pill status="neutral">{{ ucfirst($email_send->status) }}</x-admin.status-pill>
 
-                <p class="text-sm">
+                <p class="text-xs">
                     <span class="text-xs font-semibold">At </span>
                     {{ $email_send->sent_at?->format('d/m/Y H:i') ?? '—' }}
                 </p>
 
-                <p class="text-sm">
+                <p class="text-xs">
                     <span class="text-xs font-semibold">By </span>
                     @if($email_send->broadcast?->sender)
                         {{ $email_send->broadcast->sender->first_name }} {{ $email_send->broadcast->sender->last_name }}
