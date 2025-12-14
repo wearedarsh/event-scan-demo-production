@@ -92,14 +92,14 @@
 
                 <tbody>
                     @forelse($broadcasts as $broadcast)
-                        @if($broadcast->isBulk())
+                        @if(!$broadcast->isBulk())
                             @php 
-                                $is_bulk = true;
+                                $is_bulk = false;
                                 $send = $broadcast->sends->first(); 
                             @endphp
                         @else
                             @php 
-                                $is_bulk = false; 
+                                $is_bulk = true; 
                             @endphp
                         @endif
 
