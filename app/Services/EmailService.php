@@ -41,7 +41,7 @@ class EmailService
 
             Log::info('Email service received request');
 
-            $subject = $mailable->envelope()->subject;
+            $subject = $mailable->subject;
 
             $html = $mailable->render();
 

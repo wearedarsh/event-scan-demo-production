@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('key_name');
             $table->string('label');
             $table->string('subject');
+            $table->string('pre_header');
             $table->string('category');
             $table->mediumText('html_content');
             $table->timestamps();

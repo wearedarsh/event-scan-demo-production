@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('key_name')->unique();
             $table->string('label');
             $table->string('subject');
+            $table->string('pre_header');
             $table->longText('html_content');
             $table->timestamps();
 

@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class EmailHtmlContent extends Model
 {
     use SoftDeletes;
-    protected $fillable = ['key_name', 'label', 'subject', 'category', 'html_content'];
+    protected $fillable = ['key_name', 'label', 'subject', 'pre_header', 'category', 'html_content'];
 }

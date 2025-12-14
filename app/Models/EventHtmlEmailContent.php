@@ -12,6 +12,7 @@ class EventHtmlEmailContent extends Model
         'key_name',
         'label',
         'subject',
+        'pre_header',
         'html_content',
     ];
 

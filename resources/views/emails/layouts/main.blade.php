@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title ?? 'Eventscan demo' }}</title>
     <style>
         body {
             margin: 0;
@@ -90,7 +89,7 @@
     </style>
 </head>
 <body>
-    <span class="preheader">{{ $preheader ?? '' }}</span>
+    <span class="preheader">{{ $pre_header ?? '' }}</span>
 
     <table class="email-wrapper" cellpadding="0" cellspacing="0" width="100%">
         <tr>

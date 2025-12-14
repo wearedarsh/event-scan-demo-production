@@ -3,10 +3,11 @@
 namespace App\Mail;
 
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Mail\Mailables\Content;
 use App\Models\Registration;
+use App\Models\EmailHtmlContent;
+use App\Models\EmailHtmlLayout;
 use App\Models\ClientSetting;
+use Illuminate\Support\Facades\Blade;
 
 class NoPaymentConfirmationCustomer extends Mailable
 {
@@ -15,25 +16,28 @@ class NoPaymentConfirmationCustomer extends Mailable
         public float $registration_total
     ) {}
 
-    public function envelope(): Envelope
+    public function build(): static
     {
-        return new Envelope(
-            subject: 'Thank you for your event booking'
-        );
-    }
+        $email_content = EmailHtmlContent::where('key_name', 'customer_no_payment_confirmation')->firstOrFail();
+        $layout = EmailHtmlLayout::where('key_name', 'customer')->firstOrFail();
+        $email_signature = ClientSetting::getValue('email', 'transactional_signature_html');
 
-    public function content(): Content
-    {
-        return new Content(
-            view: 'emails.customer.no-payment-confirmation',
-            with: [
-                'email_signature' => ClientSetting::getValue('email', 'transactional_signature_html'),
-                'registration' => $this->registration,
-                'registration_total' => $this->registration_total,
-                'currency_symbol' => '€',
-                'title' => 'Thank you for your event booking',
-                'preheader' => 'We look forward to seeing you at...',
-            ]
-        );
+        $body_html = Blade::render($email_content->html_content, [
+            'registration' => $this->registration,
+            'registration_total' => $this->registration_total,
+            'currency_symbol' => '€',
+            'email_signature' => $email_signature,
+        ]);
+
+        $full_html = Blade::render($layout->html_content, [
+            'title' => $email_content->subject,
+            'pre_header' => $email_content->pre_header,
+            'body_html_content' => $body_html,
+            'app_url' => config('app.url'),
+            'sub_title' => config('customer.contact_details.booking_website_company_name') . ' events',
+        ]);
+
+        return $this->subject($email_content->subject)
+                    ->html($full_html);
     }
 }

@@ -3,42 +3,45 @@
 namespace App\Mail;
 
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Mail\Mailables\Content;
 use App\Models\User;
+use App\Models\EmailHtmlContent;
+use App\Models\EmailHtmlLayout;
+use App\Models\ClientSetting;
+use Illuminate\Support\Facades\Blade;
 
 class CheckInAppInstructionAdmin extends Mailable
 {
-    public User $user;
-    public string $qr_prefix;
-    public string $client_id;
-    public string $auth_token;
-    public string $app_scheme;
+    public function __construct(
+        public User $user
+    ) {}
 
-    public function __construct(User $user)
+    public function build(): static
     {
-        $this->user = $user;
-        $this->qr_prefix = config('check-in-app.qr_prefix');
-        $this->client_id = config('services.eventscan.client_id');
-        $this->auth_token = config('check-in-app.auth_token');
-        $this->app_scheme = config('check-in-app.scheme');
-    }
+        $email_content = EmailHtmlContent::where('key_name', 'check_in_app_instruction')->firstOrFail();
+        $layout = EmailHtmlLayout::where('key_name', 'admin')->firstOrFail();
+        $email_signature = ClientSetting::getValue('email', 'transactional_signature_html');
 
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: 'Instructions for installing the ' . config('check-in-app.friendly_name') . ' app'
-        );
-    }
+        $initialise_link =
+            config('check-in-app.scheme')
+            . '://initialise?client_id=' . config('services.eventscan.client_id')
+            . '&auth_token=' . config('check-in-app.auth_token')
+            . '&qr_prefix=' . config('check-in-app.qr_prefix');
 
-    public function content(): Content
-    {
-        return new Content(
-            view: 'emails.admin.check-in-app-instruction',
-            with: [
-                'initialise_link' => $this->app_scheme . '://initialise?client_id=' . $this->client_id . '&auth_token=' . $this->auth_token . '&qr_prefix=' . $this->qr_prefix,
-                'user' => $this->user,
-            ]
-        );
+        $body_html = Blade::render($email_content->html_content, [
+            'user' => $this->user,
+            'initialise_link' => $initialise_link,
+            'email_signature' => $email_signature,
+        ]);
+
+        $full_html = Blade::render($layout->html_content, [
+            'title' => $email_content->subject,
+            'pre_header' => $email_content->pre_header,
+            'body_html_content' => $body_html,
+            'app_url' => config('app.url'),
+            'sub_title' => config('customer.contact_details.booking_website_company_name') . ' events',
+        ]);
+
+        return $this->subject($email_content->subject)
+                    ->html($full_html);
     }
 }

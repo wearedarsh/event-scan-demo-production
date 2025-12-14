@@ -3,40 +3,43 @@
 namespace App\Mail;
 
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Mail\Mailables\Content;
 use App\Models\Registration;
+use App\Models\EventHtmlEmailContent;
+use App\Models\EmailHtmlLayout;
 use App\Models\ClientSetting;
-use App\Models\EmailHtmlContent;
+use Illuminate\Support\Facades\Blade;
 
 class WelcomeEmailCustomer extends Mailable
 {
-    public EmailHtmlContent $email_html_content;
-
     public function __construct(
         public Registration $registration
-    ) {
-        $this->email_html_content = EmailHtmlContent::where('key_name', 'customer_welcome_email')->first();
-    }
+    ) {}
 
-    public function envelope(): Envelope
+    public function build(): static
     {
-        return new Envelope(
-            subject: 'Welcome to our events'
-        );
-    }
+        $email_content = EventHtmlEmailContent::where('event_id', $this->registration->event_id)
+            ->where('key_name', 'customer_welcome_email')
+            ->firstOrFail();
 
-    public function content(): Content
-    {
-        return new Content(
-            view: 'emails.customer.welcome',
-            with: [
-                'email_signature' => ClientSetting::getValue('email', 'transactional_signature_html'),
-                'registration' => $this->registration,
-                'title' => 'Thank you for registering',
-                'preheader' => 'We look forward to seeing you...',
-                'email_html_content' => $this->email_html_content,
-            ]
-        );
+        $layout = EmailHtmlLayout::where('key_name', 'customer')->firstOrFail();
+
+        $email_signature = ClientSetting::getValue('email', 'transactional_signature_html');
+
+        $body_html = Blade::render($email_content->html_content, [
+            'registration' => $this->registration,
+            'event' => $this->registration->event,
+            'email_signature' => $email_signature,
+        ]);
+
+        $full_html = Blade::render($layout->html_content, [
+            'title' => $email_content->subject,
+            'pre_header' => $email_content->pre_header,
+            'body_html_content' => $body_html,
+            'app_url' => config('app.url'),
+            'sub_title' => config('customer.contact_details.booking_website_company_name') . ' events',
+        ]);
+
+        return $this->subject($email_content->subject)
+                    ->html($full_html);
     }
 }
