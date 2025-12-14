@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\ClientSetting;
 
-class EmailSettingsSeeder extends Seeder
+class ClientSettingsSeeder extends Seeder
 {
     public function run(): void
     {
