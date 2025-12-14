@@ -62,7 +62,9 @@
 
                             <td class="px-4 py-3">
                                 @if($send->recipient->trashed())
-                                    <x-admin.status-pill status="neutral">Attendee deleted</x-admin.status-pill><br>
+                                    <span class="text-xs text-[var(--color-text)]/40">
+                                        Attendee deleted
+                                    </span><br>
                                 @endif
                                 {{ $send->recipient->title }}
                                 {{ $send->recipient->first_name }}
