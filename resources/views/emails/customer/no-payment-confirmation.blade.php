@@ -43,4 +43,4 @@
 <p style="margin-top: 30px;">
     If you have any questions, feel free to <a href="mailto:">email us</a>.
 </p>
-{!! email_signature !!}
+{!! $email_signature !!}
