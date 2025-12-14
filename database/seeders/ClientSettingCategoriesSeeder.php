@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\ClientSettingsCategory;
 
-class ClientSettingsCategoriesSeeder extends Seeder
+class ClientSettingCategoriesSeeder extends Seeder
 {
     public function run(): void
     {
