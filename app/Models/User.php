@@ -87,7 +87,7 @@ class User extends Authenticatable
         ];
     }
 
-    public function adminNotificationRecipients()
+    public static function adminNotificationRecipients()
     {
         return self::where('active', true)
             ->where('receives_admin_notifications', true)
