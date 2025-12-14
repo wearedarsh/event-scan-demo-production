@@ -51,8 +51,9 @@
 
             <!-- Recipient -->
             <x-admin.tile-card
-                title="Recipient details"
+                title="Recipient"
                 description="Who this email was sent to."
+                micro="Details"
                 icon="heroicon-o-user"
                 >
 
@@ -74,21 +75,18 @@
             <x-admin.tile-card
                 title="Delivery"
                 description="When and how this email was sent."
+                micro="details"
                 icon="heroicon-o-paper-airplane"
             >
+            <x-admin.status-pill status="neutral">{{ ucfirst($email_send->status) }}</x-admin.status-pill>
 
                 <p class="text-sm">
-                    <span class="font-semibold">Status:</span>
-                    {{ ucfirst($email_send->status) }}
-                </p>
-
-                <p class="text-sm">
-                    <span class="font-semibold">Sent at:</span>
+                    <span class="text-xs font-semibold">At </span>
                     {{ $email_send->sent_at?->format('d/m/Y H:i') ?? '—' }}
                 </p>
 
                 <p class="text-sm">
-                    <span class="font-semibold">Sent by:</span>
+                    <span class="text-xs font-semibold">By </span>
                     @if($email_send->broadcast?->sender)
                         {{ $email_send->broadcast->sender->first_name }} {{ $email_send->broadcast->sender->last_name }}
                     @else
