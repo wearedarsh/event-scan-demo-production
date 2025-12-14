@@ -83,21 +83,22 @@
                 :micro="['title' => 'Details']"
                 icon="heroicon-o-paper-airplane"
             >
-            <x-admin.status-pill status="neutral">{{ ucfirst($email_send->status) }}</x-admin.status-pill>
 
                 <p class="text-xs">
-                    <span class="text-xs font-semibold">At </span>
+                    <span class="text-xs font-semibold">Sent at:</span>
                     {{ $email_send->sent_at?->format('d/m/Y H:i') ?? '—' }}
                 </p>
 
-                <p class="text-xs">
-                    <span class="text-xs font-semibold">By </span>
+                <p>
+                    <span class="font-semibold">Sent by: </span>
                     @if($email_send->broadcast?->sender)
                         {{ $email_send->broadcast->sender->first_name }} {{ $email_send->broadcast->sender->last_name }}
                     @else
                         System
                     @endif
                 </p>
+
+                <x-admin.status-pill status="neutral">{{ ucfirst($email_send->status) }}</x-admin.status-pill>
 
             </x-admin.tile-card>
 
