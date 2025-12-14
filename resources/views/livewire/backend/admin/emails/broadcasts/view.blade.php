@@ -52,7 +52,7 @@
             <!-- Recipient -->
             <x-admin.action-card
                 title="Subject"
-                description="{{email_send->subject}}"
+                description="{{$email_send->subject}}"
                 :micro="['title' => 'Details']"
                 icon="heroicon-o-pencil-square"
                 >
