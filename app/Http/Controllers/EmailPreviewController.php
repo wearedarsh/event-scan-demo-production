@@ -8,7 +8,7 @@ class EmailPreviewController extends Controller
     public function show(EmailSend $email_send)
     {
         return view('livewire.backend.admin.emails.preview', [
-            'html' => $email_send->html_content
+            'html_content' => $email_send->html_content
         ]);
     }
 }
