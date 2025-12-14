@@ -41,9 +41,9 @@ class EmailService
 
             Log::info('Email service received request');
 
-            $subject = $mailable->subject;
-
             $html = $mailable->render();
+
+            $subject = $mailable->subject;
 
             if ($signature_html) {
                 $html .= '<br><br>' . $signature_html;
