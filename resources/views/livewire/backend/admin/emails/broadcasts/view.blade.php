@@ -53,11 +53,10 @@
             <x-admin.tile-card
                 title="Delivery"
                 description="When and how this email was sent."
-                :micro="['title' => 'Details']"
                 icon="heroicon-o-paper-airplane"
             >
 
-                <p>
+                <p  class="text-sm">
                     <span class="font-semibold">Subject: </span>
                     {{$email_send->subject}}
                 </p>
