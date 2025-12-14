@@ -55,7 +55,10 @@
                 description="When and how this email was sent."
                 icon="heroicon-o-paper-airplane"
             >
-
+                <p class="text-sm">
+                    <span class="semibold">Status: </span>
+                    <x-admin.status-pill status="neutral">{{ ucfirst($email_send->status) }}</x-admin.status-pill>
+                </p>
                 <p  class="text-sm">
                     <span class="font-semibold">Subject: </span>
                     {{$email_send->subject}}
@@ -75,7 +78,7 @@
                     @endif
                 </p>
 
-                <x-admin.status-pill status="neutral">{{ ucfirst($email_send->status) }}</x-admin.status-pill>
+                
 
             </x-admin.tile-card>
 
