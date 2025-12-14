@@ -542,22 +542,19 @@ class RegistrationForm extends Component
             event_id: $registration->event_id,
         );
 
-        //Send admin confirmation emails
-        $admin_emails = config('mail.admin_emails');
 
-        Log::info('Attempting to send admin No payment confirmation email to: ', $admin_emails);
+        Log::info('Attempting to send admin No payment confirmation email to team members');
 
         try {
 
-            foreach ($admin_emails as $email) {
-                $email = trim($email);
+            foreach (User::adminNotificationRecipients() as $user) {
 
                 $mailable = new NoPaymentConfirmationAdmin($registration, $registration_total);
 
                 EmailService::queueMailable(
                     mailable: $mailable,
-                    recipient_user: null,
-                    recipient_email: $email,
+                    recipient_user: $user,
+                    recipient_email: $user->email,
                     friendly_name: 'No payment confirmation admin',
                     type: 'transactional_admin',
                     event_id: $registration->event_id,
@@ -632,17 +629,15 @@ class RegistrationForm extends Component
             );
             Log::info('Bank transfer information email sent to customer');
 
-            $admin_emails = config('mail.admin_emails');
 
-            foreach ($admin_emails as $email) {
-                $email = trim($email);
+            foreach (User::adminNotificationRecipients() as $user) {
 
                 $mailable = new BankTransferConfirmationAdmin($registration, $this->registration_total);
 
                 EmailService::queueMailable(
                     mailable: $mailable,
-                    recipient_email: $email,
-                    recipient_user: null,
+                    recipient_email: $user->email,
+                    recipient_user: $user,
                     friendly_name: 'Bank transfer information admin',
                     type: 'transactional_admin',
                     event_id: $registration->event_id,

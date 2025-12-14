@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use Stripe\Webhook;
 use App\Models\Registration;
 use App\Models\EventPaymentMethod;
+use App\Models\User;
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Mail;
@@ -94,22 +95,19 @@ class StripeWebhookController extends Controller
 
                     Log::info('Customer welcome email sent successfully.');
 
-                    //Send admin confirmation emails
-                    $admin_emails = config('mail.admin_emails');
         
-                    Log::info('Attempting to send admin Stripe confirmation email to: ', $admin_emails);
+                    Log::info('Attempting to send admin Stripe confirmation email to team members');
 
                     try {
 
-                        foreach ($admin_emails as $email) {
-                            $email = trim($email);
+                        foreach (User::adminNotificationRecipients() as $user) {
 
                             $mailable = new StripeConfirmationAdmin($registration, $registration_total);
 
                             EmailService::queueMailable(
                                 mailable: $mailable,
-                                recipient_user: null,
-                                recipient_email: $email,
+                                recipient_user: $user,
+                                recipient_email: $user->email,
                                 friendly_name: 'Stripe confirmation admin',
                                 type: 'transactional_admin',
                                 event_id: $registration->event_id,
