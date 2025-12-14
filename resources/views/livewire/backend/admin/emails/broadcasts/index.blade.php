@@ -106,15 +106,18 @@
 
                         <!-- Recipient -->
                         <td class="px-4 py-3">
-                            @if($broadcast->isBulk())
                             <span class="text-xs  text-[var(--color-text)]/40">Sent to</span><br>
-                            {{ $broadcast->sends_count }} recipients
+                            @if($broadcast->isBulk())
+                                {{ $broadcast->sends_count }} recipients
                             @else
-                            @php $send = $broadcast->sends->first(); @endphp
-                            @if ($send->recipient)
-                            {{ $send->recipient->title }}
-                            {{ $send->recipient->first_name }}
-                            {{ $send->recipient->last_name }}
+                                @php $send = $broadcast->sends->first(); @endphp
+                                @if ($send->recipient)
+                                    <span class="text-xs">
+                                    {{ $send->recipient->title }}
+                                    {{ $send->recipient->first_name }}
+                                    {{ $send->recipient->last_name }}
+                                    </span
+                                @endif
                             <br>
                             <x-link-arrow size="xs" href="mailto:{{ $send->email_address }}">
                                 {{ $send->email_address }}
