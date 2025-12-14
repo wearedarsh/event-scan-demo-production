@@ -56,21 +56,21 @@
                 icon="heroicon-o-paper-airplane"
             >
                 <p class="text-sm">
-                    <span class="font-semibold text-[var(--color-text)]/70"">Status: </span>
+                    <span class="font-semibold">Status: </span>
                     <x-admin.status-pill status="neutral">{{ ucfirst($email_send->status) }}</x-admin.status-pill>
                 </p>
                 <p  class="text-sm">
-                    <span class="font-semibold text-[var(--color-text)]/70">Subject: </span>
+                    <span class="font-semibold">Subject: </span>
                     {{$email_send->subject}}
                 </p>
 
                 <p class="text-sm">
-                    <span class="font-semibold text-[var(--color-text)]/70"">Sent at: </span>
+                    <span class="font-semibold">Sent at: </span>
                     {{ $email_send->sent_at?->format('d/m/Y H:i') ?? '—' }}
                 </p>
 
                 <p class="text-sm">
-                    <span class="font-semibold text-[var(--color-text)]/70"">Sent by: </span>
+                    <span class="font-semibold">Sent by: </span>
                     @if($email_send->broadcast?->sender)
                         {{ $email_send->broadcast->sender->first_name }} {{ $email_send->broadcast->sender->last_name }}
                     @else
