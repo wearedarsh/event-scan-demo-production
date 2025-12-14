@@ -9,7 +9,7 @@
     class="w-full border rounded"
     sandbox
     style="min-height: 400px; width: 100%; border: 1px solid #ccc;"
-    src="{{ route('admin.emails.preview', $id) }}"
+    src="{{ route('admin.emails.preview', 'email_send' => $id) }}"
 ></iframe>
 
 @once
