@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->id();
 
             $table->foreignId('category_id')
-                ->constrained('client_settings_categories')
+                ->constrained('client_setting_categories')
                 ->cascadeOnDelete();
 
             $table->string('key_name'); // support_email, invoice_prefix
