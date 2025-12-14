@@ -38,7 +38,7 @@ class CheckInAppInstructionAdmin extends Mailable
             'pre_header' => $email_content->pre_header,
             'body_html_content' => $body_html,
             'app_url' => config('app.url'),
-            'sub_title' => config('customer.contact_details.booking_website_company_name') . ' events',
+            'sub_title' => '',
         ]);
 
         return $this->subject($email_content->subject)
