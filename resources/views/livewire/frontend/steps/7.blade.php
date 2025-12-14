@@ -23,7 +23,7 @@
     <div class="bg-[var(--color-bg)] rounded-lg p-4 text-[var(--color-secondary)]">
       <h3 class="text-lg font-semibold mb-1">Thank you for registering for this event</h3>
       <p class="text-sm text-[var(--color-text-light)]">
-        The {{config('customer.contact_details.booking_website_company_name')}} team has been notified of your application.
+        The //Company name here// team has been notified of your application.
       </p>
     </div>
 
