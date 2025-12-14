@@ -56,7 +56,7 @@
                 icon="heroicon-o-paper-airplane"
             >
                 <p class="text-sm">
-                    <span class="semibold">Status: </span>
+                    <span class="font-semibold">Status: </span>
                     <x-admin.status-pill status="neutral">{{ ucfirst($email_send->status) }}</x-admin.status-pill>
                 </p>
                 <p  class="text-sm">
