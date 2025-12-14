@@ -92,9 +92,23 @@
 
                 <tbody>
                     @forelse($broadcasts as $broadcast)
+                        @if($broadcast->isBulk())
+                            @php 
+                                $is_bulk = true;
+                                $send = $broadcast->sends->first(); 
+                            @endphp
+                        @else
+                            @php $is_bulk = false;
+                        @endif
+
                     <tr class="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
 
                         <td class="px-4 py-3">
+                            @if(!$is_bulk)
+                                <x-admin.status-pill status="neutral">{{ $send->status }}</x-admin.status-pill>
+                            @else
+                                <x-admin.status-pill status="neutral">Bulk</x-admin.status-pill>
+                            @endif
                             <span class="text-xs">
                                 {{ $broadcast->type->category->label }}
                             </span><br>
@@ -107,10 +121,9 @@
                         <!-- Recipient -->
                         <td class="px-4 py-3">
                             <span class="text-xs  text-[var(--color-text)]/40">Sent to</span><br>
-                            @if($broadcast->isBulk())
+                            @if($is_bulk)
                                 {{ $broadcast->sends_count }} recipients
                             @else
-                                @php $send = $broadcast->sends->first(); @endphp
                                 @if ($send->recipient)
                                     <span class="text-xs">
                                     {{ $send->recipient->title }}
