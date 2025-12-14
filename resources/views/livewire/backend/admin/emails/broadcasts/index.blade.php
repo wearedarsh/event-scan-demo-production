@@ -121,7 +121,7 @@
                                         {{ $send->email_address }}
                                     </x-link-arrow>
                                     @else
-                                    Team member
+                                        Team member
                                     @endif
 
                             @endif
