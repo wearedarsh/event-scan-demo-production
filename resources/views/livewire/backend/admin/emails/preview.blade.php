@@ -1,1 +1,1 @@
-{!! $email_send->html_content !!}
+{!! $html_content !!}
