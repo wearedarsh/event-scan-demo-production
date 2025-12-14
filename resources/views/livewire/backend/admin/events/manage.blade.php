@@ -179,7 +179,7 @@
             <!-- Feedback & Analytics -->
             <x-admin.tile-card
                 icon="heroicon-o-chart-bar"
-                title="Feedback & Analytics"
+                title="Feedback and analytics"
                 description="Manage feedback forms and access reporting tools."
             >
                 <x-link-arrow href="{{ route('admin.events.feedback-form.index', $event->id) }}">
