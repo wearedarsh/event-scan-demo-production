@@ -19,7 +19,7 @@ class ClientSetting extends Model
 
     public function category(): BelongsTo
     {
-        return $this->belongsTo(ClientSettingsCategory::class, 'category_id');
+        return $this->belongsTo(ClientSettingCategory::class, 'category_id');
     }
 
     /**

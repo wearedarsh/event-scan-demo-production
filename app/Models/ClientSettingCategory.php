@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class ClientSettingsCategory extends Model
+class ClientSettingCategory extends Model
 {
     protected $fillable = [
         'key_name',
