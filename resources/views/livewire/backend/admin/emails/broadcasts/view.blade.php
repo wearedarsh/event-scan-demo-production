@@ -84,12 +84,12 @@
                 icon="heroicon-o-paper-airplane"
             >
 
-                <p class="text-xs">
-                    <span class="text-xs font-semibold">Sent at:</span>
+                <p class="text-sm">
+                    <span class="font-semibold">Sent at: </span>
                     {{ $email_send->sent_at?->format('d/m/Y H:i') ?? '—' }}
                 </p>
 
-                <p>
+                <p class="text-sm">
                     <span class="font-semibold">Sent by: </span>
                     @if($email_send->broadcast?->sender)
                         {{ $email_send->broadcast->sender->first_name }} {{ $email_send->broadcast->sender->last_name }}
