@@ -98,23 +98,22 @@
                 <table class="email-content" cellpadding="0" cellspacing="0" width="100%">
                     <tr>
                         <td class="email-masthead">
-                            <a href="{{ config('app.url') }}" style="text-decoration: none; display: inline-block;">
-                                <img src="{{ config('app.url') }}/images/frontend/logo-white.png" alt="{{ config('customer.contact_details.booking_website_company_name') }} Logo">
-                                <p style="color:#fff; font-size:16px; margin-top:10px;">{{ config('customer.contact_details.booking_website_company_name') }} events</p>
+                            <a href="{{ $app_url }}" style="text-decoration: none; display: inline-block;">
+                                <img src="{{ $app_url }}/images/frontend/logo-white.png" alt="Logo">
+                                <p style="color:#fff; font-size:16px; margin-top:10px;"> {{ $sub_title ?? 'events' }}</p>
                             </a>
                         </td>
                     </tr>
 
                     <tr>
                         <td class="email-body">
-                            @yield('content')
+                            {!! $body_html_content !!}
                         </td>
                     </tr>
 
                     <tr>
                         <td class="email-footer">
-                            <p>© {{ now()->year }} {{ config('customer.contact_details.booking_website_company_name') }}. All rights reserved.</p>
-                            {!! config('customer.contact_details.booking_website_company_details') !!}
+                            <p>© {{ now()->year }}. All rights reserved.</p>
                         </td>
                     </tr>
                 </table>

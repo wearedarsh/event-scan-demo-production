@@ -1,7 +1,3 @@
-@extends('emails.layouts.main')
-
-@section('content')
-
 <h1>Dear {{ $user->first_name }},</h1>
 <p>Here are your instructions for installing and initialising the {{ config('check-in-app.friendly_name') }} app.<br><br>
 Simply follow these instructions on your phone.</p>

@@ -1,4 +1,3 @@
-@extends('emails.layouts.main')
 
 @section('content')
     <p>You recently requested to reset your password for your {{config('customer.custom_details.friendly_name')}} account. Click the button below to reset it:</p>
@@ -9,5 +8,5 @@
 
     <p>If you didn’t request a password reset, please ignore this email. This link will expire in 60 minutes.</p>
 
-    {!! config('customer.email.transactional_signature') !!}
+    {!! email_signature !!}
 @endsection

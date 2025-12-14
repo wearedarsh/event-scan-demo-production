@@ -1,6 +1,3 @@
-@extends('emails.layouts.main')
-
-@section('content')
 <h1>Dear {{ $registration->title }} {{ $registration->last_name }},</h1>
 
 <p>Thank you for your registration. No payment was due.</p>
@@ -46,5 +43,4 @@
 <p style="margin-top: 30px;">
     If you have any questions, feel free to <a href="mailto:{{config('customer.contact_details.booking_website_support_email)}}">email us</a>.
 </p>
-{!! config('customer.email.transactional_signature') !!}
-@endsection
+{!! email_signature !!}

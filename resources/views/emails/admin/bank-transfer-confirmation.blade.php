@@ -1,7 +1,3 @@
-@extends('emails.layouts.main')
-
-@section('content')
-
 <p>A registration has opted to pay by bank transfer</p>
 
 <p>Registration total: {{ $currency_symbol }}{{ number_format($registration_total, 2) }}<br>
@@ -39,5 +35,3 @@ Email: <a href="{{ $registration->user->email }}">{{ $registration->user->email 
 </table>
 
 <p>You can view this registration <a href="{{ route('admin.events.registrations.manage', ['event' => $registration->event_id, 'attendee' => $registration->id]) }}">here</a></p>
-
-@endsection

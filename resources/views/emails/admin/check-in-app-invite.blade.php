@@ -1,7 +1,3 @@
-@extends('emails.layouts.main')
-
-@section('content')
-
 <h1>Dear {{ $user->first_name }},</h1>
 <p>You have been invited to use the {{ config('check-in-app.friendly_name') }} app, please follow the instructions below on your phone.</p>
 <br><br>
@@ -26,6 +22,4 @@ You are required to set your password before logging in.</p>
 <p style="margin-top: 30px;">
     If you have any questions, feel free to <a href="mailto:{{config('customer.contact_details.booking_website_support_email}}">email us</a>.
 </p>
-{!! config('customer.email.transactional_signature') !!}
-
-@endsection
+{!! email_signature !!}

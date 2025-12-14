@@ -6,6 +6,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Mail\Mailables\Content;
 use App\Models\Registration;
+use App\Models\ClientSetting;
 
 class NoPaymentConfirmationAdmin extends Mailable
 {
@@ -26,6 +27,7 @@ class NoPaymentConfirmationAdmin extends Mailable
         return new Content(
             view: 'emails.admin.no-payment-confirmation',
             with: [
+                'email_signature' => ClientSetting::getValue('email', 'transactional_signature_html'),
                 'registration' => $this->registration,
                 'registration_total' => $this->registration_total,
                 'currency_symbol' => '€',

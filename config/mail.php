@@ -35,19 +35,6 @@ return [
     |
     */
 
-    'admin_emails' => explode(',', env('MAIL_ADMIN_EMAILS', 'no-reply@eventscan.co.uk')),
-
-    'transactional' => [
-        'address' => env('MAIL_TRANSACTIONAL_FROM', 'no-reply@eventscan.co.uk'),
-        'name' => env('MAIL_TRANSACTIONAL_NAME', 'Eventscan'),
-    ],
-
-    'customer' => [
-        'address' => env('MAIL_CUSTOMER_FROM', 'demo@eventscan.co.uk'),
-        'name' => env('MAIL_CUSTOMER_NAME', 'Eventscan'),
-    ],
-
-
     'mailers' => [
 
         'smtp' => [
@@ -66,17 +53,7 @@ return [
             'transport' => 'sendgrid',
             'api_key' => env('MAIL_API_KEY'),
         ],
-
-        'transactional' => [
-            'address' => env('MAIL_TRANSACTIONAL_FROM', 'admin@wearedarsh.com'),
-            'name' => env('MAIL_TRANSACTIONAL_NAME', 'Darsh'),
-        ],
-
-        'customer' => [
-            'address' => env('MAIL_CUSTOMER_FROM', 'admin@wearedarsh.com'),
-            'name' => env('MAIL_CUSTOMER_NAME', 'Darsh'),
-        ],
-
+        
         'ses' => [
             'transport' => 'ses',
         ],

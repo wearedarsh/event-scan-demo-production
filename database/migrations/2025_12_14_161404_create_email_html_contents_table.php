@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('email_html_contents', function (Blueprint $table) {
             $table->id();
             $table->string('key_name');
-            $table->string('title');
+            $table->string('label');
+            $table->string('subject');
+            $table->string('category');
             $table->mediumText('html_content');
             $table->timestamps();
             $table->softDeletes();

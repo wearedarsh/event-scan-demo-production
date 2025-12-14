@@ -6,6 +6,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Mail\Mailables\Content;
 use App\Models\Registration;
+use App\Models\ClientSetting;
 use App\Models\EmailHtmlContent;
 
 class WelcomeEmailCustomer extends Mailable
@@ -30,6 +31,7 @@ class WelcomeEmailCustomer extends Mailable
         return new Content(
             view: 'emails.customer.welcome',
             with: [
+                'email_signature' => ClientSetting::getValue('email', 'transactional_signature_html'),
                 'registration' => $this->registration,
                 'title' => 'Thank you for registering',
                 'preheader' => 'We look forward to seeing you...',

@@ -1,6 +1,3 @@
-@extends('emails.layouts.main')
-
-@section('content')
 <h1>There has been a new registration for  <strong>{{ $registration->event->title }}</strong></h1>
 
 <p>The attendee paid by Stripe and the payment was successful.</p>
@@ -47,5 +44,3 @@ Email: <a href="{{ $registration->user->email }}">{{ $registration->user->email 
 <p style="margin-top: 30px;">
     Login to check the booking <a href="{{ route('admin.events.attendees.manage', ['event' => $registration->event_id, 'attendee' => $registration->id]) }}">here</a>.
 </p>
-
-@endsection

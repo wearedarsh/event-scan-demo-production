@@ -1,0 +1,24 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void
+    {
+        Schema::create('client_settings_categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('key_name')->unique(); // api, booking, admin
+            $table->string('label');
+            $table->unsignedInteger('display_order')->default(0);
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('client_settings_categories');
+    }
+};
+

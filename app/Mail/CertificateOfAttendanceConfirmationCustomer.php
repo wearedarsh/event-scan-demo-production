@@ -3,11 +3,12 @@
 namespace App\Mail;
 
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Mail\Mailables\Content;
 use App\Models\User;
 use App\Models\FeedbackForm;
 use App\Models\Registration;
+use App\Models\EmailHtmlContent;
+use App\Models\EmailHtmlLayout;
+use Illuminate\Support\Facades\Blade;
 
 class CertificateOfAttendanceConfirmationCustomer extends Mailable
 {
@@ -16,14 +17,7 @@ class CertificateOfAttendanceConfirmationCustomer extends Mailable
         public FeedbackForm $feedback_form,
     ) {}
 
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: "Your certificate of attendance for {$this->feedback_form->event->title}"
-        );
-    }
-
-    public function content(): Content
+    public function build(): static
     {
         $registration = Registration::where('user_id', $this->user->id)
             ->where('event_id', $this->feedback_form->event_id)
@@ -32,17 +26,29 @@ class CertificateOfAttendanceConfirmationCustomer extends Mailable
 
         $url = route('customer.bookings.index', ['user' => $this->user->id]);
 
-        return new Content(
-            view: 'emails.customer.certificate-of-attendance-confirmation',
-            with: [
-                'user' => $this->user,
-                'evaluation_form_title' => $this->feedback_form->title,
-                'event_title' => $this->feedback_form->event->title,
-                'url' => $url,
-                'currency_symbol' => '€',
-                'title' => 'Thank you for completing your evaluation form',
-                'preheader' => 'You are now able to download your certificate of attendance...',
-            ]
-        );
+        $email_content = EmailHtmlContent::where('key_name', 'customer_certificate_confirmation')->firstOrFail();
+        $layout = EmailHtmlLayout::where('key_name', 'customer')->firstOrFail();
+
+        $body_html = Blade::render($email_content->html_content, [
+            'user' => $this->user,
+            'registration' => $registration,
+            'feedback_form' => $this->feedback_form,
+            'evaluation_form_title' => $this->feedback_form->title,
+            'event_title' => $this->feedback_form->event->title,
+            'url' => $url,
+            'currency_symbol' => '€',
+            'email_signature' => config('customer.transactional_email_signature'),
+        ]);
+
+        $full_html = Blade::render($layout->html_content, [
+            'title' => $email_content->subject,
+            'preheader' => 'You are now able to download your certificate of attendance...',
+            'body_html_content' => $body_html,
+            'app_url' => config('app.url'),
+            'sub_title' => config('customer.contact_details.booking_website_company_name') . ' events',
+        ]);
+
+        return $this->subject($email_content->subject)
+                    ->html($full_html);
     }
 }
