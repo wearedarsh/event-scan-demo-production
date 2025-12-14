@@ -27,6 +27,11 @@
 
         <div class="space-y-4">
 
+            
+
+            <!-- Other categories looped below -->
+            <div class="flex flex-wrap items-start gap-4">
+
             <!-- Top categories (stacked) -->
             <div class="space-y-4">
                 <x-admin.section-title title="Categories" />
@@ -37,9 +42,6 @@
                     All ({{ $counts['all'] }})
                 </x-admin.filter-pill>
             </div>
-
-            <!-- Other categories looped below -->
-            <div class="flex flex-wrap items-start gap-4">
                 @foreach ($categories as $category)
                 @php
                 $categoryTotal = $category->types->sum(fn($t) => $counts[$t->id] ?? 0);

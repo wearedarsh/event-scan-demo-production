@@ -8,6 +8,6 @@
     id="{{ $iframeId }}"
     class="w-full border rounded"
     sandbox
-    style="min-height: 500px; width: 100%; border: 1px solid #ccc;"
+    style="min-height: 600px; width: 100%; border: 1px solid #ccc;"
     src="{{ route('admin.emails.preview', ['email_send' => $id]) }}"
 ></iframe>
