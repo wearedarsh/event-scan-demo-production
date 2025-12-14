@@ -107,9 +107,9 @@
 
                         <td class="px-4 py-3">
                             @if(!$is_bulk)
-                                <x-admin.status-pill status="neutral">{{ $send->status }}</x-admin.status-pill>
+                                <x-admin.status-pill status="neutral">{{ $send->status }}</x-admin.status-pill><br>
                             @else
-                                <x-admin.status-pill status="neutral">Bulk</x-admin.status-pill>
+                                <x-admin.status-pill status="neutral">Bulk</x-admin.status-pill><br>
                             @endif
                             <span class="text-xs">
                                 {{ $broadcast->type->category->label }}
