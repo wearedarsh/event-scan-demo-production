@@ -109,8 +109,9 @@
             :description="$email_send->subject"
             icon="heroicon-o-pencil-square"
         >
-        <x-admin.section-title-icon title="Email content" icon="heroicon-o-computer-desktop" />
-            <div class="prose max-w-none">
+        
+            <div class="prose max-w-none" class="mt-2 space-y-4">
+                <x-admin.section-title-icon title="Email content" icon="heroicon-o-computer-desktop" />
                 <x-admin.email-preview-iframe :id="$email_send->id" />
             </div>
 
