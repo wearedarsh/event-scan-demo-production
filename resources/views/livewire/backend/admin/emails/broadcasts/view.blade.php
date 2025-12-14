@@ -112,7 +112,7 @@
             icon="heroicon-o-code"
         >
             <div class="prose max-w-none">
-                <iframe srcdoc="{{ route('admin.emails.preview', $email_send->id) }}" class="w-full border rounded" sandbox ></iframe>
+                <iframe src="{{ route('admin.emails.preview', $email_send->id) }}" class="w-full border rounded" sandbox ></iframe>
             </div>
 
         </x-admin.card>
