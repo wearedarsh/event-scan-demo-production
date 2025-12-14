@@ -184,6 +184,9 @@ Route::middleware(['auth', HasAdminAccess::class])
                 ->name('attendees.export');
         });
 
+        Route::get('emails/preview/{email_send}', [App\Http\Controllers\EmailPreviewController::class, 'show'])
+            ->name('emails.preview');
+
         Route::prefix('events/{event}/feedback-form')->name('events.feedback-form.')->group(function () {
             Route::get('/', App\Livewire\Backend\Admin\FeedbackForm\Index::class)->name('index');
             Route::get('/{feedback_form}/manage', App\Livewire\Backend\Admin\FeedbackForm\Manage::class)->name('manage');
