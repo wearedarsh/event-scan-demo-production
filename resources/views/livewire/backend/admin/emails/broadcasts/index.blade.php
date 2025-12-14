@@ -34,7 +34,7 @@
 
             <!-- Top categories (stacked) -->
             <div class="space-y-4">
-                <x-admin.section-title title=" " />
+                <x-admin.section-title title="All" />
 
                 <x-admin.filter-pill
                     :active="$filter === 'all'"
