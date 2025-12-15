@@ -16,11 +16,14 @@
     >
         <option value="">{{ $placeholder }}</option>
 
-        @foreach ($options as $value => $label)
-            <option value="{{ $value }}">
-                {{ $label }}
-            </option>
-        @endforeach
+        @if(count($options) > 0)
+            @foreach ($options as $value => $label)
+                <option value="{{ $value }}">{{ $label }}</option>
+            @endforeach
+        @else
+            {{ $slot }}
+        @endif
+
     </select>
 
     <x-heroicon-o-chevron-down

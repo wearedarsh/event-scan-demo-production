@@ -21,7 +21,7 @@ class Event extends Model
 
 {
     use SoftDeletes;
-    protected $fillable = ['id','event_id', 'title', 'location', 'date_start', 'date_end', 'event_attendee_limit', 'vat_percentage', 'full', 'provisional', 'active'];
+    protected $fillable = ['id','event_id', 'title', 'location', 'date_start', 'date_end', 'event_attendee_limit', 'vat_percentage', 'full', 'provisional', 'active', 'requires_approval'];
 
     protected $appends = ['formatted_start_date', 'formatted_end_date'];
     

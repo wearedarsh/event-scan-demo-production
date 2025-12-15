@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @include('livewire.frontend.partials.head')
+    @include('livewire.frontend.registration.partials.head')
 </head>
 
 <body class="text-center">
@@ -11,7 +11,7 @@
         @yield('content')
     </div>
 
-    @include('livewire.frontend.partials.footer')
+    @include('livewire.frontend.registration.partials.footer')
     @livewireScripts
 </body>
 

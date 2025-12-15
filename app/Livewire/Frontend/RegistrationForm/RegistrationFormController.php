@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Frontend;
+namespace App\Livewire\Frontend\RegistrationForm;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -33,7 +33,7 @@ use Stripe\Checkout\Session as StripeSession;
 
 use Illuminate\Support\Facades\Hash;
 
-class RegistrationForm extends Component
+class RegistrationFormController extends Component
 {
     protected EmailMarketingService $email_service;
     public Event $event;

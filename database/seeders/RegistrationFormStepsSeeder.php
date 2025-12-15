@@ -1,0 +1,75 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use App\Models\RegistrationForm;
+use App\Models\RegistrationFormStep;
+
+class RegistrationFormStepsSeeder extends Seeder
+{
+    public function run()
+    {
+        $form = RegistrationForm::where('key_name', 'default_registration_form')->first();
+        $steps = [
+            [
+                'registration_form_id' => $form->id,
+                'label' => 'Personal details',
+                'key_name' => 'personal',
+                'type' => 'dynamic',
+                'display_order' => 1,
+            ],
+            [
+                'registration_form_id' => $form->id,
+                'label' => 'Professional details',
+                'key_name' => 'professional',
+                'type' => 'dynamic',
+                'display_order' => 2,
+            ],
+            [
+                'registration_form_id' => $form->id,
+                'label' => 'Account creation',
+                'key_name' => 'account',
+                'type' => 'rigid',
+                'display_order' => 3,
+            ],
+            [
+                'registration_form_id' => $form->id,
+                'label' => 'GDPR & Marketing preferences',
+                'key_name' => 'gdpr',
+                'type' => 'rigid',
+                'display_order' => 4,
+            ],
+            [
+                'registration_form_id' => $form->id,
+                'label' => 'Select tickets',
+                'key_name' => 'tickets',
+                'type' => 'rigid',
+                'display_order' => 5,
+            ],
+            [
+                'registration_form_id' => $form->id,
+                'label' => 'Payment',
+                'key_name' => 'payment',
+                'type' => 'rigid',
+                'display_order' => 6,
+            ],
+            [
+                'registration_form_id' => $form->id,
+                'label' => 'Bank transfer information',
+                'key_name' => 'bank-transfer-information',
+                'type' => 'rigid',
+                'display_order' => 7,
+            ],
+            [
+                'registration_form_id' => $form->id,
+                'label' => 'Payment success',
+                'key_name' => 'payment-success',
+                'type' => 'rigid',
+                'display_order' => 8,
+            ],
+        ];
+
+        RegistrationFormStep::insert($steps);
+    }
+}

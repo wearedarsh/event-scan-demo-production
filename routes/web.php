@@ -15,7 +15,7 @@ use App\Http\Controllers\AveryLabelController;
 use App\Http\Controllers\AveryPersonnelLabelController;
 
 
-use App\Livewire\Frontend\RegistrationForm;
+use App\Livewire\Frontend\RegistrationForm\RegistrationForm;
 use App\Livewire\Frontend\CheckoutSuccess;
 use App\Livewire\Frontend\HomeController;
 use App\Livewire\Frontend\EventController;
