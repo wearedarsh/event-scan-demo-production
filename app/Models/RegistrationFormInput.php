@@ -22,6 +22,7 @@ class RegistrationFormInput extends Model
 
     protected $casts = [
         'required' => 'boolean',
+        'options' => 'array'
     ];
 
     public function step()

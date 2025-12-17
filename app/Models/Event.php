@@ -16,6 +16,7 @@ use App\Models\EventPaymentMethod;
 use App\Models\AttendeeGroup;
 use App\Models\Registration;
 use App\Models\FeedbackForm;
+use App\Models\RegistrationForm;
 
 class Event extends Model
 
@@ -33,6 +34,11 @@ class Event extends Model
     public function registrations()
     {
         return $this->hasMany(Registration::class)->where('payment_status', '!=', 'paid')->whereNotNull('event_payment_method_id')->where('is_complete', true);
+    }
+
+    public function registrationForm()
+    {
+        return $this->hasOne(RegistrationForm::class);
     }
 
     public function attendees()

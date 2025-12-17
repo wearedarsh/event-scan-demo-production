@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\RegistrationForm;
 
 use Illuminate\Database\Seeder;
 use App\Models\RegistrationFormStep;
@@ -31,7 +31,7 @@ class RegistrationFormInputsSeeder extends Seeder
                 'type' => 'select',
                 'required' => true,
                 'width' => '1/2',
-                'options' => 'Dr, Mr, Mrs, Ms, Miss, Professor',
+                'options' => ["Dr", "Mr", "Mrs", "Ms", "Miss", "Professor"],
                 'display_order' => 1
             ],
             [
@@ -98,7 +98,9 @@ class RegistrationFormInputsSeeder extends Seeder
             ],
         ];
 
-        RegistrationFormInput::insert($personal_inputs);
+        foreach ($personal_inputs as $personal_input){
+            RegistrationFormInput::create($personal_input);
+        }
 
         $professional_inputs = [
             [
@@ -135,7 +137,9 @@ class RegistrationFormInputsSeeder extends Seeder
             ],
         ];
 
-        RegistrationFormInput::insert($professional_inputs);
+        foreach ($professional_inputs as $professional_input){
+            RegistrationFormInput::create($professional_input);
+        }
 
     }
 }

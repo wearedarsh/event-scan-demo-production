@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\RegistrationForm;
 
 use Illuminate\Database\Seeder;
 use App\Models\RegistrationForm;

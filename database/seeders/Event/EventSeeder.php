@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Event;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -18,6 +18,7 @@ class EventSeeder extends Seeder
                 'id' => 1,
                 'title' => 'Medical Imaging Skills Workshop',
                 'location' => 'London, UK',
+                'registration_form_id' => 1,
                 'date_start' => '2026-06-12',
                 'date_end' => '2026-06-12',
                 'event_attendee_limit' => 80,
@@ -34,6 +35,7 @@ class EventSeeder extends Seeder
 
             [
                 'id' => 2,
+                'registration_form_id' => 1,
                 'title' => 'Acute Care Masterclass',
                 'location' => 'Paris, France',
                 'date_start' => '2026-11-05',
@@ -51,6 +53,7 @@ class EventSeeder extends Seeder
             ],
             [
                 'id' => 3,
+                'registration_form_id' => 1,
                 'title' => 'Clinical Procedures Intensive Course',
                 'location' => 'Milan, Italy',
                 'date_start' => '2026-04-03',

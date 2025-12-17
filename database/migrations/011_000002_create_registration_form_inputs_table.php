@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('type');
             $table->boolean('required')->default(false);
             $table->string('width')->nullable();
-            $table->text('options')->nullable();
+            $table->json('options')->nullable();
             $table->json('validation_rules')->nullable();
             $table->integer('display_order')->default(0);
             $table->string('relation_model')->nullable();

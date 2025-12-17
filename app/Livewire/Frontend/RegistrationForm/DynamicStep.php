@@ -11,24 +11,6 @@ class DynamicStep extends Component
 
     public array $state = [];
 
-    public function getSelectOptions($input): array
-    {
-        if ($input->relation_model) {
-            $model = "App\\Models\\{$input->relation_model}";
-            return $model::pluck('name', 'id')->toArray();
-        }
-
-        if ($input->options) {
-            return collect(explode(',', $input->options))
-                ->map(fn ($v) => trim($v))
-                ->mapWithKeys(fn ($v) => [$v => $v])
-                ->toArray();
-        }
-
-        return [];
-    }
-
-
     public function mount(RegistrationFormStep $step)
     {
         $this->step = $step;
@@ -36,6 +18,31 @@ class DynamicStep extends Component
         foreach ($step->inputs as $input) {
             $this->state[$input->key_name] = null;
         }
+    }
+
+    public function getSelectOptions($input): array
+    {
+        if ($input->relation_model) {
+            $model = "App\\Models\\{$input->relation_model}";
+            return $model::pluck('name', 'id')->toArray();
+        }
+
+        return collect($input->options ?? [])
+            ->mapWithKeys(fn ($v) => [$v => $v])
+            ->toArray();
+    }
+
+    public function submitStep()
+    {
+        $rules = [];
+        foreach ($this->step->inputs as $input) {
+            if ($input->required) {
+                $rules[$input->key_name] = ['required'];
+            }
+        }
+
+        $this->validate($rules);
+
     }
 
     public function render()

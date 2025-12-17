@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Event;
 
 use App\Models\EventOptInCheck;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -14,8 +14,6 @@ class EventOptInCheckSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        //DB::table('event_opt_in_checks')->truncate();
         $event_opt_in_checks = [
             [
                 'event_id' => 1, 
@@ -34,6 +32,5 @@ class EventOptInCheckSeeder extends Seeder
         ];
 
         EventOptInCheck::insert($event_opt_in_checks);
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

@@ -8,7 +8,7 @@ use App\Models\FeedbackFormStep;
 use App\Models\FeedbackFormGroup;
 use App\Models\FeedbackFormQuestion;
 
-class FeedbackFormSeeder extends Seeder
+class MasterFeedbackFormSeeder extends Seeder
 {
     public function run()
     {

@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained();
             $table->foreignId('event_id')->constrained();
             $table->foreignId('attendee_group_id')->nullable()->constrained();
-
             $table->string('title')->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
@@ -33,9 +32,7 @@ return new class extends Migration
             $table->string('mobile_number')->nullable();
             $table->string('email')->nullable();
             $table->mediumText('special_requirements')->nullable();
-
             $table->boolean('is_complete')->default(false);
-
             $table->foreignId('event_payment_method_id')->nullable()->constrained('event_payment_methods')->nullOnDelete();
             $table->decimal('registration_total', 10, 2)->nullable();
             $table->string('payment_status')->nullable();
