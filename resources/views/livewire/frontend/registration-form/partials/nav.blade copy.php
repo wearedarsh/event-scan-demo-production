@@ -8,7 +8,6 @@
       <img src="{{ asset('images/frontend/logo.png') }}" width="200" alt="{{ config('customer.contact_details.booking_website_company_name" />
     </a>
 
-    <!-- RIGHT SIDE: Events dropdown + auth buttons -->
     <div class="hidden md:flex items-center gap-8">
 
         <!-- ===== Auth Buttons ===== -->

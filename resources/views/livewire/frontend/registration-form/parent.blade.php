@@ -10,7 +10,11 @@
             :total="$total_steps"
         />
 
-        <p>I am the parent blade</p> 
+        @if($step_type === 'rigid')
+            <livewire:is :component="'frontend.registration-form.steps.'. $step_key_name" :key="$step_key_name" />
+        @else
+            <livewire:is component="frontend.registration-form.steps.dynamic" key="dynamic_step" />
+        @endif
 
     </main>
 </div>

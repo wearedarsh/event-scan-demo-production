@@ -13,10 +13,11 @@ class RegistrationFormController extends Component
 {
     public RegistrationForm $registration_form;
     public Event $event;
-    public int $step = 1;
     public int $total_steps;
+    public string $step_type = 'dynamic';
     public int $current_step = 1;
     public string $step_label = '';
+    public string $step_key_name = 'account';
     public ?int $spaces_remaining = 2;
     public $events;
     

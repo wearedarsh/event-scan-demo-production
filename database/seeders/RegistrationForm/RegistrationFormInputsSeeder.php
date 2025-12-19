@@ -30,7 +30,7 @@ class RegistrationFormInputsSeeder extends Seeder
                 'placeholder' => 'Please select...',
                 'type' => 'select',
                 'required' => true,
-                'width' => '1/2',
+                'width' => '1/3',
                 'options' => ["Dr", "Mr", "Mrs", "Ms", "Miss", "Professor"],
                 'display_order' => 1
             ],
@@ -41,7 +41,7 @@ class RegistrationFormInputsSeeder extends Seeder
                 'type' => 'text',
                 'placeholder' => '',
                 'required' => true,
-                'width' => '1/2',
+                'width' => '1/3',
                 'display_order' => 2
             ],
             [
@@ -51,7 +51,7 @@ class RegistrationFormInputsSeeder extends Seeder
                 'type' => 'text',
                 'placeholder' => '',
                 'required' => true,
-                'width' => '1/2',
+                'width' => '1/3',
                 'display_order' => 3
             ],
             [

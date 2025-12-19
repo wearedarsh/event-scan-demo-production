@@ -1,10 +1,4 @@
 <div class="space-y-4">
-
-    <x-registration.step-indicator
-        :current="3"
-        :total="6"
-        label="Account details" />
-
     <x-registration.message type="error" />
 
     <x-registration.form-step>
