@@ -18,6 +18,27 @@ class Dynamic extends Component
         }
     }
 
+    public function getInputOptions($input)
+    {
+        if ($input->relation_model) {
+            return app($input->relation_model)
+                ->query()
+                ->where('active', true)
+                ->orderBy('name')
+                ->get()
+                ->map(fn ($model) => [
+                    'value' => $model->id,
+                    'label' => $model->name,
+                ]);
+        }
+
+        return collect($input->options)
+            ->map(fn ($option) => [
+                'value' => $option['value'],
+                'label' => $option['label'],
+            ]);
+    }
+
     public function render()
     {
         return view('livewire.frontend.registration-form.steps.dynamic');

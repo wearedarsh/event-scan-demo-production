@@ -30,8 +30,15 @@ class RegistrationFormInputsSeeder extends Seeder
                 'placeholder' => 'Please select...',
                 'type' => 'select',
                 'required' => true,
-                'width' => '1/3',
-                'options' => ["Dr", "Mr", "Mrs", "Ms", "Miss", "Professor"],
+                'col_span' => '2',
+                'options' => [
+                    ['value' => 'dr', 'label' => 'Dr'],
+                    ['value' => 'mr', 'label' => 'Mr'],
+                    ['value' => 'mrs', 'label' => 'Mrs'],
+                    ['value' => 'ms', 'label' => 'Ms'],
+                    ['value' => 'miss', 'label' => 'Miss'],
+                    ['value' => 'professor', 'label' => 'Professor']
+                ],
                 'display_order' => 1
             ],
             [
@@ -41,7 +48,7 @@ class RegistrationFormInputsSeeder extends Seeder
                 'type' => 'text',
                 'placeholder' => '',
                 'required' => true,
-                'width' => '1/3',
+                'col_span' => '4',
                 'display_order' => 2
             ],
             [
@@ -51,7 +58,7 @@ class RegistrationFormInputsSeeder extends Seeder
                 'type' => 'text',
                 'placeholder' => '',
                 'required' => true,
-                'width' => '1/3',
+                'col_span' => '4',
                 'display_order' => 3
             ],
             [
@@ -61,7 +68,7 @@ class RegistrationFormInputsSeeder extends Seeder
                 'type' => 'text',
                 'placeholder' => '',
                 'required' => true,
-                'width' => 'full',
+                'col_span' => '12',
                 'display_order' => 4
             ],
             [
@@ -71,7 +78,7 @@ class RegistrationFormInputsSeeder extends Seeder
                 'type' => 'text',
                 'placeholder' => '',
                 'required' => true,
-                'width' => '1/2',
+                'col_span' => '6',
                 'display_order' => 5
             ],
             [
@@ -81,7 +88,7 @@ class RegistrationFormInputsSeeder extends Seeder
                 'type' => 'text',
                 'placeholder' => '',
                 'required' => true,
-                'width' => '1/2',
+                'col_span' => '6',
                 'display_order' => 6
             ],
             [
@@ -90,10 +97,9 @@ class RegistrationFormInputsSeeder extends Seeder
                 'label' => 'Country',
                 'type' => 'select',
                 'placeholder' => 'Please select...',
-                'options' => '',
                 'required' => true,
-                'relation_model' => 'Country',
-                'width' => 'full',
+                'relation_model' => 'App\Models\Country',
+                'col_span' => '6',
                 'display_order' => 7
             ],
         ];
@@ -110,7 +116,7 @@ class RegistrationFormInputsSeeder extends Seeder
                 'type' => 'text',
                 'placeholder' => 'Company name',
                 'required' => true,
-                'width' => 'full',
+                'col_span' => '12',
                 'display_order' => 1
             ],
             [
@@ -119,20 +125,20 @@ class RegistrationFormInputsSeeder extends Seeder
                 'label' => 'Profession',
                 'type' => 'select',
                 'placeholder' => 'Please select...',
-                'options' => '',
-                'relation_model' => 'AttendeeType',
+                'relation_model' => 'App\Models\AttendeeType',
                 'required' => true,
-                'width' => 'full',
+                'col_span' => '12',
                 'display_order' => 2
             ],
             [
                 'registration_form_step_id' => $professional_step->id,
                 'key_name' => 'attendee_type_other',
-                'label' => 'Other (if profession not listed)',
+                'label' => 'Other',
                 'type' => 'text',
+                'help' => 'Please enter your profession if it is not listed above',
                 'placeholder' => '',
                 'required' => false,
-                'width' => 'full',
+                'col_span' => '12',
                 'display_order' => 3
             ],
         ];

@@ -17,9 +17,10 @@ return new class extends Migration
             $table->string('key_name');
             $table->string('label');
             $table->string('placeholder')->nullable();
+            $table->string('help')->nullable();
             $table->string('type');
             $table->boolean('required')->default(false);
-            $table->string('width')->nullable();
+            $table->integer('col_span')->default(6);
             $table->json('options')->nullable();
             $table->json('validation_rules')->nullable();
             $table->integer('display_order')->default(0);
