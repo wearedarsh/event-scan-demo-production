@@ -1,7 +1,7 @@
 @props([
-    'current',
-    'total',
-    'label',
+    'current' => 0,
+    'total' => 0,
+    'label' => 'No label prop',
 ])
 
 <div class="bg-[var(--color-surface)] py-3 px-6 mt-6 rounded-lg shadow-sm flex items-center gap-4">

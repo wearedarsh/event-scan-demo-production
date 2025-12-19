@@ -13,5 +13,10 @@ class RegistrationForm extends Model
         return $this->hasMany(RegistrationFormStep::class)
             ->orderBy('display_order');
     }
+
+    public function stepCount()
+    {
+        
+    }
 }
 

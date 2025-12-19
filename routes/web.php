@@ -15,7 +15,7 @@ use App\Http\Controllers\AveryLabelController;
 use App\Http\Controllers\AveryPersonnelLabelController;
 
 
-use App\Livewire\Frontend\RegistrationForm\RegistrationForm;
+use App\Livewire\Frontend\RegistrationForm\RegistrationFormController;
 use App\Livewire\Frontend\CheckoutSuccess;
 use App\Livewire\Frontend\HomeController;
 use App\Livewire\Frontend\EventController;
@@ -289,7 +289,7 @@ Route::get('/check-in-app/support', [AppSupportController::class, 'show'])->name
 Route::get('/event/{event}', [EventController::class, 'show'])->name('event');
 Route::get('/event/download/{id}', [EventDownloadController::class, 'download'])
     ->name('event.download');
-Route::get('/registration/{event}', RegistrationForm::class)->name('registration');
+Route::get('/registration/{event}', RegistrationFormController::class)->name('registration');
 Route::get('/checkout/success/{registration_id}/{event}', CheckoutSuccess::class)->name('checkout.success');
 
 //Webhook

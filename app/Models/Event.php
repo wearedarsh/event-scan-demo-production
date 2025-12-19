@@ -38,7 +38,7 @@ class Event extends Model
 
     public function registrationForm()
     {
-        return $this->hasOne(RegistrationForm::class);
+        return $this->belongsTo(RegistrationForm::class);
     }
 
     public function attendees()

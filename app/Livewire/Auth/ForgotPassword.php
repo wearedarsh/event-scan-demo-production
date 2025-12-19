@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Auth;
 
-use App\Models\User;
 use Illuminate\Support\Facades\Password;
 use Livewire\Attributes\Layout;
 use Livewire\Component;

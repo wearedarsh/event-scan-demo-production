@@ -25,4 +25,4 @@
 <link rel="icon" type="image/svg+xml" href="{{ asset('images/frontend/favicon.svg') }}">
 
 @livewireStyles
-<title>{{ $this->page_title }}</title>
+<title>{{ $title }}</title>

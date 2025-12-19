@@ -1,6 +1,6 @@
 @props([
     'event',
-    'spacesRemaining' => null,
+    'spaces_remaining' => null,
 ])
 
 <div
@@ -28,8 +28,8 @@
             <p>{{ $event->location }}</p>
         @endif
 
-        @if(!is_null($spacesRemaining))
-            <p>{{ $spacesRemaining }} spaces remaining</p>
+        @if(!is_null($spaces_remaining))
+            <p>{{ $spaces_remaining }} {{ $this->spacesLabel }} remaining</p>
         @endif
     </div>
 </div>
