@@ -1,28 +1,9 @@
 <div class="space-y-4">
-
-    <x-registration.step-indicator
-        :current="5"
-        :total="6"
-        label="Select tickets"
-    />
-
     <x-registration.form-info>
         <strong>What’s included</strong><br>
         The registration fee includes access to all lectures, workshops, hands-on sessions, tea/coffee breaks, lunch,
         certificate of attendance and conference documentation.
     </x-registration.form-info>
-
-    <div
-        x-data="{ show: @entangle('cancelled') }"
-        x-show="show"
-        x-transition
-        x-init="setTimeout(() => show = false, 5000)"
-        class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-lg text-sm text-yellow-800"
-        role="alert"
-        aria-live="assertive"
-    >
-        Payment was cancelled. Please reselect your tickets to continue.
-    </div>
 
     <x-registration.form-step>
         @if($event->ticketGroups->isNotEmpty())
@@ -110,22 +91,7 @@
                 {{ $this->currency_symbol }}{{ $registration_total }}
             </h3>
         </div>
-
-        <div class="flex flex-row gap-4 pt-6">
-            <div class="flex-1">
-                <x-registration.navigate-button action="prevStep">
-                    Previous
-                </x-registration.navigate-button>
-            </div>
-            <div class="flex-1">
-                <x-registration.navigate-button action="nextStep">
-                    Next
-                </x-registration.navigate-button>
-            </div>
-        </div>
-
-        <x-registration.navigate-cancel-link action="clearLocalStorageAndRedirect" />
-
+        
     </x-registration.form-step>
 
 </div>

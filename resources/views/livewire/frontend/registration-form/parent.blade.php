@@ -10,11 +10,15 @@
             :total="$total_steps"
         />
 
-        @if($step_type === 'rigid')
-            <livewire:is :component="'frontend.registration-form.steps.'. $step_key_name" :key="$step_key_name" />
-        @else
-            <livewire:is component="frontend.registration-form.steps.dynamic" key="dynamic_step" />
-        @endif
+        <x-registration.message type="error" />
 
+        @if($step_type === 'rigid')
+            <livewire:is :component="'frontend.registration-form.steps.'. $step_key_name" :key="$step_key_name" :event="$event" />
+        @else
+            <livewire:is component="frontend.registration-form.steps.dynamic" :key="$step_key_name" :event="$event" :registration_form_step="$registration_form_step" />
+        @endif
+        <x-registration.navigation-buttons />
     </main>
+    <x-registration.scroll-to-top />
+    
 </div>

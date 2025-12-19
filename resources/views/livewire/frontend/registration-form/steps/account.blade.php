@@ -1,6 +1,4 @@
 <div class="space-y-4">
-    <x-registration.message type="error" />
-
     <x-registration.form-step>
 
         <div class="grid grid-cols-3 md:grid-cols-4 gap-4">
@@ -51,29 +49,6 @@
                 
             </div>
         </div>
-
-        
-
-        <div
-            x-data
-            x-on:stepChanged.window="window.scrollTo({ top: 0, behavior: 'smooth' })"
-            x-on:scrollToTop.window="window.scrollTo({ top: 0, behavior: 'smooth' })"></div>
-
-        <div class="flex flex-row gap-4 pt-6">
-            <div class="flex-1">
-                <x-registration.navigate-button action="prevStep">
-                    Previous
-                </x-registration.navigate-button>
-            </div>
-            <div class="flex-1">
-                <x-registration.navigate-button action="nextStep">
-                    Next
-                </x-registration.navigate-button>
-            </div>
-        </div>
-
-        <x-registration.navigate-cancel-link action="clearLocalStorageAndRedirect" />
-
     </x-registration.form-step>
 
 </div>

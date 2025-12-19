@@ -1,13 +1,5 @@
 <div class="space-y-4">
 
-    <x-registration.step-indicator
-        :current="4"
-        :total="6"
-        label="GDPR & Marketing Preferences"
-    />
-
-    <x-registration.message type="error" />
-
     <x-registration.form-step>
 
         @if($event->auto_email_opt_in)
@@ -33,27 +25,6 @@
                 />
             @endforeach
         @endif
-
-        <div
-            x-data
-            x-on:stepChanged.window="window.scrollTo({ top: 0, behavior: 'smooth' })"
-            x-on:scrollToTop.window="window.scrollTo({ top: 0, behavior: 'smooth' })"
-        ></div>
-
-        <div class="flex flex-row gap-4 pt-6">
-            <div class="flex-1">
-                <x-registration.navigate-button action="prevStep" outline>
-                    Previous
-                </x-registration.navigate-button>
-            </div>
-            <div class="flex-1">
-                <x-registration.navigate-button action="nextStep">
-                    Next
-                </x-registration.navigate-button>
-            </div>
-        </div>
-
-        <x-registration.navigate-cancel-link action="clearLocalStorageAndRedirect" />
 
     </x-registration.form-step>
 

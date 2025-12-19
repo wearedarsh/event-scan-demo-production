@@ -12,10 +12,7 @@ class EmailHtmlLayout extends Model
         'key_name',
         'html_content',
     ];
-
-    /**
-     * Get a layout by key
-     */
+    
     public static function getByKey(string $key_name): ?self
     {
         $cacheKey = "email_layout.{$key_name}";
