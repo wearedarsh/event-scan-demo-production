@@ -1,7 +1,7 @@
 <div class="space-y-4">
     <x-registration.form-step>
         @foreach($inputs as $input)
-            <x-registration.input-dynamic-field :input="$input" />
+            <x-registration.input-dynamic-field :input="$input" wire.model="form_data.{{$input->key_name}}" />
         @endforeach
     </x-registration.form-step>
 

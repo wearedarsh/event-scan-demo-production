@@ -22,29 +22,29 @@ $col_span_class = match ((int) $input->col_span) {
     <div class="grid grid-cols-12 gap-6">
 @endif
     <div class="col-span-12 {{ $col_span_class }} space-y-2">
-        <x-registration.input-label :for="$input->key_name">
-            {{ $input->label }}
-        </x-registration.input-label>
+            <x-registration.input-label :for="$input->key_name">
+                {{ $input->label }}
+            </x-registration.input-label>
         @if($input->type === 'text')
             <x-registration.input-text
                 :id="$input->key_name"
-                wire:model="{{$input->key_name}}"
+                wire:model="form_data.{{ $input->key_name }}"
             />
         @elseif($input->type === 'textarea')
             <x-registration.input-textarea
                 :id="$input->key_name"
-                wire:model="{{$input->key_name}}"
+                wire:model="form_data.{{ $input->key_name }}"
             />
         @elseif($input->type === 'checkbox')
             <x-registration.input-checkbox
                 id="{{$input->key_name.$input->id }}"
-                wire:model="{{$input->key_name.$input->id }}"
+                wire:model="form_data.{{ $input->key_name }}.{{$input->id}}"
                 label="{{ $input->label }}"
             />
         @elseif($input->type === 'select')
             <x-registration.input-select
-                wire:model="{{$input->key_name}}"
-                :placeholder="$input->place_holder"
+                wire:model="form_data.{{ $input->key_name }}"
+                :placeholder="$input->placeholder"
             >
                 @foreach($this->getInputOptions($input) as $option)
                     <option value="{{ $option['value'] }}">

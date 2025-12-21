@@ -50,10 +50,16 @@ class RegistrationFormController extends Component
 
     public function nextStep()
     {
-        if($this->current_step < $this->total_steps){
-            $this->current_step++;
-            $this->updateCurrentStepProperties();
+        if ($this->step_type === 'dynamic') {
+            $this->dispatch('validate-step');
         }
+        
+        // if($this->current_step < $this->total_steps){
+        //     $this->current_step++;
+        //     $this->updateCurrentStepProperties();
+        // }
+
+        
     }
 
     public function prevStep()
