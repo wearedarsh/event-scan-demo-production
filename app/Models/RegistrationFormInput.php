@@ -15,6 +15,9 @@ class RegistrationFormInput extends Model
         'required',
         'width',
         'options',
+        'row_start',
+        'row_end',
+        'col_span',
         'validation_rules',
         'display_order',
         'relation_model',
@@ -22,7 +25,9 @@ class RegistrationFormInput extends Model
 
     protected $casts = [
         'required' => 'boolean',
-        'options' => 'array'
+        'options' => 'array',
+        'validation_rules' => 'array',
+        'validation_messages' => 'array',
     ];
 
     public function step()

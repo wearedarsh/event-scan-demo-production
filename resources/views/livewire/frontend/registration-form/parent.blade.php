@@ -17,7 +17,9 @@
         @else
             <livewire:is component="frontend.registration-form.steps.dynamic" :key="$step_key_name" :event="$event" :registration_form_step="$registration_form_step" />
         @endif
-        <x-registration.navigation-buttons />
+
+    <x-registration.navigate-cancel-link action="clearLocalStorageAndRedirect" />
+    
     </main>
     <x-registration.scroll-to-top />
     

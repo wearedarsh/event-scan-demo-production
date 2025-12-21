@@ -22,6 +22,11 @@ class RegistrationFormController extends Component
     public string $step_key_name;
     public $spaces_remaining;
     public $events;
+
+    protected $listeners = [
+        'next-step' => 'nextStep',
+        'prev-step' => 'prevStep',
+    ];
     
     public function getSpacesLabelProperty(){
         return Str::plural('space', $this->spaces_remaining);

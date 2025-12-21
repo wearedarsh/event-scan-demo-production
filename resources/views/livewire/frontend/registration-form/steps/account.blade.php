@@ -36,9 +36,9 @@
                     id="password"
                     type="password"
                     wire:model="password" />
-                    <x-registration.input-help>
-                        Your password must be at least 8 characters long.
-                    </x-registration.input-help>
+                <x-registration.input-help>
+                    Your password must be at least 8 characters long.
+                </x-registration.input-help>
             </div>
             <div>
                 <x-registration.input-label for="password_confirmation">Password confirmation</x-registration.input-label>
@@ -46,9 +46,23 @@
                     id="password_confirmation"
                     type="password"
                     wire:model="password_confirmation" />
-                
+
             </div>
         </div>
+
     </x-registration.form-step>
+
+    <div class="flex flex-row gap-4 pt-6">
+        <div class="flex-1">
+            <x-registration.navigate-button wire:click="$dispatch('prev-step')">
+                Previous
+            </x-registration.navigate-button>
+        </div>
+        <div class="flex-1">
+            <x-registration.navigate-button wire:click="$dispatch('next-step')">
+                Next
+            </x-registration.navigate-button>
+        </div>
+    </div>
 
 </div>

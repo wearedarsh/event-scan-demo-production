@@ -23,8 +23,11 @@ return new class extends Migration
             $table->integer('col_span')->default(6);
             $table->json('options')->nullable();
             $table->json('validation_rules')->nullable();
+            $table->json('validation_messages')->nullable();
             $table->integer('display_order')->default(0);
             $table->string('relation_model')->nullable();
+            $table->boolean('row_start')->default(false);
+            $table->boolean('row_end')->default(false);
             $table->timestamps();
             $table->unique(['registration_form_step_id', 'key_name'], 'registration_form_steps_unique');
         });

@@ -43,9 +43,9 @@
                         <x-registration.form-info>
                             If you select bank transfer, your place will not be reserved until payment is confirmed.
                         </x-registration.form-info>
-                        <x-registration.button wire:click="bankTransferPayment">
+                        <x-registration.navigate-button wire:click="bankTransferPayment">
                             Pay by bank transfer
-                        </x-registration.button>
+                        </x-registration.navigate-button>
                     </div>
                 @endif
 
@@ -60,9 +60,9 @@
                         </x-registration.form-info>
 
                         <div class="flex justify-end mt-3">
-                            <x-registration.button wire:click="stripePayment">
+                            <x-registration.navigate-button wire:click="stripePayment">
                                 Pay by card
-                            </x-registration.button>
+                            </x-registration.navigate-button>
                         </div>
                     </div>
                 @endif
@@ -75,10 +75,12 @@
                 Please click below to confirm your registration and secure your place at this event.
             </x-registration.form-info>
 
-            <x-registration.button wire:click="noPaymentDue">
+            <x-registration.navigate-button wire:click="$dispatch('noPaymentDue')">
                 Complete booking
-            </x-registration.button>
+            </x-registration.navigate-button>
         @endif
+
+        
 
     </x-registration.form-step>
 
