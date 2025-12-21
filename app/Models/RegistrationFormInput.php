@@ -20,6 +20,7 @@ class RegistrationFormInput extends Model
         'col_span',
         'validation_rules',
         'display_order',
+        'custom',
         'relation_model',
     ];
 
@@ -28,11 +29,17 @@ class RegistrationFormInput extends Model
         'options' => 'array',
         'validation_rules' => 'array',
         'validation_messages' => 'array',
+        'custom' => 'boolean'
     ];
 
     public function step()
     {
         return $this->belongsTo(RegistrationFormStep::class);
+    }
+
+    public function customValues()
+    {
+        return $this->hasMany(RegistrationFormCustomFieldValue::class);
     }
 }
 

@@ -170,6 +170,7 @@ class RegistrationFormInputsSeeder extends Seeder
                     'string' => 'Custom field can only be text',
                     'max' => 'Custom field must be a maximum of 40 characters'
                 ],
+                'custom' => true,
                 'display_order' => 8
             ],
         ];

@@ -24,8 +24,7 @@ class RegistrationFormController extends Component
     public $events;
 
     protected $listeners = [
-        'next-step' => 'nextStep',
-        'prev-step' => 'prevStep',
+        'update-step' => 'updateStep'
     ];
     
     public function getSpacesLabelProperty(){
@@ -48,22 +47,14 @@ class RegistrationFormController extends Component
 
     }
 
-    public function move()
+    public function updateStep($direction)
     {
-        $this->current_step++;
-        $this->updateCurrentStepProperties();
-    }
-
-    public function nextStep()
-    {
-        if($this->dispatch('validate-step')){
-            //do something here
+        if($direction === 'forward'){
+            $this->current_step++;
+            
+        }else{
+            $this->current_step--;
         }
-    }
-
-    public function prevStep()
-    {
-        $this->current_step--;
         $this->updateCurrentStepProperties();
     }
 

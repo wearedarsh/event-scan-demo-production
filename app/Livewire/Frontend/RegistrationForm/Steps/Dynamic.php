@@ -13,6 +13,8 @@ class Dynamic extends Component
     public RegistrationFormStep $registration_form_step;
     public Registration $registration;
 
+    public $current_step;
+
     public $inputs;
     public $form_data = [];
     public array $rules = [];
@@ -53,11 +55,22 @@ class Dynamic extends Component
         return $this->messages;
     }
 
-    public function validateStep()
+    public function validateStep($direction)
     {
         $this->dispatch('scroll-to-top');
         $this->validate();
-        $this->dispatch('save-step');
+        $this->store();
+        $this->dispatch('update-step', $direction);
+    }
+
+    public function store()
+    {
+        $fields_to_update = [];
+        $custom_fields_to_update = [];
+
+        foreach($this->form_data as $key => $value){
+            $tommmy;
+        }
     }
 
     

@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('registration_form_custom_field_values', function (Blueprint $table) {
             $table->id();
             $table->foreignId('registration_id')->constrained()->onDelete('cascade');
-            $table->string('custom_field_key'); // links to input->custom_field_key
+            $table->foreignId('registration_form_input_id');
+            $table->foreign('registration_form_input_id', 'reg_input_fk')->references('id')->on('registration_form_inputs');
             $table->text('value')->nullable();
             $table->timestamps();
-            $table->unique(['registration_id', 'custom_field_key'], 'registration_form_custom_field_unique');
+            $table->unique(['registration_id', 'registration_form_input_id'], 'registration_form_custom_field_unique');
         });
     }
 

@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('relation_model')->nullable();
             $table->boolean('row_start')->default(false);
             $table->boolean('row_end')->default(false);
+            $table->boolean('custom')->default(false);
             $table->timestamps();
             $table->unique(['registration_form_step_id', 'key_name'], 'registration_form_steps_unique');
         });

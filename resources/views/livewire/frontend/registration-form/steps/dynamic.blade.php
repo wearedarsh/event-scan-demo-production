@@ -4,6 +4,7 @@
     @endif
 
     <x-registration.form-step>
+        {{ $current_step }}
         @foreach($inputs as $input)
             <x-registration.input-dynamic-field :input="$input" :key="$input->key_name" />
         @endforeach
@@ -11,12 +12,14 @@
 
     <div class="flex w-full flex-row gap-4 pt-6">
             <div class="flex-1">
-                <x-registration.navigate-button wire:click="$dispatch('prev-step')">
-                    Previous
-                </x-registration.navigate-button>
+                @if($current_step > 1)
+                    <x-registration.navigate-button wire:click="$dispatch('update-step', ['backward'])">
+                        Previous
+                    </x-registration.navigate-button>
+                @endif
             </div>
             <div class="flex-1">
-                <x-registration.navigate-button wire:click="$dispatch('next-step')">
+                <x-registration.navigate-button wire:click="$dispatch('validate-step', ['forward'])">
                     Next
                 </x-registration.navigate-button>
             </div>
