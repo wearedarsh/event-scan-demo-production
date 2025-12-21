@@ -10,8 +10,6 @@
             :total="$total_steps"
         />
 
-        <x-registration.message type="error" />
-
         @if($step_type === 'rigid')
             <livewire:is :component="'frontend.registration-form.steps.'. $step_key_name" :key="$step_key_name" :event="$event" />
         @else

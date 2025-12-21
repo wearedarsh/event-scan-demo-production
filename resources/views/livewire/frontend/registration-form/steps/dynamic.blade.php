@@ -1,7 +1,11 @@
 <div class="space-y-4">
+    @if($errors->any())
+        <x-registration.alert type="warning" :message="$errors->first()" />
+    @endif
+
     <x-registration.form-step>
         @foreach($inputs as $input)
-            <x-registration.input-dynamic-field :input="$input" wire.model="form_data.{{$input->key_name}}" />
+            <x-registration.input-dynamic-field :input="$input" :key="$input->key_name" />
         @endforeach
     </x-registration.form-step>
 

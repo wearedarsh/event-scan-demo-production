@@ -48,26 +48,23 @@ class RegistrationFormController extends Component
 
     }
 
+    public function move()
+    {
+        $this->current_step++;
+        $this->updateCurrentStepProperties();
+    }
+
     public function nextStep()
     {
-        if ($this->step_type === 'dynamic') {
-            $this->dispatch('validate-step');
+        if($this->dispatch('validate-step')){
+            //do something here
         }
-        
-        // if($this->current_step < $this->total_steps){
-        //     $this->current_step++;
-        //     $this->updateCurrentStepProperties();
-        // }
-
-        
     }
 
     public function prevStep()
     {
-        if($this->current_step > 1){
-            $this->current_step--;
-            $this->updateCurrentStepProperties();
-        }
+        $this->current_step--;
+        $this->updateCurrentStepProperties();
     }
 
     public function updateCurrentStepProperties(){
