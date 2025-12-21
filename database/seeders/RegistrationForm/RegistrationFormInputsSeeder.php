@@ -225,9 +225,11 @@ class RegistrationFormInputsSeeder extends Seeder
                 'row_start' => true,
                 'row_end' => true,
                 'col_span' => '12',
-                'validation_rules' => ['required_without:attendee_type_id', 'string', 'max:40'],
+                'validation_rules' => ['required_without:attendee_type_id', 'string', 'max:100'],
                 'validation_messages' => [
-                    'required_without' => 'Please enter your profession or select from the list'
+                    'required_without' => 'Please enter your profession or select from the list',
+                    'string' => 'Please enter only text for your profession',
+                    'max' => 'Profession must be a maximum of 100 characters'
                 ],
                 'display_order' => 3
             ],
