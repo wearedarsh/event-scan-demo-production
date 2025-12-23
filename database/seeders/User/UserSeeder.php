@@ -28,6 +28,17 @@ class UserSeeder extends Seeder
                 'receives_admin_notifications' => true,
                 'role_id' => 4,
                 'active' => true
+            ],
+            [
+                'id' => 2, 
+                'email' => 'testuser@eventscan.co.uk',
+                'password' => Hash::make('password123!'),
+                'first_name' => 'Tom', 
+                'last_name' => 'Harley', 
+                'is_admin' => false,
+                'receives_admin_notifications' => false,
+                'role_id' => null,
+                'active' => true
             ]
         ];
 

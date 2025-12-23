@@ -11,9 +11,9 @@
         />
 
         @if($step_type === 'rigid')
-            <livewire:is :component="'frontend.registration-form.steps.'. $step_key_name" :key="$step_key_name" :event="$event" :current_step="$current_step" />
+            <livewire:is :component="'frontend.registration-form.steps.'. $step_key_name" :key="$step_key_name" :event="$event" :current_step="$current_step" :registration="$registration" />
         @else
-            <livewire:is component="frontend.registration-form.steps.dynamic" :key="$step_key_name" :event="$event" :registration_form_step="$registration_form_step" :current_step="$current_step" />
+            <livewire:is component="frontend.registration-form.steps.dynamic" :key="$step_key_name" :event="$event" :registration_form_step="$registration_form_step" :current_step="$current_step" :registration="$registration" />
         @endif
 
     <x-registration.navigate-cancel-link action="clearLocalStorageAndRedirect" />

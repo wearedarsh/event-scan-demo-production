@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Event;
 use App\Models\RegistrationForm;
 use App\Models\RegistrationFormStep;
+use App\Models\Registration;
 use Livewire\Attributes\Layout;
 use Illuminate\Support\Str;
 
@@ -14,6 +15,7 @@ class RegistrationFormController extends Component
 {
     public RegistrationForm $registration_form;
     public RegistrationFormStep $registration_form_step;
+    public ?Registration $registration = null;
     public Event $event;
     public int $total_steps;
     public string $step_type;
@@ -34,6 +36,21 @@ class RegistrationFormController extends Component
     public function mount(Event $event)
     {
         $this->event = $event;
+        $registration_id = session('registration_id');
+
+        if($registration_id){
+            $this->registration = Registration::where(
+                'id', $registration_id)
+                ->where('event_id', $this->event->id)
+                ->first();
+        }else{
+            $this->registration = Registration::create([
+                'event_id' => $this->event->id
+            ]);
+
+            session(['registration_id' => $this->registration->id]);
+        }
+
         $this->spaces_remaining = $this->event->space_remaining;
         $this->registration_form = $this->event->registrationForm;
         $this->total_steps = $this->registration_form->steps->count();

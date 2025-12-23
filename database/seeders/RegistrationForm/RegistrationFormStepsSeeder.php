@@ -53,21 +53,7 @@ class RegistrationFormStepsSeeder extends Seeder
                 'key_name' => 'payment',
                 'type' => 'rigid',
                 'display_order' => 6,
-            ],
-            [
-                'registration_form_id' => $form->id,
-                'label' => 'Bank transfer information',
-                'key_name' => 'bank-transfer-information',
-                'type' => 'rigid',
-                'display_order' => 7,
-            ],
-            [
-                'registration_form_id' => $form->id,
-                'label' => 'Payment success',
-                'key_name' => 'payment-success',
-                'type' => 'rigid',
-                'display_order' => 8,
-            ],
+            ]
         ];
 
         RegistrationFormStep::insert($steps);

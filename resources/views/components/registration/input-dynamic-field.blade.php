@@ -43,7 +43,7 @@ $col_span_class = match ((int) $input->col_span) {
             />
         @elseif($input->type === 'select')
             <x-registration.input-select
-                wire:model="form_data.{{ $input->key_name }}"
+                wire:model.live="form_data.{{ $input->key_name }}"
                 :placeholder="$input->placeholder"
             >
                 @foreach($this->getInputOptions($input) as $option)

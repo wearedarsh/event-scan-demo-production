@@ -29,6 +29,11 @@ class Registration extends Model
         'registration_total', 'special_requirements', 'email_subscriber_id', 'attendee_group_id'
     ];
 
+    public function setAttendeeTypeIdAttribute($value)
+    {   
+        $this->attributes['attendee_type_id'] = $value === '' ? null : $value;
+    }
+
     public function feedbackFormSubmissions()
     {
         return $this->hasMany(FeedbackFormSubmission::class, 'user_id', 'user_id');
@@ -94,6 +99,11 @@ class Registration extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function customFieldValues()
+    {
+        return $this->hasMany(RegistrationFormCustomFieldValue::class);
     }
 
     public function AttendeeType()

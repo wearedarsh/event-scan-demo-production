@@ -14,9 +14,5 @@ class RegistrationForm extends Model
             ->orderBy('display_order');
     }
 
-    public function stepCount()
-    {
-        
-    }
 }
 

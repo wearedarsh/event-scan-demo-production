@@ -157,6 +157,40 @@ class RegistrationFormInputsSeeder extends Seeder
             ],
             [
                 'registration_form_step_id' => $personal_step->id,
+                'key_name' => 'mobile_country_code',
+                'label' => 'Country code',
+                'type' => 'text',
+                'placeholder' => 'eg +44',
+                'required' => true,
+                'row_start' => true,
+                'row_end' => false,
+                'col_span' => '3',
+                'validation_rules' => ['required', 'regex:/^\+?[0-9]{1,5}$/'],
+                'validation_messages' => [
+                    'required' => 'Please enter your country code',
+                    'regex' => 'Please use the correct format for your country code eg +44'
+                ],
+                'help' => 'Please enter your country code using the international format eg +44',
+                'display_order' => 8
+            ],
+            [
+                'registration_form_step_id' => $personal_step->id,
+                'key_name' => 'mobile_number',
+                'label' => 'Mobile',
+                'type' => 'text',
+                'placeholder' => '',
+                'required' => true,
+                'row_start' => false,
+                'row_end' => true,
+                'col_span' => '6',
+                'validation_rules' => ['required'],
+                'validation_messages' => [
+                    'required' => 'Please enter your mobile number',
+                ],
+                'display_order' => 9
+            ],
+            [
+                'registration_form_step_id' => $personal_step->id,
                 'key_name' => 'custom_field_one',
                 'label' => 'My custom field',
                 'type' => 'text',
@@ -171,7 +205,7 @@ class RegistrationFormInputsSeeder extends Seeder
                     'max' => 'Custom field must be a maximum of 40 characters'
                 ],
                 'custom' => true,
-                'display_order' => 8
+                'display_order' => 10
             ],
         ];
 
@@ -192,7 +226,7 @@ class RegistrationFormInputsSeeder extends Seeder
                 'col_span' => '12',
                 'validation_rules' => ['required', 'string', 'max:40'],
                 'validation_messages' => [
-                    'required' => 'Please enter your Currently held position',
+                    'required' => 'Please enter your currently held position',
                     'string' => 'Currently held position can only be text',
                     'max' => 'Currently held position must be a maximum of 40 characters'
                 ],
@@ -209,8 +243,9 @@ class RegistrationFormInputsSeeder extends Seeder
                 'row_start' => true,
                 'row_end' => true,
                 'col_span' => '12',
-                'validation_rules' => ['nullable', 'exists:attendee_types:id'],
+                'validation_rules' => ['required_without:form_data.attendee_type_other', 'exists:attendee_types,id'],
                 'validation_messages' => [
+                    'required_without' => 'Please select a profession or enter one below',
                     'exists' => 'Please select a valid profession'
                 ],
                 'display_order' => 2
@@ -226,9 +261,8 @@ class RegistrationFormInputsSeeder extends Seeder
                 'row_start' => true,
                 'row_end' => true,
                 'col_span' => '12',
-                'validation_rules' => ['required_without:attendee_type_id', 'string', 'max:100'],
+                'validation_rules' => ['nullable', 'string', 'max:100'],
                 'validation_messages' => [
-                    'required_without' => 'Please enter your profession or select from the list',
                     'string' => 'Please enter only text for your profession',
                     'max' => 'Profession must be a maximum of 100 characters'
                 ],
