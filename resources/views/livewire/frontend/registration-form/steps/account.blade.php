@@ -1,5 +1,7 @@
 <div class="space-y-6">
-
+    @if($errors->any())
+        <x-registration.alert type="warning" :message="$errors->first()" />
+    @endif
     @auth
         <x-registration.form-step>
             <div class="flex items-center justify-between gap-4">
@@ -10,7 +12,7 @@
                 </div>
 
                 <div class="w-32 text-right">
-                    <x-registration.button action="logout">
+                    <x-registration.button variant="secondary" wire:click="logout">
                         Logout
                     </x-registration.button>
                 </div>
@@ -19,18 +21,17 @@
     @endauth
 
     @guest
-        {{-- Top toggle links --}}
         <div class="flex gap-4 text-sm px-6">
-            <x-registration.account-link
-                wire:click="$set('mode', 'login')"
-                :active="$mode === 'login'">
-                Sign in
-            </x-registration.account-link>
-
             <x-registration.account-link
                 wire:click="$set('mode', 'register')"
                 :active="$mode === 'register'">
                 Create account
+            </x-registration.account-link>
+            
+            <x-registration.account-link
+                wire:click="$set('mode', 'login')"
+                :active="$mode === 'login'">
+                Sign in
             </x-registration.account-link>
         </div>
 
@@ -99,9 +100,9 @@
             </div>
 
             @if($mode !== 'register')
-                <div class="text-right">
+                <div class="text-left">
                     <div class="w-32">
-                        <x-registration.button action="login">
+                        <x-registration.button wire:click="login">
                             Login
                         </x-registration.button>
                     </div>

@@ -10,13 +10,17 @@ use Illuminate\Support\Facades\Hash;
 
 class Account extends Component
 {
+    protected $listeners = [
+        'validate-step' => 'validateStep'
+    ];
+
     public Registration $registration;
 
     public string $email = '';
     public string $password = '';
     public string $password_confirmation = '';
 
-    public string $mode = 'login';
+    public string $mode = 'register';
 
     protected function rules()
     {
@@ -33,6 +37,36 @@ class Account extends Component
         }
     }
 
+    public function updateUserModel()
+    {
+        if(Auth::check()){
+            Auth::user()->update([
+                'title' => $this->registration->title,
+                'first_name' => ucfirst(strtolower($this->registration->first_name)),
+                'last_name' => ucfirst(strtolower($this->registration->last_name)),
+            ]);
+        }
+    }
+
+    public function validateStep($direction){
+        $this->dispatch('scroll-to-top');
+        
+        if(!Auth::user()){
+            $this->validate();
+            if($this->mode === 'register'){
+                $this->register();
+            }else{
+                $this->login();
+            }
+        }
+
+        $this->updateUserModel();
+
+        if(!$this->getErrorBag()->any()){
+            $this->dispatch('update-step', $direction);
+        }
+    }
+
 
     public function logout()
     {
@@ -43,17 +77,9 @@ class Account extends Component
         $this->reset(['email', 'password', 'password_confirmation']);
 
         $this->mode = 'login';
-    }
 
-    public function submit()
-    {
-        $this->validate();
+        $this->addError('error', 'You are now logged out, please sign in or create an account');
 
-        if ($this->mode === 'login') {
-            $this->login();
-        } else {
-            $this->register();
-        }
     }
 
     public function attachUser($user){
@@ -62,18 +88,43 @@ class Account extends Component
         ]);
     }
 
+    public function removeUser(){
+        $this->registration->update([
+            'user_id' => null
+        ]);
+    }
+
+
+
     public function login()
     {
+        $this->dispatch('scroll-to-top');
+
+         $this->resetErrorBag();
+        if(!$this->email){
+            $this->addError('error', 'Please enter a valid email address');
+            return;
+        }
+
+        if(!$this->password){
+            $this->addError('error', 'Please enter a password');
+            return;
+        }
+
         if (!Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
-            $this->addError('email', 'Invalid credentials');
+            $this->addError('error', 'Invalid credentials');
             return;
         }
 
         $this->attachUser(Auth::user());
+
     }
 
     public function register()
     {
+
+        $this->resetErrorBag();
+
         $existing = User::where('email', $this->email)->first();
 
         if ($existing) {
@@ -82,6 +133,9 @@ class Account extends Component
         }
 
         $user = User::create([
+            'first_name' => $this->registration->first_name,
+            'last_name' => $this->registration->last_name,
+            'title' => $this->registration->title,
             'email' => $this->email,
             'password' => Hash::make($this->password),
             'active' => false,

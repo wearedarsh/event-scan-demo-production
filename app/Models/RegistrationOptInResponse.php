@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class RegistrationOptInResponse extends Model
 {
 
-    protected $fillable = ['event_opt_in_check_id', 'registration_id', 'user_id', 'value'];
+    protected $fillable = ['event_opt_in_check_id', 'registration_id', 'value'];
 
     public function eventOptInCheck(){
         return $this->belongsTo(EventOptInCheck::class);
@@ -18,10 +18,6 @@ class RegistrationOptInResponse extends Model
 
     public function registration(){
         return $this->belongsTo(Registration::class);
-    }
-
-    Public function user(){
-        return $this->belongsTo(User::class);
     }
 
 }

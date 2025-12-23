@@ -28,14 +28,15 @@
 
     </x-registration.form-step>
 
-    <div class="flex flex-row gap-4 pt-6">
+    <div class="flex gap-4 pt-6">
         <div class="flex-1">
-            <x-registration.navigate-button wire:click="$dispatch('prev-step')">
+            <x-registration.navigate-button wire:click="$dispatch('validate-step', ['backward'])">
                 Previous
             </x-registration.navigate-button>
         </div>
+
         <div class="flex-1">
-            <x-registration.navigate-button wire:click="$dispatch('next-step')">
+            <x-registration.navigate-button wire:click="$dispatch('validate-step', ['forward'])">
                 Next
             </x-registration.navigate-button>
         </div>

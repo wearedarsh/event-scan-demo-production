@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('event_opt_in_check_id')->constrained()->onDelete('cascade');
             $table->foreignId('registration_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->boolean('value')->default(false);
             $table->timestamps();
         });
