@@ -1,5 +1,4 @@
 <div class="space-y-4">
-
     <x-registration.form-step>
 
         <div class="bg-[var(--color-bg)] rounded-lg p-4 text-[var(--color-secondary)]">

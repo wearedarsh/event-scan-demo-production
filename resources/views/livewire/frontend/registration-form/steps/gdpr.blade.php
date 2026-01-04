@@ -1,5 +1,4 @@
 <div class="space-y-4">
-
     <x-registration.form-step>
 
         @if($event->auto_email_opt_in)

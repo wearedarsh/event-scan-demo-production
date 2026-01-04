@@ -13,8 +13,6 @@ class AttendeeTypesSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::table('attendee_types')->truncate();
 
         $attendee_types = [
             ['name' => 'Academic / Researcher',         'active' => true, 'key_name' => 'academic_researcher'],
@@ -25,12 +23,9 @@ class AttendeeTypesSeeder extends Seeder
             ['name' => 'Consultant / Advisor',          'active' => true, 'key_name' => 'consultant_advisor'],
             ['name' => 'Business / Management',         'active' => true, 'key_name' => 'business_management'],
             ['name' => 'Technical / Engineering',       'active' => true, 'key_name' => 'technical_engineering'],
-            ['name' => 'Media / Communications',        'active' => true, 'key_name' => 'media_communications'],
-            ['name' => 'Other',                         'active' => true, 'key_name' => 'other'],
+            ['name' => 'Media / Communications',        'active' => true, 'key_name' => 'media_communications']
         ];
 
         AttendeeType::insert($attendee_types);
-
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

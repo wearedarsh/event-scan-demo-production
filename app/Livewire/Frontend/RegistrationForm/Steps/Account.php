@@ -84,7 +84,8 @@ class Account extends Component
 
     public function attachUser($user){
         $this->registration->update([
-            'user_id' => $user->id
+            'user_id' => $user->id,
+            'email' => $user->email
         ]);
     }
 

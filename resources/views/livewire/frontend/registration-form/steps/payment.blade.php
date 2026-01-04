@@ -1,5 +1,4 @@
 <div class="space-y-4">
-
     <x-registration.form-step>
 
         @if($this->registration)
@@ -16,12 +15,13 @@
                 <h3 class="text-lg font-semibold text-[var(--color-secondary)]">Your ticket selections</h3>
             </div>
 
-            @foreach($this->registration->registrationTickets as $ticket)
+            @foreach ($this->registration->registrationTickets as $ticket)
                 <div class="flex justify-between bg-[var(--color-bg)] rounded-lg px-4 py-2 text-sm text-[var(--color-text)]">
                     <span>{{ $ticket->quantity }} × {{ $ticket->ticket->name }}</span>
-                    <span>{{ $currency_symbol }}{{ number_format($ticket->quantity * $ticket->price_at_purchase) }}</span>
+                    <span>{{ $currency_symbol }}{{ $ticket->line_total }}</span>
                 </div>
             @endforeach
+
 
             <div class="flex justify-between bg-[var(--color-bg)] rounded-lg px-4 py-2 mt-2 font-semibold text-[var(--color-secondary)]">
                 <span>Booking total</span>
@@ -36,7 +36,6 @@
             </div>
 
             @if($this->event->eventPaymentMethods)
-                <!-- Bank Transfer -->
                 @if($this->event->eventPaymentMethods->contains('payment_method','bank_transfer'))
                     <div class="bg-[var(--color-accent-light)] border-l-4 border-[var(--color-accent)] p-4 rounded-lg text-sm text-[var(--color-secondary)]">
                         <strong>Bank Transfer</strong><br>
@@ -49,15 +48,11 @@
                     </div>
                 @endif
 
-                <!-- Stripe -->
                 @if($this->event->eventPaymentMethods->contains('payment_method','stripe') && $this->registration->country->stripe_enabled)
                     <div class="bg-[var(--color-accent-light)] border-l-4 border-[var(--color-accent)] p-4 rounded-lg text-sm text-[var(--color-secondary)]">
                         <strong>Secure card payment</strong><br>
                         <img src="{{ asset('images/frontend/stripe.png') }}" alt="Stripe Secure Payments" class="mt-2 h-8 inline-block opacity-80">
-
-                        <x-registration.form-info>
-                            Payment will be processed securely via Stripe.
-                        </x-registration.form-info>
+                        <p>Payment will be processed securely via Stripe.</p>
 
                         <div class="flex justify-end mt-3">
                             <x-registration.navigate-button wire:click="stripePayment">
@@ -68,7 +63,6 @@
                 @endif
             @endif
 
-        <!-- No payment required -->
         @else
             <x-registration.form-info>
                 <strong>No payment is due</strong><br>
@@ -79,9 +73,15 @@
                 Complete booking
             </x-registration.navigate-button>
         @endif
-
-        
-
     </x-registration.form-step>
+
+    <div class="grid grid-cols-4">
+        <div class="col-span-2">
+            <x-registration.navigate-button
+                wire:click="$dispatch('validate-step', ['backward'])">
+                Previous
+            </x-registration.navigate-button>
+        </div>
+    </div>
 
 </div>

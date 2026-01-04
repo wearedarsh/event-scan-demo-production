@@ -19,7 +19,7 @@ class RegistrationFormController extends Component
     public Event $event;
     public int $total_steps;
     public string $step_type;
-    public int $current_step = 1;
+    public int $current_step = 5;
     public string $step_label;
     public string $step_key_name;
     public $spaces_remaining;

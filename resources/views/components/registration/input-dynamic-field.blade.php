@@ -29,11 +29,13 @@ $col_span_class = match ((int) $input->col_span) {
             <x-registration.input-text
                 :id="$input->key_name"
                 wire:model="form_data.{{ $input->key_name }}"
+                :placeholder="$input->placeholder"
             />
         @elseif($input->type === 'textarea')
             <x-registration.input-textarea
                 :id="$input->key_name"
                 wire:model="form_data.{{ $input->key_name }}"
+                :placeholder="$input->placeholder"
             />
         @elseif($input->type === 'checkbox')
             <x-registration.input-checkbox

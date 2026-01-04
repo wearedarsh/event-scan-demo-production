@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('registration_id')->constrained();
             $table->foreignID('ticket_id')->constrained();
             $table->integer('quantity');
-            $table->decimal('price_at_purchase');
+            $table->integer('price_cents_at_purchase');
             $table->timestamps();
             $table->softDeletes();
         });

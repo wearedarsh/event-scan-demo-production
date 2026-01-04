@@ -34,12 +34,12 @@ class RegistrationFormInputsSeeder extends Seeder
                 'row_end' => false,
                 'col_span' => '3',
                 'options' => [
-                    ['value' => 'dr', 'label' => 'Dr'],
-                    ['value' => 'mr', 'label' => 'Mr'],
-                    ['value' => 'mrs', 'label' => 'Mrs'],
-                    ['value' => 'ms', 'label' => 'Ms'],
-                    ['value' => 'miss', 'label' => 'Miss'],
-                    ['value' => 'professor', 'label' => 'Professor']
+                    ['value' => 'Dr', 'label' => 'Dr'],
+                    ['value' => 'Mr', 'label' => 'Mr'],
+                    ['value' => 'Mrs', 'label' => 'Mrs'],
+                    ['value' => 'Ms', 'label' => 'Ms'],
+                    ['value' => 'Miss', 'label' => 'Miss'],
+                    ['value' => 'Professor', 'label' => 'Professor']
                 ],
                 'validation_rules' => ['required'],
                 'validation_messages' => [
@@ -164,13 +164,12 @@ class RegistrationFormInputsSeeder extends Seeder
                 'required' => true,
                 'row_start' => true,
                 'row_end' => false,
-                'col_span' => '3',
+                'col_span' => '4',
                 'validation_rules' => ['required', 'regex:/^\+?[0-9]{1,5}$/'],
                 'validation_messages' => [
                     'required' => 'Please enter your country code',
                     'regex' => 'Please use the correct format for your country code eg +44'
                 ],
-                'help' => 'Please enter your country code using the international format eg +44',
                 'display_order' => 8
             ],
             [
@@ -182,7 +181,7 @@ class RegistrationFormInputsSeeder extends Seeder
                 'required' => true,
                 'row_start' => false,
                 'row_end' => true,
-                'col_span' => '6',
+                'col_span' => '8',
                 'validation_rules' => ['required'],
                 'validation_messages' => [
                     'required' => 'Please enter your mobile number',
@@ -219,7 +218,7 @@ class RegistrationFormInputsSeeder extends Seeder
                 'key_name' => 'currently_held_position',
                 'label' => 'Currently held position',
                 'type' => 'text',
-                'placeholder' => 'Company name',
+                'placeholder' => 'eg. Director',
                 'required' => true,
                 'row_start' => true,
                 'row_end' => true,

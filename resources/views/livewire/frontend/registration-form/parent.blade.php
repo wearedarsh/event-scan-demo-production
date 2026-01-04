@@ -1,4 +1,5 @@
 <div>
+    <div id="step-top"></div>
     <main class="max-w-3xl mx-auto px-6 pt-16 space-y-6">
         <x-registration.event-info
             :event="$event"
@@ -19,6 +20,6 @@
     <x-registration.navigate-cancel-link action="clearLocalStorageAndRedirect" />
     
     </main>
-    <x-registration.scroll-to-top />
+    <x-registration.scroll-to-top target="step-top" />
     
 </div>

@@ -1,10 +1,12 @@
 @props([
     'id' => null,
-    'rows' => 4, {{-- default rows --}}
+    'rows' => 4,
+    'placeholder' => ''
 ])
 
 <textarea
     @if($id) id="{{ $id }}" @endif
+    placeholder="{{ $placeholder }}"
     rows="{{ $rows }}"
     {{ $attributes->merge([
         'class' => 'w-full border border-[var(--color-border)] rounded-lg px-3 py-3

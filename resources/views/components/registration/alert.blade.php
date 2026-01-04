@@ -20,7 +20,7 @@
         class="rounded-lg border-l-4 py-4"
         style="border-left-color: {{ $color }}; background-color: color-mix(in srgb, {{ $color }} 10%, transparent);"
     >
-        <div class="text-sm md:text-m font-medium" style="color: {{ $color }}">
+        <div class="text-sm md:text-m font-medium text-center" style="color: {{ $color }}">
             {{ $message ?? $slot }}
         </div>
     </div>

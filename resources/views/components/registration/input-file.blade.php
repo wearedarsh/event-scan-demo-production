@@ -1,35 +1,67 @@
 @props([
-    'id' => null,
-    'model' => null,
+    'id',
+    'model',
     'accept' => '.pdf,.doc,.docx,.jpg,.jpeg,.png',
     'label' => 'Select file',
+    'filename' => null,
+    'download_copy' => null,
 ])
 
-<div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-    <input
-        type="file"
-        @if($id) id="{{ $id }}" @endif
-        @if($model) wire:model="{{ $model }}" @endif
-        class="hidden"
-        accept="{{ $accept }}"
-    />
+@php
+    $highlightColor = 'var(--color-warning)';
+@endphp
 
-    <label
-        @if($id) for="{{ $id }}" @endif
-        class="cursor-pointer inline-flex items-center justify-center bg-[var(--color-primary)] text-[var(--color-surface)] font-semibold px-4 py-2 rounded-lg mt-2 transition hover:opacity-90"
-    >
-        {{ $label }}
-    </label>
+<div
+    class="rounded-lg p-3 space-y-2 transition"
+    style="background-color: color-mix(in srgb, {{ $highlightColor }} 10%, transparent);"
+>
 
-    @if($model)
-        <span class="text-[var(--color-text-light)] text-sm truncate max-w-[200px]">
-            @if(isset($$model)) {{-- e.g. registration_uploads[groupId] --}}
-                {{ $$model->getClientOriginalName() }}
-            @endif
-        </span>
+    @if($download_copy)
+        <p class="text-sm font-medium text-[var(--color-text)]">
+            {{ $download_copy }}
+        </p>
+    @endif
 
-        <div wire:loading wire:target="{{ $model }}" class="text-xs text-[var(--color-text-light)]">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+
+        <input
+            type="file"
+            id="{{ $id }}"
+            wire:model="{{ $model }}"
+            accept="{{ $accept }}"
+            class="hidden"
+        />
+
+        <label
+            for="{{ $id }}"
+            class="cursor-pointer inline-flex items-center justify-center
+                   bg-[var(--color-primary)]
+                   text-[var(--color-surface)]
+                   font-semibold px-4 py-2 rounded-lg
+                   transition hover:opacity-90"
+        >
+            {{ $label }}
+        </label>
+
+        @if($filename)
+            <span class="text-sm font-medium truncate max-w-[220px]"
+                  style="color: {{ $highlightColor }}">
+                {{ $filename }}
+            </span>
+        @else
+            <span class="text-[var(--color-text-light)] text-sm">
+                No file selected
+            </span>
+        @endif
+
+        <div
+            wire:loading
+            wire:target="{{ $model }}"
+            class="text-xs text-[var(--color-text-light)]"
+        >
             Uploading…
         </div>
-    @endif
+
+    </div>
+
 </div>
