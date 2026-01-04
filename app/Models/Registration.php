@@ -26,7 +26,7 @@ class Registration extends Model
         'town', 'postcode', 'country_id', 'attendee_type_id', 'attendee_type_other',
         'mobile_country_code', 'mobile_number', 'email', 'is_complete', 'event_payment_method_id', 
         'payment_status','paid_at', 'currently_held_position', 'payment_intent_id', 'booking_reference',
-        'registration_total', 'special_requirements', 'email_subscriber_id', 'attendee_group_id'
+        'total_cents', 'special_requirements', 'email_subscriber_id', 'attendee_group_id'
     ];
 
     public function setAttendeeTypeIdAttribute($value)
@@ -114,6 +114,18 @@ class Registration extends Model
     public function registrationTickets()
     {
         return $this->hasMany(RegistrationTicket::class);
+    }
+
+    public function getTotalCentsAttribute(): int
+    {
+        return $this->registrationTickets->sum(function ($ticket) {
+            return $ticket->line_total_cents;
+        });
+    }
+
+    public function getTotalAttribute(): string
+    {
+        return number_format($this->total_cents / 100, 2);
     }
 
     public function registrationDocuments()
