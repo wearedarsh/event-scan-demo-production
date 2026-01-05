@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('email_list_id')->nullable();
             $table->string('email_opt_in_description')->nullable();
             $table->boolean('provisional')->default(false);
-            $table->boolean('registration_type')->default('paid');
+            $table->string('registration_type')->default('paid');
             $table->timestamps();
             $table->softDeletes();
         });
