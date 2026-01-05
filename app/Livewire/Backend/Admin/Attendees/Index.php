@@ -43,7 +43,7 @@ class Index extends Component
     {
 
         $this->event = $event;
-        $this->currency_symbol = config('app.currency_symbol', '€');
+        $this->currency_symbol = client_setting('general.currency_symbol');
         $this->groups = $this->event->attendeeGroups()->orderBy('title')->get();
 
         foreach ($this->event->attendees as $a) {

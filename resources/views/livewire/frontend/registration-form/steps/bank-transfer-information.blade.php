@@ -18,13 +18,13 @@
 
             <div class="mt-4 space-y-1 text-[var(--color-text)]">
                 <p><strong>Amount:</strong> {{ $currency_symbol }}{{ $this->registration_total }}</p>
-                {!! config('customer.financial.bank_transfer_details') !!}
+                {!! client_setting('payment.bank_transfer_detail_html') !!}
             </div>
         </div>
 
         <x-registration.form-info>
             If you do not receive an email, please check your spam or junk folder.
-            We recommend adding <strong>{{ config('mail.customer.address') }}</strong> to your contacts to ensure future emails and updates are received.
+            We recommend adding <strong>{{ client_setting('email.customer.from_address') }}</strong> to your contacts to ensure future emails and updates are received.
             <br><br>
             Please note that your place will not be reserved until payment has been received and confirmed by our office.
         </x-registration.form-info>

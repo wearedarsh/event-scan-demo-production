@@ -39,12 +39,12 @@ class Index extends Component
 
     public function render()
     {
-        $this->client_id = config('services.eventscan.client_id');
+        $this->client_id = config('api.client_id');
         $this->auth_token = config('check-in-app.auth_token');
-        $this->app_scheme = config('check-in-app.scheme');
-        $this->apple_url = config('check-in-app.apple_download_url');
-        $this->android_url = config('check-in-app.android_download_url');
-        $this->qr_prefix = config('check-in-app.qr_prefix');
+        $this->app_scheme = client_setting('check_in_app.scheme');
+        $this->apple_url = client_setting('check_in_app.apple_download_url');
+        $this->android_url = client_setting('check_in_app.android_download_url');
+        $this->qr_prefix = client_setting('check_in_app.qr_prefix');
 
         $this->initialise_url = $this->app_scheme . '://initialise?client_id=' . $this->client_id . '&auth_token=' . $this->auth_token . '&qr_prefix=' . $this->qr_prefix;
         return view('livewire.backend.admin.app.index');

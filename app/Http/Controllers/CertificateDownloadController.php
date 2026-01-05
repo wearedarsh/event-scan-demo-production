@@ -34,7 +34,7 @@ class CertificateDownloadController extends Controller
         $start_date = ordinal($start->day) . ' ' . $start->format('F Y');
         $end_date   = ordinal($end->day)   . ' ' . $end->format('F Y');
 
-        $friendly_name = config('customer.custom_details.friendly_name');
+        $friendly_name = client_setting('general.customer_friendly_name');
         $bodyText = sprintf(
             '%s in %s, %s - %s
 organized by the ' . $friendly_name .  ' has been accredited by the European Accreditation Council for Continuing Medical Education (EACCME®) for a maximum of 12.5 European CME credits (ECMEC®s).',

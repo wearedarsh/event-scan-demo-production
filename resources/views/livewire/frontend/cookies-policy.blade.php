@@ -27,7 +27,7 @@
     <p class="text-[var(--color-text-light)]">Last updated: <strong>November 2025</strong></p>
 
     <p>
-      This Cookies Policy explains how <strong>{{ config('customer.contact_details.booking_website_company_name') }}</strong> 
+      This Cookies Policy explains how <strong>{{ client_setting('check_in_app.friendly_name') }}</strong> 
       (“we”, “our”, or “us”) uses cookies and similar technologies on our website 
       (<a href="https://eventscan.co.uk" class="text-[var(--color-accent)] hover:text-[var(--color-text-muted)] transition">eventscan.co.uk</a>).
     </p>
@@ -81,8 +81,8 @@
       For questions about this policy or how we use cookies, please contact:
     </p>
     <p>
-      <strong>{{ config('customer.contact_details.booking_website_company_name') }}</strong>
-      Email: <strong>{{ config('customer.contact_details.booking_website_support_email') }}</strong>
+      <strong>{{ client_setting('check_in_app.friendly_name') }}</strong>
+      Email: <strong>{{ client_setting('general.support_email') }}</strong>
     </p>
 
   </div>

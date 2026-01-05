@@ -1,39 +1,22 @@
 <footer id="footer" class="bg-[var(--color-surface)] border-t border-[var(--color-border)] mt-20">
   <div class="max-w-6xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-10 text-[var(--color-text-light)] text-sm">
 
-    <!-- Secure Payments -->
     <div class="text-center md:text-left">
-      <h3 class="text-[var(--color-text)] font-semibold mb-3">Secure Payments</h3>
-      <img src="{{ asset('images/frontend/stripe.png') }}" alt="Stripe Secure Payments" class="h-8 inline-block opacity-80">
-      <p class="mt-3 leading-relaxed">
-        We accept all major cards via Stripe - your transactions are encrypted and protected.
-      </p>
+      {!! client_setting('booking.footer.left_column_html') !!}
     </div>
 
-    <!-- Questions / Contact -->
     <div class="text-center">
-      <h3 class="text-[var(--color-text)] font-semibold mb-3">Questions?</h3>
-      <p class="mb-2">Feel free to get in touch with any queries.</p>
-      <p>
-        <a href="mailto:{{ config('mail.contact_details.booking_website_support_email') }}" class="text-[var(--color-primary)] hover:underline font-medium">
-          {{config('customer.contact_details.booking_website_support_email')}}
-        </a>
-      </p>
-      <p class="mt-1 opacity-80">{{config('customer.contact_details.booking_website_phone_number')}}</p>
+      {!! client_setting('booking.footer.middle_column_html') !!}
     </div>
 
-    <!-- Company Info -->
     <div class="text-center md:text-right">
-      <h3 class="text-[var(--color-text)] font-semibold mb-3">Company</h3>
-      <p>{{config('customer.contact_details.booking_website_company_name')}}</p>
-      {!! config('customer.contact_details.booking_website_company_details') !!}
+      {!! client_setting('booking.footer.right_column_html') !!}
     </div>
   </div>
 
-  <!-- ===== Copyright Strip ===== -->
   <div class="border-t border-[var(--color-border)] bg-[var(--color-bg)]">
     <div class="max-w-6xl mx-auto px-6 py-4 flex flex-col md:flex-row items-center justify-between text-xs text-[var(--color-text-light)]">
-      <p class="mb-2 md:mb-0">© {{config('customer.contact_details.booking_website_company_name')}} {{ date('Y') }}. All rights reserved.</p>
+      <p class="mb-2 md:mb-0">&copy; {!! client_setting('general.customer_friendly_name') !!} {{ date('Y') }}. All rights reserved.</p>
 
       <div class="flex items-center gap-6">
         <a href="{{route('privacy-policy')}}" class="hover:text-[var(--color-primary)] transition">Privacy Policy</a>

@@ -1,5 +1,5 @@
 <h1>Dear {{ $user->first_name }},</h1>
-<p>Here are your instructions for installing and initialising the {{ config('check-in-app.friendly_name') }} app.<br><br>
+<p>Here are your instructions for installing and initialising the {{ client_setting('check_in_app.friendly_name') }} app.<br><br>
 Simply follow these instructions on your phone.</p>
 <br><br>
 
@@ -7,8 +7,8 @@ Simply follow these instructions on your phone.</p>
 <p>Select your phone type below.<br><br>
 You will be directed to the appropriate app store where you can download and install the app on your phone.</p>
 <p style="margin: 30px 0;">
-    <a href="{{ config('check-in-app.apple_download_url') }}" style="padding: 12px 24px; background-color: #0D4261; color: #fff; text-decoration: none; border-radius: 6px; margin-right:20px;">Apple</a> 
-    <a href="{{ config('check-in-app.android_download_url') }}" style="padding: 12px 24px; background-color: #0D4261; color: #fff; text-decoration: none; border-radius: 6px;">Android</a>
+    <a href="{{ client_setting('check_in_app.apple_download_url') }}" style="padding: 12px 24px; background-color: #0D4261; color: #fff; text-decoration: none; border-radius: 6px; margin-right:20px;">Apple</a> 
+    <a href="{{ client_setting('check_in_app.android_download_url') }}" style="padding: 12px 24px; background-color: #0D4261; color: #fff; text-decoration: none; border-radius: 6px;">Android</a>
 </p>
 <br><br>
 <p><strong>Step 2. Initialise the app</strong></p>

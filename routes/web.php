@@ -294,7 +294,7 @@ Route::get('/checkout/success/{registration_id}/{event}', CheckoutSuccess::class
 
 //Webhook
 Route::post('/webhooks/stripe', StripeWebhookController::class);
-Route::post('/webhooks/sendgrid/' . config('services.eventscan.webhook_uuid'), SendGridWebhookController::class);
+Route::post('/webhooks/sendgrid/' . config('api.webhook_uuid'), SendGridWebhookController::class);
 Route::post('/webhooks/checkin/', CheckInWebhookController::class)->middleware('throttle:300,1');
 
 Route::prefix('/webhooks/app/')->group(function () {
@@ -310,7 +310,7 @@ Route::get('/webhooks/stripe', function () {
     abort(404);
 });
 
-Route::get('/webhooks/sendgrid/' . config('services.eventscan.webhook_uuid'), function () {
+Route::get('/webhooks/sendgrid/' . config('api.webhook_uuid'), function () {
     abort(404);
 });
 

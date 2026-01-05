@@ -1,7 +1,7 @@
 <div class="w-full flex flex-col items-center">
   
   <!-- Logo -->
-  <img src="{{ asset('images/frontend/logo-white.png') }}" alt="{{config('customer.contact_details.booking_website_company_name')}} Logo" class="mx-auto w-56 mb-6">
+  <img src="{{ asset('images/frontend/logo-white.png') }}" alt="{{client_setting('general.customer_friendly_name')}} Logo" class="mx-auto w-56 mb-6">
 
   <!-- Reset Password Card -->
   <div class="w-full max-w-md bg-[var(--color-surface)] rounded-2xl p-8 text-center shadow-lg border border-[var(--color-border)]">
@@ -11,7 +11,6 @@
       Enter your email address and we’ll send you a link to reset your password.
     </p>
 
-    {{-- Error + Status Messages --}}
     @if($errors->any())
       <div class="mb-4 p-3 rounded-lg bg-[var(--color-accent-light)] text-[var(--color-text)] text-sm text-left">
         {{ $errors->first() }}
@@ -63,6 +62,6 @@
 
   <!-- Footer -->
   <footer class="mt-8 text-xs text-[var(--color-accent)] text-center">
-    &copy; {{ date('Y') }} {{config('customer.contact_details.booking_website_company_name')}}. All rights reserved.
+    &copy; {{ date('Y') }} {{client_setting('general.customer_friendly_name')}}. All rights reserved.
   </footer>
 </div>

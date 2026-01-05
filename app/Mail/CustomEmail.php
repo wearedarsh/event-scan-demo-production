@@ -22,7 +22,7 @@ class CustomEmail extends Mailable
     {
 
         return new Envelope(
-            from: new Address(config('mail.customer.address'), config('mail.customer.name')),
+            from: new Address(client_setting('mail.customer.from_address'), config('mail.customer.from_name')),
             subject: $this->custom_subject,
         );
     }

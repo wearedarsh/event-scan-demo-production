@@ -19,7 +19,7 @@ class EventController extends Controller
 
         $event_content = EventContent::where('event_id', $event->id)->orderBy('order', 'asc')->get();
         $event_display_tickets = $event->frontendTickets;
-        $currency_symbol = $currency_symbol = config('app.currency_symbol', '€');
+        $currency_symbol = $currency_symbol = client_setting('general.currency_symbol');
 
         $testimonials = Testimonial::where('active', true)->orderBy('display_order', 'asc')->get();
 
@@ -31,7 +31,7 @@ class EventController extends Controller
             'testimonials' => $testimonials,
             'page_title' => $event->title,
             'og_title' => $event->title,
-            'og_description' => 'Event organised by the ' . config('customer.custom_details.friendly_name'),
+            'og_description' => 'Event organised by the ' . client_setting('general.customer_friendly_name'),
             'event_content' => $event_content,
             'event_display_tickets' => $event_display_tickets,
             'currency_symbol' => $currency_symbol,

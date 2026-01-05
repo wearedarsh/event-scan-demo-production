@@ -314,7 +314,7 @@ class RegistrationFormControllerOld extends Component
         $this->step = intval(request()->query('step', 1));
         $this->cancelled = request()->query('cancelled') === 'true';
 
-        $this->currency_symbol = config('app.currency_symbol', '€');
+        $this->currency_symbol = client_setting('general.currency_symbol');
 
         foreach ($this->event->eventOptInChecks as $check) {
             $this->opt_in_responses[$check->id] = false;
@@ -496,7 +496,7 @@ class RegistrationFormControllerOld extends Component
     {
         $registration = Registration::find($this->registration_id);
         $randomNumber = random_int(1000, 9999);
-        $booking_reference = config('customer.invoice_prefix') . '-' . $randomNumber . '-' . $registration->user_id . '-' . $registration->event_id;
+        $booking_reference = client_setting('general.invoice_prefix') . '-' . $randomNumber . '-' . $registration->user_id . '-' . $registration->event_id;
         
         $registration_total = 0;
         $registration->update([

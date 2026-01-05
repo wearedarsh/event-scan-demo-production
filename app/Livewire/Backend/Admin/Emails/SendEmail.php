@@ -127,7 +127,7 @@ class SendEmail extends Component
 		$ticket = $this->event->tickets()->where('id', $id)->first();
 		if (!$ticket) return null;
 
-		$currency = config('app.currency_symbol', '€');
+		$currency = client_setting('general.currency_symbol');
 		return "{$currency}{$ticket->price} {$ticket->name} ticket";
 	}
 

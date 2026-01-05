@@ -1,5 +1,5 @@
 <h1>Dear {{ $user->first_name }},</h1>
-<p>You have been invited to use the {{ config('check-in-app.friendly_name') }} app, please follow the instructions below on your phone.</p>
+<p>You have been invited to use the {{ client_setting('check_in_app.friendly_name') }} app, please follow the instructions below on your phone.</p>
 <br><br>
 
 <p><strong>Step 1. Set your account password</strong></p>

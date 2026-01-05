@@ -10,8 +10,8 @@ class AttendeeBadgeExportController extends Controller
 {
     public function export(Event $event)
     {
-        $client_id = config('services.eventscan.client_id');
-        $qr_prefix = config('check-in-app.qr_prefix');
+        $client_id = config('api.client_id');
+        $qr_prefix = client_setting('check_in_app.qr_prefix');
 
         $attendees = $event->attendees()->with(['user', 'country', 'attendeeGroup'])->get();
 

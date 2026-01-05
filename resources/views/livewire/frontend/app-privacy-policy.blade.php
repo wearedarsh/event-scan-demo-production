@@ -13,7 +13,7 @@
 
   <!-- Content -->
   <div class="relative max-w-3xl mx-auto px-6 text-white z-10">
-    <h1 class="text-4xl md:text-5xl font-bold mb-4">{{ config('check-in-app.friendly_name') }} privacy policy</h1>
+    <h1 class="text-4xl md:text-5xl font-bold mb-4">{{ client_setting('check_in_app.friendly_name') }} privacy policy</h1>
     <p class="text-lg text-white/90 mb-10">
       Your privacy and data security are important to us.
     </p>
@@ -26,8 +26,8 @@
 
     <h2 class="text-lg font-semibold text-[var(--color-secondary)]">Overview</h2>
     <p>
-      The <strong>{{ config('check-in-app.friendly_name') }}</strong> application and platform are provided by 
-      <strong>{{ config('customer.contact_details.booking_website_company_name') }}</strong> 
+      The <strong>{{ client_setting('check_in_app.friendly_name') }}</strong> application and platform are provided by 
+      <strong>{{client_setting('general.customer_friendly_name')}}</strong> 
       to manage event registrations, attendee check-ins, and related communications.
       We are committed to <strong>protecting your personal information</strong> and handling it responsibly.
     </p>

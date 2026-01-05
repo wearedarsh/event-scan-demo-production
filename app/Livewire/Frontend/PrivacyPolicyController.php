@@ -12,12 +12,14 @@ class PrivacyPolicyController extends Controller
         {
             $events = Event::where('active', true)
             ->orderBy('date_start', 'asc')->get();
-            
+
+            $company_name = client_setting('general.customer_friendly_name');
+
             return view('livewire.frontend.privacy-policy', [
-                'page_title' => config('customer.contact_details.booking_website_company_name') . ' privacy policy',
+                'page_title' => $company_name . ' privacy policy',
                 'og_title' => 'Our privacy policy',
-                'og_description' => 'Globally held courses and events by' . config('customer.contact_details.booking_website_company_name'),
-                'company_name' => config('customer.contact_details.booking_website_company_name'),
+                'og_description' => 'Globally held courses and events by' . $company_name,
+                'company_name' => $company_name,
                 'events' => $events
             ]);
         }

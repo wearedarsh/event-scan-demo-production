@@ -13,7 +13,7 @@ class AppPrivacyPolicyController extends Controller
         $events = Event::where('active', true)
             ->orderBy('date_start', 'asc')->get();
         return view('livewire.frontend.app-privacy-policy', [
-            'privacy_email' => config('check-in-app.privacy_email'),
+            'privacy_email' => client_setting('check_in_app.privacy_email'),
             'page_title' => 'Check in app privacy policy',
             'events' => $events
         ]);

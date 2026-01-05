@@ -22,10 +22,10 @@ class CheckInAppInstructionAdmin extends Mailable
         $email_signature = ClientSetting::get('transactional_signature_html');
 
         $initialise_link =
-            config('check-in-app.scheme')
-            . '://initialise?client_id=' . config('services.eventscan.client_id')
+            client_setting('check_in_app.scheme')
+            . '://initialise?client_id=' . config('api.client_id')
             . '&auth_token=' . config('check-in-app.auth_token')
-            . '&qr_prefix=' . config('check-in-app.qr_prefix');
+            . '&qr_prefix=' . client_setting('check_in_app.qr_prefix');
 
         $body_html = Blade::render($email_content->html_content, [
             'user' => $this->user,

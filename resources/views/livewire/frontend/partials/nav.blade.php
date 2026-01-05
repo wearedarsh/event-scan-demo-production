@@ -5,7 +5,7 @@
   <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
     <!-- Logo -->
     <a href="{{ route('home') }}" class="flex items-center gap-3">
-      <img src="{{ asset('images/frontend/logo.png') }}" width="200" alt="{{ config('customer.contact_details.booking_website_company_name" />
+      <img src="{{ asset('images/frontend/logo.png') }}" width="200" alt="{{ client_setting('general.customer_friendly_name') }}" />
     </a>
 
     <!-- RIGHT SIDE: Events dropdown + auth buttons -->

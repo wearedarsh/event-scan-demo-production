@@ -11,7 +11,7 @@
             <x-registration.input-checkbox
                 id="email_marketing_opt_in"
                 wire:model="email_marketing_opt_in"
-                label="Please keep me informed of future {{ config('customer.contact_details.booking_website_company_name') }} events."
+                label="Please keep me informed of future {{ client_setting('general.customer_friendly_name') }} events."
             />
         @endif
 

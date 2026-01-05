@@ -14,7 +14,7 @@ class Index extends Component
 
     public function render()
     {
-        $this->app_scheme = config('check-in-app.scheme');
+        $this->app_scheme = client_setting('check_in_app.scheme');
 
         $this->initialise_url = $this->app_scheme . '://initialise?review=true';
 

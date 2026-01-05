@@ -32,7 +32,7 @@ class SendQueuedEmailJob implements ShouldQueue
                 html_content: $this->queued_send->html_content,
                 broadcast_id: $this->queued_send->email_broadcast_id,
                 email_send_id: $this->queued_send->id,
-                client_id: config('services.eventscan.client_id')
+                client_id: config('api.client_id')
             );
 
             Log::info('Creating new EmailSend');

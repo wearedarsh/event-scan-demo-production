@@ -22,7 +22,7 @@ class Index extends Component
     public function mount(Event $event)
     {
         $this->event = $event;
-        $this->currency_symbol = config('app.currency_symbol', '€');
+        $this->currency_symbol = client_setting('general.currency_symbol');
 
         $this->loadOrders();
     }

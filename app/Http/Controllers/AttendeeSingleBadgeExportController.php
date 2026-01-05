@@ -31,8 +31,8 @@ class AttendeeSingleBadgeExportController extends Controller
 
     protected function makePdf(Event $event, Registration $attendee)
     {
-        $client_id = config('services.eventscan.client_id');
-        $qr_prefix = config('check-in-app.qr_prefix');
+        $client_id = config('api.client_id');
+        $qr_prefix = client_setting('check_in_app.qr_prefix');
 
         $attendee->loadMissing(['user','country','attendeeGroup']);
 

@@ -31,7 +31,7 @@ class ClientSettingsGeneralSeeder extends Seeder
                 'key_name'      => 'general.event_friendly_name',
                 'label'         => 'Event friendly name',
                 'type'          => 'text',
-                'display_order' => 2,
+                'display_order' => 3,
                 'value'         => 'Event',
             ],
             [
@@ -39,8 +39,32 @@ class ClientSettingsGeneralSeeder extends Seeder
                 'key_name'      => 'general.attendee_friendly_name',
                 'label'         => 'Attendee friendly name',
                 'type'          => 'text',
-                'display_order' => 2,
+                'display_order' => 4,
                 'value'         => 'Attendee',
+            ],
+            [
+                'category_id'   => 6,
+                'key_name'      => 'general.invoice_prefix',
+                'label'         => 'Invoice prefix',
+                'type'          => 'text',
+                'display_order' => 5,
+                'value'         => 'ES',
+            ],
+            [
+                'category_id'   => 6,
+                'key_name'      => 'general.support_email',
+                'label'         => 'Support email',
+                'type'          => 'text',
+                'display_order' => 6,
+                'value'         => 'support@eventscan.co.uk',
+            ],
+            [
+                'category_id'   => 6,
+                'key_name'      => 'general.privacy_email',
+                'label'         => 'Privacy email',
+                'type'          => 'text',
+                'display_order' => 7,
+                'value'         => 'privacy@eventscan.co.uk',
             ],
 
         ]);

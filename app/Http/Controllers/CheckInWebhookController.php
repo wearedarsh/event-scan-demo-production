@@ -13,7 +13,7 @@ class CheckInWebhookController extends Controller
     {
        Log::info('Check in webhook request');
 
-        if ($request->ip() !== config('services.eventscan.request_ip_address')) {
+        if ($request->ip() !== config('api.request_ip_address')) {
             Log::warning('Unauthorized IP attempted to access CheckIn webhook: ' . $request->ip());
             return response()->json(['error' => 'Unauthorized'], 403);
         }

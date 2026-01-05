@@ -30,14 +30,6 @@ return [
         'marketing_list_id' => env('EMAILBLASTER_MARKETING_LIST_ID'),
         'folder' => env('EMAIL_BLASTER_FOLDER')
     ],
-
-    'eventscan' => [
-        'client_id' => env('EVENT_SCAN_CLIENT_ID'),
-        'request_ip_address' => env('EVENT_SCAN_SERVER_IP'),
-        'check_in_encryption_key' => env('EVENT_SCAN_CHECK_IN_ENCRYPTION_KEY'),
-        'webhook_uuid' => env('EVENT_SCAN_WEBHOOK_UUID')
-    ],
-
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],

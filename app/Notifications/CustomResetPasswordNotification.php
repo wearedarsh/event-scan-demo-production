@@ -19,8 +19,8 @@ class CustomResetPasswordNotification extends Notification
         $resetUrl = url(route('password.reset', ['token' => $this->token, 'email' => $notifiable->email]));
 
         return (new MailMessage)->from(
-            config('mail.transactional.address'),
-            config('mail.transactional.name')
+            client_setting('email.transactional.from_address'),
+            client_setting('email.transactional.from_name')
         )
             ->subject('Reset your password')
             ->view('emails.auth.reset-password', [

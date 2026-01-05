@@ -38,8 +38,8 @@ class AveryLabelController extends Controller
         $offset_x = $cells[$slot]['x'];
         $offset_y = $cells[$slot]['y'];
 
-        $client_id  = config('services.eventscan.client_id');
-        $qr_prefix  = config('check-in-app.qr_prefix');
+        $client_id  = config('api.client_id');
+        $qr_prefix  = client_setting('check_in_app.qr_prefix');
         $encoded    = Hashids::connection('checkin')->encode($attendee->id, $client_id);
 
         $attendee = (object)[

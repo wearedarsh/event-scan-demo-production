@@ -19,7 +19,7 @@ class Manage extends Component
     {
         $this->user = $user;
         $this->registration = $registration;
-        $this->currency_symbol = config('app.currency_symbol', '€');
+        $this->currency_symbol = client_setting('general.currency_symbol');
     }
 
     public function updateOptIn($id)

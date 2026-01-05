@@ -20,14 +20,13 @@
   </div>
 </section>
 
-<!-- ===== Content ===== -->
 <section class="bg-[var(--color-bg)] py-16">
   <div class="text-sm text-left max-w-3xl mx-auto px-6 text-[var(--color-text)] leading-relaxed space-y-8">
 
     <p class="text-[var(--color-text-light)]">Last updated: <strong>November 2025</strong></p>
 
     <p>
-      <strong>{{ config('customer.contact_details.booking_website_company_name') }}</strong> (“we”, “our”, or “us”) respects your privacy and is committed to protecting your personal data. 
+      <strong>{{ client_setting('general.customer_friendly_name') }}</strong> (“we”, “our”, or “us”) respects your privacy and is committed to protecting your personal data. 
       This policy outlines how we collect, use, and protect information when you use our website and related services.
     </p>
 
@@ -64,7 +63,7 @@
       Under the <strong>UK GDPR</strong>, you have the right to access, correct, or request deletion of your personal data.
       To exercise these rights, contact us at:
     </p>
-    <p><strong>Email:</strong> {{ config('customer.contact_details.booking_website_support_email') }}</p>
+    <p><strong>Email:</strong> {{ client_setting('general.support_email') }}</p>
 
     <hr class="border-[var(--color-border)]">
 
@@ -73,9 +72,9 @@
       For any questions regarding this policy, please contact:
     </p>
     <p>
-      <strong>{{ config('customer.contact_details.booking_website_company_name') }}</strong><br>
+      <strong>{{ client_setting('general.customer_friendly_name') }}</strong><br>
       Registered in England & Wales<br>
-      Email: <strong>{{ config('customer.contact_details.booking_website_support_email') }}</strong>
+      Email: <strong>{{ client_setting('general.support_email') }}</strong>
     </p>
 
   </div>

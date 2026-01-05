@@ -14,7 +14,7 @@
 
 <x-admin.page-header
     title="Setting up your app"
-    subtitle="Install, initialise and start using {{ config('check-in-app.friendly_name') }}."
+    subtitle="Install, initialise and start using {{ client_setting('check_in_app.friendly_name') }}."
 />
 
 @if (session()->has('success'))
@@ -30,7 +30,7 @@
         <x-admin.card class="p-6 space-y-4">
             <x-admin.section-title title="Step 1 Install the app" />
             <p class="text-sm text-[var(--color-text-light)]">
-                Select your device type and download the {{ config('check-in-app.friendly_name') }} app to get started.
+                Select your device type and download the {{ client_setting('check_in_app.friendly_name') }} app to get started.
             </p>
 
             <div class="flex items-center gap-4">

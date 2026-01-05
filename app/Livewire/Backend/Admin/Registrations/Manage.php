@@ -37,7 +37,7 @@ class Manage extends Component
     {
         $this->event = $event;
         $this->attendee = $attendee;
-        $this->currency_symbol = config('app.currency_symbol', '€');
+        $this->currency_symbol = client_setting('general.currency_symbol');
         $now = now();
         $this->payment_date = $now->format('d-m-Y');
         $this->payment_hour = $now->format('H');
@@ -78,7 +78,7 @@ class Manage extends Component
 
         $timestamp = Carbon::createFromFormat('d-m-Y H:i', "{$this->payment_date} {$this->payment_hour}:{$this->payment_minute}");
         $randomNumber = random_int(1000, 9999);
-        $booking_reference = config('customer.invoice_prefix') . '-' . $randomNumber . '-' . $this->attendee->user_id . '-' . $this->attendee->event_id;
+        $booking_reference = client_setting('general.invoice_prefix') . '-' . $randomNumber . '-' . $this->attendee->user_id . '-' . $this->attendee->event_id;
 
         $this->attendee->update([
             'payment_status' => 'paid',
@@ -124,7 +124,7 @@ class Manage extends Component
     {
         Mail::to($this->attendee->user->email)->send(
             (new BankTransferInformationCustomer($this->attendee, $this->attendee->registration_total))
-                ->from(config('mail.customer.address'), config('mail.customer.name'))
+                ->from(client_setting('email.customer.from_address'), config('mail.customer.from_name'))
         );
 
         session()->flash('receipt', 'Bank transfer information sent to the registrant\'s email address');
