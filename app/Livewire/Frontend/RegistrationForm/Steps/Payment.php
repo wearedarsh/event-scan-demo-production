@@ -12,7 +12,7 @@ class Payment extends Component
 {
     public Event $event;
     public Registration $registration;
-    public $currency_symbol = '[£]';
+    public $currency_symbol = '';
     public int $registration_total_cents = 0;
     public $registration_total = 0;
 
@@ -21,6 +21,7 @@ class Payment extends Component
     ];
 
     public function mount(){
+        $this->currency_symbol = client_setting('general.currency_symbol');
         $this->registration_total = $this->registration->total;
         $this->registration_total_cents = $this->registration->total_cents;
     }

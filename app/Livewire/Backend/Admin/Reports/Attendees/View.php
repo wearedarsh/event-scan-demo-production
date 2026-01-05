@@ -68,7 +68,7 @@ class View extends Component
                 ];
             });
 
-        $currency_symbol = config('app.currency_symbol', '£');
+        $currency_symbol = client_setting('general.currency_symbol');
 
         return view('livewire.backend.admin.reports.attendees.view', [
             'attendees'        => $attendees,

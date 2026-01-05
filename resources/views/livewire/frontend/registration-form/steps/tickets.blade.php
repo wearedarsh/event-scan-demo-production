@@ -29,7 +29,7 @@
                 placeholder="Please select…">
                 @foreach($group->activeTickets->sortBy('display_order') as $ticket)
                 <option value="{{ $ticket->id }}">
-                    {{ $ticket->name }} – [£]{{ $ticket->Price }}
+                    {{ $ticket->name }} – {{$currency_symbol}}{{ $ticket->Price }}
                 </option>
                 @endforeach
             </x-registration.input-select>
@@ -40,7 +40,7 @@
                 @foreach($group->activeTickets as $ticket)
                 <div class="flex justify-between items-center rounded-md border border-[var(--color-border)] p-3">
                     <span>
-                        {{ $ticket->name }} – [£]{{ $ticket->Price }}
+                        {{ $ticket->name }} – {{$currency_symbol }}{{ $ticket->Price }}
                     </span>
 
                     <x-registration.input-select
@@ -105,7 +105,7 @@
 
         <div class="flex justify-between pt-4">
             <strong>Total</strong>
-            <strong>[£]{{ $this->registrationTotal }}</strong>
+            <strong>{{ $currency_symbol }}{{ $this->registrationTotal }}</strong>
         </div>
 
     </x-registration.form-step>

@@ -26,7 +26,7 @@ class Tickets extends Component
     public array $replace_document = [];
 
     public int $registration_total_cents = 0;
-    public string $currency_symbol = '[Settings£]';
+    public string $currency_symbol = '';
 
     protected $listeners = [
         'validate-step' => 'validateStep',
@@ -34,6 +34,7 @@ class Tickets extends Component
 
     public function mount(): void
     {
+        $this->currency_symbol = client_setting('general.currency_symbol');
         $tickets = Ticket::where('event_id', $this->event->id)->get();
 
         $this->ticketLookup = $tickets->keyBy('id');

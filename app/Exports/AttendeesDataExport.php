@@ -14,7 +14,7 @@ class AttendeesDataExport implements FromCollection, WithHeadings, WithMapping
     public function __construct($event)
     {
         $this->event = $event;
-        $this->currency_symbol = config('app.currency_symbol', '£');
+        $this->currency_symbol = client_setting('general.currency_symbol');
     }
 
     public function collection()
