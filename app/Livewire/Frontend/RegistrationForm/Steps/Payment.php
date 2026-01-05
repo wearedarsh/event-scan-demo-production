@@ -5,7 +5,7 @@ namespace App\Livewire\Frontend\RegistrationForm\Steps;
 use Livewire\Component;
 use App\Models\Event;
 use App\Models\Registration;
-use App\Services\Registration\RegistrationPaymentService;
+use App\Services\RegistrationPaymentService;
 
 
 class Payment extends Component

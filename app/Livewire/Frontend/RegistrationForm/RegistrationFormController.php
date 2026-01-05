@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\RegistrationForm;
+namespace App\Livewire\Frontend\RegistrationForm;
 
 use Livewire\Component;
 use App\Models\Event;

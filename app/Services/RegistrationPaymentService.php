@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Services\Registration;
+namespace App\Services;
 
 use App\Models\Registration;
 use App\Models\EventPaymentMethod;
@@ -58,7 +58,7 @@ class RegistrationPaymentService
                 'event' => $registration->event,
             ]),
             'cancel_url' => route('registration', [
-                'event' => $registration->event->id,
+                'event' => $registration->event,
             ]) . '?step=payment&cancelled=true',
             'customer_email' => $registration->email,
             'metadata' => [
@@ -71,7 +71,7 @@ class RegistrationPaymentService
 
     protected function generateBookingReference(Registration $registration): string
     {
-        return '[£]'
+        return '[ADD_SETTING]'
             . '-' . random_int(1000, 9999)
             . '-' . $registration->user_id
             . '-' . $registration->event_id;
