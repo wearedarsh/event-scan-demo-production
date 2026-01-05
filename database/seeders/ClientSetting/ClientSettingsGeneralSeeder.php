@@ -12,7 +12,7 @@ class ClientSettingsGeneralSeeder extends Seeder
         ClientSetting::insert([
             [
                 'category_id'   => 6,
-                'key_name'      => 'currency_symbol',
+                'key_name'      => 'general.currency_symbol',
                 'label'         => 'Currency symbol',
                 'display_order' => 1,
                 'type'          => 'text',
@@ -20,7 +20,7 @@ class ClientSettingsGeneralSeeder extends Seeder
             ],
             [
                 'category_id'   => 6,
-                'key_name'      => 'customer_friendly_name',
+                'key_name'      => 'general.customer_friendly_name',
                 'label'         => 'Customer friendly name',
                 'type'          => 'text',
                 'display_order' => 2,
@@ -28,7 +28,7 @@ class ClientSettingsGeneralSeeder extends Seeder
             ],
             [
                 'category_id'   => 6,
-                'key_name'      => 'event_friendly_name',
+                'key_name'      => 'general.event_friendly_name',
                 'label'         => 'Event friendly name',
                 'type'          => 'text',
                 'display_order' => 2,
@@ -36,7 +36,7 @@ class ClientSettingsGeneralSeeder extends Seeder
             ],
             [
                 'category_id'   => 6,
-                'key_name'      => 'attendee_friendly_name',
+                'key_name'      => 'general.attendee_friendly_name',
                 'label'         => 'Attendee friendly name',
                 'type'          => 'text',
                 'display_order' => 2,

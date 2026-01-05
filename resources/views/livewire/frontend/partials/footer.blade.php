@@ -2,21 +2,21 @@
   <div class="max-w-6xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-10 text-[var(--color-text-light)] text-sm">
 
     <div class="text-center md:text-left">
-      {!! ClientSetting::get('booking_website_footer_right_column_html') !!}
+      {!! client_setting('booking.footer.right_column_html') !!}
     </div>
 
     <div class="text-center">
-      {!! ClientSetting::get('booking_website_footer_middle_column_html') !!}
+      {!! client_setting('booking.footer.middle_column_html') !!}
     </div>
 
     <div class="text-center md:text-right">
-      {!! ClientSetting::get('booking_website_footer_right_column_html') !!}
+      {!! client_setting('booking.footer.right_column_html') !!}
     </div>
   </div>
 
   <div class="border-t border-[var(--color-border)] bg-[var(--color-bg)]">
     <div class="max-w-6xl mx-auto px-6 py-4 flex flex-col md:flex-row items-center justify-between text-xs text-[var(--color-text-light)]">
-      <p class="mb-2 md:mb-0">© {!! ClientSetting::get('general_customer_friendly_name') !!} {{ date('Y') }}. All rights reserved.</p>
+      <p class="mb-2 md:mb-0">&copy; {!! client_setting('general.customer_friendly_name') !!} {{ date('Y') }}. All rights reserved.</p>
 
       <div class="flex items-center gap-6">
         <a href="{{route('privacy-policy')}}" class="hover:text-[var(--color-primary)] transition">Privacy Policy</a>

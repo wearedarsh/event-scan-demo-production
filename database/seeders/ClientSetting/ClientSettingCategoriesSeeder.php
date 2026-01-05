@@ -58,6 +58,14 @@ class ClientSettingCategoriesSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'id' => 7,
+                'key_name' => 'payment',
+                'label' => 'Payment',
+                'display_order' => 7,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

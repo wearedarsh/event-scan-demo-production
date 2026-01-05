@@ -12,7 +12,7 @@ class ClientSettingsBookingSeeder extends Seeder
         ClientSetting::insert([
             [
                 'category_id'   => 3,
-                'key_name'      => 'booking_website_footer_middle_column_html',
+                'key_name'      => 'booking.footer.middle_column_html',
                 'label'         => 'Footer middle column html',
                 'display_order' => 1,
                 'type'          => 'textarea',
@@ -27,7 +27,7 @@ class ClientSettingsBookingSeeder extends Seeder
             ],
             [
                 'category_id'   => 3,
-                'key_name'      => 'booking_website_footer_right_column_html',
+                'key_name'      => 'booking.footer.right_column_html',
                 'label'         => 'Footer right column html',
                 'display_order' => 2,
                 'type'          => 'textarea',
@@ -38,7 +38,7 @@ class ClientSettingsBookingSeeder extends Seeder
             ],
             [
                 'category_id'   => 3,
-                'key_name'      => 'booking_website_footer_left_column_html',
+                'key_name'      => 'booking.footer.left_column_html',
                 'label'         => 'Footer left column html',
                 'display_order' => 2,
                 'type'          => 'textarea',
