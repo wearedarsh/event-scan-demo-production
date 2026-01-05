@@ -5,13 +5,13 @@ namespace Database\Seeders\ClientSetting;
 use Illuminate\Database\Seeder;
 use App\Models\ClientSetting;
 
-class ClientSettingsSeeder extends Seeder
+class ClientSettingsEmailSeeder extends Seeder
 {
     public function run(): void
     {
         ClientSetting::insert([
             [
-                'category_id'   => 1, // Email
+                'category_id'   => 1,
                 'key_name'      => 'from_address',
                 'label'         => 'From email address',
                 'display_order' => 1,

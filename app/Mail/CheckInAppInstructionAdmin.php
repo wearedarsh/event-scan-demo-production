@@ -19,7 +19,7 @@ class CheckInAppInstructionAdmin extends Mailable
     {
         $email_content = EmailHtmlContent::where('key_name', 'check_in_app_instruction')->firstOrFail();
         $layout = EmailHtmlLayout::where('key_name', 'admin')->firstOrFail();
-        $email_signature = ClientSetting::getValue('email', 'transactional_signature_html');
+        $email_signature = ClientSetting::get('transactional_signature_html');
 
         $initialise_link =
             config('check-in-app.scheme')

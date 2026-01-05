@@ -43,7 +43,7 @@ class BroadcastEmail extends Mailable
         ]);
 
         return new Envelope(
-            from: new Address(ClientSetting::getValue('email', 'from_address'), ClientSetting::getValue('email', 'from_name')),
+            from: new Address(ClientSetting::get('from_address'), ClientSetting::get('from_name')),
             subject: $this->custom_subject,
         );
     }

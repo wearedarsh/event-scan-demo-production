@@ -9,6 +9,9 @@ use Stripe\Checkout\Session as StripeSession;
 
 class RegistrationPaymentService
 {
+
+    public string $invoice_prefix = 'ADDTOCLIENT';
+
     public function completeFreeRegistration(Registration $registration): void
     {
         $registration->update([
@@ -71,7 +74,7 @@ class RegistrationPaymentService
 
     protected function generateBookingReference(Registration $registration): string
     {
-        return '[ADD_SETTING]'
+        return $this->invoice_prefix
             . '-' . random_int(1000, 9999)
             . '-' . $registration->user_id
             . '-' . $registration->event_id;
