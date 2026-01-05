@@ -3,10 +3,7 @@
   class="relative py-20 bg-[var(--color-bg)]"
 >
   <div class="max-w-6xl mx-auto px-6 text-center mb-12">
-    <h2 class="text-3xl md:text-4xl font-bold text-[var(--color-text)]">Testimonials</h2>
-    <p class="mt-4 text-[var(--color-text-light)] max-w-2xl mx-auto">
-      Hear from {{config('customer.contact_details.booking_website_company_name')}} attendees about their experiences at our workshops and conferences.
-    </p>
+    {!! client_setting('booking.testimonial.header_html') !!}
   </div>
 
   @if($testimonials->isNotEmpty())

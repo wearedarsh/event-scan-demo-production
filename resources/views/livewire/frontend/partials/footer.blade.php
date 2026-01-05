@@ -2,7 +2,7 @@
   <div class="max-w-6xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-10 text-[var(--color-text-light)] text-sm">
 
     <div class="text-center md:text-left">
-      {!! client_setting('booking.footer.right_column_html') !!}
+      {!! client_setting('booking.footer.left_column_html') !!}
     </div>
 
     <div class="text-center">

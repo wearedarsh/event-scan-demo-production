@@ -17,7 +17,7 @@
               @click="open = !open"
               class="inline-flex items-center gap-2 text-sm text-[var(--color-text)] hover:text-[var(--color-primary)] transition"
             >
-              Our Events
+              {!! client_setting('booking.nav.dropdown_title') !!}
               <x-heroicon-o-chevron-down 
                   class="w-4 h-4 transform transition" 
                   x-bind:class="{ 'rotate-180': open }" 
@@ -58,7 +58,6 @@
             </div>
         </div>
 
-        <!-- ===== Auth Buttons ===== -->
         <div class="flex items-center gap-4">
           @if(Auth::check())
               @php

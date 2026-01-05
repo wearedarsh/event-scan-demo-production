@@ -31,7 +31,7 @@
         @click="open = !open"
         class="inline-flex items-center gap-2 text-[var(--color-text)] hover:text-[var(--color-primary)] transition"
       >
-        Event Information
+        {!! client_setting('booking.event_nav.dropdown_title') !!}
         <x-heroicon-o-chevron-down 
             class="w-4 h-4 transform transition" 
             x-bind:class="{ 'rotate-180': open }" 

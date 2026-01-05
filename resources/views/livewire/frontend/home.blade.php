@@ -4,7 +4,6 @@
 <div class="relative bg-[var(--color-bg)]">
   @include('livewire.frontend.partials.nav')
 
-  <!-- ===== Hero ===== -->
   <section class="relative pt-32 pb-24 text-center overflow-hidden">
     <div 
       class="absolute inset-0 bg-cover bg-center" 
@@ -12,26 +11,14 @@
     ></div>
 
     <div class="relative max-w-3xl mx-auto px-6 text-[var(--color-surface)]">
-      <h1 class="text-4xl md:text-5xl font-bold mb-4">{{config('customer.contact_details.booking_website_company_name')}} events</h1>
-      <p class="text-lg text-[var(--color-surface)]/90 mb-10">
-        Register for our upcoming global events
-      </p>
-
-      <a href="#our-events"
-        class="inline-flex items-center justify-center px-6 py-2 rounded-xl font-semibold border border-[var(--color-surface)] text-[var(--color-surface)] hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)] transition">
-        Explore events
-      </a>
+      {!! client_setting('booking.hero.header_html') !!}
     </div>
   </section>
 </div>
 
-<!-- ===== Our Events ===== -->
 <section id="our-events" class="py-24 bg-[var(--color-bg)]">
   <div class="max-w-6xl mx-auto px-6 text-center mb-12">
-    <h2 class="text-3xl font-semibold text-[var(--color-text)]">Our Events</h2>
-    <p class="mt-3 text-[var(--color-text-light)] max-w-2xl mx-auto">
-      Explore our upcoming events and register now.
-    </p>
+    {!! client_setting('booking.events.header_html') !!}
   </div>
 
   <div x-data="{ showAll: false }" class="max-w-6xl mx-auto px-6">
