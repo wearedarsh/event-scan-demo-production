@@ -5,7 +5,7 @@ namespace Database\Seeders\ClientSetting;
 use Illuminate\Database\Seeder;
 use App\Models\ClientSetting;
 
-class ClientSettingsBookingSeeder extends Seeder
+class ClientSettingBookingSeeder extends Seeder
 {
     public function run(): void
     {
@@ -19,7 +19,7 @@ class ClientSettingsBookingSeeder extends Seeder
                 'value'         => '<h3 class="text-[var(--color-text)] font-semibold mb-3">Questions?</h3>
                                     <p class="mb-2">Feel free to get in touch with any queries.</p>
                                     <p>
-                                        <a href="mailto:" class="text-[var(--color-primary)] hover:underline font-medium">
+                                        <a href="mailto:support@eventscan.co.uk" class="text-[var(--color-primary)] hover:underline font-medium">
                                         support@eventscan.co.uk
                                         </a>
                                     </p>
@@ -43,7 +43,7 @@ class ClientSettingsBookingSeeder extends Seeder
                 'display_order' => 3,
                 'type'          => 'textarea',
                 'value'         => '<h3 class="text-[var(--color-text)] font-semibold mb-3">Secure Payments</h3>
-                                    <img src="images/frontend/stripe.png" alt="Stripe Secure Payments" class="h-8 inline-block opacity-80">
+                                    <img src="/images/frontend/stripe.png" alt="Stripe Secure Payments" class="h-8 inline-block opacity-80">
                                     <p class="mt-3 leading-relaxed">
                                         We accept all major cards via Stripe - your transactions are encrypted and protected.
                                     </p>',
@@ -97,7 +97,7 @@ class ClientSettingsBookingSeeder extends Seeder
                 'category_id'   => 3,
                 'key_name'      => 'booking.event_nav.dropdown_title',
                 'label'         => 'Event sub nav dropdown title',
-                'display_order' => 7,
+                'display_order' => 8,
                 'type'          => 'text',
                 'value'         => 'Event information',
             ],

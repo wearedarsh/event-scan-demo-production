@@ -5,7 +5,7 @@ namespace Database\Seeders\ClientSetting;
 use Illuminate\Database\Seeder;
 use App\Models\ClientSetting;
 
-class ClientSettingsGeneralSeeder extends Seeder
+class ClientSettingGeneralSeeder extends Seeder
 {
     public function run(): void
     {

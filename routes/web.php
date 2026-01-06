@@ -14,7 +14,6 @@ use App\Http\Controllers\ReportFeedbackExportController;
 use App\Http\Controllers\AveryLabelController;
 use App\Http\Controllers\AveryPersonnelLabelController;
 
-
 use App\Livewire\Frontend\RegistrationForm\RegistrationFormController;
 use App\Livewire\Frontend\CheckoutSuccess;
 use App\Livewire\Frontend\HomeController;
@@ -30,7 +29,6 @@ use App\Livewire\Auth\ForgotPassword;
 
 use App\Http\Middleware\IsCustomer;
 use App\Http\Middleware\HasAdminAccess;
-use App\Http\Middleware\AllowAppUser;
 
 use App\Http\Controllers\AttachmentController;
 
