@@ -55,6 +55,13 @@ $col_span_class = match ((int) $input->col_span) {
                 @endforeach
 
             </x-registration.input-select>
+
+        @elseif($input->type === 'document_upload')
+            <x-registration.input-file
+                :id="$input->key_name"
+                model="form_data.{{ $input->key_name }}"
+                accept=".pdf,.doc,.docx"
+            />
         @endif
 
         @if($input->help)

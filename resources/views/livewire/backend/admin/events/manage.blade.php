@@ -1,21 +1,16 @@
 <div class="space-y-4">
 
-    <!-- Breadcrumbs -->
     <x-admin.breadcrumb :items="[
         ['label' => 'Events', 'href' => route('admin.events.index')],
         ['label' => $event->title],
     ]" />
 
-    <!-- Header -->
     <x-admin.page-header
         title="{{ $event->title }}"
         subtitle="{{ $event->formatted_start_date }} – {{ $event->formatted_end_date }}">
 
-        <!-- Top Stats -->
         <div class="flex flex-wrap md:flex-nowrap items-center gap-3">
-            <!-- Link + Copy -->
             <x-admin.stat-card label="Link">
-                <!-- View -->
                 <x-admin.icon-link
                     href="{{ route('event', $event->id) }}"
                     icon="heroicon-o-arrow-top-right-on-square"
@@ -25,7 +20,6 @@
                 </x-admin.icon-link>
             </x-admin.stat-card>
 
-            <!-- Status -->
             <x-admin.stat-card label="Status">
                 <x-admin.toggle
                     :active="$event->active"
@@ -35,19 +29,16 @@
                     wire:click="toggleActive" />
             </x-admin.stat-card>
 
-            <!-- Attendees -->
             <x-admin.stat-card
                 label="Attendees"
                 :value="$event->attendees->count()" />
 
-            <!-- Unpaid -->
             <x-admin.stat-card
                 label="Unpaid"
                 :value="$event->registrations->count()" />
         </div>
     </x-admin.page-header>
 
-    <!-- Alerts -->
     @if($errors->any())
     <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
@@ -58,7 +49,6 @@
 
     <div class="px-6 space-y-4">
 
-        <!-- Settings -->
         <x-admin.section-title title="Settings" />
         <x-admin.action-card
             title="General Settings"
@@ -68,12 +58,9 @@
             <x-link-arrow href="{{ route('admin.events.edit', $event->id) }}">Edit settings</x-link-arrow>
         </x-admin.action-card>
 
-        <!-- Primary actions -->
         <x-admin.section-title title="People and content" />
-        <!-- Row: 3 columns -->
         <div class="grid md:grid-cols-2 gap-6">
 
-            <!-- People -->
             <x-admin.tile-card
             icon="heroicon-o-users"
                 title="People"
@@ -94,7 +81,6 @@
                 </x-link-arrow>
             </x-admin.tile-card>
 
-            <!-- Content -->
             <x-admin.tile-card
             icon="heroicon-o-document-text"
                 title="Content"
@@ -147,7 +133,6 @@
 
         <x-admin.section-title title="Tools" />
         <div class="grid md:grid-cols-3 gap-6">
-            <!-- Communication -->
             <x-admin.tile-card
             icon="heroicon-o-envelope"
                 title="Communication"
@@ -161,7 +146,6 @@
                 </x-link-arrow>
             </x-admin.tile-card>
 
-            <!-- Downloads -->
             <x-admin.tile-card
                 icon="heroicon-o-arrow-down-tray"
                 title="Downloads"
@@ -176,7 +160,6 @@
             </x-admin.tile-card>
 
 
-            <!-- Feedback & Analytics -->
             <x-admin.tile-card
                 icon="heroicon-o-chart-bar"
                 title="Feedback and analytics"

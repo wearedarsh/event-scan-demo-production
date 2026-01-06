@@ -35,7 +35,6 @@
         </button>
     </div>
 
-    <!-- HOME -->
     <x-admin.sidebar-link
         label="Home"
         href="{{ route('admin.dashboard') }}"
@@ -44,7 +43,6 @@
 
     <x-admin.sidebar-separator />
 
-    <!-- EVENTS -->
     <x-admin.sidebar-heading label="Events" />
 
     <x-admin.sidebar-link
@@ -61,7 +59,6 @@
 
     <x-admin.sidebar-separator />
 
-    <!-- SETTINGS -->
     <x-admin.sidebar-heading label="Settings" />
 
     <x-admin.sidebar-link
@@ -78,7 +75,6 @@
 
     <x-admin.sidebar-separator />
 
-    <!-- EMAIL -->
     <x-admin.sidebar-heading label="Email" />
 
     <x-admin.sidebar-link
@@ -95,7 +91,6 @@
 
     <x-admin.sidebar-separator />
 
-    <!-- CHECK-IN -->
     <x-admin.sidebar-heading label="Check-In App" />
 
     <x-admin.sidebar-link
@@ -104,5 +99,28 @@
         icon="heroicon-o-device-phone-mobile"
         :active="request()->routeIs('admin.app.*')" />
 
+    @if(auth()->user()->role->key_name === 'developer')
+    <x-admin.sidebar-separator />
+
+    <x-admin.sidebar-heading label="Developer" />
+
+    <x-admin.sidebar-link
+        label="Client settings"
+        href="{{ route('admin.developer.client-settings.index') }}"
+        icon="heroicon-o-adjustments-horizontal"
+        :active="request()->routeIs('admin.client-settings.*')" />
+
+    <x-admin.sidebar-link
+        label="Registration forms"
+        href="{{ route('admin.developer.registration-form.index') }}"
+        icon="heroicon-o-clipboard-document-list"
+        :active="request()->routeIs('admin.registration-form.*')" />
+
+    <x-admin.sidebar-link
+        label="Email templates"
+        href="{{ route('admin.developer.email-templates.index') }}"
+        icon="heroicon-o-envelope"
+        :active="request()->routeIs('admin.email-templates.*')" />
+    @endif
 
 </aside>

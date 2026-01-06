@@ -5,14 +5,19 @@ namespace Database\Seeders\RegistrationForm;
 use Illuminate\Database\Seeder;
 use App\Models\RegistrationFormStep;
 use App\Models\RegistrationFormInput;
+use App\Models\RegistrationForm;
 
-class RegistrationFormInputsSeeder extends Seeder
+class RegistrationFormPaidInputsSeeder extends Seeder
 {
     public function run()
     {
-        $form_id = 1;
+        $form = RegistrationForm::where(
+            'key_name',
+            'default_paying_registration_form'
+        )->firstOrFail();
 
-        // Fetch step IDs
+        $form_id = $form->id;
+
         $personal_step = RegistrationFormStep::where('registration_form_id', $form_id)
             ->where('key_name', 'personal')
             ->first();
@@ -21,7 +26,6 @@ class RegistrationFormInputsSeeder extends Seeder
             ->where('key_name', 'professional')
             ->first();
 
-        // Personal Details Inputs
         $personal_inputs = [
             [
                 'registration_form_step_id' => $personal_step->id,

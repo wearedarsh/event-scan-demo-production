@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class RegistrationForm extends Model
 {
-    protected $fillable = ['label', 'key_name', 'description', 'is_active'];
+    protected $fillable = ['label', 'key_name', 'description', 'is_active', 'type'];
 
     public function steps()
     {

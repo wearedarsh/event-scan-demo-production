@@ -7,15 +7,25 @@ use App\Models\RegistrationForm;
 
 class RegistrationFormsSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
         RegistrationForm::updateOrCreate(
-            ['id' => 1],
+            ['key_name' => 'default_paying_registration_form'],
             [
-                'label' => 'Default Company Registration Form',
-                'key_name' => 'default_registration_form',
-                'description' => 'The standard registration form for all events by this company',
-                'is_active' => true,
+                'label'       => 'Default paying registration form',
+                'description' => 'The standard registration form for all paying events for this company',
+                'type'        => 'paid',
+                'is_active'   => true,
+            ]
+        );
+
+        RegistrationForm::updateOrCreate(
+            ['key_name' => 'default_approval_registration_form'],
+            [
+                'label'       => 'Default approval registration form',
+                'description' => 'The standard registration form for all approval events by this company',
+                'type'        => 'approval',
+                'is_active'   => true,
             ]
         );
     }

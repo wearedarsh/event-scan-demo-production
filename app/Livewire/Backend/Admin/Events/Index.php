@@ -7,7 +7,6 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Event;
 use App\Models\FeedbackForm;
-use App\Models\FeedbackFormStep;
 use App\Models\FeedbackFormGroup;
 use App\Models\FeedbackFormQuestion;
 use Illuminate\Support\Facades\DB;
@@ -166,7 +165,6 @@ class Index extends Component
                 }
             }
 
-            // 7) Create new mailing list
             $emailService = app(EmailMarketingService::class);
             $listName = '[COPY]' . $event->title;
             $listId = $emailService->createMailingListInFolder(config('services.emailblaster.folder'), $listName);

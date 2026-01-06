@@ -66,6 +66,14 @@ class ClientSettingCategoriesSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'id' => 8,
+                'key_name' => 'legal',
+                'label' => 'Legal',
+                'display_order' => 8,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

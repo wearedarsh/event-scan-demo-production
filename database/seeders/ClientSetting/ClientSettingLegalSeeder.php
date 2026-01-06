@@ -12,7 +12,7 @@ class ClientSettingLegalSeeder extends Seeder
         ClientSetting::insert(
             [
                 [
-                    'category_id'   => 3,
+                    'category_id'   => 8,
                     'key_name'      => 'legal.privacy.header_html',
                     'label'         => 'Privacy policy header html',
                     'display_order' => 1,
@@ -23,7 +23,7 @@ class ClientSettingLegalSeeder extends Seeder
                                         </p>',
                 ],
                 [
-                    'category_id'   => 3,
+                    'category_id'   => 8,
                     'key_name'      => 'legal.cookies.header_html',
                     'label'         => 'Cookie policy header html',
                     'display_order' => 2,
@@ -34,7 +34,7 @@ class ClientSettingLegalSeeder extends Seeder
                                         </p>',
                 ],
                 [
-                    'category_id'   => 3,
+                    'category_id'   => 8,
                     'key_name'      => 'legal.privacy.content_html',
                     'label'         => 'Privacy policy content html',
                     'display_order' => 3,
@@ -93,7 +93,7 @@ class ClientSettingLegalSeeder extends Seeder
                                         </p>'
                 ],
                 [
-                    'category_id'   => 3,
+                    'category_id'   => 8,
                     'key_name'      => 'legal.cookies.content_html',
                     'label'         => 'Cookie policy content html',
                     'display_order' => 4,

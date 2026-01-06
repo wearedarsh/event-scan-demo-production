@@ -61,6 +61,23 @@ Route::middleware(['auth', HasAdminAccess::class])
             Route::get('/', App\Livewire\Backend\Admin\Settings\Index::class)->name('index');
         });
 
+        Route::prefix('developer')->name('developer.')->group(function () {
+            Route::prefix('client-settings')->name('client-settings.')->group(function () {
+                Route::get('/', App\Livewire\Backend\Admin\Developer\ClientSettings\Index::class)->name('index');
+                Route::get('/{category}/manage', App\Livewire\Backend\Admin\Developer\ClientSettings\Manage::class)->name('manage');
+            });
+
+            Route::prefix('registration-form')->name('registration-form.')->group(function () {
+                Route::get('/', App\Livewire\Backend\Admin\Developer\RegistrationForm\Index::class)->name('index');
+            });
+
+            Route::prefix('email-templates')->name('email-templates.')->group(function () {
+                Route::get('/', App\Livewire\Backend\Admin\Developer\EmailTemplates\Index::class)->name('index');
+            });
+        });
+
+
+
         Route::prefix('events')->name('events.')->group(function () {
             Route::get('/', App\Livewire\Backend\Admin\Events\Index::class)->name('index');
             Route::get('/create', App\Livewire\Backend\Admin\Events\Create::class)->name('create');

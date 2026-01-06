@@ -1,12 +1,10 @@
 <div class="space-y-4">
 
-    <!-- Breadcrumbs -->
     <x-admin.breadcrumb :items="[
         ['label' => 'Home', 'href' => route('admin.dashboard')],
         ['label' => 'Events'],
     ]" />
 
-    <!-- Header -->
     <x-admin.page-header
         title="Events"
         subtitle="Manage and organise all platform events.">
@@ -18,7 +16,6 @@
         </x-admin.outline-btn-icon>
     </x-admin.page-header>
 
-    <!-- Alerts -->
     @if($errors->any())
     <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
@@ -27,11 +24,8 @@
     <x-admin.alert type="success" :message="session('success')" />
     @endif
 
-
-    <!-- Main card -->
     <x-admin.card hover="false" class="p-6 mx-6 space-y-4">
 
-        <!-- Filters row -->
         <div class="flex flex-wrap items-center gap-2 mb-2">
 
             <x-admin.filter-pill
@@ -59,21 +53,12 @@
                 Templates ({{ $counts['template'] }})
             </x-admin.filter-pill>
 
-            <!-- <x-admin.filter-pill
-                :active="$filter === 'archived'"
-                wire:click="setFilter('archived')">
-                Archived ({{ $counts['archived'] }})
-            </x-admin.filter-pill> -->
-
         </div>
 
-        <!-- Search -->
         <x-admin.search-input
             wire:model.live.debounce.300ms="search"
             placeholder="Search event title or location" />
 
-
-        <!-- Table -->
         <x-admin.table>
             <table class="min-w-full text-sm text-left">
                 <thead>
@@ -88,11 +73,9 @@
 
                     @forelse($events as $event)
 
-                    <!-- Main table row -->
                     <tr x-data
                         class="group border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
 
-                        <!-- Title -->
                         <td class="px-4 py-3">
                             {{ $event->title }}
                             @if($event->template)
@@ -103,7 +86,6 @@
                             @endif
                         </td>
 
-                        <!-- Status Pill -->
                         <td class="px-4 py-3">
                             @if ($event->active)
                             <x-admin.status-pill status="success">Active</x-admin.status-pill>
@@ -112,7 +94,6 @@
                             @endif
                         </td>
 
-                        <!-- Actions Button -->
                         <td class="px-4 py-3 text-right">
                             <div class="flex justify-end items-center gap-2">
 
@@ -128,7 +109,6 @@
                         </td>
                     </tr>
 
-                    <!-- Expanded action bar -->
                     <tr x-cloak
                         x-show="openRow === {{ $event->id }}"
                         x-transition.duration.150ms
@@ -171,7 +151,6 @@
             </table>
         </x-admin.table>
 
-        <!-- Pagination -->
         <x-admin.pagination :paginator="$events" />
 
     </x-admin.card>

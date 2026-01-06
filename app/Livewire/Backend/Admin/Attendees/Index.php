@@ -17,7 +17,6 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Models\AttendeeGroup;
 
 
-
 #[Layout('livewire.backend.admin.layouts.app')]
 class Index extends Component
 {

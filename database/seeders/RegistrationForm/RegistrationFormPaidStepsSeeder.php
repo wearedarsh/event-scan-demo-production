@@ -6,11 +6,11 @@ use Illuminate\Database\Seeder;
 use App\Models\RegistrationForm;
 use App\Models\RegistrationFormStep;
 
-class RegistrationFormStepsSeeder extends Seeder
+class RegistrationFormPaidStepsSeeder extends Seeder
 {
     public function run()
     {
-        $form = RegistrationForm::where('key_name', 'default_registration_form')->first();
+        $form = RegistrationForm::where('key_name', 'default_paying_registration_form')->first();
         $steps = [
             [
                 'registration_form_id' => $form->id,
