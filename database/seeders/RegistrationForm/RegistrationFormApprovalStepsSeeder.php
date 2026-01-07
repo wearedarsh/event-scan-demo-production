@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\RegistrationForm;
 use App\Models\RegistrationFormStep;
 
-class RegistrationFormPaidStepsSeeder extends Seeder
+class RegistrationFormApprovalStepsSeeder extends Seeder
 {
     public function run()
     {

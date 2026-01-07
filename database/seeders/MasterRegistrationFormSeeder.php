@@ -9,8 +9,10 @@ class MasterRegistrationFormSeeder extends Seeder
     {
         $this->call([
             \Database\Seeders\RegistrationForm\RegistrationFormsSeeder::class,
-            \Database\Seeders\RegistrationForm\RegistrationFormStepsSeeder::class,
-            \Database\Seeders\RegistrationForm\RegistrationFormInputsSeeder::class,
+            \Database\Seeders\RegistrationForm\RegistrationFormPaidStepsSeeder::class,
+            \Database\Seeders\RegistrationForm\RegistrationFormPaidInputsSeeder::class,
+            \Database\Seeders\RegistrationForm\RegistrationFormApprovalStepsSeeder::class,
+            \Database\Seeders\RegistrationForm\RegistrationFormApprovalInputsSeeder::class,
         ]);
     }
 }

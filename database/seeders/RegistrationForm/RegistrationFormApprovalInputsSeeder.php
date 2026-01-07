@@ -240,13 +240,7 @@ class RegistrationFormApprovalInputsSeeder extends Seeder
         foreach ($professional_inputs as $input) {
             RegistrationFormInput::create($input);
         }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Documents
-        |--------------------------------------------------------------------------
-        */
-
+        
         $document_inputs = [
             [
                 'registration_form_step_id' => $documents_step->id,
