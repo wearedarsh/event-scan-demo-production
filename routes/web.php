@@ -71,7 +71,9 @@ Route::middleware(['auth', HasAdminAccess::class])
                 Route::get('/', App\Livewire\Backend\Admin\Developer\RegistrationForm\Index::class)->name('index');
                 Route::get('/form/{form}/manage', App\Livewire\Backend\Admin\Developer\RegistrationForm\Manage::class)->name('manage');
                 Route::get('/form/steps/{step}/manage', App\Livewire\Backend\Admin\Developer\RegistrationForm\Steps\Manage::class)->name('steps.manage');
-                Route::get('/form/{form}/create', App\Livewire\Backend\Admin\Developer\RegistrationForm\Steps\Create::class)->name('steps.create');
+                Route::get('/form/{form}/steps/create', App\Livewire\Backend\Admin\Developer\RegistrationForm\Steps\Create::class)->name('steps.create');
+                Route::get('/form/steps/{step}/fields/create', App\Livewire\Backend\Admin\Developer\RegistrationForm\Fields\Create::class)->name('fields.create');
+                Route::get('/form/steps/{step}/fields/{field}/edit', App\Livewire\Backend\Admin\Developer\RegistrationForm\Fields\Edit::class)->name('fields.edit');
             });
 
             Route::prefix('email-templates')->name('email-templates.')->group(function () {

@@ -12,7 +12,7 @@
         title="Manage step fields"
         subtitle="{{ $step->label }}">
         <x-admin.outline-btn-icon
-            :href="route('home')"
+            :href="route('admin.developer.registration-form.fields.create', $step->id)"
             icon="heroicon-o-plus">
             Add Field
         </x-admin.outline-btn-icon>

@@ -108,19 +108,19 @@
         label="Client settings"
         href="{{ route('admin.developer.client-settings.index') }}"
         icon="heroicon-o-adjustments-horizontal"
-        :active="request()->routeIs('admin.client-settings.*')" />
+        :active="request()->routeIs('admin.developer.client-settings.*')" />
 
     <x-admin.sidebar-link
         label="Registration forms"
         href="{{ route('admin.developer.registration-form.index') }}"
         icon="heroicon-o-clipboard-document-list"
-        :active="request()->routeIs('admin.registration-form.*')" />
+        :active="request()->routeIs('admin.developer.registration-form.*')" />
 
     <x-admin.sidebar-link
         label="Email templates"
         href="{{ route('admin.developer.email-templates.index') }}"
         icon="heroicon-o-envelope"
-        :active="request()->routeIs('admin.email-templates.*')" />
+        :active="request()->routeIs('admin.developer.email-templates.*')" />
     @endif
 
 </aside>

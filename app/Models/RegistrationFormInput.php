@@ -13,7 +13,6 @@ class RegistrationFormInput extends Model
         'placeholder',
         'type',
         'required',
-        'width',
         'options',
         'row_start',
         'row_end',
