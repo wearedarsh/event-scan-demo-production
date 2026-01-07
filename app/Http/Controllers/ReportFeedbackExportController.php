@@ -15,14 +15,12 @@ class ReportFeedbackExportController extends Controller
 {
     public function export(Event $event, FeedbackForm $feedback_form)
     {
-        // Collect submissions
         $submissions = FeedbackFormSubmission::query()
             ->where('feedback_form_id', $feedback_form->id)
             ->get();
 
         $submission_ids = $submissions->pluck('id');
 
-        // Collect responses
         $responses = FeedbackFormResponse::query()
             ->where('feedback_form_id', $feedback_form->id)
             ->when($submission_ids->isNotEmpty(), fn($q) =>
@@ -31,7 +29,6 @@ class ReportFeedbackExportController extends Controller
             ->get()
             ->groupBy('feedback_form_question_id');
 
-        // Collect questions grouped
         $questions = FeedbackFormQuestion::query()
             ->where('feedback_form_id', $feedback_form->id)
             ->orderBy('feedback_form_group_id')
@@ -39,7 +36,6 @@ class ReportFeedbackExportController extends Controller
             ->get()
             ->groupBy('feedback_form_group_id');
 
-        // Totals
         $totals = [
             'in_progress' => $feedback_form->submissions()->where('status', 'in_progress')->count(),
             'complete' => $feedback_form->submissions()->where('status', 'complete')->count(),
