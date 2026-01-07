@@ -52,27 +52,24 @@
 
                     <tbody x-data="{ openRow: null }">
 
-                        @foreach($event_contents as $content)
+                        @forelse($event_contents as $content)
 
                         <tr
                             wire:key="content-row-{{ $content->id }}"
                             class="hover:bg-[var(--color-surface-hover)] transition border-b border-[var(--color-border)]">
 
-                            <!-- Arrows -->
                             <td class="px-2 py-3">
                                 <x-admin.table-order-up-down
                                     :order="$orders['content'][$content->id]"
                                     :id="$content->id"
-                                    type="content"
-                                />
+                                    upMethod="moveContentUp"
+                                    downMethod="moveContentDown" />
                             </td>
 
-                            <!-- Title -->
                             <td class="px-4 py-3 font-medium">
                                 {{ $content->title }}
                             </td>
 
-                            <!-- Order input -->
                             <td class="px-4 py-3">
                                 <div class="flex items-center gap-2">
                                     <x-admin.table-order-input
@@ -141,7 +138,13 @@
                             </td>
                         </tr>
 
-                        @endforeach
+                        @empty
+                        <tr>
+                            <td colspan="5" class="px-4 py-6 text-center text-[var(--color-text-light)]">
+                                No content found.
+                            </td>
+                        </tr>
+                        @endforelse
 
                     </tbody>
                 </table>
@@ -181,7 +184,7 @@
 
                     <tbody x-data="{ openRow: null }">
 
-                        @foreach($downloads as $download)
+                        @forelse($downloads as $download)
 
                         <tr
                             wire:key="download-row-{{ $download->id }}"
@@ -190,10 +193,10 @@
                             <!-- Arrows -->
                             <td class="px-2 py-3">
                                 <x-admin.table-order-up-down
-                                    :order="$orders['downloads'][$download->id] ?? $download->display_order ?? 0"
+                                    :order="$orders['downloads'][$download->id]"
                                     :id="$download->id"
-                                    type="downloads"
-                                />
+                                    upMethod="moveDownloadUp"
+                                    downMethod="moveDownloadDown" />
                             </td>
 
                             <td class="px-4 py-3 font-medium">
@@ -266,8 +269,14 @@
                                 </div>
                             </td>
                         </tr>
-
-                        @endforeach
+                        
+                        @empty
+                        <tr>
+                            <td colspan="5" class="px-4 py-6 text-center text-[var(--color-text-light)]">
+                                No downloads found.
+                            </td>
+                        </tr>
+                        @endforelse
 
                     </tbody>
                 </table>

@@ -19,7 +19,7 @@ class Edit extends Component
     public string $title;
     public ?string $start_time = null;
     public ?string $end_time = null;
-    public float $cme_points = 0.0;
+    public string $cme_points = '0.0';
     public int $event_session_type_id;
     public int $display_order = 0;
    
@@ -37,7 +37,7 @@ class Edit extends Component
         $this->display_order = $event_session->display_order;
     }
 
-    public function store()
+    public function update()
     {
         $this->validate([
             'title' => 'required|string|max:255',

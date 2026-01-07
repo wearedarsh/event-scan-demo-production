@@ -20,7 +20,7 @@
         class="rounded-lg p-4"
         style="background-color: color-mix(in srgb, {{ $color }} 10%, transparent);"
     >
-        <div class="text-sm font-medium" style="color: {{ $color }}">
+        <div class="text-xs font-regular" style="color: {{ $color }}">
             {{ $message ?? $slot }}
         </div>
     </div>

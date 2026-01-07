@@ -61,8 +61,11 @@
                             class="hover:bg-[var(--color-surface-hover)] transition border-b border-[var(--color-border)]">
                             <td class="px-2 py-3">
                                 <x-admin.table-order-up-down
-                                    :order="$orders[$group->id]"
-                                    :id="$group->id" />
+                                :order="$orders[$group->id]"
+                                :id="$group->id"
+                                upMethod="moveGroupUp"
+                                downMethod="moveGroupDown" />
+
                             </td>
 
                             <td class="px-4 py-3 font-medium">
@@ -73,12 +76,12 @@
                                 <div class="flex items-center gap-2">
                                     <x-admin.table-order-input
                                         wire:model.defer="orders.{{ $group->id }}"
-                                        wire:keydown.enter="updateOrder({{ $group->id }})"
+                                        wire:keydown.enter="updateGroupOrder({{ $group->id }})"
                                         class="rounded-sm text-xs" />
 
                                     <x-admin.table-order-input-enter
                                         :id="$group->id"
-                                        method="updateOrder" />
+                                        method="updateGroupOrder" />
                                 </div>
                             </td>
 
@@ -96,9 +99,10 @@
                                     <x-admin.table-action-button
                                         type="link"
                                         :href="route('admin.events.event-sessions.manage', [
-                                'event' => $event->id,
-                                'group' => $group->id
-                            ])"
+                                            'event' => $event->id,
+                                            'group' => $group->id
+                                        ])"
+                                        primary
                                         icon="rectangle-stack"
                                         label="Manage sessions" />
 
@@ -120,9 +124,10 @@
                                     <x-admin.table-action-button
                                         type="link"
                                         :href="route('admin.events.event-sessions.groups.edit', [
-                                'event' => $event->id,
-                                'group' => $group->id
-                            ])"
+                                            'event' => $event->id,
+                                            'group' => $group->id
+                                        ])"
+                                        
                                         icon="pencil-square"
                                         label="Edit" />
 
@@ -204,6 +209,7 @@
                                                 'event' => $event->id,
                                                 'type' => $type->id
                                             ])"
+                                            primary
                                         icon="pencil-square"
                                         label="Edit" />
 

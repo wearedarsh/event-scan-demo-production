@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('feedback_form_id')->constrained()->cascadeOnDelete();
             $table->string('title')->nullable(); // optional step title
-            $table->integer('order')->default(0);
+            $table->integer('display_order')->default(0);
             $table->timestamps();
         });
     }

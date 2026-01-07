@@ -24,19 +24,19 @@ class Edit extends Component
         $this->step = $step;
 
         $this->title = $step->title;
-        $this->order = $step->order;
+        $this->order = $step->display_order;
     }
 
     public function update()
     {
         $this->validate([
             'title' => 'required|string|max:255',
-            'order' => 'required|integer|min:0',
+            'display_order' => 'required|integer|min:0',
         ]);
 
         $this->step->update([
             'title' => $this->title,
-            'order' => $this->order,
+            'display_order' => $this->order,
         ]);
 
         session()->flash('success', 'Step updated');

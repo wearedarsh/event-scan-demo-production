@@ -41,7 +41,6 @@ class View extends Component
             ->where('event_id', $this->event->id)
             ->get(['id','event_session_id','event_id','checked_in_by','checked_in_at','checked_in_route']);
 
-        // --- by user
         $userCounts = [];
         foreach ($ins as $ci) {
             $u = $ci->checkedInBy;
@@ -51,7 +50,6 @@ class View extends Component
         arsort($userCounts);
         $by_user = collect($userCounts)->map(fn($count,$label)=>['label'=>$label,'count'=>$count])->values()->all();
 
-        // --- by groups/sessions
         $grouped = [];
         foreach ($ins as $ci) {
             $gName  = $ci->session?->group?->friendly_name ?: 'Unassigned group';

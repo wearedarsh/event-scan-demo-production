@@ -7,61 +7,78 @@ use Livewire\Attributes\Layout;
 use App\Models\Event;
 use App\Models\EventSessionGroup;
 use App\Models\EventSession;
+use App\Traits\HandlesDisplayOrder;
 
 #[Layout('livewire.backend.admin.layouts.app')]
 class Manage extends Component
 {
+    use HandlesDisplayOrder;
+
     public Event $event;
     public EventSessionGroup $group;
 
-    public $event_sessions = [];
-    public $orders = [];
+    public array $orders = [];
 
-    public function mount(Event $event, EventSessionGroup $group)
+    public function mount(Event $event, EventSessionGroup $group): void
     {
         $this->event = $event;
         $this->group = $group;
 
-        $this->event_sessions = EventSession::where('event_session_group_id', $this->group->id)
+        $this->loadSessions();
+    }
+
+    protected function loadSessions(): void
+    {
+        $sessions = EventSession::where('event_session_group_id', $this->group->id)
             ->orderBy('display_order')
             ->orderBy('start_time')
             ->get();
 
-        $this->orders = $this->event_sessions
+        $this->orders = $sessions
             ->pluck('display_order', 'id')
             ->toArray();
     }
 
-    public function updateSessionOrder($id, $value)
+
+    public function moveSessionUp(int $id): void
     {
-        $value = max(1, (int) $value);
-
-        EventSession::where('id', $id)->update([
-            'display_order' => $value
-        ]);
-
-        $this->orders[$id] = $value;
-
-        $this->dispatch('notify', 'Session order updated.');
+        $this->moveUp(EventSession::findOrFail($id));
+        $this->loadSessions();
     }
 
-    public function delete(int $session_id)
+    public function moveSessionDown(int $id): void
     {
-        $session = EventSession::findOrFail($session_id);
-        $session->delete();
+        $this->moveDown(EventSession::findOrFail($id));
+        $this->loadSessions();
+    }
 
+    public function updateSessionOrder(int $id): void
+    {
+        if (!isset($this->orders[$id])) {
+            return;
+        }
+
+        $this->updateOrder(
+            EventSession::findOrFail($id),
+            (int) $this->orders[$id]
+        );
+
+        $this->loadSessions();
+    }
+
+    public function delete(int $session_id): void
+    {
+        EventSession::findOrFail($session_id)->delete();
         session()->flash('success', 'Session deleted successfully.');
+        $this->loadSessions();
     }
 
     public function render()
     {
-        $this->event_sessions = EventSession::where('event_session_group_id', $this->group->id)
-            ->orderBy('display_order')
-            ->orderBy('start_time')
-            ->get();
-
         return view('livewire.backend.admin.event-sessions.manage', [
-            'event_sessions' => $this->event_sessions
+            'event_sessions' => EventSession::where('event_session_group_id', $this->group->id)
+                ->get()
+                ->sortBy(fn ($s) => $this->orders[$s->id] ?? $s->display_order),
         ]);
     }
 }

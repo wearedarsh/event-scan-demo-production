@@ -41,6 +41,7 @@
 
                     <thead>
                         <tr class="text-xs uppercase text-[var(--color-text-light)] border-b border-[var(--color-border)]">
+                            <th class="px-4 py-3"></th>
                             <th class="px-4 py-3">Title</th>
                             <th class="px-4 py-3">CME Points</th>
                             <th class="px-4 py-3">Order</th>
@@ -55,7 +56,13 @@
 
                             <!-- Main Row -->
                             <tr class="group border-b border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition">
-
+                                <td class="px-4 py-3">
+                                    <x-admin.table-order-up-down
+                                        :order="$orders[$session->id]"
+                                        :id="$session->id"
+                                        upMethod="moveSessionUp"
+                                        downMethod="moveSessionDown" />
+                                </td>
                                 <td class="px-4 py-3 font-medium">
                                     {{ $session->title }}
                                 </td>
@@ -65,10 +72,16 @@
                                 </td>
 
                                 <td class="px-4 py-3">
-                                    <x-admin.table-order-input
-                                        model="orders.{{ $session->id }}"
-                                        wire:change="updateSessionOrder({{ $session->id }}, $event.target.value)"
-                                    />
+                                    <div class="flex items-center gap-2">
+                                        <x-admin.table-order-input
+                                            wire:model.defer="orders.{{ $session->id }}"
+                                            wire:keydown.enter="updateSessionOrder({{ $session->id }})"
+                                            class="rounded-sm text-xs" />
+
+                                        <x-admin.table-order-input-enter
+                                            :id="$session->id"
+                                            method="updateSessionOrder" />
+                                    </div>
                                 </td>
 
                                 <td class="px-4 py-3">
@@ -78,7 +91,6 @@
                                 <td class="px-4 py-3 text-right">
                                     <div class="flex items-center justify-end gap-2">
 
-                                        <!-- Edit as primary action -->
                                         <x-admin.table-action-button
                                             type="link"
                                             :href="route('admin.events.event-sessions.edit', [
@@ -86,6 +98,7 @@
                                                 'group' => $group->id,
                                                 'event_session' => $session->id
                                             ])"
+                                            primary
                                             icon="pencil-square"
                                             label="Edit"
                                         />

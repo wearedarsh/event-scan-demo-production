@@ -24,34 +24,34 @@ class MasterFeedbackFormSeeder extends Seeder
         );
 
         $step1 = FeedbackFormStep::updateOrCreate(
-            ['feedback_form_id' => $form->id, 'order' => 1],
+            ['feedback_form_id' => $form->id, 'display_order' => 1],
             ['title' => 'Your Experience']
         );
 
         $step2 = FeedbackFormStep::updateOrCreate(
-            ['feedback_form_id' => $form->id, 'order' => 2],
+            ['feedback_form_id' => $form->id, 'display_order' => 2],
             ['title' => 'Event Impact']
         );
 
 
         $g1 = FeedbackFormGroup::updateOrCreate(
             ['feedback_form_id' => $form->id, 'title' => 'Overall Experience'],
-            ['feedback_form_step_id' => $step1->id, 'order' => 1]
+            ['feedback_form_step_id' => $step1->id, 'display_order' => 1]
         );
 
         $g2 = FeedbackFormGroup::updateOrCreate(
             ['feedback_form_id' => $form->id, 'title' => 'Content & Delivery'],
-            ['feedback_form_step_id' => $step1->id, 'order' => 2]
+            ['feedback_form_step_id' => $step1->id, 'display_order' => 2]
         );
 
         $g3 = FeedbackFormGroup::updateOrCreate(
             ['feedback_form_id' => $form->id, 'title' => 'Practical Application'],
-            ['feedback_form_step_id' => $step2->id, 'order' => 1]
+            ['feedback_form_step_id' => $step2->id, 'display_order' => 1]
         );
 
         $g4 = FeedbackFormGroup::updateOrCreate(
             ['feedback_form_id' => $form->id, 'title' => 'Final Thoughts'],
-            ['feedback_form_step_id' => $step2->id, 'order' => 2]
+            ['feedback_form_step_id' => $step2->id, 'display_order' => 2]
         );
 
         $this->addQuestion($g1,
@@ -119,7 +119,7 @@ class MasterFeedbackFormSeeder extends Seeder
         );
     }
 
-    private function addQuestion($group, $text, $type, $is_required, $order, $options_text = null, $visible_if_question_id = null, $visible_if_answer = null)
+    private function addQuestion($group, $text, $type, $is_required, $display_order, $options_text = null, $visible_if_question_id = null, $visible_if_answer = null)
     {
         return FeedbackFormQuestion::updateOrCreate(
             [
@@ -130,7 +130,7 @@ class MasterFeedbackFormSeeder extends Seeder
                 'feedback_form_id' => $group->feedback_form_id,
                 'type' => $type,
                 'is_required' => $is_required,
-                'order' => $order,
+                'display_order' => $display_order,
                 'options_text' => $options_text,
                 'visible_if_question_id' => $visible_if_question_id,
                 'visible_if_answer' => $visible_if_answer,

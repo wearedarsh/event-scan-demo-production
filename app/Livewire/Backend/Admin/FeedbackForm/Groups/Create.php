@@ -28,13 +28,13 @@ class Create extends Component
     {
         $this->validate([
             'title' => 'required|string|max:255',
-            'order' => 'required|integer|min:0',
+            'display_order' => 'required|integer|min:0',
             'feedback_form_step_id' => 'required|exists:feedback_form_steps,id',
         ]);
 
         FeedbackFormGroup::create([
             'title' => $this->title,
-            'order' => $this->order,
+            'display_order' => $this->order,
             'feedback_form_id' => $this->feedback_form->id,
             'feedback_form_step_id' => $this->feedback_form_step_id,
         ]);
@@ -49,7 +49,7 @@ class Create extends Component
     public function render()
     {
         return view('livewire.backend.admin.feedback-form.groups.create', [
-            'steps' => $this->feedback_form->steps()->orderBy('order')->get(),
+            'steps' => $this->feedback_form->steps()->orderBy('display_order')->get(),
         ]);
     }
 }

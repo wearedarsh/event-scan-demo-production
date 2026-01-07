@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('question');
             $table->text('type'); // eg radio, text, textarea
             $table->foreignId('feedback_form_group_id')->constrained();
-            $table->integer('order')->default(0);
+            $table->integer('display_order')->default(0);
             $table->boolean('is_required')->default(false);
             $table->unsignedBigInteger('visible_if_question_id')->nullable();
             $table->string('visible_if_answer')->nullable();

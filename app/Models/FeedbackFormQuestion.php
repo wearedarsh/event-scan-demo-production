@@ -11,7 +11,7 @@ class FeedbackFormQuestion extends Model
         'question',
         'type',
         'feedback_form_group_id',
-        'order',
+        'display_order',
         'is_required',
         'options_text',
         'visible_if_question_id',

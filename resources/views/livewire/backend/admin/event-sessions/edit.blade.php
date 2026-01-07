@@ -35,36 +35,51 @@
             <x-admin.section-title title="Session details" />
 
             <form wire:submit.prevent="update" class="space-y-6">
-
-                <!-- Grid -->
                 <div class="grid md:grid-cols-2 gap-6">
-
+                    <div>
+                    <x-admin.input-label for="title">
+                        Title
+                    </x-admin.input-label>
                     <x-admin.input-text
-                        label="Title"
                         model="title"
                     />
+                    </div>
 
+                    <div>
+                    <x-admin.input-label for="start_time">
+                        Start time
+                    </x-admin.input-label>
                     <x-admin.input-time
-                        label="Start Time"
                         model="start_time"
                     />
+                    </div>
 
+                    <div>
+                    <x-admin.input-label for="end_time">
+                        End time
+                    </x-admin.input-label>
                     <x-admin.input-time
-                        label="End Time"
                         model="end_time"
                     />
+                    </div>
 
+                    <div>
+                    <x-admin.input-label for="cme_points">
+                        CME points
+                    </x-admin.input-label>
                     <x-admin.input-text
-                        label="CME Points"
-        type="number"
                         model="cme_points"
                     />
+                    </div>
 
+                    <div>
+                    <x-admin.input-label for="display_order">
+                        Display order
+                    </x-admin.input-label>
                     <x-admin.input-text
-                        label="Display Order"
-                        type="number"
                         model="display_order"
                     />
+                    </div>
 
                     <div>
                         <x-admin.input-label for="event_session_type_id">Session Type</x-admin.input-label>

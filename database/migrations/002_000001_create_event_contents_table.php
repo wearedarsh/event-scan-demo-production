@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->mediumText('html_content');
-            $table->integer('order')->default(0);
+            $table->integer('display_order')->default(0);
             $table->boolean('active')->default(true);
             $table->softDeletes();
             $table->timestamps();

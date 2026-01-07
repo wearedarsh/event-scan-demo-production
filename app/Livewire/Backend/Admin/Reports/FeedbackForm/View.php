@@ -64,26 +64,23 @@ class View extends Component
         $totals['date_from'] = $this->date_from;
         $totals['date_to']   = $this->date_to;
 
-        // Load groups + questions (ordered)
         $groups = FeedbackFormGroup::query()
             ->where('feedback_form_id', $this->feedback_form->id)
-            ->orderBy('order')
+            ->orderBy('display_order')
             ->with(['questions' => function($q){
-                $q->orderBy('order');
+                $q->orderBy('display_order');
             }])
             ->get();
 
-        // Find any ungrouped questions
         $ungroupedQuestions = FeedbackFormQuestion::query()
             ->where('feedback_form_id', $this->feedback_form->id)
             ->whereNull('feedback_form_group_id')
-            ->orderBy('order')
+            ->orderBy('display_order')
             ->get();
 
         $groups_report = [];
         $charts = [];
 
-        // Helper to build a question item
         $makeItem = function(FeedbackFormQuestion $q) use ($responses, &$charts) {
             $q_responses = $responses->get($q->id, collect());
             $item = [
@@ -160,7 +157,7 @@ class View extends Component
         foreach ($groups as $g) {
             $groupBlock = [
                 'title'     => $g->title,
-                'order'     => $g->order,
+                'order'     => $g->display_order,
                 'questions' => [],
             ];
             foreach ($g->questions as $q) {

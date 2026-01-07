@@ -31,7 +31,7 @@ class Create extends Component
 
         FeedbackFormStep::create([
             'title' => $this->title,
-            'order' => $this->order,
+            'display_order' => $this->order,
             'feedback_form_id' => $this->feedback_form->id,
         ]);
 

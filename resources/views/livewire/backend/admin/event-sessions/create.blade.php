@@ -68,7 +68,7 @@
                         <x-admin.input-text
                             id="display_order"
                             model="display_order"
-                            type="number"
+                            type="text"
                         />
                     </div>
 

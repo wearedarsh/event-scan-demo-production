@@ -26,7 +26,7 @@ class Edit extends Component
         $this->feedback_form = $feedback_form;
 
         $this->title = $group->title;
-        $this->order = $group->order;
+        $this->order = $group->display_order;
         $this->feedback_form_step_id = $group->feedback_form_step_id;
     }
 
@@ -34,13 +34,13 @@ class Edit extends Component
     {
         $this->validate([
             'title' => 'required|string|max:255',
-            'order' => 'required|integer|min:0',
+            'display_order' => 'required|integer|min:0',
             'feedback_form_step_id' => 'required|exists:feedback_form_steps,id',
         ]);
 
         $this->group->update([
             'title' => $this->title,
-            'order' => $this->order,
+            'display_order' => $this->order,
             'feedback_form_step_id' => $this->feedback_form_step_id,
         ]);
 
@@ -54,7 +54,7 @@ class Edit extends Component
     public function render()
     {
         return view('livewire.backend.admin.feedback-form.groups.edit', [
-            'steps' => $this->feedback_form->steps()->orderBy('order')->get(),
+            'steps' => $this->feedback_form->steps()->orderBy('display_order')->get(),
         ]);
     }
 }

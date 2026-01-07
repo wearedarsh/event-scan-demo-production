@@ -7,21 +7,25 @@ use Livewire\Component;
 use App\Models\EventSessionType;
 use App\Models\EventSessionGroup;
 use App\Models\Event;
+use App\Traits\HandlesDisplayOrder;
 
 #[Layout('livewire.backend.admin.layouts.app')]
 class Index extends Component
 {
+    use HandlesDisplayOrder;
+
     public Event $event;
-    public $orders = [];
+
+    public array $orders = [];
     public $event_session_groups = [];
 
-    public function mount(Event $event)
+    public function mount(Event $event): void
     {
         $this->event = $event;
         $this->loadGroups();
     }
 
-    private function loadGroups()
+    protected function loadGroups(): void
     {
         $this->event_session_groups = EventSessionGroup::where('event_id', $this->event->id)
             ->orderBy('display_order')
@@ -32,55 +36,44 @@ class Index extends Component
             ->toArray();
     }
 
-    public function moveUp($id)
+
+    public function moveGroupUp(int $id): void
     {
-        $group = EventSessionGroup::findOrFail($id);
-
-        if ($group->display_order <= 0) {
-            return;
-        }
-
-        $group->decrement('display_order', 1);
-
+        $this->moveUp(EventSessionGroup::findOrFail($id));
         $this->loadGroups();
     }
 
-    public function moveDown($id)
+    public function moveGroupDown(int $id): void
     {
-        $group = EventSessionGroup::findOrFail($id);
-
-        $group->increment('display_order', 1);
-
+        $this->moveDown(EventSessionGroup::findOrFail($id));
         $this->loadGroups();
     }
 
-    public function updateOrder($id)
+    public function updateGroupOrder(int $id): void
     {
         if (!isset($this->orders[$id])) {
             return;
         }
 
-        $newOrder = (int) $this->orders[$id];
-
-        EventSessionGroup::where('id', $id)->update([
-            'display_order' => $newOrder,
-        ]);
+        $this->updateOrder(
+            EventSessionGroup::findOrFail($id),
+            (int) $this->orders[$id]
+        );
 
         $this->loadGroups();
     }
 
-    public function deleteGroup($group_id)
+    public function deleteGroup(int $group_id): void
     {
         EventSessionGroup::where('event_id', $this->event->id)
             ->findOrFail($group_id)
             ->delete();
 
-        $this->loadGroups();
-
         session()->flash('success', 'Session group deleted successfully.');
+        $this->loadGroups();
     }
 
-    public function deleteType(int $type_id)
+    public function deleteType(int $type_id): void
     {
         EventSessionType::findOrFail($type_id)->delete();
         session()->flash('success', 'Session type deleted successfully.');

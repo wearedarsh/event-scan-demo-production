@@ -20,12 +20,12 @@ class FeedbackForm extends Model
 
     public function steps()
     {
-        return $this->hasMany(FeedbackFormStep::class)->orderBy('order');
+        return $this->hasMany(FeedbackFormStep::class)->orderBy('display_order');
     }
 
     public function questions()
     {
-        return $this->hasMany(FeedbackFormQuestion::class)->orderBy('order');
+        return $this->hasMany(FeedbackFormQuestion::class)->orderBy('display_order');
     }
 
     public function groups()

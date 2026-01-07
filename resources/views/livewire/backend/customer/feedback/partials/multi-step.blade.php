@@ -71,11 +71,11 @@
 
     {{-- Navigation --}}
     <div class="mt-4 d-flex justify-content-between">
-        @if ($step->order !== 1)
+        @if ($step->display_order !== 1)
             <button class="btn bg-brand-secondary" wire:click="previousStep">Previous</button>
         @endif
 
-        @if ($step->order !== $total_steps)
+        @if ($step->display_order !== $total_steps)
             <button class="btn bg-brand-secondary" wire:click="nextStep">Next</button>
         @else
             <button class="btn bg-brand-secondary" wire:click="nextStep">Finish</button>

@@ -12,7 +12,7 @@ class FeedbackFormStep extends Model
     protected $fillable = [
         'feedback_form_id',
         'title',
-        'order',
+        'display_order',
     ];
 
     public function form()

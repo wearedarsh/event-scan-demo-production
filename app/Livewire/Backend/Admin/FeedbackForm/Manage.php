@@ -31,22 +31,18 @@ class Manage extends Component
         $this->loadOrders();
     }
 
-
-    /**
-     * Load all steps + groups into order arrays
-     */
     protected function loadOrders(): void
     {
         $this->stepOrders = $this->feedback_form
             ->steps()
-            ->orderBy('order')
-            ->pluck('order', 'id')
+            ->orderBy('display_order')
+            ->pluck('display_order', 'id')
             ->toArray();
 
         $this->groupOrders = $this->feedback_form
             ->groups()
-            ->orderBy('order')
-            ->pluck('order', 'id')
+            ->orderBy('display_order')
+            ->pluck('display_order', 'id')
             ->toArray();
     }
 
@@ -83,8 +79,8 @@ class Manage extends Component
     public function render()
     {
         return view('livewire.backend.admin.feedback-form.manage', [
-            'steps' => $this->feedback_form->steps()->orderBy('order')->get(),
-            'groups' => $this->feedback_form->groups()->orderBy('order')->get(),
+            'steps' => $this->feedback_form->steps()->orderBy('display_order')->get(),
+            'groups' => $this->feedback_form->groups()->orderBy('display_order')->get(),
         ]);
     }
 }

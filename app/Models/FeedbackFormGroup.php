@@ -13,7 +13,7 @@ class FeedbackFormGroup extends Model
         'feedback_form_id',
         'feedback_form_step_id',
         'title',
-        'order',
+        'display_order',
     ];
 
     public function feedbackForm()
@@ -29,7 +29,7 @@ class FeedbackFormGroup extends Model
 
     public function questions()
     {
-        return $this->hasMany(FeedbackFormQuestion::class)->orderBy('order');
+        return $this->hasMany(FeedbackFormQuestion::class)->orderBy('display_order');
     }
 
     public function parent()
@@ -39,6 +39,6 @@ class FeedbackFormGroup extends Model
 
     public function children()
     {
-        return $this->hasMany(FeedbackFormGroup::class, 'parent_group_id')->orderBy('order');
+        return $this->hasMany(FeedbackFormGroup::class, 'parent_group_id')->orderBy('display_order');
     }
 }

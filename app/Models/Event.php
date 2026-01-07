@@ -123,7 +123,7 @@ class Event extends Model
 
     public function contentAll()
     {
-        return $this->hasMany(EventContent::class)->orderBy('order', 'asc');
+        return $this->hasMany(EventContent::class)->orderBy('display_order', 'asc');
     }
 
     public function getFormattedStartDateAttribute()

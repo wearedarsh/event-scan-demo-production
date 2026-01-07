@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('feedback_form_id')->constrained();
             $table->foreignId('feedback_form_step_id')->constrained()->cascadeOnDelete();
             $table->string('title');
-            $table->integer('order')->default(0);
+            $table->integer('display_order')->default(0);
             $table->timestamps();
         });
     }

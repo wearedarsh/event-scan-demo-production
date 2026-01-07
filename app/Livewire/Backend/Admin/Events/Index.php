@@ -129,7 +129,7 @@ class Index extends Component
 
                 // Groups
                 $groupIdMap = [];
-                $origGroups = FeedbackFormGroup::where('feedback_form_id', $form->id)->orderBy('order')->get();
+                $origGroups = FeedbackFormGroup::where('feedback_form_id', $form->id)->orderBy('display_order')->get();
 
                 foreach ($origGroups as $group) {
                     $newGroup = $group->replicate();
@@ -141,7 +141,7 @@ class Index extends Component
 
                 // Questions
                 $questionIdMap = [];
-                $origQuestions = FeedbackFormQuestion::where('feedback_form_id', $form->id)->orderBy('order')->get();
+                $origQuestions = FeedbackFormQuestion::where('feedback_form_id', $form->id)->orderBy('display_order')->get();
 
                 foreach ($origQuestions as $q) {
                     $newQ = $q->replicate();

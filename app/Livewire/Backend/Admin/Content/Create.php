@@ -34,7 +34,7 @@ class Create extends Component
         $this->validate([
             'title' => 'required|string|max:255',
             'html_content' => 'required|string',
-            'order' => 'required|integer|min:0',
+            'display_order' => 'required|integer|min:0',
             'active' => 'boolean',
         ]);
 
@@ -42,7 +42,7 @@ class Create extends Component
             'event_id' => $this->event->id,
             'title' => $this->title,
             'html_content' => $this->html_content,
-            'order' => $this->order,
+            'display_order' => $this->order,
             'active' => $this->active,
         ]);
 

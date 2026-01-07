@@ -63,7 +63,7 @@ class Create extends Component
         FeedbackFormQuestion::create([
             'feedback_form_id' => $this->feedback_form->id,
             'question' => $this->question_text,
-            'order' => $this->order,
+            'display_order' => $this->order,
             'type' => $this->type,
             'feedback_form_group_id' => $this->group->id,
             'is_required' => true,

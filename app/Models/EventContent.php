@@ -10,7 +10,7 @@ class EventContent extends Model
 {
 
     use SoftDeletes;
-    protected $fillable = ['event_id', 'title', 'html_content', 'active', 'order'];
+    protected $fillable = ['event_id', 'title', 'html_content', 'active', 'display_order'];
 
     public function event()
     {

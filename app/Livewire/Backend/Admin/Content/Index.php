@@ -7,140 +7,116 @@ use Livewire\Attributes\Layout;
 use App\Models\Event;
 use App\Models\EventContent;
 use App\Models\EventDownload;
+use App\Traits\HandlesDisplayOrder;
 
 #[Layout('livewire.backend.admin.layouts.app')]
 class Index extends Component
 {
+    use HandlesDisplayOrder;
+
     public Event $event;
 
-    public $orders = [
+    public array $orders = [
         'content' => [],
         'downloads' => [],
     ];
 
-    public function mount(Event $event)
+    public function mount(Event $event): void
     {
         $this->event = $event;
         $this->loadOrders();
     }
 
-    private function loadOrders()
+    protected function loadOrders(): void
     {
         $this->orders['content'] = $this->event->contentAll
-            ->pluck('order', 'id')
+            ->pluck('display_order', 'id')
             ->toArray();
 
         $this->orders['downloads'] = EventDownload::where('event_id', $this->event->id)
-            ->orderBy('display_order')
             ->pluck('display_order', 'id')
             ->toArray();
     }
 
-    public function moveUpContent($id)
+
+    public function moveContentUp(int $id): void
     {
-        $current = EventContent::findOrFail($id);
-
-        if ($current->order <= 1) {
-            return;
-        }
-
-        $current->decrement('order');
+        $this->moveUp(EventContent::findOrFail($id));
         $this->loadOrders();
     }
 
-    public function moveDownContent($id)
+    public function moveContentDown(int $id): void
     {
-        $current = EventContent::findOrFail($id);
-
-        $current->increment('order');
+        $this->moveDown(EventContent::findOrFail($id));
         $this->loadOrders();
     }
 
-    public function updateContentOrder($id)
+    public function updateContentOrder(int $id): void
     {
         if (!isset($this->orders['content'][$id])) {
             return;
         }
 
-        $newOrder = max(1, (int) $this->orders['content'][$id]);
-
-        EventContent::where('id', $id)->update([
-            'order' => $newOrder
-        ]);
+        $this->updateOrder(
+            EventContent::findOrFail($id),
+            (int) $this->orders['content'][$id]
+        );
 
         $this->loadOrders();
     }
 
 
-    public function moveUpDownloads($id)
+    public function moveDownloadUp(int $id): void
     {
-        $current = EventDownload::findOrFail($id);
-
-        if ($current->display_order <= 1) {
-            return;
-        }
-
-        $current->decrement('display_order');
+        $this->moveUp(EventDownload::findOrFail($id));
         $this->loadOrders();
     }
 
-    public function moveDownDownloads($id)
+    public function moveDownloadDown(int $id): void
     {
-        $current = EventDownload::findOrFail($id);
-
-        $current->increment('display_order');
+        $this->moveDown(EventDownload::findOrFail($id));
         $this->loadOrders();
     }
 
-    public function updateDownloadOrder($id)
+    public function updateDownloadOrder(int $id): void
     {
         if (!isset($this->orders['downloads'][$id])) {
             return;
         }
 
-        $newOrder = max(1, (int) $this->orders['downloads'][$id]);
-
-        EventDownload::where('id', $id)->update([
-            'display_order' => $newOrder
-        ]);
+        $this->updateOrder(
+            EventDownload::findOrFail($id),
+            (int) $this->orders['downloads'][$id]
+        );
 
         $this->loadOrders();
     }
 
-    public function deleteContent(int $id)
+    public function deleteContent(int $id): void
     {
         EventContent::findOrFail($id)->delete();
-
         session()->flash('success', 'Content deleted successfully.');
         $this->loadOrders();
     }
 
-    public function deleteDownload(int $id)
+    public function deleteDownload(int $id): void
     {
         EventDownload::findOrFail($id)->delete();
-
         session()->flash('success', 'Download deleted successfully.');
         $this->loadOrders();
     }
 
-
     public function render()
     {
-        $allContent = EventContent::where('event_id', $this->event->id)->get();
-        $allDownloads = EventDownload::where('event_id', $this->event->id)->get();
-
-        $sortedContent = $allContent->sortBy(
-            fn($c) => $this->orders['content'][$c->id] ?? $c->order
-        );
-
-        $sortedDownloads = $allDownloads->sortBy(
-            fn($d) => $this->orders['downloads'][$d->id] ?? $d->display_order
-        );
-
         return view('livewire.backend.admin.content.index', [
             'event' => $this->event,
-            'event_contents' => $sortedContent,
-            'downloads' => $sortedDownloads,
+            'event_contents' => EventContent::where('event_id', $this->event->id)
+                ->get()
+                ->sortBy(fn ($c) => $this->orders['content'][$c->id] ?? $c->display_order),
+
+            'downloads' => EventDownload::where('event_id', $this->event->id)
+                ->get()
+                ->sortBy(fn ($d) => $this->orders['downloads'][$d->id] ?? $d->display_order),
         ]);
     }
 }

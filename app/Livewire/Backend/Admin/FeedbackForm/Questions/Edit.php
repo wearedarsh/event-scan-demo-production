@@ -37,7 +37,7 @@ class Edit extends Component
         $this->question = $question;
 
         $this->question_text = $question->question;
-        $this->order = $question->order;
+        $this->order = $question->display_order;
         $this->type = $question->type;
         $this->options_text = $question->options_text;
         $this->is_optional = $question->visible_if_question_id !== null;
@@ -74,7 +74,7 @@ class Edit extends Component
 
         $this->question->update([
             'question' => $this->question_text,
-            'order' => $this->order,
+            'display_order' => $this->order,
             'type' => $this->type,
             'options_text' => $this->options_text,
             'is_required' => (bool) $this->is_required,

@@ -18,7 +18,7 @@ class Create extends Component
     public string $title;
     public ?string $start_time = null;
     public ?string $end_time = null;
-    public float $cme_points = 0.0;
+    public string $cme_points = '0.0';
     public int $event_session_type_id;
     public int $display_order = 0;
 
@@ -46,6 +46,8 @@ class Create extends Component
             ],
             'event_session_type_id' => 'required|exists:event_session_types,id',
             'display_order' => 'nullable|integer',
+        ],[
+            'event_session_type_id.required' => 'Please select a session type',
         ]);
 
 

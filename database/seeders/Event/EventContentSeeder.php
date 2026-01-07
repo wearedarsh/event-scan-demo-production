@@ -31,7 +31,7 @@ class EventContentSeeder extends Seeder
                     <h3>Who Should Attend</h3>
                     <p>This event is ideal for radiographers, clinicians, medical technicians, researchers, and early-career professionals seeking deeper knowledge in diagnostic practice.</p>
                 ',
-                'order' => 1,
+                'display_order' => 1,
                 'active' => 1,
             ],
 
@@ -51,7 +51,7 @@ class EventContentSeeder extends Seeder
                     <h3>Parking</h3>
                     <p>Limited on-site parking is available. Delegates are encouraged to use public transport where possible.</p>
                 ',
-                'order' => 2,
+                'display_order' => 2,
                 'active' => 1,
             ],
 
@@ -74,7 +74,7 @@ class EventContentSeeder extends Seeder
                     <p><strong>Medical Foundry Events Team</strong><br>
                     Email: <a href="mailto:events@medicalfoundry.co.uk">events@medicalfoundry.co.uk</a></p>
                 ',
-                'order' => 3,
+                'display_order' => 3,
                 'active' => 1,
             ],
             [
@@ -87,7 +87,7 @@ class EventContentSeeder extends Seeder
 
                     <p>To register interest, please check back shortly or contact the events team for early updates.</p>
                 ',
-                'order' => 1,
+                'display_order' => 1,
                 'active' => 1,
             ],
 
@@ -109,7 +109,7 @@ class EventContentSeeder extends Seeder
 
                     <p>If you would like to be added to the waiting list, please contact the Medical Foundry events team.</p>
                 ',
-                'order' => 1,
+                'display_order' => 1,
                 'active' => 1,
             ],
 

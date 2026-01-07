@@ -17,7 +17,7 @@ class EventController extends Controller
             ->orderBy('date_start', 'asc')->get();
 
 
-        $event_content = EventContent::where('event_id', $event->id)->orderBy('order', 'asc')->get();
+        $event_content = EventContent::where('event_id', $event->id)->orderBy('display_order', 'asc')->get();
         $event_display_tickets = $event->frontendTickets;
         $currency_symbol = $currency_symbol = client_setting('general.currency_symbol');
 

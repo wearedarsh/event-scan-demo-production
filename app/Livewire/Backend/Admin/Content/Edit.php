@@ -28,7 +28,7 @@ class Edit extends Component
         $this->title = $content->title;
         $this->html_content = $content->html_content;
         $this->active = $content->active;
-        $this->order = $content->order;
+        $this->order = $content->display_order;
     }
 
     public function logMessage($message)

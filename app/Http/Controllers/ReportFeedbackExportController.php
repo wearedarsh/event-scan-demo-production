@@ -32,7 +32,7 @@ class ReportFeedbackExportController extends Controller
         $questions = FeedbackFormQuestion::query()
             ->where('feedback_form_id', $feedback_form->id)
             ->orderBy('feedback_form_group_id')
-            ->orderBy('order')
+            ->orderBy('display_order')
             ->get()
             ->groupBy('feedback_form_group_id');
 

@@ -27,15 +27,15 @@ class Form extends Component
 
         if ($this->form->multi_step) {
             $this->form->load([
-                'steps' => fn ($q) => $q->orderBy('order'),
-                'steps.groups' => fn ($q) => $q->orderBy('order'),
-                'steps.groups.questions' => fn ($q) => $q->orderBy('order'),
+                'steps' => fn ($q) => $q->orderBy('display_order'),
+                'steps.groups' => fn ($q) => $q->orderBy('display_order'),
+                'steps.groups.questions' => fn ($q) => $q->orderBy('display_order'),
             ]);
             $this->steps = $this->form->steps->values()->all();
         } else {
             $this->form->load([
-                'groups' => fn ($q) => $q->orderBy('order'),
-                'groups.questions' => fn ($q) => $q->orderBy('order'),
+                'groups' => fn ($q) => $q->orderBy('display_order'),
+                'groups.questions' => fn ($q) => $q->orderBy('display_order'),
             ]);
         }
 
