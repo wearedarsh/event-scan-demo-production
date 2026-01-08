@@ -15,19 +15,20 @@ class Create extends Component
     public string $label = '';
     public string $key_name = '';
     public string $type = 'text';
-    public bool $required = false;
+    public int $required = 0;
     public ?string $placeholder = null;
 
     public int $display_order = 1;
     public int $col_span = 12;
-    public bool $row_start = true;
-    public bool $row_end = true;
+    public int $row_start = 0;
+    public int $row_end = 0;
 
-    public bool $custom = false;
+    public int $custom = 0;
     public ?string $relation_model = null;
 
     public array $options = [];
-    public array $validation_rules = [];
+    public string $validation_rules = '';
+    public string $validation_messages = '';
 
     public function mount(RegistrationFormStep $step): void
     {
@@ -46,6 +47,8 @@ class Create extends Component
             'display_order' => 'required|integer|min:1',
             'col_span' => 'required|integer|min:1|max:12',
             'relation_model' => 'nullable|string',
+            'validation_rules' => 'required|json',
+            'validation_messages' => 'nullable|json',
         ]);
 
         RegistrationFormInput::create([
@@ -53,16 +56,17 @@ class Create extends Component
             'label' => $this->label,
             'key_name' => $this->key_name,
             'type' => $this->type,
-            'required' => $this->required,
+            'required' => (bool) $this->required,
             'placeholder' => $this->placeholder,
             'display_order' => $this->display_order,
             'col_span' => $this->col_span,
-            'row_start' => $this->row_start,
-            'row_end' => $this->row_end,
-            'custom' => $this->custom,
+            'row_start' => (bool) $this->row_start,
+            'row_end' => (bool) $this->row_end,
+            'custom' => (bool) $this->custom,
             'relation_model' => $this->relation_model,
             'options' => $this->options ?: null,
-            'validation_rules' => $this->validation_rules ?: null,
+            'validation_rules' => json_decode($this->validation_rules) ?: null,
+            'validation_messages' => json_decode($this->validation_messages) ?: null
         ]);
 
         session()->flash('success', 'Field created successfully.');

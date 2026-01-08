@@ -1,13 +1,13 @@
 <div class="space-y-4">
 
-    
+
 
     <x-admin.page-header
         title="Create field"
         subtitle="Add a new input to this registration form step." />
 
     @if ($errors->any())
-        <x-admin.alert type="danger" :message="$errors->first()" />
+    <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
 
     <div class="px-6">
@@ -45,6 +45,12 @@
                         <x-admin.input-text model="placeholder" />
                     </div>
 
+                </div>
+
+                <x-admin.section-title title="Layout" />
+
+                <div class="grid md:grid-cols-2 gap-6">
+
                     <div>
                         <x-admin.input-label>Display order</x-admin.input-label>
                         <x-admin.input-text model="display_order" />
@@ -55,7 +61,23 @@
                         <x-admin.select wire:model.live="col_span">
                             @for ($i = 1; $i <= 12; $i++)
                                 <option value="{{ $i }}">{{ $i }}</option>
-                            @endfor
+                                @endfor
+                        </x-admin.select>
+                    </div>
+
+                    <div>
+                        <x-admin.input-label>Is this a row start?</x-admin.input-label>
+                        <x-admin.select wire:model.live="row_start">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </x-admin.select>
+                    </div>
+
+                    <div>
+                        <x-admin.input-label>Is this a row end?</x-admin.input-label>
+                        <x-admin.select wire:model.live="row_end">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
                         </x-admin.select>
                     </div>
 
@@ -82,13 +104,42 @@
                     </div>
 
                     @if($type === 'select')
-                        <div class="md:col-span-2">
-                            <x-admin.input-label>Relation model (optional)</x-admin.input-label>
-                            <x-admin.input-text model="relation_model" />
-                        </div>
+                    <div class="md:col-span-2">
+                        <x-admin.input-label>Relation model (optional)</x-admin.input-label>
+                        <x-admin.input-text model="relation_model" />
+                    </div>
                     @endif
 
                 </div>
+
+                <x-admin.section-title title="Validation" />
+
+                <div class="grid md:grid-cols-2 gap-6">
+
+                    <div class="md:col-span-2">
+                        <x-admin.input-label>Validation rules (JSON)</x-admin.input-label>
+                        <x-admin.input-textarea
+                            model="validation_rules"
+                            rows="4"
+                            placeholder="" />
+                        <x-admin.input-help>
+                            eg. ["required", "string", "max:40"]
+                        </x-admin.input-help>
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <x-admin.input-label>Validation messages (JSON)</x-admin.input-label>
+                        <x-admin.input-textarea
+                            model="validation_messages"
+                            rows="4"
+                            placeholder="" />
+                        <x-admin.input-help>
+                            eg. {"required": "Please select a title"}
+                        </x-admin.input-help>
+                    </div>
+
+                </div>
+
 
                 <x-admin.form-actions
                     submit-text="Create field"

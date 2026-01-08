@@ -88,7 +88,7 @@
                                     <div class="flex justify-end items-center gap-2">
                                         <x-admin.table-action-button
                                             type="link"
-                                            :href="route('home')"
+                                            :href="route('admin.developer.registration-form.fields.edit', ['step' => $step->id, 'field' => $input->id])"
                                             icon="pencil-square"
                                             primary
                                             label="Edit" />
