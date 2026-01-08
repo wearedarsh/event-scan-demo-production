@@ -2,14 +2,18 @@
 
 namespace App\Livewire\Frontend\RegistrationForm\Steps;
 
+
 use Livewire\Component;
 use App\Models\Event;
 use App\Models\RegistrationFormStep;
 use App\Models\RegistrationFormCustomFieldValue;
 use App\Models\Registration;
+use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 
 class Dynamic extends Component
 {
+    use WithFileUploads;
     public Event $event;
     public RegistrationFormStep $registration_form_step;
     public Registration $registration;
@@ -21,6 +25,10 @@ class Dynamic extends Component
     public array $rules = [];
     public array $messages = [];
     public array $inputs_by_key = [];
+
+    public array $document_uploads = [];
+    public array $replace_document = [];
+
 
     protected $listeners = [
         'validate-step' => 'validateStep',
@@ -39,7 +47,10 @@ class Dynamic extends Component
 
             foreach($this->inputs as $input){
 
-                $input_value = null;
+                if ($input->type === 'document_upload') {
+                    $this->document_uploads[$input->id] = null;
+                    continue;
+                }
 
                 if($input->custom){
                      $value = $this->registration->customFieldValues
@@ -62,6 +73,81 @@ class Dynamic extends Component
         }
     }
 
+    protected function validateDocumentUploads(): void
+    {
+        foreach ($this->inputs as $input) {
+
+            if ($input->type !== 'document_upload') continue;
+
+            $existingDocument = $this->registration
+                ->registrationDocuments
+                ->firstWhere('registration_form_input_id', $input->id);
+
+            $isReplacing = !empty($this->replace_document[$input->id]);
+            $file = $this->document_uploads[$input->id] ?? null;
+
+            if (($isReplacing || !$existingDocument) && $input->required && !$file) {
+                $this->addError(
+                    "document_uploads.{$input->id}",
+                    "Please upload a document for {$input->label}."
+                );
+                continue;
+            }
+
+            if ($file) {
+                $rules = ['file', 'max:5120'];
+
+                if ($input->allowed_file_types) {
+                    $rules[] = 'mimes:' . $input->allowed_file_types;
+                }
+
+                $this->validate([
+                    "document_uploads.{$input->id}" => $rules,
+                ]);
+            }
+        }
+    }
+
+    protected function persistDocumentUploads(): void
+    {
+        foreach ($this->document_uploads as $input_id => $file) {
+            if (!$file) continue;
+
+            $path = $file->store(
+                "registrations/{$this->registration->id}/documents",
+                'private'
+            );
+
+            $this->registration->registrationDocuments()->updateOrCreate(
+                [
+                    'registration_form_input_id' => $input_id,
+                ],
+                [
+                    'file_path' => $path,
+                    'original_name' => $file->getClientOriginalName(),
+                ]
+            );
+
+            unset($this->replace_document[$input_id]);
+        }
+    }
+    
+    protected function cleanupOrphanedDocuments(): void
+    {
+        $validInputIds = $this->inputs
+            ->where('type', 'document_upload')
+            ->pluck('id');
+
+        $this->registration->registrationDocuments
+            ->whereNotIn('registration_form_input_id', $validInputIds)
+            ->each(function ($doc) {
+                Storage::disk('private')->delete($doc->file_path);
+                $doc->delete();
+            });
+    }
+
+
+
     public function rules()
     {
         return $this->rules;
@@ -75,46 +161,74 @@ class Dynamic extends Component
     public function validateStep($direction)
     {
         $this->dispatch('scroll-to-top');
-        $this->validate();
-        $this->store();
+        $this->resetErrorBag();
+
+        if ($direction === 'forward') {
+
+            $this->validate();
+
+
+            $this->validateDocumentUploads();
+
+            if ($this->getErrorBag()->isNotEmpty()) {
+                return;
+            }
+
+            $this->store();
+            $this->persistDocumentUploads();
+            $this->cleanupOrphanedDocuments();
+        }
+
         $this->dispatch('update-step', $direction);
     }
 
-    public function store()
+
+    public function store(): void
     {
         $fields_to_update = [];
         $custom_fields_to_update = [];
 
-        foreach($this->form_data as $key => $value){
-            if($this->inputs_by_key[$key]->custom){
-                $custom_fields_to_update[$key]['value'] = $value;
-                $custom_fields_to_update[$key]['id'] = $this->inputs_by_key[$key]->id;
-            }else{
+        foreach ($this->form_data as $key => $value) {
+
+            $input = $this->inputs_by_key[$key];
+
+            if ($input->type === 'document_upload') {
+                continue;
+            }
+
+            if ($input->custom) {
+                $custom_fields_to_update[] = [
+                    'id' => $input->id,
+                    'value' => $value,
+                ];
+            } else {
                 $fields_to_update[$key] = $value;
             }
         }
-        
-        Registration::updateOrCreate(
-            [
-                'id' => $this->registration->id, 
-                'event_id' => $this->event->id
-            ],
-            $fields_to_update
-        );
 
-        foreach($custom_fields_to_update as $custom_field){
+        if (!empty($fields_to_update)) {
+            Registration::updateOrCreate(
+                [
+                    'id' => $this->registration->id,
+                    'event_id' => $this->event->id,
+                ],
+                $fields_to_update
+            );
+        }
+
+        foreach ($custom_fields_to_update as $custom_field) {
             RegistrationFormCustomFieldValue::updateOrCreate(
                 [
                     'registration_id' => $this->registration->id,
-                    'registration_form_input_id' => $custom_field['id']
+                    'registration_form_input_id' => $custom_field['id'],
                 ],
                 [
-                    'value' => $custom_field['value'
+                    'value' => $custom_field['value'],
                 ]
-            ]);
+            );
         }
-        
     }
+
 
     
     public function getInputOptions($input)

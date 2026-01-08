@@ -57,14 +57,48 @@ $col_span_class = match ((int) $input->col_span) {
             </x-registration.input-select>
 
         @elseif($input->type === 'document_upload')
-            <x-registration.input-file
-                :id="$input->key_name"
-                model="form_data.{{ $input->key_name }}"
-                accept=".pdf,.doc,.docx"
-            />
+
+            @php
+                $existing_document = $this->registration->registrationDocuments
+                    ->firstWhere('registration_form_input_id', $input->id);
+            @endphp
+
+            @if($existing_document && empty($replace_document[$input->id]))
+
+                <x-registration.document-uploaded
+                    message="Document uploaded: {{ $existing_document->original_name }}"
+                    wire:click="$set('replace_document.{{ $input->id }}', true)"
+                />
+
+            @else
+
+                <x-registration.input-file
+                    :id="'document-upload-' . $input->id"
+                    :model="'document_uploads.' . $input->id"
+                    download_copy="Please upload a pdf or word document (pdf, .doc, .docx)"
+                    :accept="
+                        $input->allowed_file_types
+                            ? implode(',', array_map(
+                                fn ($t) => '.' . trim($t),
+                                explode(',', $input->allowed_file_types)
+                            ))
+                            : '.pdf,.doc,.docx'
+                    "
+                    :filename="
+                        isset($this->document_uploads[$input->id])
+                            ? $this->document_uploads[$input->id]->getClientOriginalName()
+                            : null
+                    "
+                />
+
+            @endif
+
         @endif
 
-        @if($input->help)
+
+
+
+        @if($input->help && $input->type != 'document_upload')
             <x-registration.input-help>
                 {{ $input->help }}
             </x-registration.input-help>

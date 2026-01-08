@@ -163,7 +163,6 @@ class Tickets extends Component
 
             $file = $this->ticket_documents[$ticket->id] ?? null;
 
-            // If replacing, existing document no longer counts
             if (($isReplacing || !$existingDocument) && !$file) {
                 $this->addError(
                     "ticket_documents.{$ticket->id}",
@@ -185,8 +184,6 @@ class Tickets extends Component
             }
         }
     }
-
-
 
     protected function cleanupOrphanedDocuments(): void
     {

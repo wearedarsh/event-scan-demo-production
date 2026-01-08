@@ -5,7 +5,7 @@
 
     <x-registration.form-step>
         @foreach($inputs as $input)
-            <x-registration.input-dynamic-field :input="$input" :key="$input->key_name" :placeholder="$input->placeholder" />
+            <x-registration.input-dynamic-field :input="$input" />
         @endforeach
     </x-registration.form-step>
 
