@@ -37,10 +37,19 @@
                             <option value="text">Text</option>
                             <option value="textarea">Textarea</option>
                             <option value="select">Select</option>
-                            <option value="checkbox">Checkbox</option>
-                            <option value="radio">Radio</option>
+                            <option value="document_upload">Document upload</option>
                         </x-admin.select>
                     </div>
+
+                    @if($type === 'document_upload')
+                        <div>
+                            <x-admin.input-label>Allowed file types</x-admin.input-label>
+                            <x-admin.input-text model="allowed_file_types" />
+                            <x-admin.input-help>
+                                eg. pdf,doc,docx
+                            </x-admin.input-help>
+                        </div>
+                    @endif
 
                     <div>
                         <x-admin.input-label>Placeholder</x-admin.input-label>

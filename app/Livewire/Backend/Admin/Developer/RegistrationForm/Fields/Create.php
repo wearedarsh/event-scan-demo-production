@@ -15,6 +15,7 @@ class Create extends Component
     public string $label = '';
     public string $key_name = '';
     public string $type = 'text';
+    public string $allowed_file_types = '';
     public int $required = 0;
     public ?string $placeholder = null;
 
@@ -49,6 +50,10 @@ class Create extends Component
             'relation_model' => 'nullable|string',
             'validation_rules' => 'required|json',
             'validation_messages' => 'nullable|json',
+            'allowed_file_types' => 'required_if:type,document_upload|string',
+        ], [
+            'allowed_file_types.required_if' =>
+                'Please specify allowed file types for document uploads.',
         ]);
 
         RegistrationFormInput::create([
@@ -64,6 +69,7 @@ class Create extends Component
             'row_end' => (bool) $this->row_end,
             'custom' => (bool) $this->custom,
             'relation_model' => $this->relation_model,
+            'allowed_file_types' => $this->allowed_file_types,
             'options' => $this->options ?: null,
             'validation_rules' => json_decode($this->validation_rules) ?: null,
             'validation_messages' => json_decode($this->validation_messages) ?: null

@@ -18,6 +18,8 @@ class RegistrationFormInput extends Model
         'row_end',
         'col_span',
         'validation_rules',
+        'validation_messages',
+        'allowed_file_types',
         'display_order',
         'custom',
         'relation_model',

@@ -18,6 +18,7 @@ class Edit extends Component
     public string $type = 'text';
     public int $required = 0;
     public ?string $placeholder = null;
+    public string $allowed_file_types = '';
 
     public int $display_order = 1;
     public int $col_span = 12;
@@ -45,6 +46,7 @@ class Edit extends Component
         $this->col_span = $field->col_span;
         $this->row_start = (int) $field->row_start;
         $this->row_end = (int) $field->row_end;
+        $this->allowed_file_types = $field->allowed_file_types;
 
         $this->custom = (int) $field->custom;
         $this->relation_model = $field->relation_model;
@@ -69,6 +71,10 @@ class Edit extends Component
             'relation_model' => 'nullable|string',
             'validation_rules' => 'required|json',
             'validation_messages' => 'nullable|json',
+            'allowed_file_types' => 'required_if:type,document_upload|string',
+        ], [
+            'allowed_file_types.required_if' =>
+                'Please specify allowed file types for document uploads.',
         ]);
 
         $this->field->update([
@@ -83,6 +89,7 @@ class Edit extends Component
             'row_end' => (bool) $this->row_end,
             'custom' => (bool) $this->custom,
             'relation_model' => $this->relation_model,
+            'allowed_file_types' => $this->allowed_file_types,
             'validation_rules' => json_decode($this->validation_rules, true),
             'validation_messages' => $this->validation_messages
                 ? json_decode($this->validation_messages, true)
