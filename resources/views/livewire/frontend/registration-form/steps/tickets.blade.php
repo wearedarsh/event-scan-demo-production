@@ -70,7 +70,7 @@
                 @if($existingDocument && empty($replace_document[$ticket->id]))
 
                 <x-registration.document-uploaded
-                    :ticket="$ticket"
+                    key_path="replace_document.{{ $ticket->id }}"
                     message="Document uploaded: {{ $existingDocument->original_name }}" />
 
                 @else
@@ -80,11 +80,7 @@
                     :model="'ticket_documents.' . $ticket->id"
                     label="Upload document"
                     :download_copy="$ticket->requires_document_copy"
-                    :accept="
-                $ticket->allowedFileTypes()
-                    ? implode(',', array_map(fn ($t) => '.' . $t, $ticket->allowedFileTypes()))
-                    : '.pdf,.doc,.docx,.jpg,.jpeg,.png'
-            "
+                    :accept="$ticket->allowed_file_types"
                     :filename="
                 isset($ticket_documents[$ticket->id])
                     ? $ticket_documents[$ticket->id]->getClientOriginalName()

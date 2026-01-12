@@ -10,6 +10,7 @@ class RegistrationFormInput extends Model
         'registration_form_step_id',
         'key_name',
         'label',
+        'help',
         'placeholder',
         'type',
         'required',

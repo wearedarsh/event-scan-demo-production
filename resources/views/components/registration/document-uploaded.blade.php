@@ -1,6 +1,6 @@
 @props([
     'message' => null,
-    'ticket' => null
+    'key_path' => null,
 ])
 
 <div>
@@ -10,7 +10,7 @@
     >
         <div class="text-sm md:text-m flex flex-row font-medium justify-between px-4">
             <span style="color: var(--color-success)">{{ $message ?? $slot }}</span>
-            <a href="#" style="color: var(--color-text)" wire:click="$set('replace_document.{{ $ticket->id }}', true)">
+            <a href="#" style="color: var(--color-text)" wire:click="$set('{{ $key_path }}', true)">
                 Remove document
             </a>
         </div>

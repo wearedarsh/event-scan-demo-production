@@ -8,6 +8,7 @@ use App\Models\Event;
 use App\Models\RegistrationFormStep;
 use App\Models\RegistrationFormCustomFieldValue;
 use App\Models\Registration;
+use App\Models\RegistrationDocument;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
 
@@ -25,6 +26,7 @@ class Dynamic extends Component
     public array $rules = [];
     public array $messages = [];
     public array $inputs_by_key = [];
+    public $registration_documents;
 
     public array $document_uploads = [];
     public array $replace_document = [];
@@ -40,6 +42,7 @@ class Dynamic extends Component
 
         $this->rules = [];
         $this->messages = [];
+        $this->registration_documents = RegistrationDocument::where('registration_id', $this->registration->id)->get();
 
         if ($this->registration_form_step) {
             $this->inputs = $this->registration_form_step->inputs;
@@ -73,20 +76,26 @@ class Dynamic extends Component
         }
     }
 
-    protected function validateDocumentUploads(): void
+    protected function documentInputs()
     {
-        foreach ($this->inputs as $input) {
+        return $this->inputs->where('type', 'document_upload');
+    }
 
-            if ($input->type !== 'document_upload') continue;
+    protected function existingDocumentFor($input)
+    {
+        return $this->registration->registrationDocuments
+            ->firstWhere('registration_form_input_id', $input->id);
+    }
 
-            $existingDocument = $this->registration
-                ->registrationDocuments
-                ->firstWhere('registration_form_input_id', $input->id);
+    protected function validateRequiredUploads(): void
+    {
+        foreach ($this->documentInputs() as $input) {
 
             $isReplacing = !empty($this->replace_document[$input->id]);
-            $file = $this->document_uploads[$input->id] ?? null;
+            $existing    = $this->existingDocumentFor($input);
+            $file        = $this->document_uploads[$input->id] ?? null;
 
-            if (($isReplacing || !$existingDocument) && $input->required && !$file) {
+            if (($isReplacing || !$existing) && $input->required && !$file) {
                 $this->addError(
                     "document_uploads.{$input->id}",
                     "Please upload a document for {$input->label}."
@@ -108,7 +117,7 @@ class Dynamic extends Component
         }
     }
 
-    protected function persistDocumentUploads(): void
+    protected function persistUploads(): void
     {
         foreach ($this->document_uploads as $input_id => $file) {
             if (!$file) continue;
@@ -118,35 +127,33 @@ class Dynamic extends Component
                 'private'
             );
 
-            $this->registration->registrationDocuments()->updateOrCreate(
+            RegistrationDocument::updateOrCreate(
                 [
-                    'registration_form_input_id' => $input_id,
-                ],
+                    'registration_form_input_id' => $input_id, 
+                    'registration_id' => $this->registration->id],
                 [
-                    'file_path' => $path,
+                    'file_path'     => $path,
                     'original_name' => $file->getClientOriginalName(),
                 ]
             );
 
             unset($this->replace_document[$input_id]);
         }
+
+        $this->registration->load('registrationDocuments');
     }
-    
+
     protected function cleanupOrphanedDocuments(): void
     {
-        $validInputIds = $this->inputs
-            ->where('type', 'document_upload')
-            ->pluck('id');
+        $validIds = $this->documentInputs()->pluck('id');
 
         $this->registration->registrationDocuments
-            ->whereNotIn('registration_form_input_id', $validInputIds)
+            ->whereNotIn('registration_form_input_id', $validIds)
             ->each(function ($doc) {
                 Storage::disk('private')->delete($doc->file_path);
                 $doc->delete();
             });
     }
-
-
 
     public function rules()
     {
@@ -166,16 +173,14 @@ class Dynamic extends Component
         if ($direction === 'forward') {
 
             $this->validate();
-
-
-            $this->validateDocumentUploads();
+            $this->validateRequiredUploads();
 
             if ($this->getErrorBag()->isNotEmpty()) {
                 return;
             }
 
             $this->store();
-            $this->persistDocumentUploads();
+            $this->persistUploads();
             $this->cleanupOrphanedDocuments();
         }
 

@@ -8,7 +8,7 @@ use App\Models\Ticket;
 
 class RegistrationDocument extends Model
 {
-    protected $fillable = ['registration_id', 'file_path', 'original_name', 'ticket_id'];
+    protected $fillable = ['registration_id', 'file_path', 'original_name', 'ticket_id', 'registration_form_input_id'];
 
     public function registration()
     {
