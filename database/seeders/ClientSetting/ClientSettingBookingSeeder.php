@@ -101,6 +101,22 @@ class ClientSettingBookingSeeder extends Seeder
                 'type'          => 'text',
                 'value'         => 'Event information',
             ],
+            [
+                'category_id'   => 3,
+                'key_name'      => 'booking.approval_complete.header_html',
+                'label'         => 'Booking approval complete header html',
+                'display_order' => 9,
+                'type'          => 'textarea',
+                'value'         => '<h3 class="text-lg font-semibold text-[var(--color-secondary)]">Thank you for your registration</h3>',
+            ],
+            [
+                'category_id'   => 3,
+                'key_name'      => 'booking.approval_complete.content_html',
+                'label'         => 'Booking approval complete content html',
+                'display_order' => 10,
+                'type'          => 'textarea',
+                'value'         => '<p>Thank you for your registration, a member of our team has received your registraion and will be in touch shortly',
+            ]
             
         ]);
     }

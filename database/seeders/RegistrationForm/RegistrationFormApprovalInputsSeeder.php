@@ -126,6 +126,9 @@ class RegistrationFormApprovalInputsSeeder extends Seeder
                 'row_end' => true,
                 'col_span' => 12,
                 'validation_rules' => ['required', 'string', 'max:50'],
+                'validation_messages' => [
+                    'required' => 'Please enter your address line 1',
+                ],
                 'display_order' => 6,
             ],
             [
@@ -138,6 +141,9 @@ class RegistrationFormApprovalInputsSeeder extends Seeder
                 'row_end' => false,
                 'col_span' => 6,
                 'validation_rules' => ['required', 'string', 'max:12'],
+                'validation_messages' => [
+                    'required' => 'Please enter your postcode',
+                ],
                 'display_order' => 7,
             ],
             [
@@ -152,6 +158,9 @@ class RegistrationFormApprovalInputsSeeder extends Seeder
                 'col_span' => 6,
                 'relation_model' => 'App\Models\Country',
                 'validation_rules' => ['required', 'exists:countries,id'],
+                'validation_messages' => [
+                    'required' => 'Please select a country',
+                ],
                 'display_order' => 8,
             ],
         ];
@@ -171,6 +180,9 @@ class RegistrationFormApprovalInputsSeeder extends Seeder
                 'row_end' => true,
                 'col_span' => 12,
                 'validation_rules' => ['required', 'string', 'max:50'],
+                'validation_messages' => [
+                    'required' => 'Please enter your work address line one',
+                ],
                 'display_order' => 1,
                 'custom' => true,
             ],
@@ -184,6 +196,9 @@ class RegistrationFormApprovalInputsSeeder extends Seeder
                 'row_end' => false,
                 'col_span' => 6,
                 'validation_rules' => ['required', 'string', 'max:12'],
+                'validation_messages' => [
+                    'required' => 'Please enter your work postcode',
+                ],
                 'display_order' => 2,
                 'custom' => true,
             ],
@@ -198,6 +213,9 @@ class RegistrationFormApprovalInputsSeeder extends Seeder
                 'col_span' => 6,
                 'relation_model' => 'App\Models\Country',
                 'validation_rules' => ['required', 'exists:countries,id'],
+                'validation_messages' => [
+                    'required' => 'Please select your work country',
+                ],
                 'display_order' => 3,
                 'custom' => true,
             ],
@@ -213,6 +231,9 @@ class RegistrationFormApprovalInputsSeeder extends Seeder
                 'col_span' => 12,
                 'relation_model' => 'App\Models\AttendeeType',
                 'validation_rules' => ['required_without:form_data.attendee_type_other'],
+                'validation_messages' => [
+                    'required_without' => 'Please select your professional speciality or enter it below',
+                ],
                 'display_order' => 4,
             ],
             [
@@ -232,6 +253,9 @@ class RegistrationFormApprovalInputsSeeder extends Seeder
                     ['value' => 'Masters', 'label' => 'Masters'],
                 ],
                 'validation_rules' => ['required'],
+                'validation_messages' => [
+                    'required' => 'Please select your highest academic qualification',
+                ],
                 'display_order' => 5,
                 'custom' => true,
             ],
@@ -252,6 +276,9 @@ class RegistrationFormApprovalInputsSeeder extends Seeder
                 'row_end' => true,
                 'col_span' => 12,
                 'validation_rules' => ['required', 'file', 'mimes:pdf,doc,docx'],
+                'validation_messages' => [
+                    'required' => 'Please upload your Curriculum Vitae in pdf, doc or docx format',
+                ],
                 'display_order' => 1,
                 'custom' => true,
             ],
@@ -265,6 +292,9 @@ class RegistrationFormApprovalInputsSeeder extends Seeder
                 'row_end' => true,
                 'col_span' => 12,
                 'validation_rules' => ['required', 'file', 'mimes:pdf,doc,docx'],
+                'validation_messages' => [
+                    'required' => 'Please upload your Proof of address in pdf, doc or docx format',
+                ],
                 'display_order' => 2,
                 'custom' => true,
             ],

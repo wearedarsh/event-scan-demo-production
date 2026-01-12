@@ -52,18 +52,16 @@ class Dynamic extends Component
 
                 if ($input->type === 'document_upload') {
                     $this->document_uploads[$input->id] = null;
-                    continue;
-                }
-
-                if($input->custom){
+                }else{
+                     if($input->custom){
                      $value = $this->registration->customFieldValues
                         ->firstWhere('registration_form_input_id', $input->id)?->value;
 
                     $this->form_data[$input->key_name] = $value ?? null;
-                }else{
-                    $this->form_data[$input->key_name] = $this->registration->{$input->key_name} ?? null;
+                    }else{
+                        $this->form_data[$input->key_name] = $this->registration->{$input->key_name} ?? null;
+                    }
                 }
-
                 
                 foreach($input->validation_rules as $rule){
                     $this->rules['form_data.'.$input->key_name][] = $rule;

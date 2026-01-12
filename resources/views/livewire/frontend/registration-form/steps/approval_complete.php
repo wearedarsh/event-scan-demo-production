@@ -1,0 +1,36 @@
+<div class="space-y-4">
+    <x-registration.form-step>
+
+        @if($this->registration)
+            <div class="space-y-2 text-sm text-[var(--color-text)]">
+                <div class="bg-[var(--color-bg)] rounded-lg px-4 py-2">
+                    {{ $this->registration->title }} {{ $this->registration->first_name }} {{ $this->registration->last_name }}
+                </div>
+                <div class="bg-[var(--color-bg)] rounded-lg px-4 py-2">
+                    {{ $this->registration->email }}
+                </div>
+            </div>
+
+            <div class="pt-6">
+                {{ client_setting('booking.approval_complete.header_html')}}
+            </div>
+
+
+            <div class="flex justify-between bg-[var(--color-bg)] rounded-lg px-4 py-2 mt-2 font-semibold text-[var(--color-secondary)]">
+                {{ client_setting('booking.approval_complete.content_html') }}
+            </div>
+        @endif
+
+        
+    </x-registration.form-step>
+
+    <div class="grid grid-cols-4">
+        <div class="col-span-2">
+            <x-registration.navigate-button
+                wire:click="$dispatch('validate-step', ['backward'])">
+                Previous
+            </x-registration.navigate-button>
+        </div>
+    </div>
+
+</div>

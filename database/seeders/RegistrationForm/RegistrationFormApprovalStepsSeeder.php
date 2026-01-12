@@ -47,6 +47,14 @@ class RegistrationFormApprovalStepsSeeder extends Seeder
                 'type' => 'rigid',
                 'display_order' => 5,
             ]
+            ,
+            [
+                'registration_form_id' => $form->id,
+                'label' => 'Registration Complete',
+                'key_name' => 'approval_complete',
+                'type' => 'rigid',
+                'display_order' => 6,
+            ]
         ];
 
         RegistrationFormStep::insert($steps);
