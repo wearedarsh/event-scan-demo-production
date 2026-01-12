@@ -32,15 +32,9 @@ return new class extends Migration
             $table->string('mobile_number')->nullable();
             $table->string('email')->nullable();
             $table->mediumText('special_requirements')->nullable();
-            $table->boolean('is_complete')->default(false);
-            $table->foreignId('event_payment_method_id')->nullable()->constrained('event_payment_methods')->nullOnDelete();
-            $table->integer('total_cents')->nullable();
-            $table->string('payment_status')->nullable();
-            $table->string('payment_intent_id')->nullable();
-            $table->timestamp('paid_at')->nullable();
-
             $table->string('email_subscriber_id')->nullable();
-
+            $table->string('payment_status')->default('pending');
+            $table->string('registration_status')->default('draft');
             $table->timestamps();
             $table->softDeletes();
         });
