@@ -9,6 +9,7 @@ class RegistrationFormStep extends Model
     protected $fillable = [
         'registration_form_id',
         'label',
+        'help_information_copy',
         'key_name',
         'type',
         'display_order',

@@ -32,6 +32,8 @@ class Dynamic extends Component
     public array $document_uploads = [];
     public array $replace_document = [];
 
+    public $step_help_info;
+
 
     protected $listeners = [
         'validate-step' => 'validateStep',

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('registration_form_id')->constrained()->onDelete('cascade');
             $table->string('label');
             $table->string('key_name');
+            $table->text('help_information_copy')->nullable();
             $table->string('type')->default('rigid');
             $table->integer('display_order')->default(0);
             $table->timestamps();

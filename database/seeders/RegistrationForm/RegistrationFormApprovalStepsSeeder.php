@@ -18,6 +18,7 @@ class RegistrationFormApprovalStepsSeeder extends Seeder
                 'key_name' => 'personal',
                 'type' => 'dynamic',
                 'display_order' => 1,
+                'help_information_copy' => 'Please remember to have your CV and your proof of address ready before you begin the application process'
             ],
             [
                 'registration_form_id' => $form->id,
@@ -25,6 +26,7 @@ class RegistrationFormApprovalStepsSeeder extends Seeder
                 'key_name' => 'professional',
                 'type' => 'dynamic',
                 'display_order' => 2,
+                'help_information_copy' => null
             ],
             [
                 'registration_form_id' => $form->id,
@@ -32,6 +34,7 @@ class RegistrationFormApprovalStepsSeeder extends Seeder
                 'key_name' => 'documents',
                 'type' => 'dynamic',
                 'display_order' => 3,
+                'help_information_copy' => null
             ],
             [
                 'registration_form_id' => $form->id,
@@ -39,6 +42,7 @@ class RegistrationFormApprovalStepsSeeder extends Seeder
                 'key_name' => 'account',
                 'type' => 'rigid',
                 'display_order' => 4,
+                'help_information_copy' => null
             ],
             [
                 'registration_form_id' => $form->id,
@@ -46,6 +50,7 @@ class RegistrationFormApprovalStepsSeeder extends Seeder
                 'key_name' => 'gdpr',
                 'type' => 'rigid',
                 'display_order' => 5,
+                'help_information_copy' => null
             ]
             ,
             [
@@ -54,6 +59,7 @@ class RegistrationFormApprovalStepsSeeder extends Seeder
                 'key_name' => 'approval_complete',
                 'type' => 'rigid',
                 'display_order' => 6,
+                'help_information_copy' => null
             ]
         ];
 

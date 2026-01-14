@@ -22,6 +22,7 @@ class RegistrationFormController extends Component
     public int $current_step = 1;
     public string $step_label;
     public string $step_key_name;
+    public $step_help_information_copy = null;
     public $spaces_remaining;
     public $events;
 
@@ -61,6 +62,7 @@ class RegistrationFormController extends Component
         $this->step_type = $this->registration_form_step->type;
         $this->step_label = $this->registration_form_step->label;
         $this->step_key_name = $this->registration_form_step->key_name;
+        $this->step_help_information_copy = $this->registration_form_step->help_information_copy;
 
     }
 

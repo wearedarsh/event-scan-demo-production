@@ -4,6 +4,11 @@
     @endif
     @auth
         <x-registration.form-step>
+            @if($step_help_info)
+                <x-registration.form-info>
+                    {{ $step_help_info }}
+                </x-registration.form-info>
+            @endif
             <div class="flex items-center justify-between gap-4">
                 <div class="flex-1">
                     <x-registration.form-info>

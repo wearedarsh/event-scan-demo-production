@@ -1,6 +1,10 @@
 <div class="space-y-4">
     <x-registration.form-step>
-
+        @if($step_help_info)
+            <x-registration.form-info>
+                {{ $step_help_info }}
+            </x-registration.form-info>
+        @endif
         @if($this->registration)
             <div class="space-y-2 text-sm text-[var(--color-text)]">
                 <div class="bg-[var(--color-bg)] rounded-lg px-4 py-2">

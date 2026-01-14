@@ -5,6 +5,11 @@
     @endif
 
     <x-registration.form-step>
+        @if($step_help_info)
+            <x-registration.form-info>
+                {{ $step_help_info }}
+            </x-registration.form-info>
+        @endif
 
         @foreach($event->ticketGroups->sortBy('display_order') as $group)
 

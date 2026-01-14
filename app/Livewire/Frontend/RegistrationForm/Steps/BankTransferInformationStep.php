@@ -9,6 +9,7 @@ use Livewire\Component;
 class BankTransferInformation extends Component
 {
     public Event $event;
+    public $step_help_info;
 
     public function render()
     {

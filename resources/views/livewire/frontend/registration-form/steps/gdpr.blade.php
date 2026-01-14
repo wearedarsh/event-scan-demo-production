@@ -1,5 +1,10 @@
 <div class="space-y-4">
     <x-registration.form-step>
+        @if($step_help_info)
+            <x-registration.form-info>
+                {{ $step_help_info }}
+            </x-registration.form-info>
+        @endif
 
         @if($event->auto_email_opt_in)
             <x-registration.form-info>

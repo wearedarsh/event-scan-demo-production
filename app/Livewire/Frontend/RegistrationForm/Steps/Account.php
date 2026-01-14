@@ -22,6 +22,8 @@ class Account extends Component
 
     public string $mode = 'register';
 
+    public $step_help_info;
+
     protected function rules()
     {
         if($this->mode === 'login'){

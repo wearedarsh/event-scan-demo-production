@@ -4,8 +4,13 @@
     @endif
 
     <x-registration.form-step>
+        @if($step_help_info)
+            <x-registration.form-info>
+                {{ $step_help_info }}
+            </x-registration.form-info>
+            
+        @endif
 
-        {{ json_encode($document_uploads)}}
         @foreach($inputs as $input)
             @if($input->type != 'document_upload')
                 <x-registration.input-dynamic-field :input="$input" />

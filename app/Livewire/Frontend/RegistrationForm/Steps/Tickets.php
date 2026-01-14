@@ -28,6 +28,8 @@ class Tickets extends Component
     public int $registration_total_cents = 0;
     public string $currency_symbol = '';
 
+    public $step_help_info;
+
     protected $listeners = [
         'validate-step' => 'validateStep',
     ];

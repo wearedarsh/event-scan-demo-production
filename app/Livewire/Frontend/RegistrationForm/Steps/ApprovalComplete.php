@@ -10,6 +10,7 @@ class ApprovalComplete extends Component
 {
     public Event $event;
     public Registration $registration;
+    public $step_help_info;
 
     protected $listeners = [
         'complete-approval-registration' => 'completeRegistration',
