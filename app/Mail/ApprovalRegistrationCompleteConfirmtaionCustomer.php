@@ -12,8 +12,7 @@ use Illuminate\Support\Facades\Blade;
 class ApprovalRegistrationCompleteConfirmationCustomer extends Mailable
 {
     public function __construct(
-        public Registration $registration,
-        public float $registration_total
+        public Registration $registration
     ) {}
 
     public function build(): static

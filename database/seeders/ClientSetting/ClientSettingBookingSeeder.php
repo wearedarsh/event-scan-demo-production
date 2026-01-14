@@ -103,27 +103,27 @@ class ClientSettingBookingSeeder extends Seeder
             ],
             [
                 'category_id'   => 3,
-                'key_name'      => 'booking.approval_complete.header_html',
-                'label'         => 'Booking approval complete header html',
-                'display_order' => 9,
-                'type'          => 'textarea',
-                'value'         => '<h3 class="text-lg font-semibold text-[var(--color-secondary)]">Thank you for your registration</h3>',
-            ],
-            [
-                'category_id'   => 3,
                 'key_name'      => 'booking.approval_complete.content_html',
                 'label'         => 'Booking approval complete content html',
                 'display_order' => 10,
                 'type'          => 'textarea',
-                'value'         => '<p>Thank you for your registration, a member of our team has received your registraion and will be in touch shortly',
+                'value'         => '<div class="bg-[var(--color-bg)] rounded-lg px-4 py-2"><h2 class="text-3xl font-semibold text-[var(--color-text)]">Thank you for your application</h2><p>A member of our team has received your registraion and will be in touch shortly</div>',
             ],
             [
                 'category_id'   => 3,
-                'key_name'      => 'booking.navigation.final_step_label',
-                'label'         => 'Booking navigation final step label',
+                'key_name'      => 'booking.navigation.approval.final_step_button_label',
+                'label'         => 'Booking approval final step button label',
                 'display_order' => 11,
                 'type'          => 'text',
-                'value'         => '<p>Thank you for your registration, a member of our team has received your registraion and will be in touch shortly',
+                'value'         => 'Complete application',
+            ],
+            [
+                'category_id'   => 3,
+                'key_name'      => 'booking.navigation.approval.finish_button_label',
+                'label'         => 'Booking navigation finish button label',
+                'display_order' => 12,
+                'type'          => 'text',
+                'value'         => 'Finish and return to homepage',
             ]
             
         ]);

@@ -5,6 +5,10 @@ namespace App\Livewire\Frontend\RegistrationForm\Steps;
 use Livewire\Component;
 use App\Models\Event;
 use App\Models\Registration;
+use App\Mail\ApprovalRegistrationCompleteConfirmationAdmin;
+use App\Mail\ApprovalRegistrationCompleteConfirmationCustomer;
+use App\Services\EmailService;
+use Illuminate\Support\Facades\Session;
 
 class ApprovalComplete extends Component
 {
@@ -12,13 +16,46 @@ class ApprovalComplete extends Component
     public Registration $registration;
     public $step_help_info;
 
-    protected $listeners = [
-        'complete-approval-registration' => 'completeRegistration',
-    ];
-
-    public function completeRegistration()
+    public function mount()
     {
-      //set registration to 
+
+        if (! $this->registration) {
+            return;
+        }
+
+        if ($this->registration->status === 'pending_approval') {
+            return;
+        }
+        
+        if($this->registration){
+            $this->registration->update([
+                'status' => 'pending_approval'
+            ]);
+        }
+
+        $mailable = new ApprovalRegistrationCompleteConfirmationAdmin($this->registration);
+
+        EmailService::queueMailable(
+            mailable: $mailable,
+            recipient_user: $this->registration->user,
+            recipient_email: $this->registration->user->email,
+            friendly_name: 'Approval registration complete confirmation admin',
+            type: 'transactional_admin',
+            event_id: $this->registration->event_id,
+        );
+
+        $mailable = new ApprovalRegistrationCompleteConfirmationCustomer($this->registration);
+
+        EmailService::queueMailable(
+            mailable: $mailable,
+            recipient_user: $this->registration->user,
+            recipient_email: $this->registration->user->email,
+            friendly_name: 'Approval registration complete confirmation customer',
+            type: 'transactional_customer',
+            event_id: $this->registration->event_id,
+        );
+
+        Session::forget('registration_id');
     }
 
 
