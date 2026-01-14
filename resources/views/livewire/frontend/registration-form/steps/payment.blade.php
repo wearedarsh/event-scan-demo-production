@@ -89,4 +89,10 @@
         </div>
     </div>
 
+    <div class="flex w-full flex-row gap-4 pt-6 justify-center">
+        <x-registration.navigate-cancel-link wire:click="$dispatch('clear-session')">
+            Cancel
+        </x-registration.navigate-cancel-link>
+    </div>
+
 </div>

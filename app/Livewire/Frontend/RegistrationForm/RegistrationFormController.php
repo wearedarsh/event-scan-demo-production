@@ -9,6 +9,7 @@ use App\Models\RegistrationFormStep;
 use App\Models\Registration;
 use Livewire\Attributes\Layout;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Session;
 
 #[Layout('livewire.frontend.registration-form.layouts.app')]
 class RegistrationFormController extends Component
@@ -27,9 +28,15 @@ class RegistrationFormController extends Component
     public $events;
 
     protected $listeners = [
-        'update-step' => 'updateStep'
+        'update-step' => 'updateStep',
+        'clear-session' => 'clearSessionAndRedirect'
     ];
     
+    public function clearSessionAndRedirect(){
+        Session::forget('registration_id');
+        return redirect()->route('home');
+    }
+
     public function getSpacesLabelProperty(){
         return Str::plural('space', $this->spaces_remaining);
     }
