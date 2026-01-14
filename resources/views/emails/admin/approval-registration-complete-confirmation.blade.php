@@ -8,5 +8,5 @@
 </p>
 
 <p style="margin-top: 30px;">
-    Login to check the booking <a href="{{ route('admin.events.registrations.manage', ['event' => $registration->event_id, 'registration' => $registration->id]) }}">here</a>.
+    Login to check the booking <a href="{{ route('admin.events.registrations.manage', ['event' => $registration->event_id, 'attendee' => $registration->id]) }}">here</a>.
 </p>
