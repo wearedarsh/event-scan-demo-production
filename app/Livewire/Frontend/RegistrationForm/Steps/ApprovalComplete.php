@@ -29,7 +29,7 @@ class ApprovalComplete extends Component
         
         if($this->registration){
             $this->registration->update([
-                'status' => 'pending_approval'
+                'registration_status' => 'pending_approval'
             ]);
         }
 
