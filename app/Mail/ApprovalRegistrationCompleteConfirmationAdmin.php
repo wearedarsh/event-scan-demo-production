@@ -19,11 +19,9 @@ class ApprovalRegistrationCompleteConfirmationAdmin extends Mailable
     {
         $email_content = EmailHtmlContent::where('key_name', 'admin_registration_complete_confirmation')->firstOrFail();
         $layout = EmailHtmlLayout::where('key_name', 'admin')->firstOrFail();
-        $email_signature = ClientSetting::get('transactional_signature_html');
 
         $body_html = Blade::render($email_content->html_content, [
-            'registration' => $this->registration,
-            'email_signature' => $email_signature,
+            'registration' => $this->registration
         ]);
 
         $full_html = Blade::render($layout->html_content, [
