@@ -33,6 +33,13 @@ class RegistrationFormController extends Component
     ];
     
     public function clearSessionAndRedirect(){
+        
+        if(session('registration_id') && $this->registration){
+            $this->registration->update([
+                'status' => 'cancelled'
+            ]);
+        }
+
         Session::forget('registration_id');
         return redirect()->route('home');
     }

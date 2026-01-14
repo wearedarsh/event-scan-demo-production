@@ -18,7 +18,7 @@ class ApprovalComplete extends Component
 
     public function completeRegistration()
     {
-        
+      //set registration to 
     }
 
 

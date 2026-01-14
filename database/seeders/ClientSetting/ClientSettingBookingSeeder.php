@@ -116,6 +116,14 @@ class ClientSettingBookingSeeder extends Seeder
                 'display_order' => 10,
                 'type'          => 'textarea',
                 'value'         => '<p>Thank you for your registration, a member of our team has received your registraion and will be in touch shortly',
+            ],
+            [
+                'category_id'   => 3,
+                'key_name'      => 'booking.navigation.final_step_label',
+                'label'         => 'Booking navigation final step label',
+                'display_order' => 11,
+                'type'          => 'text',
+                'value'         => '<p>Thank you for your registration, a member of our team has received your registraion and will be in touch shortly',
             ]
             
         ]);

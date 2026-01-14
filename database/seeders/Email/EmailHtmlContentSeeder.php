@@ -51,6 +51,14 @@ class EmailHtmlContentSeeder extends Seeder
                 'pre_header' => 'A new registration has been completed and payment was received via Stripe.',
                 'html_content' => file_get_contents(resource_path('views/emails/admin/stripe-confirmation.blade.php')),
             ],
+            [
+                'label' => 'Admin approval registration complete confirmation',
+                'key_name' => 'admin_registration_complete_confirmation',
+                'category' => 'admin',
+                'subject' => 'New registration - Pending approval',
+                'pre_header' => 'A new registration has been completed for approval',
+                'html_content' => file_get_contents(resource_path('views/emails/admin/approval-registration-complete-confirmation.blade.php')),
+            ],
         ]);
 
         // Customer emails
@@ -80,7 +88,7 @@ class EmailHtmlContentSeeder extends Seeder
                 'html_content' => file_get_contents(resource_path('views/emails/customer/certificate-of-attendance-confirmation.blade.php')),
             ],
             [
-                'label' => 'No payment confirmation',
+                'label' => 'Customer no payment confirmation',
                 'key_name' => 'customer_no_payment_confirmation',
                 'category' => 'customer',
                 'subject' => 'Thank you for your booking',
@@ -88,12 +96,20 @@ class EmailHtmlContentSeeder extends Seeder
                 'html_content' => file_get_contents(resource_path('views/emails/customer/no-payment-confirmation.blade.php')),
             ],
             [
-                'label' => 'Stripe confirmation',
+                'label' => 'Customer Stripe confirmation',
                 'key_name' => 'customer_stripe_confirmation',
                 'category' => 'customer',
                 'subject' => 'Payment confirmation - Thank you for your booking',
                 'pre_header' => 'Your payment was successful and your booking is confirmed.',
                 'html_content' => file_get_contents(resource_path('views/emails/customer/stripe-confirmation.blade.php')),
+            ],
+            [
+                'label' => 'Customer approval registration complete confirmation',
+                'key_name' => 'customer_registration_complete_confirmation',
+                'category' => 'customer',
+                'subject' => 'Registration complete - Pending approval',
+                'pre_header' => 'Thank you for your application for this event',
+                'html_content' => file_get_contents(resource_path('views/emails/customer/approval-registration-complete-confirmation.blade.php')),
             ],
         ]);
     }
