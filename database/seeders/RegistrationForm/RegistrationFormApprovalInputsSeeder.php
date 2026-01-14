@@ -275,9 +275,12 @@ class RegistrationFormApprovalInputsSeeder extends Seeder
                 'row_start' => true,
                 'row_end' => true,
                 'col_span' => 12,
-                'validation_rules' => ['required', 'file', 'mimes:pdf,doc,docx'],
+                'validation_rules' => ['required', 'file', 'mimes:pdf,doc,docx', 'max:10240'],
                 'validation_messages' => [
                     'required' => 'Please upload your Curriculum Vitae in pdf, doc or docx format',
+                    'file' => 'Please upload a file',
+                    'mimes' => 'Please upload your Curriculum Vitae in pdf, doc or docx format',
+                    'max' => 'Please upload a file that is under 10mb'
                 ],
                 'display_order' => 1,
                 'custom' => true,
@@ -291,9 +294,12 @@ class RegistrationFormApprovalInputsSeeder extends Seeder
                 'row_start' => true,
                 'row_end' => true,
                 'col_span' => 12,
-                'validation_rules' => ['required', 'file', 'mimes:pdf,doc,docx'],
+                'validation_rules' => ['required', 'file', 'mimes:pdf,doc,docx', 'max:10240'],
                 'validation_messages' => [
-                    'required' => 'Please upload your Proof of address in pdf, doc or docx format',
+                    'required' => 'Please upload your proof of address in pdf, doc or docx format',
+                    'file' => 'Please upload a file',
+                    'mimes' => 'Please upload your proof of address in pdf, doc or docx format',
+                    'max' => 'Please upload a file that is under 10mb'
                 ],
                 'display_order' => 2,
                 'custom' => true,

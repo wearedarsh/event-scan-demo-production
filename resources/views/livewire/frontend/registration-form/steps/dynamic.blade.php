@@ -4,6 +4,8 @@
     @endif
 
     <x-registration.form-step>
+
+        {{ json_encode($document_uploads)}}
         @foreach($inputs as $input)
             @if($input->type != 'document_upload')
                 <x-registration.input-dynamic-field :input="$input" />

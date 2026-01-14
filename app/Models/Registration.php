@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\RegistrationTicket;
 use App\Models\RegistrationDocument;
 use App\Models\RegistrationOptInResponse;
-use App\Models\EventPaymentMethod;
+use App\Models\RegistrationPayment;
 use App\Models\Country;
 use App\Models\EmailBroadcast;
 
@@ -39,10 +39,6 @@ class Registration extends Model
         return $this->hasMany(FeedbackFormSubmission::class, 'user_id', 'user_id');
     }
 
-    protected $casts = [
-        'paid_at' => 'datetime',
-    ];
-
     public function scopeFeedbackCompleteForEvent($q, int $event_id)
     {
         return $q->whereHas('feedbackFormSubmissions', function ($s) use ($event_id) {
@@ -62,10 +58,6 @@ class Registration extends Model
         });
     }
 
-    public function eventPaymentMethod()
-    {
-        return $this->belongsTo(EventPaymentMethod::class);
-    }
 
     public function scopeWithTicket($q, $ticket_id)
     {
@@ -133,14 +125,9 @@ class Registration extends Model
         return $this->hasMany(RegistrationDocument::class);
     }
 
-    public function scopePaid($query)
+    public function payments()
     {
-        return $query->where('payment_status', 'paid');
-    }
-
-    public function scopeUnpaidComplete($query)
-    {
-        return $query->where('payment_status', 'pending')->where('is_complete', true);
+        return $this->hasMany(RegistrationPayment::class);
     }
 
     public function getFormattedPaidDateAttribute()

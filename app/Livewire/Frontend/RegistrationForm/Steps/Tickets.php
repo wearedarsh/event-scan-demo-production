@@ -203,7 +203,7 @@ class Tickets extends Component
             if (!$file) continue;
 
             $path = $file->store(
-                "registrations/{$this->registration->id}/tickets",
+                "registrations/{$this->registration->id}/document_uploads",
                 'private'
             );
 

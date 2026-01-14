@@ -11,6 +11,7 @@ use App\Models\Registration;
 use App\Models\RegistrationDocument;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class Dynamic extends Component
 {
@@ -61,15 +62,17 @@ class Dynamic extends Component
                     }else{
                         $this->form_data[$input->key_name] = $this->registration->{$input->key_name} ?? null;
                     }
+
+                    foreach($input->validation_rules as $rule){
+                        $this->rules['form_data.'.$input->key_name][] = $rule;
+                    }
+
+                    foreach($input->validation_messages as $rule => $message){
+                        $this->messages['form_data.'.$input->key_name.'.'.$rule] = $message;
+                    }
                 }
                 
-                foreach($input->validation_rules as $rule){
-                    $this->rules['form_data.'.$input->key_name][] = $rule;
-                }
-
-                foreach($input->validation_messages as $rule => $message){
-                    $this->messages['form_data.'.$input->key_name.'.'.$rule] = $message;
-                }
+                
             }
         }
     }
@@ -102,26 +105,31 @@ class Dynamic extends Component
             }
 
             if ($file) {
-                $rules = ['file', 'max:5120'];
 
-                if ($input->allowed_file_types) {
-                    $rules[] = 'mimes:' . $input->allowed_file_types;
+                $rules = [];
+                $messages = [];
+                
+                foreach($input->validation_rules as $rule){
+                    $rules["document_uploads.{$input->id}"][] = $rule;
                 }
 
-                $this->validate([
-                    "document_uploads.{$input->id}" => $rules,
-                ]);
+                foreach($input->validation_messages as $rule => $message){
+                    $messages["document_uploads.{$input->id}.{$rule}"] = $message;
+                }
+
+                $this->validate($rules, $messages);
             }
         }
     }
 
-    protected function persistUploads(): void
+    protected function storeUploads(): void
     {
         foreach ($this->document_uploads as $input_id => $file) {
+
             if (!$file) continue;
 
             $path = $file->store(
-                "registrations/{$this->registration->id}/documents",
+                "registrations/{$this->registration->id}/document_uploads",
                 'private'
             );
 
@@ -141,12 +149,14 @@ class Dynamic extends Component
         $this->registration->load('registrationDocuments');
     }
 
-    protected function cleanupOrphanedDocuments(): void
+    protected function cleanUpDocuments(): void
     {
-        $validIds = $this->documentInputs()->pluck('id');
+        $valid_ids = $this->documentInputs()->pluck('id');
+        Log::info('valid ids: ' . json_encode($valid_ids));
+        return;
 
         $this->registration->registrationDocuments
-            ->whereNotIn('registration_form_input_id', $validIds)
+            ->whereNotIn('registration_form_input_id', $valid_ids)
             ->each(function ($doc) {
                 Storage::disk('private')->delete($doc->file_path);
                 $doc->delete();
@@ -170,7 +180,10 @@ class Dynamic extends Component
 
         if ($direction === 'forward') {
 
-            $this->validate();
+            if($this->rules){
+                $this->validate();
+            }
+
             $this->validateRequiredUploads();
 
             if ($this->getErrorBag()->isNotEmpty()) {
@@ -178,8 +191,8 @@ class Dynamic extends Component
             }
 
             $this->store();
-            $this->persistUploads();
-            $this->cleanupOrphanedDocuments();
+            $this->storeUploads();
+            $this->cleanUpDocuments();
         }
 
         $this->dispatch('update-step', $direction);

@@ -1,18 +1,15 @@
 <div class="space-y-4">
 
-    <!-- Breadcrumbs -->
     <x-admin.breadcrumb :items="[
         ['label' => 'Team members', 'href' => route('admin.users.index')],
         ['label' => 'Add team member'],
     ]" />
 
-    <!-- Header -->
     <x-admin.page-header
         title="Add team member"
         subtitle="Create a new team member and assign permissions."
     />
 
-    <!-- Alerts -->
     @if($errors->any())
         <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
@@ -22,36 +19,30 @@
     @endif
 
 
-    <!-- Form wrapper -->
     <div class="px-6">
         <form wire:submit.prevent="save" class="space-y-6">
 
-            <!-- User information -->
             <x-admin.section-title title="Information" />
 
             <x-admin.card hover="false" class="p-6 space-y-4">
 
                 <div class="grid md:grid-cols-2 gap-6">
 
-                    <!-- First name -->
                     <div>
                         <x-admin.input-label for="first_name">First name</x-admin.input-label>
                         <x-admin.input-text id="first_name" model="first_name" />
                     </div>
 
-                    <!-- Last name -->
                     <div>
                         <x-admin.input-label for="last_name">Last name</x-admin.input-label>
                         <x-admin.input-text id="last_name" model="last_name" />
                     </div>
 
-                    <!-- Email -->
                     <div>
                         <x-admin.input-label for="email">Email</x-admin.input-label>
                         <x-admin.input-text id="email" model="email" type="email" />
                     </div>
 
-                    <!-- Password -->
                     <div>
                         <x-admin.input-label for="password">Password</x-admin.input-label>
                         <x-admin.input-text id="password" model="password" type="password" />

@@ -5,6 +5,7 @@ namespace App\Livewire\Backend\Admin\Events;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use App\Models\Event;
+use App\Models\RegistrationPayment;
 
 #[Layout('livewire.backend.admin.layouts.app')]
 class Manage extends Component
@@ -16,8 +17,16 @@ class Manage extends Component
     public function mount(Event $event)
     {
         $this->event = $event;
-        $this->registrations_paid = $this->event->registrations()->paid()->count();
-        $this->registrations_unpaid = $this->event->registrations()->unpaidComplete()->count();
+        $this->registrations_paid = RegistrationPayment::paid()
+            ->whereHas('registration', fn ($q) =>
+                $q->where('event_id', $this->event->id)
+            )
+            ->count();
+        $this->registrations_paid = RegistrationPayment::paid()
+            ->whereHas('registration', fn ($q) =>
+                $q->where('event_id', $this->event->id)
+            )
+            ->count();
 
     }
 

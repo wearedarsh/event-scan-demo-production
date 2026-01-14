@@ -1,12 +1,10 @@
 <div class="space-y-4">
 
-    <!-- Breadcrumb -->
     <x-admin.breadcrumb :items="[
         ['label' => 'Home', 'href' => route('admin.dashboard')],
         ['label' => 'Team members'],
     ]" />
 
-    <!-- Header -->
     <x-admin.page-header
         title="Team members"
         subtitle="Manage staff accounts, roles and access."
@@ -17,7 +15,6 @@
         </x-admin.button>
     </x-admin.page-header>
 
-    <!-- Alerts -->
     @if($errors->any())
         <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
@@ -26,12 +23,10 @@
         <x-admin.alert type="success" :message="session('success')" />
     @endif
 
-    <!-- MAIN CONTENT -->
     <div class="px-6">
 
         <x-admin.card class="p-6 space-y-6">
 
-            <!-- Role Filter Pills -->
             <div class="flex flex-wrap items-center gap-2">
 
                 <x-admin.filter-pill :active="$roleFilter === 'all'" wire:click="setRoleFilter('all')">
@@ -107,6 +102,7 @@
                                             type="link"
                                             :href="route('admin.users.edit', $user->id)"
                                             icon="pencil-square"
+                                            primary
                                             label="Edit"
                                         />
 

@@ -18,7 +18,7 @@ class Edit extends Component
     public string $type = 'text';
     public int $required = 0;
     public ?string $placeholder = null;
-    public string $allowed_file_types = '';
+    public $allowed_file_types = null;
 
     public int $display_order = 1;
     public int $col_span = 12;

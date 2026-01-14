@@ -51,7 +51,7 @@ class Account extends Component
     public function validateStep($direction){
         $this->dispatch('scroll-to-top');
         
-        if(!Auth::user()){
+        if(!Auth::user() && $direction === 'forward'){
             $this->validate();
             if($this->mode === 'register'){
                 $this->register();

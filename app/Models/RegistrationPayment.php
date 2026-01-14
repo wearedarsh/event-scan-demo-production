@@ -32,7 +32,6 @@ class RegistrationPayment extends Model
         return $this->belongsTo(EventPaymentMethod::class);
     }
 
-
     public function scopePaid($query)
     {
         return $query->where('status', 'paid');
@@ -42,4 +41,5 @@ class RegistrationPayment extends Model
     {
         return $query->where('status', 'pending');
     }
+
 }

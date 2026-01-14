@@ -26,7 +26,6 @@ return new class extends Migration
             $table->json('validation_messages')->nullable();
             $table->integer('display_order')->default(0);
             $table->string('relation_model')->nullable();
-            $table->string('allowed_file_types')->nullable();
             $table->boolean('row_start')->default(false);
             $table->boolean('row_end')->default(false);
             $table->boolean('custom')->default(false);

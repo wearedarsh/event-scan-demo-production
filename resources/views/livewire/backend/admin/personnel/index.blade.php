@@ -1,14 +1,11 @@
 <div class="space-y-4">
 
-    <!-- Breadcrumbs -->
     <x-admin.breadcrumb :items="[
         ['label' => 'Events', 'href' => route('admin.events.index')],
         ['label' => $event->title, 'href' => route('admin.events.manage', $event->id)],
         ['label' => 'Personnel'],
     ]" />
 
-
-    <!-- Page Header -->
     <x-admin.page-header
         title="Personnel"
         subtitle="Manage personnel groups and individual personnel.">
@@ -17,19 +14,15 @@
             :value="$personnel->total()" />
     </x-admin.page-header>
 
-
-    <!-- Alerts -->
     @if($errors->any())
-    <x-admin.alert type="danger" :message="$errors->first()" />
+        <x-admin.alert type="danger" :message="$errors->first()" />
     @endif
 
     @if (session()->has('success'))
-    <x-admin.alert type="success" :message="session('success')" />
+        <x-admin.alert type="success" :message="session('success')" />
     @endif
 
 
-
-    <!-- Badges -->
     <div class="px-6">
         <x-admin.action-card
             title="Badges"
@@ -42,8 +35,6 @@
     </div>
 
 
-
-    <!-- Personnel Groups -->
     <div class="px-6 space-y-4">
 
         <x-admin.section-title title="Personnel groups" />
@@ -60,8 +51,6 @@
                 </x-admin.outline-btn-icon>
             </div>
 
-
-            <!-- Table -->
             <x-admin.table>
                 <table class="min-w-full text-sm text-left">
 
