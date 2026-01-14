@@ -36,7 +36,7 @@ class RegistrationFormController extends Component
         
         if(session('registration_id') && $this->registration){
             $this->registration->update([
-                'status' => 'cancelled'
+                'registration_status' => 'cancelled'
             ]);
         }
 
