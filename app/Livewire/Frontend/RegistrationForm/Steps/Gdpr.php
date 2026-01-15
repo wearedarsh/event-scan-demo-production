@@ -13,7 +13,9 @@ class Gdpr extends Component
     public Registration $registration;
     public array $opt_in_responses = [];
     public bool $email_marketing_opt_in = false;
+
     public $step_help_info;
+    public $total_steps;
 
     protected $listeners = [
         'validate-step' => 'validateStep',

@@ -15,7 +15,9 @@ class Payment extends Component
     public $currency_symbol = '';
     public int $registration_total_cents = 0;
     public $registration_total = 0;
+
     public $step_help_info;
+    public $total_steps;
 
     protected $listeners = [
         'validate-step' => 'validateStep',

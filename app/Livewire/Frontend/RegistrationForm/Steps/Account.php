@@ -23,6 +23,7 @@ class Account extends Component
     public string $mode = 'register';
 
     public $step_help_info;
+    public $total_steps;
 
     protected function rules()
     {

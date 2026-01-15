@@ -33,6 +33,7 @@ class Dynamic extends Component
     public array $replace_document = [];
 
     public $step_help_info;
+    public $total_steps;
 
 
     protected $listeners = [

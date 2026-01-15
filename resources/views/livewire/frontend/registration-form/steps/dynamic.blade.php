@@ -60,7 +60,7 @@
         </div>
         <div class="flex-1">
             <x-registration.navigate-button wire:click="$dispatch('validate-step', ['forward'])">
-                Next
+                @if($current_step === $total_steps) client_setting('booking.navigation.approval.final_step_button_label') @else Next @endif
             </x-registration.navigate-button>
         </div>
     </div>
