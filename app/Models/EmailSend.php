@@ -10,6 +10,8 @@ class EmailSend extends Model
     protected $fillable = [
         'email_broadcast_id',
         'recipient_id',
+        'from_name',
+        'from_address',
         'email_address',
         'subject',
         'html_content',
