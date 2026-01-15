@@ -7,7 +7,6 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Address;
 use Sichikawa\LaravelSendgridDriver\SendGrid;
-use App\Models\ClientSetting;
 
 class BroadcastEmail extends Mailable
 {
@@ -43,7 +42,7 @@ class BroadcastEmail extends Mailable
         ]);
 
         return new Envelope(
-            from: new Address(ClientSetting::get('from_address'), ClientSetting::get('from_name')),
+            from: new Address(client_setting('email.customer.from_address'), client_setting('email.customer.from_name')),
             subject: $this->custom_subject,
         );
     }

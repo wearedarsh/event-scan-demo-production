@@ -6,7 +6,6 @@ use Illuminate\Mail\Mailable;
 use App\Models\User;
 use App\Models\EmailHtmlContent;
 use App\Models\EmailHtmlLayout;
-use App\Models\ClientSetting;
 use Illuminate\Support\Facades\Blade;
 
 class CheckInAppInstructionAdmin extends Mailable
@@ -19,7 +18,7 @@ class CheckInAppInstructionAdmin extends Mailable
     {
         $email_content = EmailHtmlContent::where('key_name', 'check_in_app_instruction')->firstOrFail();
         $layout = EmailHtmlLayout::where('key_name', 'admin')->firstOrFail();
-        $email_signature = ClientSetting::get('transactional_signature_html');
+        $email_signature = client_setting('email.customer.signature_html');
 
         $initialise_link =
             client_setting('check_in_app.scheme')

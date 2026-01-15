@@ -6,7 +6,6 @@ use Illuminate\Mail\Mailable;
 use App\Models\Registration;
 use App\Models\EmailHtmlContent;
 use App\Models\EmailHtmlLayout;
-use App\Models\ClientSetting;
 use Illuminate\Support\Facades\Blade;
 
 class BankTransferConfirmationAdmin extends Mailable
@@ -20,7 +19,6 @@ class BankTransferConfirmationAdmin extends Mailable
     {
         $email_content = EmailHtmlContent::where('key_name', 'admin_bank_transfer_confirmation')->firstOrFail();
         $layout = EmailHtmlLayout::where('key_name', 'admin')->firstOrFail();
-        $email_signature = ClientSetting::get('transactional_signature_html');
 
 
         $body_html = Blade::render($email_content->html_content, [

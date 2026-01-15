@@ -8,7 +8,6 @@ use App\Models\FeedbackForm;
 use App\Models\Registration;
 use App\Models\EmailHtmlContent;
 use App\Models\EmailHtmlLayout;
-use App\Models\ClientSetting;
 use Illuminate\Support\Facades\Blade;
 
 class CertificateOfAttendanceConfirmationCustomer extends Mailable
@@ -29,7 +28,7 @@ class CertificateOfAttendanceConfirmationCustomer extends Mailable
 
         $email_content = EmailHtmlContent::where('key_name', 'customer_certificate_confirmation')->firstOrFail();
         $layout = EmailHtmlLayout::where('key_name', 'customer')->firstOrFail();
-        $email_signature = ClientSetting::get('transactional_signature_html');
+        $email_signature = client_setting('email.customer.signature_html');
 
         $body_html = Blade::render($email_content->html_content, [
             'user' => $this->user,

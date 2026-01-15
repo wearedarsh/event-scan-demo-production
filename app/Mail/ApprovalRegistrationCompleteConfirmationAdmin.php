@@ -6,7 +6,6 @@ use Illuminate\Mail\Mailable;
 use App\Models\Registration;
 use App\Models\EmailHtmlContent;
 use App\Models\EmailHtmlLayout;
-use App\Models\ClientSetting;
 use Illuminate\Support\Facades\Blade;
 
 class ApprovalRegistrationCompleteConfirmationAdmin extends Mailable

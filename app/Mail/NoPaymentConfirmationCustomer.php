@@ -6,7 +6,6 @@ use Illuminate\Mail\Mailable;
 use App\Models\Registration;
 use App\Models\EmailHtmlContent;
 use App\Models\EmailHtmlLayout;
-use App\Models\ClientSetting;
 use Illuminate\Support\Facades\Blade;
 
 class NoPaymentConfirmationCustomer extends Mailable
@@ -20,7 +19,7 @@ class NoPaymentConfirmationCustomer extends Mailable
     {
         $email_content = EmailHtmlContent::where('key_name', 'customer_no_payment_confirmation')->firstOrFail();
         $layout = EmailHtmlLayout::where('key_name', 'customer')->firstOrFail();
-        $email_signature = ClientSetting::get('transactional_signature_html');
+        $email_signature = client_setting('email.customer.signature_html');
 
         $body_html = Blade::render($email_content->html_content, [
             'registration' => $this->registration,
