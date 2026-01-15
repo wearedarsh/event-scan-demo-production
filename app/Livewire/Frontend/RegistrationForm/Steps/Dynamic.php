@@ -34,6 +34,7 @@ class Dynamic extends Component
 
     public $step_help_info;
     public $total_steps;
+    public bool $is_penultimate_step = false;
 
 
     protected $listeners = [

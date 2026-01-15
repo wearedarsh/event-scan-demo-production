@@ -12,9 +12,9 @@
         />
 
         @if($step_type === 'rigid')
-            <livewire:is :component="'frontend.registration-form.steps.'. $step_key_name" :key="$step_key_name" :event="$event" :current_step="$current_step" :total_steps="$total_steps" :registration="$registration" :step_help_info="$step_help_information_copy" />
+            <livewire:is :component="'frontend.registration-form.steps.'. $step_key_name" :key="$step_key_name" :event="$event" :current_step="$current_step" :total_steps="$total_steps" :registration="$registration" :step_help_info="$step_help_information_copy" :is_penultimate_step="$this->isPenultimateStep" />
         @else
-            <livewire:is component="frontend.registration-form.steps.dynamic" :key="$step_key_name" :event="$event" :registration_form_step="$registration_form_step" :total_steps="$total_steps" :current_step="$current_step" :step_help_info="$step_help_information_copy" :registration="$registration" />
+            <livewire:is component="frontend.registration-form.steps.dynamic" :key="$step_key_name" :event="$event" :registration_form_step="$registration_form_step" :total_steps="$total_steps" :current_step="$current_step" :step_help_info="$step_help_information_copy" :registration="$registration" :is_penultimate_step="$this->isPenultimateStep" />
         @endif
     
     </main>
