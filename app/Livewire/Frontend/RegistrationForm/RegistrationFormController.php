@@ -10,6 +10,7 @@ use App\Models\Registration;
 use Livewire\Attributes\Layout;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 #[Layout('livewire.frontend.registration-form.layouts.app')]
 class RegistrationFormController extends Component
@@ -41,6 +42,7 @@ class RegistrationFormController extends Component
         }
 
         Session::forget('registration_id');
+        Auth::logout();
         return redirect()->route('home');
     }
 

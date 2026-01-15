@@ -9,6 +9,7 @@ use App\Mail\ApprovalRegistrationCompleteConfirmationAdmin;
 use App\Mail\ApprovalRegistrationCompleteConfirmationCustomer;
 use App\Services\EmailService;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class ApprovalComplete extends Component
 {
@@ -55,6 +56,7 @@ class ApprovalComplete extends Component
             event_id: $this->registration->event_id,
         );
 
+        Auth::logout();
         Session::forget('registration_id');
     }
 
