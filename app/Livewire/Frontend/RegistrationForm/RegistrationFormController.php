@@ -21,6 +21,7 @@ class RegistrationFormController extends Component
     public Event $event;
     public int $total_steps;
     public string $step_type;
+    public string $registration_type;
     public int $current_step = 1;
     public string $step_label;
     public string $step_key_name;
@@ -32,6 +33,11 @@ class RegistrationFormController extends Component
         'update-step' => 'updateStep',
         'clear-session' => 'clearSessionAndRedirect'
     ];
+
+    public function getIsPenultimateStepProperty(){
+        return $this->current_step === ($this->total_steps - 1);
+    }
+
     
     public function clearSessionAndRedirect(){
         
@@ -71,6 +77,7 @@ class RegistrationFormController extends Component
         $this->spaces_remaining = $this->event->space_remaining;
         $this->registration_form = $this->event->registrationForm;
         $this->total_steps = $this->registration_form->steps->count();
+        $this->registration_type = $this->registration_form->type;
 
         $this->registration_form_step = $this->registration_form->steps
         ->firstWhere('display_order', $this->current_step);
