@@ -39,6 +39,12 @@ class User extends Authenticatable
     public function emailBroadcasts(){
         return $this->hasMany(EmailBroadcast::class);
     }
+
+    public function canAccessDashboard(): bool
+    {
+        return $this->active;
+    }
+
     
     /** @use HasFactory<\Database\Factories\UserFactory> */
     
