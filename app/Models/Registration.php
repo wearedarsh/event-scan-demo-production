@@ -24,7 +24,7 @@ class Registration extends Model
     protected $fillable = [
         'user_id', 'event_id', 'title', 'first_name', 'last_name', 'address_line_one',
         'town', 'postcode', 'country_id', 'attendee_type_id', 'attendee_type_other',
-        'mobile_country_code', 'mobile_number', 'email', 'status', 
+        'mobile_country_code', 'mobile_number', 'email', 'registration_status', 'payment_status', 
         'payment_status', 'currently_held_position', 'booking_reference',
         'total_cents', 'special_requirements', 'email_subscriber_id', 'attendee_group_id'
     ];
