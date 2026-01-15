@@ -41,6 +41,8 @@ class SendQueuedEmailJob implements ShouldQueue
 
             $send = EmailSend::create([
                 'email_broadcast_id' => $this->queued_send->email_broadcast_id,
+                'from_address' => $this->queued_send->from_address,
+                'from_name' => $this->queued_send->from_name,
                 'recipient_id' => $this->queued_send->recipient_id ?? null,
                 'email_address' => $this->queued_send->email_address,
                 'subject' => $this->queued_send->subject,
