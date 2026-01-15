@@ -1,5 +1,6 @@
 <div class="space-y-4">
     <x-registration.form-step>
+        {{ $this->isPenultimateStep }}
         @if($step_help_info)
             <x-registration.form-info>
                 {{ $step_help_info }}
