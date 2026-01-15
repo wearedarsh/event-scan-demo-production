@@ -16,6 +16,7 @@ class Gdpr extends Component
 
     public $step_help_info;
     public $total_steps;
+    public $current_step;
 
     protected $listeners = [
         'validate-step' => 'validateStep',
