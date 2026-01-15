@@ -128,7 +128,7 @@ class Account extends Component
 
         $this->resetErrorBag();
 
-        $existing = User::where('email', $this->email)->first();
+        $existing = User::where('email', $this->email)->where('active', true)->first();
 
         if ($existing) {
             $this->addError('email', 'Account already exists. Please sign in.');
