@@ -38,6 +38,8 @@ class ApprovalComplete extends Component
 
         EmailService::queueMailable(
             mailable: $mailable,
+            from_address: client_setting('email.admin.from_address'),
+            from_name: client_setting('email.admin.from_name'),
             recipient_user: $this->registration->user,
             recipient_email: $this->registration->user->email,
             friendly_name: 'Approval registration complete confirmation admin',
@@ -49,6 +51,8 @@ class ApprovalComplete extends Component
 
         EmailService::queueMailable(
             mailable: $mailable,
+            from_address: client_setting('email.admin.from_address'),
+            from_name: client_setting('email.admin.from_name'),
             recipient_user: $this->registration->user,
             recipient_email: $this->registration->user->email,
             friendly_name: 'Approval registration complete confirmation customer',

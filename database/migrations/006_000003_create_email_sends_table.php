@@ -17,6 +17,8 @@ return new class extends Migration
                   ->nullable()
                   ->constrained('users')
                   ->onDelete('set null');
+            $table->string('from_address');
+            $table->string('from_name');
             $table->string('email_address');
             $table->string('subject');
             $table->mediumText('html_content');

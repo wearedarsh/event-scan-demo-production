@@ -15,6 +15,8 @@ class BroadcastEmail extends Mailable
     public string $custom_subject;
     public string $html_content;
     public int $broadcast_id;
+    public $from_name;
+    public $from_address;
     public ?int $email_send_id;
     public ?string $client_id;
 
@@ -22,12 +24,16 @@ class BroadcastEmail extends Mailable
         string $custom_subject,
         string $html_content,
         int $broadcast_id,
+        string $from_address,
+        string $from_name,
         ?int $email_send_id = null,
         ?string $client_id = null
     ) {
         $this->custom_subject = $custom_subject;
         $this->html_content = $html_content;
         $this->broadcast_id = $broadcast_id;
+        $this->from_address = $from_address;
+        $this->from_name = $from_name;
         $this->email_send_id = $email_send_id;
         $this->client_id = $client_id;
     }
@@ -42,7 +48,7 @@ class BroadcastEmail extends Mailable
         ]);
 
         return new Envelope(
-            from: new Address(client_setting('email.customer.from_address'), client_setting('email.customer.from_name')),
+            from: new Address($this->from_address, $this->from_name),
             subject: $this->custom_subject,
         );
     }

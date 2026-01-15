@@ -9,6 +9,8 @@ class EmailQueuedSend extends Model
 {
     protected $fillable = [
         'email_broadcast_id',
+        'from_address',
+        'from_name',
         'recipient_id',
         'email_address',
         'subject',

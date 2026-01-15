@@ -28,6 +28,8 @@ class SendQueuedEmailJob implements ShouldQueue
             Log::info('Creating new mailable');
 
             $mailable = new BroadcastEmail(
+                from_address: $this->queued_send->from_address,
+                from_name: $this->queued_send->from_name,
                 custom_subject: $this->queued_send->subject,
                 html_content: $this->queued_send->html_content,
                 broadcast_id: $this->queued_send->email_broadcast_id,

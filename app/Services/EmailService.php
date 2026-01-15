@@ -16,6 +16,8 @@ class EmailService
 {
     public static function queueMailable(
         Mailable $mailable,
+        string $from_name,
+        string $from_address,
         string $recipient_email,
         string $friendly_name,
         string $type,
@@ -28,6 +30,8 @@ class EmailService
     ): EmailQueuedSend {
         return DB::transaction(function () use (
             $mailable,
+            $from_name,
+            $from_address,
             $recipient_email,
             $recipient_user,
             $friendly_name,
@@ -67,6 +71,8 @@ class EmailService
 
             $queued = EmailQueuedSend::create([
                 'email_broadcast_id' => $broadcast->id,
+                'from_address' => $from_address,
+                'from_name' => $from_name,
                 'recipient_id' => $recipient_user?->id,
                 'email_address' => $recipient_email,
                 'subject' => $subject,
