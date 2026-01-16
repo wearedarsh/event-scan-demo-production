@@ -8,7 +8,7 @@
 
         @if($this->registration)
             <div class="space-y-2 text-sm text-[var(--color-text)]">
-                <div class="pt-6">
+                <div>
                     <h3 class="text-lg font-semibold text-[var(--color-secondary)]">Your details</h3>
                 </div>
 
