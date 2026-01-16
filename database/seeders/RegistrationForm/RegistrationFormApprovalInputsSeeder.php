@@ -98,6 +98,7 @@ class RegistrationFormApprovalInputsSeeder extends Seeder
                 'validation_rules' => ['required', 'regex:/^\+?[0-9]{1,5}$/'],
                 'validation_messages' => [
                     'required' => 'Please enter your country code',
+                    'regex' => 'Please enter your country code in the international format eg. +44',
                 ],
                 'display_order' => 4,
             ],
