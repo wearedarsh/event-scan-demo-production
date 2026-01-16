@@ -65,7 +65,7 @@
                         <strong>Bank Transfer</strong><br>
                         {!! client_setting('payment.bank_transfer.cta.info_html') !!}
                         <div class="flex justify-end mt-3">
-                            <x-registration.button variant="outline" wire:click="bankTransferPayment">
+                            <x-registration.button variant="primary" wire:click="bankTransferPayment">
                                 {!! client_setting('payment.bank_transfer.cta.label') !!}
                             </x-registration.button>
                         </div>
