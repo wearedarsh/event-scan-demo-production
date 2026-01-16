@@ -6,16 +6,6 @@
             </x-registration.form-info>
         @endif
         @if($this->registration)
-            <div class="space-y-2 text-sm text-[var(--color-text)]">
-                <div class="bg-[var(--color-bg)] rounded-lg px-4 py-2">
-                    {{ $this->registration->title }} {{ $this->registration->first_name }} {{ $this->registration->last_name }}
-                </div>
-                <div class="bg-[var(--color-bg)] rounded-lg px-4 py-2">
-                    {{ $this->registration->email }}
-                </div>
-            </div>
-
-
             <div class="pt-3">
                 {!! client_setting('booking.approval_complete.content_html') !!}
             </div>

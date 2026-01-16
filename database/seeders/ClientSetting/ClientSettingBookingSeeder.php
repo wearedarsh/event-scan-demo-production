@@ -107,7 +107,7 @@ class ClientSettingBookingSeeder extends Seeder
                 'label'         => 'Booking approval complete content html',
                 'display_order' => 10,
                 'type'          => 'textarea',
-                'value'         => '<div class="bg-[var(--color-bg)] rounded-lg px-4 py-2"><h2 class="text-3xl font-semibold text-[var(--color-text)]">Thank you for your application</h2><p>A member of our team has received your registraion and will be in touch shortly</div>',
+                'value'         => '<div class="bg-[var(--color-bg)] rounded-lg px-4 py-2"><h2 class="text-lg font-bold text-[var(--color-text)]">Thank you for your application</h2><p class="font-sm">A member of our team has received your application and will be in touch shortly.<br><br>If you have any questions, feel free to reach out to our team.</p></div>',
             ],
             [
                 'category_id'   => 3,
