@@ -45,18 +45,7 @@
             </div>
 
             @if($this->event->eventPaymentMethods)
-                @if($this->event->eventPaymentMethods->contains('payment_method','bank_transfer'))
-                    <div class="bg-[var(--color-accent-light)] border-l-4 border-[var(--color-accent)] p-4 rounded-lg text-sm text-[var(--color-secondary)]">
-                        <strong>Bank Transfer</strong><br>
-                        <x-registration.form-info>
-                            If you select bank transfer, your place will not be reserved until payment is confirmed.
-                        </x-registration.form-info>
-                        <x-registration.navigate-button wire:click="bankTransferPayment">
-                            Pay by bank transfer
-                        </x-registration.navigate-button>
-                    </div>
-                @endif
-
+                
                 @if($this->event->eventPaymentMethods->contains('payment_method','stripe') && $this->registration->country->stripe_enabled)
                     <div class="bg-[var(--color-accent-light)] border-l-4 border-[var(--color-accent)] p-4 rounded-lg text-sm text-[var(--color-secondary)]">
                         <img src="{{ asset('images/frontend/stripe.png') }}" alt="Stripe Secure Payments" class="mt-2 h-8 inline-block opacity-80"><br>
@@ -68,6 +57,18 @@
                                 Pay by card
                             </x-registration.navigate-button>
                         </div>
+                    </div>
+                @endif
+
+                @if($this->event->eventPaymentMethods->contains('payment_method','bank_transfer'))
+                    <div class="bg-[var(--color-accent-light)] border-l-4 border-[var(--color-accent)] p-4 rounded-lg text-sm text-[var(--color-secondary)]">
+                        <strong>Bank Transfer</strong><br>
+                        <p>
+                            {!! client_setting('payment.bank_transfer.cta.info_html') !!}
+                        </p>
+                        <x-registration.navigate-button wire:click="bankTransferPayment">
+                            {!! client_setting('payment.bank_transfer.cta.label') !!}
+                        </x-registration.navigate-button>
                     </div>
                 @endif
             @endif

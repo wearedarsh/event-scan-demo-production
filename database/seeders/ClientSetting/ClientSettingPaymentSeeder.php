@@ -12,7 +12,7 @@ class ClientSettingPaymentSeeder extends Seeder
         ClientSetting::insert([
             [
                 'category_id'   => 7,
-                'key_name'      => 'payment.bank_transfer_detail_html',
+                'key_name'      => 'payment.bank_transfer.details_html',
                 'label'         => 'Bank transfer details html',
                 'display_order' => 1,
                 'type'          => 'textarea',
@@ -25,7 +25,23 @@ class ClientSettingPaymentSeeder extends Seeder
             ],
             [
                 'category_id'   => 7,
-                'key_name'      => 'payment.stripe_payments',
+                'key_name'      => 'payment.bank_transfer.cta.info_html',
+                'label'         => 'Bank transfer payment method cta information html',
+                'display_order' => 1,
+                'type'          => 'textarea',
+                'value'         => '<p>If you select bank transfer, your place will not be reserved until payment has been confirmed</p>',
+            ],
+            [
+                'category_id'   => 7,
+                'key_name'      => 'payment.bank_transfer.cta.label',
+                'label'         => 'Bank transfer payment method cta label',
+                'display_order' => 1,
+                'type'          => 'textarea',
+                'value'         => 'Pay by bank transfer',
+            ],
+            [
+                'category_id'   => 7,
+                'key_name'      => 'payment.stripe.payments_url',
                 'label'         => 'Stripe payments url',
                 'type'          => 'text',
                 'display_order' => 2,
