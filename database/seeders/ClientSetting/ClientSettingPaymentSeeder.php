@@ -29,7 +29,7 @@ class ClientSettingPaymentSeeder extends Seeder
                 'label'         => 'Bank transfer payment method cta information html',
                 'display_order' => 1,
                 'type'          => 'textarea',
-                'value'         => '<p>If you select bank transfer, your place will not be reserved until payment has been confirmed</p>',
+                'value'         => '<p class="pb-2">If you select bank transfer, your place will not be reserved until payment has been confirmed</p>',
             ],
             [
                 'category_id'   => 7,

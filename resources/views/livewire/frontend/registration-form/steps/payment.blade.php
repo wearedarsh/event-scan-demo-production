@@ -61,11 +61,9 @@
                 @endif
 
                 @if($this->event->eventPaymentMethods->contains('payment_method','bank_transfer'))
-                    <div class="bg-[var(--color-accent-light)] border-l-4 border-[var(--color-accent)] p-4 rounded-lg text-sm text-[var(--color-secondary)] py-2">
+                    <div class="bg-[var(--color-accent-light)] border-l-4 border-[var(--color-accent)] p-4 rounded-lg text-sm text-[var(--color-secondary)]">
                         <strong>Bank Transfer</strong><br>
-                        <p>
-                            {!! client_setting('payment.bank_transfer.cta.info_html') !!}
-                        </p>
+                        {!! client_setting('payment.bank_transfer.cta.info_html') !!}
                         <x-registration.button variant="outline" wire:click="bankTransferPayment">
                             {!! client_setting('payment.bank_transfer.cta.label') !!}
                         </x-registration.button>
