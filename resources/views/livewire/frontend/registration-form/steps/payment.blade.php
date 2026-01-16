@@ -53,9 +53,9 @@
                         <p>Payment will be processed securely via Stripe.</p>
 
                         <div class="flex justify-end mt-3">
-                            <x-registration.navigate-button wire:click="stripePayment">
+                            <x-registration.button variant="outline" wire:click="stripePayment">
                                 Pay by card
-                            </x-registration.navigate-button>
+                            </x-registration.button>
                         </div>
                     </div>
                 @endif
