@@ -40,7 +40,7 @@
         </div>
 
         <div class="flex-1">
-            {{ $this->registration->type }}
+            {{ $registration_form->type }}
             <x-registration.navigate-button wire:click="$dispatch('validate-step', ['forward'])">
                 @if($this->registration->type === 'approval' && $is_penultimate_step) 
                     client_setting('booking.navigation.approval.final_step_button_label') 
