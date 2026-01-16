@@ -1,7 +1,7 @@
 <div>
     <div id="step-top"></div>
     <main class="max-w-3xl mx-auto px-6 pt-16 space-y-6">
-        {{ $this->isPenultimateStep }}
+        
         <x-registration.event-info
             :event="$event"
             :spaces_remaining="$spaces_remaining"
@@ -11,7 +11,7 @@
             :current="$current_step"
             :total="$total_steps"
         />
-
+        {{ $this->isPenultimateStep }}
         @if($step_type === 'rigid')
             <livewire:is :component="'frontend.registration-form.steps.'. $step_key_name" :key="$step_key_name" :event="$event" :current_step="$current_step" :total_steps="$total_steps" :registration="$registration" :step_help_info="$step_help_information_copy" :is_penultimate_step="$this->isPenultimateStep" />
         @else
