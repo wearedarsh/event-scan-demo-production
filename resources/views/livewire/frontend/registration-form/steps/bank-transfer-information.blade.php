@@ -9,7 +9,7 @@
         <div class="bg-[var(--color-bg)] rounded-lg p-4 text-[var(--color-secondary)]">
             <h3 class="text-lg font-semibold mb-1">Thank you for registering for this event</h3>
             <p class="text-sm text-[var(--color-text-light)]">
-                The //Company name here// team has been notified of your application.
+                Our team have been notified of your application.
             </p>
         </div>
 
