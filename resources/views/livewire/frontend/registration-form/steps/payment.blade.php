@@ -66,7 +66,7 @@
                         <p>
                             {!! client_setting('payment.bank_transfer.cta.info_html') !!}
                         </p>
-                        <x-registration.button type="outline" wire:click="bankTransferPayment">
+                        <x-registration.button variant="outline" wire:click="bankTransferPayment">
                             {!! client_setting('payment.bank_transfer.cta.label') !!}
                         </x-registration.button>
                     </div>
