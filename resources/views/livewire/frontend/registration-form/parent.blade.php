@@ -1,6 +1,7 @@
 <div>
     <div id="step-top"></div>
     <main class="max-w-3xl mx-auto px-6 pt-16 space-y-6">
+        {{ $this->isPenultimateStep }}
         <x-registration.event-info
             :event="$event"
             :spaces_remaining="$spaces_remaining"
