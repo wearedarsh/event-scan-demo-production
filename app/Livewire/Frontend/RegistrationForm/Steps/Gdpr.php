@@ -5,12 +5,14 @@ namespace App\Livewire\Frontend\RegistrationForm\Steps;
 use Livewire\Component;
 use App\Models\Event;
 use App\Models\Registration;
+use App\Models\RegistrationForm;
 use Illuminate\Support\Facades\Auth;
 
 class Gdpr extends Component
 {
     public Event $event;
     public Registration $registration;
+    public RegistrationForm $registration_form;
     public array $opt_in_responses = [];
     public bool $email_marketing_opt_in = false;
 
