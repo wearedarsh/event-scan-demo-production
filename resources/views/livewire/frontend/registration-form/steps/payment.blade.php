@@ -64,9 +64,11 @@
                     <div class="bg-[var(--color-accent-light)] border-l-4 border-[var(--color-accent)] p-4 rounded-lg text-sm text-[var(--color-secondary)]">
                         <strong>Bank Transfer</strong><br>
                         {!! client_setting('payment.bank_transfer.cta.info_html') !!}
-                        <x-registration.button variant="outline" wire:click="bankTransferPayment">
-                            {!! client_setting('payment.bank_transfer.cta.label') !!}
-                        </x-registration.button>
+                        <div class="flex justify-end mt-3">
+                            <x-registration.button variant="outline" wire:click="bankTransferPayment">
+                                {!! client_setting('payment.bank_transfer.cta.label') !!}
+                            </x-registration.button>
+                        </div>
                     </div>
                 @endif
             @endif
