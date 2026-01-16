@@ -5,6 +5,7 @@ namespace App\Livewire\Frontend\RegistrationForm\Steps;
 use Livewire\Component;
 use App\Models\User;
 use App\Models\Registration;
+use App\Models\RegistrationForm;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,6 +16,7 @@ class Account extends Component
     ];
 
     public Registration $registration;
+    public RegistrationForm $registration_form;
 
     public string $email = '';
     public string $password = '';

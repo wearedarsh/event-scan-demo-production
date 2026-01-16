@@ -6,8 +6,10 @@ namespace App\Livewire\Frontend\RegistrationForm\Steps;
 use Livewire\Component;
 use App\Models\Event;
 use App\Models\RegistrationFormStep;
+
 use App\Models\RegistrationFormCustomFieldValue;
 use App\Models\Registration;
+use App\Models\RegistrationForm;
 use App\Models\RegistrationDocument;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
@@ -19,6 +21,7 @@ class Dynamic extends Component
     public Event $event;
     public RegistrationFormStep $registration_form_step;
     public Registration $registration;
+    public RegistrationForm $registration_form;
 
     public $current_step;
 
