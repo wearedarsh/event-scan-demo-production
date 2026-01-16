@@ -8,6 +8,10 @@
 
         @if($this->registration)
             <div class="space-y-2 text-sm text-[var(--color-text)]">
+                <div class="pt-6">
+                    <h3 class="text-lg font-semibold text-[var(--color-secondary)]">Your details</h3>
+                </div>
+
                 <div class="bg-[var(--color-bg)] rounded-lg px-4 py-2">
                     {{ $this->registration->title }} {{ $this->registration->first_name }} {{ $this->registration->last_name }}
                 </div>
