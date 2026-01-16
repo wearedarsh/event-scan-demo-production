@@ -11,12 +11,6 @@
             :current="$current_step"
             :total="$total_steps"
         />
-        @if($this->isPenultimateStep)
-            True
-        @else
-            False
-        @endif
-
         @if($step_type === 'rigid')
             <livewire:is :component="'frontend.registration-form.steps.'. $step_key_name" :key="$step_key_name" :event="$event" :current_step="$current_step" :total_steps="$total_steps" :registration="$registration" :registration_form="$registration_form" :step_help_info="$step_help_information_copy" :is_penultimate_step="$this->isPenultimateStep" />
         @else
