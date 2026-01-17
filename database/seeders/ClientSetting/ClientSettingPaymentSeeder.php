@@ -80,7 +80,7 @@ class ClientSettingPaymentSeeder extends Seeder
                 'label'         => 'Bank transfer booking payment information finish button label',
                 'display_order' => 1,
                 'type'          => 'text',
-                'value'         => 'Complete booking and return to homepage',
+                'value'         => 'Finish and return to homepage',
             ],
             [
                 'category_id'   => 7,
