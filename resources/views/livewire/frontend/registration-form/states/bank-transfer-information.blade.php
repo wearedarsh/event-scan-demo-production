@@ -21,8 +21,6 @@
             wire:click="$dispatch('clear-system-state')">
             {{ client_setting('payment.booking.bank_transfer.information.finish_button_label') }}
         </x-registration.navigate-button>
-        
-        </div>
 
     </x-registration.form-step>
 
