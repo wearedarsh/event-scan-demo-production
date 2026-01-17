@@ -105,7 +105,7 @@
         @endforeach
 
         <div class="flex justify-between pt-4">
-            <strong>Total {{ $registration_total_cents }}</strong>
+            <strong>Total</strong>
             <strong>{{ $currency_symbol }}{{ $this->registrationTotal }}</strong>
         </div>
 
