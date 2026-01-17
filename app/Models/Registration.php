@@ -111,7 +111,7 @@ class Registration extends Model
     public function getCalculatedTotalCentsAttribute(): int
     {
         return $this->registrationTickets->sum(function ($ticket) {
-            return $ticket->line_total_cents;
+            return $ticket->calculated_total;
         });
     }
 
