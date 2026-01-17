@@ -125,7 +125,7 @@ class Tickets extends Component
             $total_cents += $this->ticketLookup[$ticketId]->price_cents * (int) $qty;
         }
 
-        $this->registration_total_cents = $this->registration->total_cents;
+        $this->registration_total_cents = $this->total_cents;
     }
 
 
