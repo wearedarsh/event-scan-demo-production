@@ -76,6 +76,14 @@ class ClientSettingPaymentSeeder extends Seeder
             ],
             [
                 'category_id'   => 7,
+                'key_name'      => 'payment.booking.bank_transfer.information.finish_button_label',
+                'label'         => 'Bank transfer booking payment information finish button label',
+                'display_order' => 1,
+                'type'          => 'text',
+                'value'         => 'Complete booking and return to homepage',
+            ],
+            [
+                'category_id'   => 7,
                 'key_name'      => 'payment.booking.stripe.cta.info_html',
                 'label'         => 'Stripe payment booking method cta information html',
                 'display_order' => 1,

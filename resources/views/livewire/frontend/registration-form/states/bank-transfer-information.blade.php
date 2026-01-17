@@ -17,6 +17,15 @@
             {!! client_setting('payment.booking.bank_transfer.information.details_footer_html') !!}
         </div>
 
+        <div class="grid grid-cols-4">
+        <div class="col-span-4">
+            <x-registration.navigate-button
+                wire:click="$dispatch('clear-system-state')">
+                {{ client_setting('payment.booking.bank_transfer.information.finish_button_label') }}
+            </x-registration.navigate-button>
+        </div>
+    </div>
+
     </x-registration.form-step>
 
     <div class="grid grid-cols-4">
