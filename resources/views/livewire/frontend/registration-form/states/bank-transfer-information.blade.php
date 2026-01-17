@@ -18,7 +18,7 @@
         </div>
 
         <x-registration.navigate-button
-            wire:click="$dispatch('clear-system-state')">
+            wire:click="$dispatch('clear-session')">
             {{ client_setting('payment.booking.bank_transfer.information.finish_button_label') }}
         </x-registration.navigate-button>
 
@@ -27,7 +27,7 @@
     <div class="grid grid-cols-4">
         <div class="col-span-2">
             <x-registration.navigate-button
-                wire:click="$dispatch('clear-session')">
+                wire:click="$dispatch('clear-system-state')">
                 Previous
             </x-registration.navigate-button>
         </div>
