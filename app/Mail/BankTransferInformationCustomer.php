@@ -19,11 +19,13 @@ class BankTransferInformationCustomer extends Mailable
         $email_content = EmailHtmlContent::where('key_name', 'customer_bank_transfer_information')->firstOrFail();
         $layout = EmailHtmlLayout::where('key_name', 'customer')->firstOrFail();
         $email_signature = client_setting('email.customer.signature_html');
+        $currency_symbol = client_setting('general.currency_symbol');
 
         $body_html = Blade::render($email_content->html_content, [
             'registration' => $this->registration,
             'registration_total' => $this->registration->calculated_total,
-            'currency_symbol' => $email_signature,
+            'currency_symbol' => $currency_symbol,
+            'email_signature' => $email_signature
         ]);
 
         $full_html = Blade::render($layout->html_content, [
