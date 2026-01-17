@@ -26,7 +26,7 @@ class Tickets extends Component
     public array $replace_document = [];
 
     public int $registration_total_cents = 0;
-    public $currency_symbol = '';
+    public string $currency_symbol = '';
 
     public $step_help_info;
     public $total_steps;
@@ -73,6 +73,8 @@ class Tickets extends Component
         $this->recalculateTotals();
     }
 
+
+
     public function selectedTicketIds(): Collection
     {
         return collect($this->single_ticket_selections)
@@ -95,6 +97,7 @@ class Tickets extends Component
         );
     }
 
+
     public function updatedSingleTicketSelections(): void
     {
         $this->recalculateTotals();
@@ -112,8 +115,19 @@ class Tickets extends Component
 
     protected function recalculateTotals(): void
     {
-        $this->registration_total_cents = $this->registration->calculated_total_cents;
+        $total_cents = 0;
+
+        foreach ($this->single_ticket_selections as $ticketId) {
+            $total_cents += $this->ticketLookup[$ticketId]->price_cents;
+        }
+
+        foreach ($this->multiple_ticket_selections as $ticketId => $qty) {
+            $total_cents += $this->ticketLookup[$ticketId]->price_cents * (int) $qty;
+        }
+
+        $this->registration_total_cents = $this->registration->total_cents;
     }
+
 
     protected function validateRequiredTicketGroups(): void
     {
