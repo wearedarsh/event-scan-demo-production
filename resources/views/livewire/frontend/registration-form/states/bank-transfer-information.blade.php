@@ -2,7 +2,7 @@
     <x-registration.form-step>
 
         <div class="bg-[var(--color-bg)] rounded-lg p-4 text-[var(--color-secondary)]">
-            {! client_setting('payment.booking.bank_transfer.information.header_html')}
+            {!! client_setting('payment.booking.bank_transfer.information.header_html') !!}
         </div>
 
         <div class="bg-[var(--color-accent-light)] border-l-4 border-[var(--color-accent)] p-5 rounded-lg text-sm text-[var(--color-secondary)] space-y-2">
@@ -14,7 +14,7 @@
         </div>
 
         <div class="bg-[var(--color-bg)] rounded-lg p-4 text-[var(--color-secondary)]">
-            {! client_setting('payment.booking.bank_transfer.information.footer_html')}
+            {!! client_setting('payment.booking.bank_transfer.information.footer_html') !!}
         </div>
 
     </x-registration.form-step>
