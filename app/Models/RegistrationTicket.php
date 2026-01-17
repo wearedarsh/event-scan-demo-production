@@ -22,7 +22,7 @@ class RegistrationTicket extends Model
 
     public function getCalculatedTotalAttribute(): string
     {
-        return number_format($this->line_total_cents / 100, 2);
+        return number_format($this->calculated_total_cents / 100, 2);
     }
 
 

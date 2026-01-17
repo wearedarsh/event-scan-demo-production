@@ -6,7 +6,7 @@ use App\Models\Registration;
 use App\Models\EventPaymentMethod;
 use App\Models\RegistrationPayment;
 use App\Mail\BankTransferConfirmationAdmin;
-use App\Mail\BankTransferConfirmationCustomer;
+use App\Mail\BankTransferInformationCustomer;
 use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;
 
@@ -37,10 +37,11 @@ class RegistrationPaymentService
 
     public function initiateBankTransfer(Registration $registration): void
     {
-        $payment = RegistrationPayment::where('registration_id', $registration->id)
-            ->where('event_payment_method_id', $this->bank_transfer_method_id);
+        $payment_exists = RegistrationPayment::where('registration_id', $registration->id)
+            ->where('event_payment_method_id', $this->bank_transfer_method_id)
+            ->exists();
 
-        if($payment && $registration->registration_status === 'complete'){
+        if($payment_exists && $registration->registration_status === 'complete'){
             return;
         }else{
 
@@ -50,12 +51,13 @@ class RegistrationPaymentService
             ]);
 
             RegistrationPayment::updateOrCreate([
-                'registration_id' => $registration->id,
+                'registration_id' => $registration->id
+            ],[
                 'event_payment_method_id' => $this->bank_transfer_method_id,
                 'amount_cents' => 0,
                 'total_cents' => $registration->calculated_total_cents,
                 'payment_intent_id' => null,
-                'paid_at' => now(),
+                'paid_at' => null,
                 'status' => 'pending',
             ]);
 
@@ -71,11 +73,21 @@ class RegistrationPaymentService
                 type: 'transactional_admin',
                 event_id: $registration->event_id,
             );
+
+            $mailable = new BankTransferInformationCustomer($registration);
+
+            EmailService::queueMailable(
+                mailable: $mailable,
+                from_address: client_setting('email.customer.from_address'),
+                from_name: client_setting('email.customer.from_name'),
+                recipient_user: $registration->user,
+                recipient_email: $registration->user->email,
+                friendly_name: 'Registration complete pending bank transfer payment admin',
+                type: 'transactional_customer',
+                event_id: $registration->event_id,
+            );
+
         }
-
-
-        
-
     }
 
     public function createStripeCheckoutSession(Registration $registration): string
