@@ -48,13 +48,10 @@
                 
                 @if($this->event->eventPaymentMethods->contains('payment_method','stripe') && $this->registration->country->stripe_enabled)
                     <div class="bg-[var(--color-accent-light)] border-l-4 border-[var(--color-accent)] p-4 rounded-lg text-sm text-[var(--color-secondary)]">
-                        <img src="{{ asset('images/frontend/stripe.png') }}" alt="Stripe Secure Payments" class="mt-2 h-8 inline-block opacity-80"><br>
-                        <strong>Secure card payment</strong><br>
-                        <p>Payment will be processed securely via Stripe.</p>
-
+                        {!! client_setting('payment.booking.stripe.cta.info_html')}
                         <div class="flex justify-end mt-3">
                             <x-registration.button variant="primary" wire:click="stripePayment">
-                                Pay by card
+                                {!! client_setting('payment.booking.stripe.cta.button_label')}
                             </x-registration.button>
                         </div>
                     </div>
@@ -62,11 +59,10 @@
 
                 @if($this->event->eventPaymentMethods->contains('payment_method','bank_transfer'))
                     <div class="bg-[var(--color-accent-light)] border-l-4 border-[var(--color-accent)] p-4 rounded-lg text-sm text-[var(--color-secondary)]">
-                        <strong>Bank Transfer</strong><br>
-                        {!! client_setting('payment.bank_transfer.cta.info_html') !!}
+                        {!! client_setting('payment.booking.bank_transfer.cta.info_html') !!}
                         <div class="flex justify-end mt-3">
                             <x-registration.button variant="primary" wire:click="bankTransferPayment">
-                                {!! client_setting('payment.bank_transfer.cta.label') !!}
+                                {{ client_setting('payment.booking.bank_transfer.cta.button_label') }}
                             </x-registration.button>
                         </div>
                     </div>

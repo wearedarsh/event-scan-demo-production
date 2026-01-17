@@ -25,28 +25,46 @@ class ClientSettingPaymentSeeder extends Seeder
             ],
             [
                 'category_id'   => 7,
-                'key_name'      => 'payment.bank_transfer.cta.info_html',
+                'key_name'      => 'payment.booking.bank_transfer.cta.info_html',
                 'label'         => 'Bank transfer payment method cta information html',
                 'display_order' => 1,
                 'type'          => 'textarea',
-                'value'         => '<p>If you select bank transfer, your place will not be reserved until payment has been confirmed</p>',
+                'value'         => '<strong>Bank Transfer</strong><br><p>If you select bank transfer, your place will not be reserved until payment has been confirmed</p>',
             ],
             [
                 'category_id'   => 7,
-                'key_name'      => 'payment.bank_transfer.cta.label',
-                'label'         => 'Bank transfer payment method cta label',
+                'key_name'      => 'payment.booking.bank_transfer.cta.button_label',
+                'label'         => 'Bank transfer booking payment method cta label',
                 'display_order' => 1,
                 'type'          => 'textarea',
                 'value'         => 'Pay by bank transfer',
             ],
             [
                 'category_id'   => 7,
-                'key_name'      => 'payment.stripe.payments_url',
+                'key_name'      => 'payment.booking.stripe.cta.info_html',
+                'label'         => 'Stripe payment booking method cta information html',
+                'display_order' => 1,
+                'type'          => 'textarea',
+                'value'         => '<img src="images/frontend/stripe.png" alt="Stripe Secure Payments" class="mt-2 h-8 inline-block opacity-80"><br>
+                                    <strong>Secure card payment</strong><br>
+                                    <p>Payment will be processed securely via Stripe.</p>',
+            ],
+            [
+                'category_id'   => 7,
+                'key_name'      => 'payment.booking.stripe.cta.button_label',
+                'label'         => 'Stripe booking payment method cta label',
+                'display_order' => 1,
+                'type'          => 'textarea',
+                'value'         => 'Pay by card',
+            ],
+            [
+                'category_id'   => 7,
+                'key_name'      => 'payment.admin.stripe.payments_url',
                 'label'         => 'Stripe payments url',
                 'type'          => 'text',
                 'display_order' => 2,
                 'value'         => 'https://dashboard.stripe.com/payments/',
             ]
-        ]);
+            
     }
 }
