@@ -48,7 +48,7 @@
                 
                 @if($this->event->eventPaymentMethods->contains('payment_method','stripe') && $this->registration->country->stripe_enabled)
                     <div class="bg-[var(--color-accent-light)] border-l-4 border-[var(--color-accent)] p-4 rounded-lg text-sm text-[var(--color-secondary)]">
-                        {!! client_setting('payment.booking.stripe.cta.info_html')}
+                        {!! client_setting('payment.booking.stripe.cta.info_html') !!}
                         <div class="flex justify-end mt-3">
                             <x-registration.button variant="primary" wire:click="stripePayment">
                                 {!! client_setting('payment.booking.stripe.cta.button_label')}
