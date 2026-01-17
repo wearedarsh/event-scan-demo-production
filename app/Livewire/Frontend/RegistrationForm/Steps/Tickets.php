@@ -26,7 +26,7 @@ class Tickets extends Component
     public array $replace_document = [];
 
     public int $registration_total_cents = 0;
-    public $currency_symbol;
+    public $currency_symbol = '';
 
     public $step_help_info;
     public $total_steps;
@@ -107,7 +107,7 @@ class Tickets extends Component
 
     public function getRegistrationTotalProperty(): string
     {
-        return $this->registration->calculated_total;
+        return number_format($this->registration_total_cents / 100, 2);
     }
 
     protected function recalculateTotals(): void
