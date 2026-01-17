@@ -18,7 +18,7 @@ class EventPaymentMethodSeeder extends Seeder
                 'id' => 1, 
                 'event_id' => 1,
                 'name' => 'Stripe card payment',
-                'payment_method' => 'stripe',
+                'key_name' => 'stripe',
                 'enabled' => true,
                 'description' =>  'If you select credit/debit card you will be taken to <strong>Stripe</strong> where payment will be taken securely.<br><br>',
             ],
@@ -26,8 +26,8 @@ class EventPaymentMethodSeeder extends Seeder
                 'id' => 2, 
                 'event_id' => 1,
                 'name' => 'Bank transfer',
-                'payment_method' => 'bank_transfer',
-                'enabled' => false,
+                'key_name' => 'bank_transfer',
+                'enabled' => true,
                 'description' =>  'If you select bank transfer please note that your place will not be reserved until payment has been received and confirmed by our office.',
             ]
         ];

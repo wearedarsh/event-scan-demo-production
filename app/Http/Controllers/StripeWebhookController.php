@@ -52,7 +52,7 @@ class StripeWebhookController extends Controller
 
                     $registration->update([
                         'payment_status' => 'paid',
-                        'event_payment_method_id' => EventPaymentMethod::where('payment_method', 'stripe')->first()->id,
+                        'event_payment_method_id' => EventPaymentMethod::where('key_name', 'stripe')->first()->id,
                         'booking_reference' => $booking_reference,
                         'payment_intent_id' => $session->payment_intent ?? null,
                         'registration_total' => $registration_total,

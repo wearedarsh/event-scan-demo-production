@@ -49,7 +49,7 @@ class Index extends Component
                       ->orWhere('last_name', 'like', "%{$this->search}%");
             })
             ->when($this->paymentMethod, function ($query) {
-                $query->whereHas('eventPaymentMethod', fn($q) => $q->where('payment_method', $this->paymentMethod));
+                $query->whereHas('eventPaymentMethod', fn($q) => $q->where('key_name', $this->paymentMethod));
             })
             ->latest()
             ->paginate(10);

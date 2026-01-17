@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Registration;
 use App\Models\EventPaymentMethod;
 use App\Models\RegistrationPayment;
+use App\Models\EventPaymentMethod;
 use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;
 
@@ -22,7 +23,7 @@ class RegistrationPaymentService
         $registration->update([
             'payment_status' => 'paid',
             'event_payment_method_id' =>
-                EventPaymentMethod::where('payment_method', 'no_payment')->first()->id,
+                EventPaymentMethod::where('key_name', 'no_payment')->first()->id,
             'booking_reference' => $this->generateBookingReference($registration),
             'total_cents' => 0,
             'paid_at' => now(),
@@ -33,17 +34,12 @@ class RegistrationPaymentService
 
     public function initiateBankTransfer(Registration $registration): void
     {
+        $payment = RegistrationPayment::where('registration_id', $registration->id)
+            ->where('event_payment_method_id', EventPaymentMethod::where('key_name'))
         $registration->update([
             'registration_status' => 'complete',
+            'payment_status' => 'pending'
         ]);
-
-        $payment = RegistrationPayment::updateOrCreate(
-            [
-                'registration_id' => $registration->id
-            ],
-            [
-
-            ]);
 
     }
 

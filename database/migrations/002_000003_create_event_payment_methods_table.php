@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
             $table->string('name')->nullable();
-            $table->string('payment_method');
+            $table->string('key_name');
             $table->string('description')->nullable();
             $table->boolean('enabled')->default(true);
             $table->timestamps();

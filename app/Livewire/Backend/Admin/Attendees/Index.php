@@ -106,7 +106,7 @@ class Index extends Component
         })
         ->when($this->paymentMethod, function ($query) {
             $query->whereHas('eventPaymentMethod', fn($q) => 
-                $q->where('payment_method', $this->paymentMethod)
+                $q->where('key_name', $this->paymentMethod)
             );
         })
         ->when($this->groupFilter !== '', function ($query) {
@@ -133,10 +133,10 @@ class Index extends Component
 
     $counts['payment_methods'] = [
         'stripe'       => $this->event->attendees()
-                                ->whereHas('eventPaymentMethod', fn($q) => $q->where('payment_method', 'stripe'))
+                                ->whereHas('eventPaymentMethod', fn($q) => $q->where('key_name', 'stripe'))
                                 ->count(),
         'bank_transfer'         => $this->event->attendees()
-                                ->whereHas('eventPaymentMethod', fn($q) => $q->where('payment_method', 'bank_transfer'))
+                                ->whereHas('eventPaymentMethod', fn($q) => $q->where('key_name', 'bank_transfer'))
                                 ->count(),
     ];
     $counts['payment_methods']['all'] =

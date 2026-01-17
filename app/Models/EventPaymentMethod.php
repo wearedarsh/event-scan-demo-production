@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EventPaymentMethod extends Model
 {
-    protected $fillable = ['event_id', 'name', 'payment_method', 'enabled', 'description'];
+    protected $fillable = ['event_id', 'name', 'key_name', 'enabled', 'description'];
 
     public function event(){
         $this->belongsTo(Event::class);

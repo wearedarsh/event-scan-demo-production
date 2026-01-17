@@ -501,7 +501,7 @@ class RegistrationFormControllerOld extends Component
         $registration_total = 0;
         $registration->update([
             'payment_status' => 'paid',
-            'event_payment_method_id' => EventPaymentMethod::where('payment_method', 'no_payment')->first()->id,
+            'event_payment_method_id' => EventPaymentMethod::where('key_name', 'no_payment')->first()->id,
             'booking_reference' => $booking_reference,
             'payment_intent_id' => null,
             'registration_total' => $registration_total,
@@ -611,7 +611,7 @@ class RegistrationFormControllerOld extends Component
         $registration = Registration::find($this->registration_id);
 
         $registration->update([
-            'event_payment_method_id' => EventPaymentMethod::where('payment_method', 'bank_transfer')->first()->id,
+            'event_payment_method_id' => EventPaymentMethod::where('key_name', 'bank_transfer')->first()->id,
             'registration_total' => $this->registration_total
         ]);
 

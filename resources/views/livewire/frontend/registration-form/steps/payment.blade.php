@@ -46,7 +46,7 @@
 
             @if($this->event->eventPaymentMethods)
                 
-                @if($this->event->eventPaymentMethods->contains('payment_method','stripe') && $this->registration->country->stripe_enabled)
+                @if($this->event->eventPaymentMethods->contains('key_name','stripe') && $this->registration->country->stripe_enabled)
                     <div class="bg-[var(--color-accent-light)] border-l-4 border-[var(--color-accent)] p-4 rounded-lg text-sm text-[var(--color-secondary)]">
                         {!! client_setting('payment.booking.stripe.cta.info_html') !!}
                         <div class="flex justify-end mt-3">
@@ -57,7 +57,7 @@
                     </div>
                 @endif
 
-                @if($this->event->eventPaymentMethods->contains('payment_method','bank_transfer'))
+                @if($this->event->eventPaymentMethods->contains('key_name','bank_transfer'))
                     <div class="bg-[var(--color-accent-light)] border-l-4 border-[var(--color-accent)] p-4 rounded-lg text-sm text-[var(--color-secondary)]">
                         {!! client_setting('payment.booking.bank_transfer.cta.info_html') !!}
                         <div class="flex justify-end mt-3">
