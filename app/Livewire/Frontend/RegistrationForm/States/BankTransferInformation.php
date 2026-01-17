@@ -13,6 +13,11 @@ class BankTransferInformation extends Component
     public Registration $registration;
     public RegistrationForm $registration_form;
     public Event $event;
+    public $currency_symbol = '';
+
+    public function mount(){
+        $this->currency_symbol = client_setting('general.currency_symbol');
+    }
 
     public function render()
     {
