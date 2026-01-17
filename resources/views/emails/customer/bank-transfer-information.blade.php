@@ -5,9 +5,7 @@
 
 <p>Please make your bank transfer using the following details:</p>
 
-<p>
-    //bank transfer details to go here//
-</p>
+{!! client_setting('payment.bank_transfer.information.bank_details_html') !!}
 
 <p>Here are your booking details:</p>
 

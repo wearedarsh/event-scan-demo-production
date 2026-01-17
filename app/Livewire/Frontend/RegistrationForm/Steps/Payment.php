@@ -43,7 +43,7 @@ class Payment extends Component
     public function bankTransferPayment(RegistrationPaymentService $service)
     {
         $service->initiateBankTransfer($this->registration);
-        $this->dispatch('enter-system-state', 'bank_transfer_information');
+        $this->dispatch('enter-system-state', 'bank-transfer-information');
     }
 
     public function stripePayment(RegistrationPaymentService $service)

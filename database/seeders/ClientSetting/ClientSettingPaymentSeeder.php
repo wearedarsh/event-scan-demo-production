@@ -12,7 +12,7 @@ class ClientSettingPaymentSeeder extends Seeder
         ClientSetting::insert([
             [
                 'category_id'   => 7,
-                'key_name'      => 'payment.bank_transfer.details_html',
+                'key_name'      => 'payment.bank_transfer.information.bank_details_html',
                 'label'         => 'Bank transfer details html',
                 'display_order' => 1,
                 'type'          => 'textarea',
@@ -36,8 +36,43 @@ class ClientSettingPaymentSeeder extends Seeder
                 'key_name'      => 'payment.booking.bank_transfer.cta.button_label',
                 'label'         => 'Bank transfer booking payment method cta label',
                 'display_order' => 1,
-                'type'          => 'textarea',
+                'type'          => 'text',
                 'value'         => 'Pay by bank transfer',
+            ],
+            [
+                'category_id'   => 7,
+                'key_name'      => 'payment.booking.bank_transfer.information.header_html',
+                'label'         => 'Bank transfer booking payment information header html',
+                'display_order' => 1,
+                'type'          => 'textarea',
+                'value'         => '<h3 class="text-lg font-semibold mb-1">Thank you for registering for this event</h3>
+                                    <p class="text-sm text-[var(--color-text-light)]">
+                                        Our team have been notified of your application.
+                                    </p>',
+            ],
+            [
+                'category_id'   => 7,
+                'key_name'      => 'payment.booking.bank_transfer.information.details_intro_html',
+                'label'         => 'Bank transfer booking payment information details intro html',
+                'display_order' => 1,
+                'type'          => 'textarea',
+                'value'         => '<p class="font-semibold">
+                                        Please arrange payment with your bank using the details below.
+                                    </p>
+                                    <p class="text-[var(--color-text-light)]">
+                                        We have also sent you an email with full details for your convenience.
+                                    </p>',
+            ],
+            [
+                'category_id'   => 7,
+                'key_name'      => 'payment.booking.bank_transfer.information.details_footer_html',
+                'label'         => 'Bank transfer booking payment information footer html',
+                'display_order' => 1,
+                'type'          => 'textarea',
+                'value'         => '<p class="text-sm">If you do not receive an email, please check your spam or junk folder.
+                                    We recommend adding <strong>demo@eventscan.co.uk</strong> to your contacts to ensure future emails and updates are received.
+                                    <br><br>
+                                    Please note that your place will not be reserved until payment has been received and confirmed by our office.</p>',
             ],
             [
                 'category_id'   => 7,
@@ -54,7 +89,7 @@ class ClientSettingPaymentSeeder extends Seeder
                 'key_name'      => 'payment.booking.stripe.cta.button_label',
                 'label'         => 'Stripe booking payment method cta label',
                 'display_order' => 1,
-                'type'          => 'textarea',
+                'type'          => 'text',
                 'value'         => 'Pay by card',
             ],
             [
