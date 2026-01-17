@@ -38,8 +38,7 @@
             </div>
         @endif
 
-        <!-- Payment methods -->
-        @if($registration_total > 0)
+        @if($this->registration->calculated_total > 0)
             <div class="pt-6">
                 <h3 class="text-lg font-semibold text-[var(--color-secondary)]">Select a payment method</h3>
             </div>
