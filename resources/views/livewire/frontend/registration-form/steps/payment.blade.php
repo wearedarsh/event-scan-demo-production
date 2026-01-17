@@ -27,7 +27,7 @@
             @foreach ($this->registration->registrationTickets as $ticket)
                 <div class="flex justify-between bg-[var(--color-bg)] rounded-lg px-4 py-2 text-sm text-[var(--color-text)]">
                     <span>{{ $ticket->quantity }} × {{ $ticket->ticket->name }}</span>
-                    <span>{{ $currency_symbol }}{{ $ticket->line_total }}</span>
+                    <span>{{ $currency_symbol }}{{ $ticket->calculated_total }}</span>
                 </div>
             @endforeach
 

@@ -5,7 +5,8 @@ namespace App\Services;
 use App\Models\Registration;
 use App\Models\EventPaymentMethod;
 use App\Models\RegistrationPayment;
-use App\Models\EventPaymentMethod;
+use App\Mail\BankTransferConfirmationAdmin;
+use App\Mail\BankTransferConfirmationCustomer;
 use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;
 
@@ -13,9 +14,11 @@ class RegistrationPaymentService
 {
 
     protected string $booking_reference_prefix;
+    protected int $bank_transfer_method_id;
 
     public function __construct(){
         $this->booking_reference_prefix = client_setting('general.booking_reference_prefix');
+        $this->bank_transfer_method_id = EventPaymentMethod::where('key_name', 'bank_transfer')->first()->id;
     }
 
     public function completeFreeRegistration(Registration $registration): void
@@ -35,11 +38,43 @@ class RegistrationPaymentService
     public function initiateBankTransfer(Registration $registration): void
     {
         $payment = RegistrationPayment::where('registration_id', $registration->id)
-            ->where('event_payment_method_id', EventPaymentMethod::where('key_name'))
-        $registration->update([
-            'registration_status' => 'complete',
-            'payment_status' => 'pending'
-        ]);
+            ->where('event_payment_method_id', $this->bank_transfer_method_id);
+
+        if($payment && $registration->registration_status === 'complete'){
+            return;
+        }else{
+
+            $registration->update([
+                'registration_status' => 'complete',
+                'payment_status' => 'pending'
+            ]);
+
+            RegistrationPayment::updateOrCreate([
+                'registration_id' => $registration->id,
+                'event_payment_method_id' => $this->bank_transfer_method_id,
+                'amount_cents' => 0,
+                'total_cents' => $registration->calculated_total_cents,
+                'payment_intent_id' => null,
+                'paid_at' => now(),
+                'status' => 'pending',
+            ]);
+
+            $mailable = new BankTransferConfirmationAdmin($registration);
+
+            EmailService::queueMailable(
+                mailable: $mailable,
+                from_address: client_setting('email.admin.from_address'),
+                from_name: client_setting('email.admin.from_name'),
+                recipient_user: $registration->user,
+                recipient_email: $registration->user->email,
+                friendly_name: 'Registration complete pending bank transfer payment admin',
+                type: 'transactional_admin',
+                event_id: $registration->event_id,
+            );
+        }
+
+
+        
 
     }
 

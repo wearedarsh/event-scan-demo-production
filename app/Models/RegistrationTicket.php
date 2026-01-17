@@ -15,12 +15,12 @@ class RegistrationTicket extends Model
         'price_cents_at_purchase' => 'integer',
     ];
 
-    public function getLineTotalCentsAttribute(): int
+    public function getCalculatedTotalCentsAttribute(): int
     {
         return $this->price_cents_at_purchase * $this->quantity;
     }
 
-    public function getLineTotalAttribute(): string
+    public function getCalculatedTotalAttribute(): string
     {
         return number_format($this->line_total_cents / 100, 2);
     }
