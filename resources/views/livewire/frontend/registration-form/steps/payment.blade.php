@@ -51,7 +51,7 @@
                         {!! client_setting('payment.booking.stripe.cta.info_html') !!}
                         <div class="flex justify-end mt-3">
                             <x-registration.button variant="primary" wire:click="stripePayment">
-                                {!! client_setting('payment.booking.stripe.cta.button_label')}
+                                { client_setting('payment.booking.stripe.cta.button_label')}
                             </x-registration.button>
                         </div>
                     </div>
