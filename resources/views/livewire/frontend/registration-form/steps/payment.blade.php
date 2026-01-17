@@ -33,7 +33,7 @@
 
 
             <div class="flex justify-between bg-[var(--color-bg)] rounded-lg px-4 py-2 mt-2 font-semibold text-[var(--color-secondary)]">
-                <span>Booking total {{ $registration->calculated_total_cents }}</span>
+                <span>{{ $registration->id }} Booking total {{ $registration->calculated_total_cents }}</span>
                 <span>{{ $this->currency_symbol }}{{ $this->registration->calculated_total }}</span>
             </div>
         @endif
