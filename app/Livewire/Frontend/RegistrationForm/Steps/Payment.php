@@ -13,6 +13,7 @@ class Payment extends Component
     public Event $event;
     public Registration $registration;
     public $currency_symbol = '';
+    public $registration_total = 0;
 
     public $step_help_info;
     public $total_steps;
@@ -23,6 +24,7 @@ class Payment extends Component
 
     public function mount(){
         $this->currency_symbol = client_setting('general.currency_symbol');
+        $this->registration_total = $this->registration->calculated_total;
     }
 
     public function validateStep($direction){
