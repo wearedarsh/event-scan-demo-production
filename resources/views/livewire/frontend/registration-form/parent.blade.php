@@ -11,11 +11,41 @@
             :current="$current_step"
             :total="$total_steps"
         />
-        @if($step_type === 'rigid')
-            <livewire:is :component="'frontend.registration-form.steps.'. $step_key_name" :key="$step_key_name" :event="$event" :current_step="$current_step" :total_steps="$total_steps" :registration="$registration" :registration_form="$registration_form" :step_help_info="$step_help_information_copy" :is_penultimate_step="$this->isPenultimateStep" />
+
+        @if($system_state)
+            <livewire:is :component="'frontend.registration-form.states.' . $system_state"
+                :registration="$registration"
+                :event="$event"
+                :registration_form="$registration_form" 
+                :step_help_info="$step_help_information_copy"
+                :key="'state-' . $system_state"
+            />
         @else
-            <livewire:is component="frontend.registration-form.steps.dynamic" :key="$step_key_name" :event="$event" :registration_form_step="$registration_form_step" :total_steps="$total_steps" :current_step="$current_step" :registration_form="$registration_form" :step_help_info="$step_help_information_copy" :registration="$registration" :is_penultimate_step="$this->isPenultimateStep" />
+            @if($step_type === 'rigid')
+                <livewire:is :component="'frontend.registration-form.steps.'. $step_key_name" 
+                    :key="$step_key_name" 
+                    :event="$event" 
+                    :current_step="$current_step" 
+                    :total_steps="$total_steps" 
+                    :registration="$registration" 
+                    :registration_form="$registration_form" 
+                    :step_help_info="$step_help_information_copy" 
+                    :is_penultimate_step="$this->isPenultimateStep" />
+            @elseif($step_type === 'dynamic')
+                <livewire:is component="frontend.registration-form.steps.dynamic" 
+                    :key="$step_key_name" 
+                    :event="$event" 
+                    :registration_form_step="$registration_form_step" 
+                    :total_steps="$total_steps" 
+                    :current_step="$current_step" 
+                    :registration_form="$registration_form" 
+                    :step_help_info="$step_help_information_copy" 
+                    :registration="$registration" 
+                    :is_penultimate_step="$this->isPenultimateStep" />
+            @endif
         @endif
+
+        
     
     </main>
     <x-registration.scroll-to-top target="step-top" />

@@ -1,10 +1,5 @@
 <div class="space-y-4">
     <x-registration.form-step>
-        @if($step_help_info)
-            <x-registration.form-info>
-                {{ $step_help_info }}
-            </x-registration.form-info>
-        @endif
 
         <div class="bg-[var(--color-bg)] rounded-lg p-4 text-[var(--color-secondary)]">
             <h3 class="text-lg font-semibold mb-1">Thank you for registering for this event</h3>
@@ -22,7 +17,7 @@
             </p>
 
             <div class="mt-4 space-y-1 text-[var(--color-text)]">
-                <p><strong>Amount:</strong> {{ $currency_symbol }}{{ $this->registration_total }}</p>
+                <p><strong>Amount:</strong> {{ $currency_symbol }}{{ $this->registration->calculated_total }}</p>
                 {!! client_setting('payment.bank_transfer_detail_html') !!}
             </div>
         </div>
@@ -35,5 +30,20 @@
         </x-registration.form-info>
 
     </x-registration.form-step>
+
+    <div class="grid grid-cols-4">
+        <div class="col-span-2">
+            <x-registration.navigate-button
+                wire:click="$dispatch('clear-system-state')">
+                Previous
+            </x-registration.navigate-button>
+        </div>
+    </div>
+
+    <div class="flex w-full flex-row gap-4 pt-6 justify-center">
+        <x-registration.navigate-cancel-link wire:click="$dispatch('clear-session')">
+            Cancel
+        </x-registration.navigate-cancel-link>
+    </div>
 
 </div>

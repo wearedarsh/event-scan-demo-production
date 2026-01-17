@@ -29,18 +29,29 @@ class RegistrationFormController extends Component
     public string $step_key_name;
     public $step_help_information_copy = null;
 
+    public $system_state = null;
+
     public $spaces_remaining;
     public $events;
 
     protected $listeners = [
         'update-step' => 'updateStep',
-        'clear-session' => 'clearSessionAndRedirect'
+        'clear-session' => 'clearSessionAndRedirect',
+        'enter-system-state' =>'enterSystemState',
+        'clear-system-state' =>'clearSystemState'
     ];
+
+    public function enterSystemState(string $state){
+        $this->system_state = $state;
+    }
+
+    public function clearSystemState(){
+        $this->system_state = null;
+    }
 
     public function getIsPenultimateStepProperty(){
         return $this->current_step === ($this->total_steps - 1);
     }
-
     
     public function clearSessionAndRedirect(){
         
@@ -94,6 +105,7 @@ class RegistrationFormController extends Component
 
     public function updateStep($direction)
     {
+
         if($direction === 'forward'){
             $this->current_step++;
             

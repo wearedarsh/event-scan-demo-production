@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Frontend\RegistrationForm\Steps;
+namespace App\Livewire\Frontend\RegistrationForm\States;
 
 use App\Models\Event;
 use App\Models\RegistrationForm;
@@ -13,11 +13,9 @@ class BankTransferInformation extends Component
     public Registration $registration;
     public RegistrationForm $registration_form;
     public Event $event;
-    public $step_help_info;
-    
 
     public function render()
     {
-        return view('livewire.frontend.registration-form.steps.bank-transfer-information');
+        return view('livewire.frontend.registration-form.states.bank-transfer-information');
     }
 }
