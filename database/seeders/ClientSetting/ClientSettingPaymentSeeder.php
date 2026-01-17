@@ -65,6 +65,6 @@ class ClientSettingPaymentSeeder extends Seeder
                 'display_order' => 2,
                 'value'         => 'https://dashboard.stripe.com/payments/',
             ]
-            
+        ]);
     }
 }
