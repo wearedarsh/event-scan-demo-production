@@ -19,13 +19,16 @@ class RegistrationFormController extends Component
     public RegistrationFormStep $registration_form_step;
     public ?Registration $registration = null;
     public Event $event;
+
+    public string $registration_type;
+
     public int $total_steps;
     public string $step_type;
-    public string $registration_type;
     public int $current_step = 1;
     public string $step_label;
     public string $step_key_name;
     public $step_help_information_copy = null;
+
     public $spaces_remaining;
     public $events;
 

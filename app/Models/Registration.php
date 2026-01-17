@@ -108,16 +108,16 @@ class Registration extends Model
         return $this->hasMany(RegistrationTicket::class);
     }
 
-    public function getTotalCentsAttribute(): int
+    public function getCalculatedTotalCentsAttribute(): int
     {
         return $this->registrationTickets->sum(function ($ticket) {
             return $ticket->line_total_cents;
         });
     }
 
-    public function getTotalAttribute(): string
+    public function getCalculatedTotalAttribute(): string
     {
-        return number_format($this->total_cents / 100, 2);
+        return number_format($this->calculated_total_cents / 100, 2);
     }
 
     public function registrationDocuments()

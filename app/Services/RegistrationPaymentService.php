@@ -4,13 +4,18 @@ namespace App\Services;
 
 use App\Models\Registration;
 use App\Models\EventPaymentMethod;
+use App\Models\RegistrationPayment;
 use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;
 
 class RegistrationPaymentService
 {
 
-    public string $invoice_prefix = 'ADDTOCLIENT';
+    protected string $booking_reference_prefix;
+
+    public function __construct(){
+        $this->booking_reference_prefix = client_setting('general.booking_reference_prefix');
+    }
 
     public function completeFreeRegistration(Registration $registration): void
     {
@@ -29,10 +34,17 @@ class RegistrationPaymentService
     public function initiateBankTransfer(Registration $registration): void
     {
         $registration->update([
-            'event_payment_method_id' =>
-                EventPaymentMethod::where('payment_method', 'bank_transfer')->first()->id,
-            'total_cents' => $registration->total_cents,
+            'registration_status' => 'complete',
         ]);
+
+        $payment = RegistrationPayment::updateOrCreate(
+            [
+                'registration_id' => $registration->id
+            ],
+            [
+
+            ]);
+
     }
 
     public function createStripeCheckoutSession(Registration $registration): string
@@ -74,7 +86,7 @@ class RegistrationPaymentService
 
     protected function generateBookingReference(Registration $registration): string
     {
-        return $this->invoice_prefix
+        return $this->booking_reference_prefix
             . '-' . random_int(1000, 9999)
             . '-' . $registration->user_id
             . '-' . $registration->event_id;

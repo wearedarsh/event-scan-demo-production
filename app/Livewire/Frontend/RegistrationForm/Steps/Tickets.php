@@ -73,8 +73,6 @@ class Tickets extends Component
         $this->recalculateTotals();
     }
 
-
-
     public function selectedTicketIds(): Collection
     {
         return collect($this->single_ticket_selections)
@@ -97,7 +95,6 @@ class Tickets extends Component
         );
     }
 
-
     public function updatedSingleTicketSelections(): void
     {
         $this->recalculateTotals();
@@ -110,24 +107,13 @@ class Tickets extends Component
 
     public function getRegistrationTotalProperty(): string
     {
-        return number_format($this->registration_total_cents / 100, 2);
+        return $this->registration->calculated_total;
     }
 
     protected function recalculateTotals(): void
     {
-        $total_cents = 0;
-
-        foreach ($this->single_ticket_selections as $ticketId) {
-            $total_cents += $this->ticketLookup[$ticketId]->price_cents;
-        }
-
-        foreach ($this->multiple_ticket_selections as $ticketId => $qty) {
-            $total_cents += $this->ticketLookup[$ticketId]->price_cents * (int) $qty;
-        }
-
-        $this->registration_total_cents = $total_cents;
+        $this->registration_total_cents = $this->registration->calculated_total_cents;
     }
-
 
     protected function validateRequiredTicketGroups(): void
     {

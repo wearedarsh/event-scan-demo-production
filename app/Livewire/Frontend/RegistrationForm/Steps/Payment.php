@@ -25,8 +25,8 @@ class Payment extends Component
 
     public function mount(){
         $this->currency_symbol = client_setting('general.currency_symbol');
-        $this->registration_total = $this->registration->total;
-        $this->registration_total_cents = $this->registration->total_cents;
+        $this->registration_total = $this->registration->calculate_total;
+        $this->registration_total_cents = $this->registration->calculated_total_cents;
     }
 
     public function validateStep($direction){

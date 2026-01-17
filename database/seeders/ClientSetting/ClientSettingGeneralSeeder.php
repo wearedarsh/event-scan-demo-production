@@ -44,8 +44,8 @@ class ClientSettingGeneralSeeder extends Seeder
             ],
             [
                 'category_id'   => 6,
-                'key_name'      => 'general.invoice_prefix',
-                'label'         => 'Invoice prefix',
+                'key_name'      => 'general.booking_reference_prefix',
+                'label'         => 'Booking reference prefix',
                 'type'          => 'text',
                 'display_order' => 5,
                 'value'         => 'ES',
