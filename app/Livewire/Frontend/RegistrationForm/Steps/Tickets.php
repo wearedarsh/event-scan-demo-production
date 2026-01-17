@@ -26,7 +26,7 @@ class Tickets extends Component
     public array $replace_document = [];
 
     public int $registration_total_cents = 0;
-    public string $currency_symbol = '';
+    public $currency_symbol;
 
     public $step_help_info;
     public $total_steps;
