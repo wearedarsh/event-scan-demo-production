@@ -10,8 +10,8 @@ class RegistrationPayment extends Model
     protected $fillable = [
         'registration_id',
         'event_payment_method_id',
-        'amount_cents',
-        'total_cents',
+        'amount_paid_cents',
+        'total_amount_due_cents',
         'provider_reference',
         'provider',
         'paid_at',

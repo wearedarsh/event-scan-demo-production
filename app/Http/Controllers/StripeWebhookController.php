@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Stripe\Webhook;
 use App\Models\Registration;
+use App\Models\RegistrationPayment;
 use App\Models\EventPaymentMethod;
 use App\Models\User;
 use Carbon\Carbon;
@@ -37,26 +38,26 @@ class StripeWebhookController extends Controller
             $session = $event->data->object;
 
             $registration_id = $session->metadata->registration_id ?? null;
+            $registration_payment_id = $session->metdata->registration_payment_id;
 
             if ($registration_id) {
                 $registration = Registration::find($registration_id);
+                $registration_payment = RegistrationPayment::find($registration_payment_id);
 
-                if ($registration) {
+                if ($registration && $registration_payment) {
 
                     $registration_total = $registration->registrationTickets->sum(function ($ticket) {
                         return $ticket->price_at_purchase * $ticket->quantity;
                     });
-                    
-                    $randomNumber = random_int(1000, 9999);
-                    $booking_reference = client_setting('general.invoice_prefix') . '-' . $randomNumber . '-' . $registration->user_id . '-' . $registration->event_id;
 
                     $registration->update([
-                        'payment_status' => 'paid',
-                        'event_payment_method_id' => EventPaymentMethod::where('key_name', 'stripe')->first()->id,
-                        'booking_reference' => $booking_reference,
-                        'payment_intent_id' => $session->payment_intent ?? null,
-                        'registration_total' => $registration_total,
-                        'paid_at' => \Carbon\Carbon::createFromTimestamp($session->created)
+                        'payment_status' => 'paid'                        
+                    ]);
+
+                    $registration_payment->update([
+                        'provider_reference' => $session->payment_intent ?? null,
+                        'paid_at' => \Carbon\Carbon::createFromTimestamp($session->created),
+                        'status' => 'paid'
                     ]);
 
                     $registration->user->update([

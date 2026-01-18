@@ -12,8 +12,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('registration_id')->constrained()->cascadeOnDelete();
             $table->foreignId('event_payment_method_id')->nullable()->constrained('event_payment_methods')->nullOnDelete();
-            $table->integer('amount_cents')->nullable();
-            $table->integer('total_cents')->nullable();
+            $table->integer('amount_paid_cents')->nullable();
+            $table->integer('total_amount_due_cents')->nullable();
             $table->string('provider_reference')->nullable()->index();
             $table->string('provider')->nullable();
             $table->timestamp('paid_at')->nullable();

@@ -52,13 +52,14 @@ class RegistrationPaymentService
             'status' => 'pending',
         ]);
 
+        $registration->ensureBookingReference();
+
 
         if($bank_transfer_payment->wasRecentlyCreated){
 
             $registration->update([
                 'registration_status' => 'complete',
                 'payment_status' => 'pending',
-                'booking_reference' => $registration->ensureBookingReference()
             ]);
 
             $mailable = new BankTransferConfirmationAdmin($registration);
