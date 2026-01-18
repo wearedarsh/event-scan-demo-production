@@ -98,7 +98,7 @@ class StripeWebhookController extends Controller
 
                         try {
 
-                            foreach (User::adminNotificationRecipients() as $user) {
+                            foreach (User::adminNotificationRecipients()->get() as $user) {
 
                                 $mailable = new StripeConfirmationAdmin($registration, $session->amount_total);
 
