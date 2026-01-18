@@ -24,14 +24,12 @@ class StripeConfirmationAdmin extends Mailable
         
         $email_content = EmailHtmlContent::where('key_name', 'admin_stripe_confirmation')->firstOrFail();
         $layout = EmailHtmlLayout::where('key_name', 'admin')->firstOrFail();
-        $email_signature = client_setting('email.customer.signature_html');
 
         $body_html = Blade::render($email_content->html_content, [
             'registration' => $this->registration,
             'registration_total' => $this->registration->calculated_total,
             'registration_payment' => $stripe_payment,
-            'currency_symbol' => client_setting('general.currency_symbol'),
-            'email_signature' => $email_signature,
+            'currency_symbol' => client_setting('general.currency_symbol')
         ]);
 
         $full_html = Blade::render($layout->html_content, [

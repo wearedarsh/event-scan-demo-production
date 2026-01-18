@@ -64,7 +64,8 @@ class RegistrationPaymentService
             ]);
 
 
-            foreach (User::adminNotificationRecipients() as $user) {
+            foreach (User::adminNotificationRecipients()->get() as $user) {
+                
                 $mailable = new BankTransferConfirmationAdmin($registration);
 
                 EmailService::queueMailable(
