@@ -96,6 +96,9 @@ class RegistrationFormController extends Component
 
         if($this->registration->last_intended_step){
             $this->current_step = $this->registration->last_intended_step;
+            $this->registration->update([
+                'last_intended_step' => null
+            ]);
         }
 
         $this->registration_form_step = $this->registration_form->steps

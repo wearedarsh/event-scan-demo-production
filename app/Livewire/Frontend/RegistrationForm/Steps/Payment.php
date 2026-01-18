@@ -16,6 +16,7 @@ class Payment extends Component
 
     public $step_help_info;
     public $total_steps;
+    public $current_step;
 
     protected $listeners = [
         'validate-step' => 'validateStep',
@@ -49,6 +50,10 @@ class Payment extends Component
     public function stripePayment(RegistrationPaymentService $service)
     {
         $this->registration->load('registrationTickets.ticket');
+
+        $this->registration->update([
+            'last_intended_step' => $this->current_step
+        ]);
 
         $url = $service->createStripeCheckoutSession($this->registration);
 
