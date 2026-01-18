@@ -8,7 +8,6 @@ Email: <a href="{{ $registration->user->email }}">{{ $registration->user->email 
 
 <p><strong>Booking reference:</strong> {{ $registration->booking_reference }}</p>
 <p><strong>Stripe payment link:</strong> <a href="{{ client_settings('payment.admin.stripe.payments_url') }}{{$registration_payment->provider_reference}}">{{$registration_payment->provider_reference}}</a>
-@endif
 
 <p>Here are the booking details</p>
 
