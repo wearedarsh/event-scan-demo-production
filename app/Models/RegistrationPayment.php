@@ -12,7 +12,8 @@ class RegistrationPayment extends Model
         'event_payment_method_id',
         'amount_cents',
         'total_cents',
-        'payment_intent_id',
+        'provider_reference',
+        'provider',
         'paid_at',
         'status',
     ];

@@ -14,7 +14,8 @@ return new class extends Migration
             $table->foreignId('event_payment_method_id')->nullable()->constrained('event_payment_methods')->nullOnDelete();
             $table->integer('amount_cents')->nullable();
             $table->integer('total_cents')->nullable();
-            $table->string('payment_intent_id')->nullable()->index();
+            $table->string('provider_reference')->nullable()->index();
+            $table->string('provider')->nullable();
             $table->timestamp('paid_at')->nullable();
             $table->string('status')->default('pending');
             $table->timestamps();
