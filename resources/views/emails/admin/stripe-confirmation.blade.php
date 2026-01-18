@@ -1,4 +1,4 @@
-<h1>There has been a new registration for  <strong>{{ $registration->event->title }}</strong></h1>
+<h1>There has been a new registration for <strong>{{ $registration->event->title }}</strong></h1>
 
 <p>The attendee paid by Stripe and the payment was successful.</p>
 
@@ -6,9 +6,8 @@
 Name: {{ $registration->title }} {{ $registration->last_name }}<br>
 Email: <a href="{{ $registration->user->email }}">{{ $registration->user->email }}</a></p>
 
-@if ($registration->booking_reference)
-    <p><strong>Booking reference:</strong> {{ $registration->booking_reference }}</p>
-    <p><strong>Stripe Reference:</strong> <a href="{{config('services.stripe.payment_link')}}{{$registration->payment_intent_id}}">{{ $registration->payment_intent_id }}</a>
+<p><strong>Booking reference:</strong> {{ $registration->booking_reference }}</p>
+<p><strong>Stripe payment link:</strong> <a href="{{ client_settings('payment.admin.stripe.payments_url') }}{{$registration_payment->provider_reference}}">{{$registration_payment->provider_reference}}</a>
 @endif
 
 <p>Here are the booking details</p>
@@ -27,7 +26,7 @@ Email: <a href="{{ $registration->user->email }}">{{ $registration->user->email 
                     {{ $ticket->quantity }} × {{ $ticket->ticket->name }} (inc. VAT)
                 </td>
                 <td align="right" style="padding: 8px 0; font-size: 15px;">
-                    {{ $currency_symbol }}{{ number_format($ticket->price_at_purchase * $ticket->quantity, 2) }}
+                    {{ $currency_symbol }}{{ $ticket->calculated_total }}
                 </td>
             </tr>
         @endforeach
@@ -35,7 +34,7 @@ Email: <a href="{{ $registration->user->email }}">{{ $registration->user->email 
         <tr style="border-top: 1px solid #EDEFF2;">
             <td align="right" style="padding-top: 15px; font-weight: bold;font-size:15px;">Total</td>
             <td align="right" style="padding-top: 15px; font-weight: bold;font-size:15px;">
-                {{ $currency_symbol }}{{ number_format($registration->registrationTickets->sum(fn($t) => $t->price_at_purchase * $t->quantity), 2) }}
+                {{ $currency_symbol }}{{ $registration->calculated_total }}
             </td>
         </tr>
     </tbody>

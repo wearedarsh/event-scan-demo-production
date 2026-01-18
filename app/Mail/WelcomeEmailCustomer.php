@@ -34,8 +34,7 @@ class WelcomeEmailCustomer extends Mailable
             'title' => $email_content->subject,
             'pre_header' => $email_content->pre_header,
             'body_html_content' => $body_html,
-            'app_url' => config('app.url'),
-            'sub_title' => '',
+            'app_url' => config('app.url')
         ]);
 
         return $this->subject($email_content->subject)
