@@ -44,8 +44,8 @@ class RegistrationPaymentService
             'registration_id' => $registration->id,
             'event_payment_method_id' => $this->bank_transfer_method_id
         ],[
-            'amount_cents' => 0,
-            'total_cents' => $registration->calculated_total_cents,
+            'amount_paid_cents' => 0,
+            'total_amount_due_cents' => $registration->calculated_total_cents,
             'provider_reference' => null,
             'provider' =>'bank_transfer',
             'paid_at' => null,
@@ -112,8 +112,8 @@ class RegistrationPaymentService
         $registration_payment = RegistrationPayment::create([
                 'registration_id' => $registration->id,
                 'event_payment_method_id' => $this->stripe_method_id,
-                'amount_cents' => 0,
-                'total_cents' => $registration->calculated_total_cents,
+                'amount_paid_cents' => 0,
+                'total_amount_due_cents' => $registration->calculated_total_cents,
                 'provider_reference' => null,
                 'provider' =>'stripe',
                 'paid_at' => null,
