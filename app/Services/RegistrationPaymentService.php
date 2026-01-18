@@ -37,29 +37,25 @@ class RegistrationPaymentService
 
     public function initiateBankTransfer(Registration $registration): void
     {
-        $payment_exists = RegistrationPayment::where('registration_id', $registration->id)
-            ->where('event_payment_method_id', $this->bank_transfer_method_id)
-            ->exists();
 
-        if($payment_exists && $registration->registration_status === 'complete'){
-            return;
-        }else{
+        $bank_transfer_payment = RegistrationPayment::updateOrCreate([
+            'registration_id' => $registration->id,
+            'event_payment_method_id' => $this->bank_transfer_method_id
+        ],[
+            'amount_cents' => 0,
+            'total_cents' => $registration->calculated_total_cents,
+            'provider_reference' => null,
+            'provider' =>'bank_transfer',
+            'paid_at' => null,
+            'status' => 'pending',
+        ]);
+
+
+        if($bank_transfer_payment->wasRecentlyCreated){
 
             $registration->update([
                 'registration_status' => 'complete',
                 'payment_status' => 'pending'
-            ]);
-
-            RegistrationPayment::updateOrCreate([
-                'registration_id' => $registration->id
-            ],[
-                'event_payment_method_id' => $this->bank_transfer_method_id,
-                'amount_cents' => 0,
-                'total_cents' => $registration->calculated_total_cents,
-                'provider_reference' => null,
-                'provider' =>'bank_transfer',
-                'paid_at' => null,
-                'status' => 'pending',
             ]);
 
             $mailable = new BankTransferConfirmationAdmin($registration);
@@ -87,7 +83,6 @@ class RegistrationPaymentService
                 type: 'transactional_customer',
                 event_id: $registration->event_id,
             );
-
         }
     }
 
@@ -108,6 +103,17 @@ class RegistrationPaymentService
             ];
         })->toArray();
 
+        $registration_payment = RegistrationPayment::create([
+                'registration_id' => $registration->id,
+                'event_payment_method_id' => $this->bank_transfer_method_id,
+                'amount_cents' => 0,
+                'total_cents' => $registration->calculated_total_cents,
+                'provider_reference' => null,
+                'provider' =>'bank_transfer',
+                'paid_at' => null,
+                'status' => 'pending',
+        ]);
+
         $session = StripeSession::create([
             'payment_method_types' => ['card'],
             'line_items' => $line_items,
@@ -122,6 +128,7 @@ class RegistrationPaymentService
             'customer_email' => $registration->email,
             'metadata' => [
                 'registration_id' => $registration->id,
+                'registration_payment_id' => $
             ],
         ]);
 
