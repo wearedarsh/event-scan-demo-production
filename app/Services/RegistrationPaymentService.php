@@ -117,7 +117,7 @@ class RegistrationPaymentService
             ]),
             'cancel_url' => route('registration', [
                 'event' => $registration->event,
-            ]) . '?step=payment&cancelled=true',
+            ]),
             'customer_email' => $registration->email,
             'metadata' => [
                 'registration_id' => $registration->id,

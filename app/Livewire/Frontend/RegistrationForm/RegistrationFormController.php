@@ -93,6 +93,11 @@ class RegistrationFormController extends Component
         $this->total_steps = $this->registration_form->steps->count();
         $this->registration_type = $this->registration_form->type;
 
+
+        if($this->registration->last_intended_step){
+            $this->current_step = $this->registration->last_intended_step;
+        }
+
         $this->registration_form_step = $this->registration_form->steps
         ->firstWhere('display_order', $this->current_step);
 
