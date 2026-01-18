@@ -29,6 +29,25 @@ class Registration extends Model
         'total_cents', 'special_requirements', 'email_subscriber_id', 'attendee_group_id', 'last_intended_step'
     ];
 
+    public function ensureBookingReference(): void
+    {
+        if ($this->booking_reference) {
+            return;
+        }
+
+        $this->update([
+            'booking_reference' => $this->generateBookingReference(),
+        ]);
+    }
+
+    protected function generateBookingReference(): string
+    {
+        return client_setting('general.booking_reference_prefix')
+            . '-' . random_int(1000, 9999)
+            . '-' . $this->user_id
+            . '-' . $this->event_id;
+    }
+    
     public function setAttendeeTypeIdAttribute($value)
     {   
         $this->attributes['attendee_type_id'] = $value === '' ? null : $value;

@@ -15,10 +15,12 @@ class RegistrationPaymentService
 
     protected string $booking_reference_prefix;
     protected int $bank_transfer_method_id;
+    protected int $stripe_method_id;
 
     public function __construct(){
         $this->booking_reference_prefix = client_setting('general.booking_reference_prefix');
         $this->bank_transfer_method_id = EventPaymentMethod::where('key_name', 'bank_transfer')->first()->id;
+        $this->stripe_method_id = EventPaymentMethod::where('key_name', 'stripe')->first()->id;
     }
 
     public function completeFreeRegistration(Registration $registration): void
@@ -27,7 +29,7 @@ class RegistrationPaymentService
             'payment_status' => 'paid',
             'event_payment_method_id' =>
                 EventPaymentMethod::where('key_name', 'no_payment')->first()->id,
-            'booking_reference' => $this->generateBookingReference($registration),
+            'booking_reference' => $registration->ensureBookingReference(),
             'total_cents' => 0,
             'paid_at' => now(),
         ]);
@@ -55,7 +57,8 @@ class RegistrationPaymentService
 
             $registration->update([
                 'registration_status' => 'complete',
-                'payment_status' => 'pending'
+                'payment_status' => 'pending',
+                'booking_reference' => $registration->ensureBookingReference()
             ]);
 
             $mailable = new BankTransferConfirmationAdmin($registration);
@@ -103,13 +106,15 @@ class RegistrationPaymentService
             ];
         })->toArray();
 
+        $registration->ensureBookingReference();
+
         $registration_payment = RegistrationPayment::create([
                 'registration_id' => $registration->id,
-                'event_payment_method_id' => $this->bank_transfer_method_id,
+                'event_payment_method_id' => $this->stripe_method_id,
                 'amount_cents' => 0,
                 'total_cents' => $registration->calculated_total_cents,
                 'provider_reference' => null,
-                'provider' =>'bank_transfer',
+                'provider' =>'stripe',
                 'paid_at' => null,
                 'status' => 'pending',
         ]);
@@ -128,18 +133,11 @@ class RegistrationPaymentService
             'customer_email' => $registration->email,
             'metadata' => [
                 'registration_id' => $registration->id,
-                'registration_payment_id' => ''
+                'registration_payment_id' => $registration_payment->id
             ],
         ]);
 
         return $session->url;
     }
 
-    protected function generateBookingReference(Registration $registration): string
-    {
-        return $this->booking_reference_prefix
-            . '-' . random_int(1000, 9999)
-            . '-' . $registration->user_id
-            . '-' . $registration->event_id;
-    }
 }
