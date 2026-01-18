@@ -35,7 +35,7 @@ return new class extends Migration
             $table->string('email_subscriber_id')->nullable();
             $table->string('payment_status')->default('pending');
             $table->string('registration_status')->default('draft');
-            $table->int('last_intended_step')->nullable();
+            $table->integer('last_intended_step')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
