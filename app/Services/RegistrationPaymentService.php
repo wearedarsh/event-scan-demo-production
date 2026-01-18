@@ -56,7 +56,8 @@ class RegistrationPaymentService
                 'event_payment_method_id' => $this->bank_transfer_method_id,
                 'amount_cents' => 0,
                 'total_cents' => $registration->calculated_total_cents,
-                'payment_intent_id' => null,
+                'provider_reference' => null,
+                'provider' =>'bank_transfer',
                 'paid_at' => null,
                 'status' => 'pending',
             ]);
