@@ -128,7 +128,7 @@ class RegistrationPaymentService
             'customer_email' => $registration->email,
             'metadata' => [
                 'registration_id' => $registration->id,
-                'registration_payment_id' => $
+                'registration_payment_id' => ''
             ],
         ]);
 
