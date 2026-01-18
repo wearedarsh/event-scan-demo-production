@@ -93,9 +93,9 @@ class User extends Authenticatable
         ];
     }
 
-    public function scopeAdminNotificationRecipients()
+    public function scopeAdminNotificationRecipients($query)
     {
-        return self::where('active', true)
+        return $query->where('active', true)
             ->where('receives_admin_notifications', true)
             ->where('is_admin', true)
             ->get();
