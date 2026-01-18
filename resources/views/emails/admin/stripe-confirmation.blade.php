@@ -2,7 +2,7 @@
 
 <p>The attendee paid by Stripe and the payment was successful.</p>
 
-<p>Registration total: {{ $currency_symbol }}{{ number_format($registration_total, 2) }}<br>
+<p>Registration total: {{ $currency_symbol }}{{ $registration_total }}<br>
 Name: {{ $registration->title }} {{ $registration->last_name }}<br>
 Email: <a href="{{ $registration->user->email }}">{{ $registration->user->email }}</a></p>
 
