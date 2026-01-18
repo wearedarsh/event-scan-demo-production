@@ -19,7 +19,8 @@ class StripeConfirmationAdmin extends Mailable
     {
         $stripe_payment = RegistrationPayment::where('registration_id', $this->registration->id)
             ->where('provider', 'stripe')
-            ->where('status', 'paid');
+            ->where('status', 'paid')
+            ->firstOrFail();
 
         
         $email_content = EmailHtmlContent::where('key_name', 'admin_stripe_confirmation')->firstOrFail();
