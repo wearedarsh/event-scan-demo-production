@@ -109,6 +109,11 @@ class RegistrationPaymentService
 
         $registration->ensureBookingReference();
 
+        $registration->update([
+            'registration_status' => 'complete',
+            'payment_status' => 'pending',
+        ]);
+
         $registration_payment = RegistrationPayment::create([
                 'registration_id' => $registration->id,
                 'event_payment_method_id' => $this->stripe_method_id,
@@ -119,6 +124,7 @@ class RegistrationPaymentService
                 'paid_at' => null,
                 'status' => 'pending',
         ]);
+
 
         $session = StripeSession::create([
             'payment_method_types' => ['card'],

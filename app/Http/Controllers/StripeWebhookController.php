@@ -7,11 +7,8 @@ use Illuminate\Support\Facades\Log;
 use Stripe\Webhook;
 use App\Models\Registration;
 use App\Models\RegistrationPayment;
-use App\Models\EventPaymentMethod;
 use App\Models\User;
 use Carbon\Carbon;
-
-use Illuminate\Support\Facades\Mail;
 use App\Mail\StripeConfirmationCustomer;
 use App\Mail\StripeConfirmationAdmin;
 use App\Mail\WelcomeEmailCustomer;
@@ -38,121 +35,120 @@ class StripeWebhookController extends Controller
             $session = $event->data->object;
 
             $registration_id = $session->metadata->registration_id ?? null;
-            $registration_payment_id = $session->metdata->registration_payment_id;
+            $registration_payment_id = $session->metadata->registration_payment_id;
 
             if ($registration_id) {
                 $registration = Registration::find($registration_id);
                 $registration_payment = RegistrationPayment::find($registration_payment_id);
 
+                if ($registration_payment->status === 'paid') {
+                    return response()->json(['status' => 'already_processed']);
+                }
+
                 if ($registration && $registration_payment) {
 
-                    $registration_total = $registration->registrationTickets->sum(function ($ticket) {
-                        return $ticket->price_at_purchase * $ticket->quantity;
-                    });
-
-                    $registration->update([
-                        'payment_status' => 'paid'                        
-                    ]);
+                    $registration_total = $registration->calculated_total;
 
                     $registration_payment->update([
                         'provider_reference' => $session->payment_intent ?? null,
-                        'paid_at' => \Carbon\Carbon::createFromTimestamp($session->created),
+                        'amount_paid_cents' => $session->amount_total,
+                        'paid_at' => Carbon::createFromTimestamp($session->created),
                         'status' => 'paid'
+                    ]);
+
+                    $registration->update([
+                        'payment_status' => 'paid'
                     ]);
 
                     $registration->user->update([
                         'active' => true
                     ]);
                     
-                    try{
+                        try{
 
-                        $mailable = new StripeConfirmationCustomer($registration, $registration_total);
+                            $mailable = new StripeConfirmationCustomer($registration, $session->amount_total);
+
+                            EmailService::queueMailable(
+                                mailable: $mailable,
+                                from_address: client_setting('email.customer.from_address'),
+                                from_name: client_setting('email.customer.from_name'),
+                                recipient_user: $registration->user,
+                                recipient_email: $registration->user->email,
+                                friendly_name: 'Stripe confirmation customer',
+                                type: 'transactional_customer',
+                                event_id: $registration->event_id,
+                            );
+
+                        }catch(\Throwable $e){
+                            Log::error('Error sending customer confirmation email: ' . $e->getMessage());
+                        }
+
+                        $mailable = new WelcomeEmailCustomer($registration);
 
                         EmailService::queueMailable(
                             mailable: $mailable,
+                            from_address: client_setting('email.customer.from_address'),
+                            from_name: client_setting('email.customer.from_name'),
                             recipient_user: $registration->user,
                             recipient_email: $registration->user->email,
-                            friendly_name: 'Stripe confirmation customer',
+                            friendly_name: 'Welcome email customer',
                             type: 'transactional_customer',
                             event_id: $registration->event_id,
                         );
 
-                        Log::info('Customer confirmation email sent successfully.');
-                    }catch(\Throwable $e){
-                        Log::error('Error sending customer confirmation email: ' . $e->getMessage());
-                    }
+                        try {
 
-                    //Send customer welcome email
-                    $mailable = new WelcomeEmailCustomer($registration);
+                            foreach (User::adminNotificationRecipients() as $user) {
 
-                    EmailService::queueMailable(
-                        mailable: $mailable,
-                        recipient_user: $registration->user,
-                        recipient_email: $registration->user->email,
-                        friendly_name: 'Welcome email customer',
-                        type: 'transactional_customer',
-                        event_id: $registration->event_id,
-                    );
+                                $mailable = new StripeConfirmationAdmin($registration, $session->amount_total);
 
-                    Log::info('Customer welcome email sent successfully.');
+                                EmailService::queueMailable(
+                                    mailable: $mailable,
+                                    from_address: client_setting('email.admin.from_address'),
+                                    from_name: client_setting('email.admin.from_name'),
+                                    recipient_user: $user,
+                                    recipient_email: $user->email,
+                                    friendly_name: 'Stripe confirmation admin',
+                                    type: 'transactional_admin',
+                                    event_id: $registration->event_id,
+                                );
+                            }
 
-        
-                    Log::info('Attempting to send admin Stripe confirmation email to team members');
-
-                    try {
-
-                        foreach (User::adminNotificationRecipients() as $user) {
-
-                            $mailable = new StripeConfirmationAdmin($registration, $registration_total);
-
-                            EmailService::queueMailable(
-                                mailable: $mailable,
-                                recipient_user: $user,
-                                recipient_email: $user->email,
-                                friendly_name: 'Stripe confirmation admin',
-                                type: 'transactional_admin',
-                                event_id: $registration->event_id,
-                            );
+                        } catch (\Throwable $e) {
+                            Log::error('Error sending admin email: ' . $e->getMessage());
                         }
 
-                        Log::info('Stripe confirmation admin email sent successfully.');
+                        // if ($registration->event->auto_email_opt_in) {
+                        //     $email_subscriber_id = $emailService->addToList([
+                        //         'email' => $registration->user->email,
+                        //         'first_name' => $registration->user->first_name,
+                        //         'last_name' => $registration->user->last_name,
+                        //         'title' => $registration->user->title
+                        //     ], $registration->event->email_list_id);
 
-                    } catch (\Throwable $e) {
-                        Log::error('Error sending admin email: ' . $e->getMessage());
+                        //     if($email_subscriber_id){
+                        //         $registration->update([
+                        //             'email_subscriber_id' => $email_subscriber_id
+                        //         ]);
+                        //     }
+                        // }
+
+                        // if ($registration->user->email_marketing_opt_in) {
+                        //     $email_subscriber_id = $emailService->addToList([
+                        //         'email' => $registration->user->email,
+                        //         'first_name' => $registration->user->first_name,
+                        //         'last_name' => $registration->user->last_name,
+                        //         'title' => $registration->user->title
+                        //     ], config('services.emailblaster.marketing_list_id'));
+
+                        //     if($email_subscriber_id){
+                        //         $registration->user->update([
+                        //             'email_marketing_subscriber_id' => $email_subscriber_id
+                        //         ]);
+                        //     }
+
+                        // }                    
                     }
-
-                    if ($registration->event->auto_email_opt_in) {
-                        $email_subscriber_id = $emailService->addToList([
-                            'email' => $registration->user->email,
-                            'first_name' => $registration->user->first_name,
-                            'last_name' => $registration->user->last_name,
-                            'title' => $registration->user->title
-                        ], $registration->event->email_list_id);
-
-                        if($email_subscriber_id){
-                            $registration->update([
-                                'email_subscriber_id' => $email_subscriber_id
-                            ]);
-                        }
-                    }
-
-                    if ($registration->user->email_marketing_opt_in) {
-                        $email_subscriber_id = $emailService->addToList([
-                            'email' => $registration->user->email,
-                            'first_name' => $registration->user->first_name,
-                            'last_name' => $registration->user->last_name,
-                            'title' => $registration->user->title
-                        ], config('services.emailblaster.marketing_list_id'));
-
-                        if($email_subscriber_id){
-                            $registration->user->update([
-                                'email_marketing_subscriber_id' => $email_subscriber_id
-                            ]);
-                        }
-
-                    }                    
-
-                }
             }
         }
 
