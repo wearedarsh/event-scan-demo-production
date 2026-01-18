@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\User;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -14,8 +14,6 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::table('users')->truncate();
 
         $users = [
             [
@@ -43,6 +41,5 @@ class UserSeeder extends Seeder
         ];
 
         User::insert($users);
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

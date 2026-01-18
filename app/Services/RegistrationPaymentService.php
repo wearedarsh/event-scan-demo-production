@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use App\Models\Registration;
 use App\Models\EventPaymentMethod;
 use App\Models\RegistrationPayment;
@@ -62,18 +63,21 @@ class RegistrationPaymentService
                 'payment_status' => 'pending',
             ]);
 
-            $mailable = new BankTransferConfirmationAdmin($registration);
 
-            EmailService::queueMailable(
-                mailable: $mailable,
-                from_address: client_setting('email.admin.from_address'),
-                from_name: client_setting('email.admin.from_name'),
-                recipient_user: $registration->user,
-                recipient_email: $registration->user->email,
-                friendly_name: 'Registration complete pending bank transfer payment admin',
-                type: 'transactional_admin',
-                event_id: $registration->event_id,
-            );
+            foreach (User::adminNotificationRecipients() as $user) {
+                $mailable = new BankTransferConfirmationAdmin($registration);
+
+                EmailService::queueMailable(
+                    mailable: $mailable,
+                    from_address: client_setting('email.admin.from_address'),
+                    from_name: client_setting('email.admin.from_name'),
+                    recipient_user: $user,
+                    recipient_email: $user->email,
+                    friendly_name: 'Registration complete pending bank transfer payment admin',
+                    type: 'transactional_admin',
+                    event_id: $registration->event_id,
+                );
+            }
 
             $mailable = new BankTransferInformationCustomer($registration);
 

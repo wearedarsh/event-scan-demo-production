@@ -8,6 +8,7 @@ class BuildSiteAndSeedContent extends Seeder
     public function run(): void
     {
         $this->call([
+            \Database\Seeders\MasterUserSeeder::class,
             \Database\Seeders\MasterRegistrationFormSeeder::class,
             \Database\Seeders\MasterEventSeeder::class,
             \Database\Seeders\MasterClientSettingSeeder::class,
