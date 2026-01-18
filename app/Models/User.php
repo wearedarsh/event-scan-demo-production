@@ -97,8 +97,7 @@ class User extends Authenticatable
     {
         return $query->where('active', true)
             ->where('receives_admin_notifications', true)
-            ->where('is_admin', true)
-            ->get();
+            ->where('is_admin', true);
     }
 
     /**
