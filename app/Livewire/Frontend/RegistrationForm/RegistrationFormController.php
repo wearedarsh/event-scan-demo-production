@@ -80,6 +80,7 @@ class RegistrationFormController extends Component
                 'id', $registration_id)
                 ->where('event_id', $this->event->id)
                 ->first();
+
         }else{
             $this->registration = Registration::create([
                 'event_id' => $this->event->id
@@ -133,7 +134,6 @@ class RegistrationFormController extends Component
         $this->step_label = $this->registration_form_step->label;
         $this->step_key_name = $this->registration_form_step->key_name;
         $this->step_help_information_copy = $this->registration_form_step->help_information_copy;
-
     }
 
 

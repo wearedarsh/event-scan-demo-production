@@ -102,6 +102,60 @@ class ClientSettingPaymentSeeder extends Seeder
             ],
             [
                 'category_id'   => 7,
+                'key_name'      => 'payment.booking.stripe.checkout.success.header_html',
+                'label'         => 'Stripe checkout success header html',
+                'display_order' => 1,
+                'type'          => 'textarea',
+                'value'         => '<h3 class="text-lg font-semibold mb-1">Thank you for registering for this event</h3>
+                                    <p class="text-sm text-[var(--color-text-light)]">
+                                        Your payment was successful and your place has been reserved
+                                    </p>',
+            ],
+            [
+                'category_id'   => 7,
+                'key_name'      => 'payment.booking.stripe.checkout.success.details_html',
+                'label'         => 'Stripe checkout success details html',
+                'display_order' => 1,
+                'type'          => 'textarea',
+                'value'         => '',
+            ],
+            [
+                'category_id'   => 7,
+                'key_name'      => 'payment.booking.stripe.checkout.success.footer_html',
+                'label'         => 'Stripe checkout success header html',
+                'display_order' => 1,
+                'type'          => 'textarea',
+                'value'         => '',
+            ],
+            [
+                'category_id'   => 7,
+                'key_name'      => 'payment.booking.stripe.payment.pending.header_html',
+                'label'         => 'Stripe payment pending header html',
+                'display_order' => 1,
+                'type'          => 'textarea',
+                'value'         => '<h3 class="text-lg font-semibold mb-1">Thank you</h3>
+                                    <p class="text-sm text-[var(--color-text-light)]">
+                                        We have received your payment and are processing it, you will receive a confirmation email shortly
+                                    </p>',
+            ],
+            [
+                'category_id'   => 7,
+                'key_name'      => 'payment.booking.stripe.checkout.success.details_html',
+                'label'         => 'Stripe payment pending details html',
+                'display_order' => 1,
+                'type'          => 'textarea',
+                'value'         => '',
+            ],
+            [
+                'category_id'   => 7,
+                'key_name'      => 'payment.booking.stripe.checkout.success.footer_html',
+                'label'         => 'Stripe checkout success header html',
+                'display_order' => 1,
+                'type'          => 'textarea',
+                'value'         => '',
+            ],
+            [
+                'category_id'   => 7,
                 'key_name'      => 'payment.admin.stripe.payments_url',
                 'label'         => 'Stripe payments url',
                 'type'          => 'text',
@@ -111,3 +165,20 @@ class ClientSettingPaymentSeeder extends Seeder
         ]);
     }
 }
+
+
+<div class="bg-[var(--color-surface)] border border-[var(--color-border)] shadow-sm rounded-2xl p-10 max-w-lg w-full text-center space-y-6">
+
+                <div class="flex justify-center">
+                    <x-heroicon-o-check-circle class="w-16 h-16 text-[var(--color-accent)]" />
+                </div>
+
+                <h2 class="text-2xl font-bold text-[var(--color-secondary)]">Registration complete</h2>
+                <p class="text-[var(--color-text-light)]">
+                    Thank you for your registration.
+                </p>
+
+                <p class="text-[var(--color-text)]">
+                    Your payment was successful, and your booking is now confirmed.
+                </p>
+            </div>

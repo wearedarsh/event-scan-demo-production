@@ -309,7 +309,7 @@ Route::get('/check-in-app/support', [AppSupportController::class, 'show'])->name
 Route::get('/event/{event}', [EventController::class, 'show'])->name('event');
 Route::get('/event/download/{id}', [EventDownloadController::class, 'download'])
     ->name('event.download');
-Route::get('/registration/{event}', RegistrationFormController::class)->name('registration');
+Route::get('/registration/{event}/{system_state?}', RegistrationFormController::class)->name('registration');
 Route::get('/checkout/success/{registration_id}/{event}', CheckoutSuccess::class)->name('checkout.success');
 
 //Webhook

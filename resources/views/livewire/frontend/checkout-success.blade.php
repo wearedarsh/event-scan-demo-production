@@ -26,12 +26,10 @@
     <!-- Success Container -->
     <div class="bg-[var(--color-surface)] border border-[var(--color-border)] shadow-sm rounded-2xl p-10 max-w-lg w-full text-center space-y-6">
 
-      <!-- Checkmark Icon -->
       <div class="flex justify-center">
         <x-heroicon-o-check-circle class="w-16 h-16 text-[var(--color-accent)]" />
       </div>
 
-      <!-- Title -->
       <h2 class="text-2xl font-bold text-[var(--color-secondary)]">Registration complete</h2>
       <p class="text-[var(--color-text-light)]">
         Thank you for your registration.
