@@ -36,6 +36,7 @@ return new class extends Migration
             $table->string('payment_status')->default('pending');
             $table->string('registration_status')->default('draft');
             $table->integer('last_intended_step')->nullable();
+            $table->boolean('registration_form_locked')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -26,7 +26,8 @@ class Registration extends Model
         'town', 'postcode', 'country_id', 'attendee_type_id', 'attendee_type_other',
         'mobile_country_code', 'mobile_number', 'email', 'registration_status', 'payment_status', 
         'currently_held_position', 'booking_reference',
-        'total_cents', 'special_requirements', 'email_subscriber_id', 'attendee_group_id', 'last_intended_step'
+        'total_cents', 'special_requirements', 'email_subscriber_id', 
+        'attendee_group_id', 'last_intended_step', 'registration_locked'
     ];
 
     public function ensureBookingReference(): void
