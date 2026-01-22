@@ -20,7 +20,9 @@ class StripePaymentPending extends Component
     public function mount()
     {
 
-        Session::forget('system_state');
+        $this->registration->update([
+            'registration_locked' => true
+        ]);
         
         $this->currency_symbol = client_setting('general.currency_symbol');
         

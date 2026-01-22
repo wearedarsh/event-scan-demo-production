@@ -36,7 +36,9 @@ class RegistrationFormController extends Component
 
     protected $listeners = [
         'update-step' => 'updateStep',
-        'clear-session' => 'clearSessionAndRedirect',
+        'cancel-session' => 'cancelSessionAndRedirect',
+        'finish-session' => 'finishSessionAndRedirect',
+        'clear-session' => 'clearSession',
         'enter-system-state' =>'enterSystemState',
         'clear-system-state' =>'clearSystemState'
     ];
@@ -53,21 +55,40 @@ class RegistrationFormController extends Component
         return $this->current_step === ($this->total_steps - 1);
     }
     
-    public function clearSessionAndRedirect(){
-        
+    public function cancelSessionAndRedirect(){
         if(session('registration_id') && $this->registration){
             $this->registration->update([
                 'registration_status' => 'cancelled'
             ]);
         }
+        $this->clearSession();
+    }
 
+    public function clearSession(){
         Session::forget('registration_id');
         Auth::logout();
         return redirect()->route('home');
     }
 
+    public function finishSessionAndRedirect(){
+        if(session('registration_id') && $this->registration){
+            $this->registration->update([
+                'registration_form_locked' => true
+            ]);
+        }
+        $this->clearSession();
+    }
+
     public function getSpacesLabelProperty(){
         return Str::plural('space', $this->spaces_remaining);
+    }
+
+    public function createNewRegistration(){
+        $this->registration = Registration::create([
+                'event_id' => $this->event->id
+        ]);
+
+        session(['registration_id' => $this->registration->id]);
     }
 
     public function mount(Event $event)
@@ -76,17 +97,18 @@ class RegistrationFormController extends Component
         $registration_id = session('registration_id');
 
         if($registration_id){
-            $this->registration = Registration::where(
+            $registration = Registration::where(
                 'id', $registration_id)
                 ->where('event_id', $this->event->id)
                 ->first();
 
+            if(!$registration->registration_form_locked){
+                $this->registration = $registration;
+            }else{
+                $this->createNewRegistration();
+            }
         }else{
-            $this->registration = Registration::create([
-                'event_id' => $this->event->id
-            ]);
-
-            session(['registration_id' => $this->registration->id]);
+            $this->createNewRegistration();
         }
 
         $this->spaces_remaining = $this->event->space_remaining;

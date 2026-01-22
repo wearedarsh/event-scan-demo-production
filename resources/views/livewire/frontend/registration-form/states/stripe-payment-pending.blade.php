@@ -15,7 +15,7 @@
     
 
         <x-registration.navigate-button
-            wire:click="$dispatch('clear-session')">
+            wire:click="$dispatch('finish-session')">
             {{ client_setting('payment.booking.stripe.payment.pending.finish_button_label') }}
         </x-registration.navigate-button>
 

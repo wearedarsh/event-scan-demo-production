@@ -12,7 +12,7 @@
 
             <div>
                 <x-registration.navigate-button
-                    wire:click="$dispatch('clear-session')">
+                    wire:click="$dispatch('cancel-session')">
                     {{ client_setting('booking.navigation.approval.finish_button_label') }}
                 </x-registration.navigate-button>
             </div>

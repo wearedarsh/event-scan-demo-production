@@ -18,7 +18,7 @@
         </div>
 
         <x-registration.navigate-button
-            wire:click="$dispatch('clear-session')">
+            wire:click="$dispatch('cancel-session')">
             {{ client_setting('payment.booking.bank_transfer.information.finish_button_label') }}
         </x-registration.navigate-button>
 

@@ -129,6 +129,14 @@ class ClientSettingPaymentSeeder extends Seeder
             ],
             [
                 'category_id'   => 7,
+                'key_name'      => 'payment.booking.stripe.checkout.success.finish_button_label',
+                'label'         => 'Stripe checkout success finish button label',
+                'display_order' => 1,
+                'type'          => 'text',
+                'value'         => 'Finish and return to homepage',
+            ],
+            [
+                'category_id'   => 7,
                 'key_name'      => 'payment.booking.stripe.payment.pending.header_html',
                 'label'         => 'Stripe payment pending header html',
                 'display_order' => 1,
@@ -140,7 +148,7 @@ class ClientSettingPaymentSeeder extends Seeder
             ],
             [
                 'category_id'   => 7,
-                'key_name'      => 'payment.booking.stripe.checkout.success.details_html',
+                'key_name'      => 'payment.booking.stripe.payment.pending.details_html',
                 'label'         => 'Stripe payment pending details html',
                 'display_order' => 1,
                 'type'          => 'textarea',
@@ -148,11 +156,19 @@ class ClientSettingPaymentSeeder extends Seeder
             ],
             [
                 'category_id'   => 7,
-                'key_name'      => 'payment.booking.stripe.checkout.success.footer_html',
-                'label'         => 'Stripe checkout success header html',
+                'key_name'      => 'payment.booking.stripe.payment.pending.footer_html',
+                'label'         => 'Stripe payment pending footer html',
                 'display_order' => 1,
                 'type'          => 'textarea',
                 'value'         => '',
+            ],
+            [
+                'category_id'   => 7,
+                'key_name'      => 'payment.booking.stripe.payment.pending.finish_button_label',
+                'label'         => 'Stripe payment pending finish button label',
+                'display_order' => 1,
+                'type'          => 'text',
+                'value'         => 'Finish and return to homepage',
             ],
             [
                 'category_id'   => 7,
