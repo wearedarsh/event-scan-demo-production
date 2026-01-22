@@ -63,7 +63,8 @@ class Dynamic extends Component
                 }else{
                      if($input->custom){
                         $value = $this->registration->customFieldValues
-                            ->where('registration_form_input_id', $input->id)->value;
+                            ->where('registration_form_input_id', $input->id)
+                            ->where('registration_id', $this->registration->id)->value ?? null;
 
                         $this->form_data[$input->key_name] = $value ?? null;
                     }else{
