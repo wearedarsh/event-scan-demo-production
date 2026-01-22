@@ -97,9 +97,9 @@ class RegistrationFormController extends Component
         $registration_id = session('registration_id');
 
         if($system_state){
-            dispatch('enter-system-state', $system_state);
+            $this->dispatch('enter-system-state', $system_state);
         }
-        
+
         if($registration_id){
             $registration = Registration::where(
                 'id', $registration_id)
