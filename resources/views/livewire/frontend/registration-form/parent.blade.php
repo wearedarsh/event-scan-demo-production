@@ -6,11 +6,14 @@
             :event="$event"
             :spaces_remaining="$spaces_remaining"
         />
-        <x-registration.step-indicator
-            :label="$step_label"
-            :current="$current_step"
-            :total="$total_steps"
-        />
+
+        @if(!$system_state)
+            <x-registration.step-indicator
+                :label="$step_label"
+                :current="$current_step"
+                :total="$total_steps"
+            />
+        @endif
 
         @if($system_state)
             <livewire:is :component="'frontend.registration-form.states.' . $system_state"
