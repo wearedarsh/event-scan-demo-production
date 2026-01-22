@@ -62,11 +62,12 @@ class Dynamic extends Component
                     $this->document_uploads[$input->id] = null;
                 }else{
                      if($input->custom){
-                        $value = $this->registration->customFieldValues
+                        $custom_field_value = $this->registration->customFieldValues
                             ->where('registration_form_input_id', $input->id)
-                            ->where('registration_id', $this->registration->id)->value ?? null;
+                            ->where('registration_id', $this->registration->id)->first();
 
-                        $this->form_data[$input->key_name] = $value ?? null;
+        
+                        $this->form_data[$input->key_name] = $custom_field_value->value ?? null;
                     }else{
                         $this->form_data[$input->key_name] = $this->registration->{$input->key_name} ?? null;
                     }
