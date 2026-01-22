@@ -66,6 +66,14 @@ class ClientSettingEmailSeeder extends Seeder
                 'display_order' => 7,
                 'value'         => '<p>Kind regards,<br>The Medical Foundry Team</p>',
             ],
+            [
+                'category_id'   => 1,
+                'key_name'      => 'email.config.send_second_email_with_receipt',
+                'type'          => 'select',
+                'label'         => 'Send second email with receipt eg. welcome email',
+                'display_order' => 7,
+                'value'         => true,
+            ],
         ]);
     }
 }

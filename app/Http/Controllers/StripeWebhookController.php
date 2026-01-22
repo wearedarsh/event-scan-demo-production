@@ -83,18 +83,20 @@ class StripeWebhookController extends Controller
                             Log::error('Error sending customer confirmation email: ' . $e->getMessage());
                         }
 
-                        $mailable = new WelcomeEmailCustomer($registration);
+                        if(client_setting('email.config.send_second_email_with_receipt')){
+                            $mailable = new WelcomeEmailCustomer($registration);
 
-                        EmailService::queueMailable(
-                            mailable: $mailable,
-                            from_address: client_setting('email.customer.from_address'),
-                            from_name: client_setting('email.customer.from_name'),
-                            recipient_user: $registration->user,
-                            recipient_email: $registration->user->email,
-                            friendly_name: 'Welcome email customer',
-                            type: 'transactional_customer',
-                            event_id: $registration->event_id,
-                        );
+                            EmailService::queueMailable(
+                                mailable: $mailable,
+                                from_address: client_setting('email.customer.from_address'),
+                                from_name: client_setting('email.customer.from_name'),
+                                recipient_user: $registration->user,
+                                recipient_email: $registration->user->email,
+                                friendly_name: 'Welcome email customer',
+                                type: 'transactional_customer',
+                                event_id: $registration->event_id,
+                            );
+                        }
 
                         try {
 
