@@ -18,7 +18,7 @@ class StripeCheckoutSuccess extends Component
     public function mount(){
         $this->currency_symbol = client_setting('general.currency_symbol');
 
-        dispatch('clear-session');
+       $this->dispatch('clear-session');
     }
 
     public function render()

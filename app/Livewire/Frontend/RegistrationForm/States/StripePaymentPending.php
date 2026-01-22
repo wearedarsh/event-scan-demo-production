@@ -24,7 +24,7 @@ class StripePaymentPending extends Component
             'registration_locked' => true
         ]);
 
-        dispatch('clear-session');
+        $this->dispatch('clear-session');
         
         $this->currency_symbol = client_setting('general.currency_symbol');
         
@@ -33,7 +33,7 @@ class StripePaymentPending extends Component
             ->where('status', 'paid');
 
         if($this->registration->payment_status === 'paid' && $stripe_payment_confirmed){
-            dispatch('enter-system-state', 'stripe-checkout-success');
+            $this->dispatch('enter-system-state', 'stripe-checkout-success');
         }
     }
 
