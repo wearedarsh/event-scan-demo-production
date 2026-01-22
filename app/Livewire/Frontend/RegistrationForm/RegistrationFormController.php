@@ -62,12 +62,12 @@ class RegistrationFormController extends Component
             ]);
         }
         $this->clearSession();
+        return redirect()->route('home');
     }
 
     public function clearSession(){
         Session::forget('registration_id');
         Auth::logout();
-        return redirect()->route('home');
     }
 
     public function finishSessionAndRedirect(){
@@ -77,6 +77,7 @@ class RegistrationFormController extends Component
             ]);
         }
         $this->clearSession();
+        return redirect()->route('home');
     }
 
     public function getSpacesLabelProperty(){
