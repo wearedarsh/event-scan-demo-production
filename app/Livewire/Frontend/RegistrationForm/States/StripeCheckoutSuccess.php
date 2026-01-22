@@ -23,6 +23,6 @@ class StripeCheckoutSuccess extends Component
 
     public function render()
     {
-        return view('livewire.frontend.registration-form.states.stripe-check-out-success');
+        return view('livewire.frontend.registration-form.states.stripe-checkout-success');
     }
 }
