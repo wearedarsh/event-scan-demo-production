@@ -21,7 +21,7 @@ class StripePaymentPending extends Component
     {
 
         $this->registration->update([
-            'registration_locked' => true
+            'registration_form_locked' => true
         ]);
 
         $this->dispatch('clear-session');
