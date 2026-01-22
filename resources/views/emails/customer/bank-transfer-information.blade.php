@@ -3,6 +3,7 @@
 
 <p>Thank you for registering for <strong>{{ $registration->event->title }}</strong> taking place on <strong>{{ $registration->event->date_start->isoformat('Do') }} to {{ $registration->event->date_end->isoformat('Do MMMM YYYY') }}</strong> in <strong>{{ $registration->event->location }}</strong>.</p>
 
+<p><strong>Your booking reference: </strong>{{ $regsitration->booking_reference }}</p>
 <p>Please make your bank transfer using the following details:</p>
 
 {!! client_setting('payment.bank_transfer.information.bank_details_html') !!}
