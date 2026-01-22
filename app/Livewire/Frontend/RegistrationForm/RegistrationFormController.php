@@ -99,6 +99,7 @@ class RegistrationFormController extends Component
         if($system_state){
             dispatch('enter-system-state', $system_state);
         }
+        
         if($registration_id){
             $registration = Registration::where(
                 'id', $registration_id)

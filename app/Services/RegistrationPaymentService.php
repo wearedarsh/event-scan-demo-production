@@ -135,9 +135,10 @@ class RegistrationPaymentService
             'payment_method_types' => ['card'],
             'line_items' => $line_items,
             'mode' => 'payment',
-            'success_url' => route('checkout.success', [
+            'success_url' => route('registration', [
                 'registration_id' => $registration->id,
                 'event' => $registration->event,
+                'system_state' => 'stripe-payment-pending'
             ]),
             'cancel_url' => route('registration', [
                 'event' => $registration->event,
