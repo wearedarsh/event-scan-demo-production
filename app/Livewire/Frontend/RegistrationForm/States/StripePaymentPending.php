@@ -23,6 +23,8 @@ class StripePaymentPending extends Component
         $this->registration->update([
             'registration_locked' => true
         ]);
+
+        dispatch('clear-session');
         
         $this->currency_symbol = client_setting('general.currency_symbol');
         

@@ -91,11 +91,14 @@ class RegistrationFormController extends Component
         session(['registration_id' => $this->registration->id]);
     }
 
-    public function mount(Event $event)
+    public function mount(Event $event, $system_state = null)
     {
         $this->event = $event;
         $registration_id = session('registration_id');
 
+        if($system_state){
+            dispatch('enter-system-state', $system_state);
+        }
         if($registration_id){
             $registration = Registration::where(
                 'id', $registration_id)
