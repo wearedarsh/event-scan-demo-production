@@ -11,7 +11,7 @@ class EventsService
     public function handle(Request $request)
     {
         
-        Log::info('EventS request from: ' . $request->ip());
+        Log::info('Events request from: ' . $request->ip());
         Log::info('Request from parent webhook: ' . $request);
 
 

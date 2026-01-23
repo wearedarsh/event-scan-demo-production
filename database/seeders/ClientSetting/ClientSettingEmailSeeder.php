@@ -74,6 +74,23 @@ class ClientSettingEmailSeeder extends Seeder
                 'display_order' => 7,
                 'value'         => true,
             ],
+            [
+                'category_id'   => 1,
+                'key_name'      => 'email.marketing.service.name',
+                'type'          => 'text',
+                'label'         => 'Email opt in marketing service eg emailblaster or mailchimp',
+                'display_order' => 7,
+                'value'         => 'emailblaster',
+            ],
+            [
+                'category_id'   => 1,
+                'key_name'      => 'email.marketing.service.general_list_id',
+                'type'          => 'text',
+                'label'         => 'Email marketing general marketing list id',
+                'display_order' => 7,
+                'value'         => '',
+            ],
+
         ]);
     }
 }

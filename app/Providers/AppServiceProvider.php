@@ -17,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(EmailMarketingService::class, function () {
-            $service = env('EMAIL_MARKETING_SERVICE', 'emailblaster');
+            $service = client_setting('email.marketing.service.name');
     
             return match ($service) {
                 'emailblaster' => new EmailBlasterUKService(),

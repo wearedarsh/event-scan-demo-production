@@ -120,36 +120,38 @@ class StripeWebhookController extends Controller
                             Log::error('Error sending admin email: ' . $e->getMessage());
                         }
 
-                        // if ($registration->event->auto_email_opt_in) {
-                        //     $email_subscriber_id = $emailService->addToList([
-                        //         'email' => $registration->user->email,
-                        //         'first_name' => $registration->user->first_name,
-                        //         'last_name' => $registration->user->last_name,
-                        //         'title' => $registration->user->title
-                        //     ], $registration->event->email_list_id);
+                        if (client_setting('email.marketing.service')){
+                            if ($registration->event->auto_email_opt_in) {
+                                $email_subscriber_id = $emailService->addToList([
+                                    'email' => $registration->user->email,
+                                    'first_name' => $registration->user->first_name,
+                                    'last_name' => $registration->user->last_name,
+                                    'title' => $registration->user->title
+                                ], $registration->event->email_list_id);
 
-                        //     if($email_subscriber_id){
-                        //         $registration->update([
-                        //             'email_subscriber_id' => $email_subscriber_id
-                        //         ]);
-                        //     }
-                        // }
+                                if($email_subscriber_id){
+                                    $registration->update([
+                                        'email_subscriber_id' => $email_subscriber_id
+                                    ]);
+                                }
+                            }
 
-                        // if ($registration->user->email_marketing_opt_in) {
-                        //     $email_subscriber_id = $emailService->addToList([
-                        //         'email' => $registration->user->email,
-                        //         'first_name' => $registration->user->first_name,
-                        //         'last_name' => $registration->user->last_name,
-                        //         'title' => $registration->user->title
-                        //     ], config('services.emailblaster.marketing_list_id'));
+                            if ($registration->user->email_marketing_opt_in) {
+                                $email_subscriber_id = $emailService->addToList([
+                                    'email' => $registration->user->email,
+                                    'first_name' => $registration->user->first_name,
+                                    'last_name' => $registration->user->last_name,
+                                    'title' => $registration->user->title
+                                ], client_setting('email.marketing.service.general_list_id'));
 
-                        //     if($email_subscriber_id){
-                        //         $registration->user->update([
-                        //             'email_marketing_subscriber_id' => $email_subscriber_id
-                        //         ]);
-                        //     }
+                                if($email_subscriber_id){
+                                    $registration->user->update([
+                                        'email_marketing_subscriber_id' => $email_subscriber_id
+                                    ]);
+                                }
 
-                        // }                    
+                            }    
+                        }                
                     }
             }
         }
