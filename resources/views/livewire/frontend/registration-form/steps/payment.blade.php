@@ -73,7 +73,7 @@
                 {!! client_setting('payment.booking.no_payment_due.cta.info_html') !!}
             </x-registration.form-info>
 
-            <x-registration.navigate-button wire:click="$dispatch('noPaymentDue')">
+            <x-registration.navigate-button wire:click="noPaymentDue">
                 {{ client_setting('payment.booking.no_payment_due.cta.button_label') }}
             </x-registration.navigate-button>
         @endif
