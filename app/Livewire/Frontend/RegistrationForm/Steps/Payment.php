@@ -34,7 +34,7 @@ class Payment extends Component
     public function noPaymentDue(RegistrationPaymentService $service)
     {
         $service->completeFreeRegistration($this->registration);
-        $this->dispatch('enter-system-state', 'no-charge-success');
+        $this->dispatch('enter-system-state', 'no-payment-due-success');
     }
 
     public function bankTransferPayment(RegistrationPaymentService $service)
