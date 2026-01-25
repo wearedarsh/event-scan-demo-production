@@ -29,7 +29,16 @@ class EventPaymentMethodSeeder extends Seeder
                 'key_name' => 'bank_transfer',
                 'enabled' => true,
                 'description' =>  'If you select bank transfer please note that your place will not be reserved until payment has been received and confirmed by our office.',
-            ]
+            ],
+            [
+                'id' => 2, 
+                'event_id' => 1,
+                'name' => 'No payment due',
+                'key_name' => 'no_payment_due',
+                'enabled' => true,
+                'description' =>  'There is no payment required for this registration.',
+            ]]
+
         ];
 
         EventPaymentMethod::insert($event_payment_methods);

@@ -27,12 +27,21 @@ class RegistrationPaymentService
     public function completeFreeRegistration(Registration $registration): void
     {
         $registration->update([
+            'registration_status' => 'complete',
             'payment_status' => 'paid',
-            'event_payment_method_id' =>
-                EventPaymentMethod::where('key_name', 'no_payment')->first()->id,
-            'booking_reference' => $registration->ensureBookingReference(),
-            'total_cents' => 0,
-            'paid_at' => now(),
+            'booking_reference' => $registration->ensureBookingReference()
+        ]);
+
+        $free_payment = RegistrationPayment::updateOrCreate([
+            'registration_id' => $registration->id,
+            'event_payment_method_id' => $this->bank_transfer_method_id
+        ],[
+            'amount_paid_cents' => 0,
+            'total_amount_due_cents' => $registration->calculated_total_cents,
+            'provider_reference' => null,
+            'provider' =>'bank_transfer',
+            'paid_at' => null,
+            'status' => 'pending',
         ]);
 
         $registration->user->update(['active' => true]);
