@@ -31,13 +31,13 @@ class EventPaymentMethodSeeder extends Seeder
                 'description' =>  'If you select bank transfer please note that your place will not be reserved until payment has been received and confirmed by our office.',
             ],
             [
-                'id' => 2, 
+                'id' => 3,
                 'event_id' => 1,
                 'name' => 'No payment due',
                 'key_name' => 'no_payment_due',
                 'enabled' => true,
                 'description' =>  'There is no payment required for this registration.',
-            ]]
+            ]
 
         ];
 
