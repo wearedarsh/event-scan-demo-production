@@ -8,6 +8,8 @@ use App\Models\EventPaymentMethod;
 use App\Models\RegistrationPayment;
 use App\Mail\BankTransferConfirmationAdmin;
 use App\Mail\BankTransferInformationCustomer;
+use App\Mail\NoPaymentConfirmationCustomer;
+use App\Mail\NoPaymentConfirmationAdmin;
 use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;
 
@@ -26,7 +28,7 @@ class RegistrationPaymentService
         $this->free_payment_id = EventPaymentMethod::where('key_name', 'no_payment_due')->first()->id;
     }
 
-    public function completeFreeRegistration(Registration $registration): void
+    public function completeFreeRegistration(Registration $registration)
     {
         $registration->update([
             'registration_status' => 'complete',
@@ -49,7 +51,36 @@ class RegistrationPaymentService
 
         $registration->user->update(['active' => true]);
 
-        //send emails
+        foreach (User::adminNotificationRecipients()->get() as $user) {
+                
+            $mailable = new NoPaymentConfirmationAdmin($registration);
+
+            EmailService::queueMailable(
+                mailable: $mailable,
+                from_address: client_setting('email.admin.from_address'),
+                from_name: client_setting('email.admin.from_name'),
+                recipient_user: $user,
+                recipient_email: $user->email,
+                friendly_name: 'Registration complete no payment due admin',
+                type: 'transactional_admin',
+                event_id: $registration->event_id,
+                );
+        }
+
+        $mailable = new NoPaymentConfirmationCustomer($registration);
+
+        EmailService::queueMailable(
+            mailable: $mailable,
+            from_address: client_setting('email.customer.from_address'),
+            from_name: client_setting('email.customer.from_name'),
+            recipient_user: $registration->user,
+            recipient_email: $registration->user->email,
+            friendly_name: 'No payment due confirmation customer',
+            type: 'transactional_customer',
+            event_id: $registration->event_id,
+        );
+
+
     }
 
     public function initiateBankTransfer(Registration $registration): void
@@ -102,7 +133,7 @@ class RegistrationPaymentService
                 from_name: client_setting('email.customer.from_name'),
                 recipient_user: $registration->user,
                 recipient_email: $registration->user->email,
-                friendly_name: 'Registration complete pending bank transfer payment admin',
+                friendly_name: 'Bank transfer information customer',
                 type: 'transactional_customer',
                 event_id: $registration->event_id,
             );
