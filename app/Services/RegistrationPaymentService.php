@@ -17,11 +17,13 @@ class RegistrationPaymentService
     protected string $booking_reference_prefix;
     protected int $bank_transfer_method_id;
     protected int $stripe_method_id;
+    protected int $free_payment_id;
 
     public function __construct(){
         $this->booking_reference_prefix = client_setting('general.booking_reference_prefix');
         $this->bank_transfer_method_id = EventPaymentMethod::where('key_name', 'bank_transfer')->first()->id;
         $this->stripe_method_id = EventPaymentMethod::where('key_name', 'stripe')->first()->id;
+        $this->free_payment_id = EventPaymentMethod::where('key_name', 'no_payment_due')->first()->id;
     }
 
     public function completeFreeRegistration(Registration $registration): void
@@ -34,17 +36,19 @@ class RegistrationPaymentService
 
         $free_payment = RegistrationPayment::updateOrCreate([
             'registration_id' => $registration->id,
-            'event_payment_method_id' => $this->bank_transfer_method_id
+            'event_payment_method_id' => $this->free_payment_id
         ],[
             'amount_paid_cents' => 0,
             'total_amount_due_cents' => $registration->calculated_total_cents,
             'provider_reference' => null,
-            'provider' =>'bank_transfer',
-            'paid_at' => null,
-            'status' => 'pending',
+            'provider' =>'no_payment_due',
+            'paid_at' => now(),
+            'status' => 'paid',
         ]);
 
         $registration->user->update(['active' => true]);
+
+        //send emails
     }
 
     public function initiateBankTransfer(Registration $registration): void

@@ -27,7 +27,7 @@ Email: <a href="{{ $registration->user->email }}">{{ $registration->user->email 
                     {{ $ticket->quantity }} × {{ $ticket->ticket->name }} (inc. VAT)
                 </td>
                 <td align="right" style="padding: 8px 0; font-size: 15px;">
-                    {{ $currency_symbol }}{{ number_format($ticket->price_at_purchase * $ticket->quantity, 2) }}
+                    {{ $currency_symbol }}{{ $ticket->calculated_total }}
                 </td>
             </tr>
         @endforeach
@@ -35,7 +35,7 @@ Email: <a href="{{ $registration->user->email }}">{{ $registration->user->email 
         <tr style="border-top: 1px solid #EDEFF2;">
             <td align="right" style="padding-top: 15px; font-weight: bold;font-size:15px;">Total</td>
             <td align="right" style="padding-top: 15px; font-weight: bold;font-size:15px;">
-                {{ $currency_symbol }}{{ number_format($registration->registrationTickets->sum(fn($t) => $t->price_at_purchase * $t->quantity), 2) }}
+                {{ $currency_symbol }}{{ $registration->calculated_total }}
             </td>
         </tr>
     </tbody>

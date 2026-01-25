@@ -34,11 +34,7 @@ class Payment extends Component
     public function noPaymentDue(RegistrationPaymentService $service)
     {
         $service->completeFreeRegistration($this->registration);
-
-        return redirect()->route('checkout.success', [
-            'registration_id' => $this->registration->id,
-            'event' => $this->registration->event,
-        ]);
+        $this->dispatch('enter-system-state', 'no-charge-success');
     }
 
     public function bankTransferPayment(RegistrationPaymentService $service)
