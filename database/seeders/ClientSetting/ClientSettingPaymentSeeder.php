@@ -137,6 +137,23 @@ class ClientSettingPaymentSeeder extends Seeder
             ],
             [
                 'category_id'   => 7,
+                'key_name'      => 'payment.booking.no_payment_due.cta.info_html',
+                'label'         => 'No payment due booking method cta information html',
+                'display_order' => 1,
+                'type'          => 'textarea',
+                'value'         => '<strong>No payment is due</strong><br>
+                Please click below to confirm your registration and secure your place at this event.',
+            ],
+            [
+                'category_id'   => 7,
+                'key_name'      => 'payment.booking.no_payment_due.cta.button_label',
+                'label'         => 'No payment due payment method cta label',
+                'display_order' => 1,
+                'type'          => 'text',
+                'value'         => 'Complete booking',
+            ],
+            [
+                'category_id'   => 7,
                 'key_name'      => 'payment.booking.stripe.payment.pending.header_html',
                 'label'         => 'Stripe payment pending header html',
                 'display_order' => 1,

@@ -70,12 +70,11 @@
 
         @else
             <x-registration.form-info>
-                <strong>No payment is due</strong><br>
-                Please click below to confirm your registration and secure your place at this event.
+                {{ client_setting('payment.booking.no_payment_due.cta.info_html') }}
             </x-registration.form-info>
 
             <x-registration.navigate-button wire:click="$dispatch('noPaymentDue')">
-                Complete booking
+                {{ client_setting('payment.booking.no_payment_due.cta.button_label') }}
             </x-registration.navigate-button>
         @endif
     </x-registration.form-step>
