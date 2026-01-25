@@ -8,7 +8,7 @@ use App\Models\Registration;
 
 use Livewire\Component;
 
-class StripeCheckoutSuccess extends Component
+class NoPaymentDueSuccess extends Component
 {
     public Registration $registration;
     public RegistrationForm $registration_form;
