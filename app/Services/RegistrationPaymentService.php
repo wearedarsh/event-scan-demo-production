@@ -30,9 +30,10 @@ class RegistrationPaymentService
     {
         $registration->update([
             'registration_status' => 'complete',
-            'payment_status' => 'paid',
-            'booking_reference' => $registration->ensureBookingReference()
+            'payment_status' => 'paid'
         ]);
+
+        $registration->ensureBookingReference();
 
         $free_payment = RegistrationPayment::updateOrCreate([
             'registration_id' => $registration->id,

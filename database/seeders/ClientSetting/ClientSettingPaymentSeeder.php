@@ -154,6 +154,41 @@ class ClientSettingPaymentSeeder extends Seeder
             ],
             [
                 'category_id'   => 7,
+                'key_name'      => 'payment.booking.no_payment_due.checkout.success.header_html',
+                'label'         => 'No payment due checkout success header html',
+                'display_order' => 1,
+                'type'          => 'textarea',
+                'value'         => '<h3 class="text-lg font-semibold mb-1">Thank you for registering for this event</h3>
+                                    <p class="text-sm text-[var(--color-text-light)]">
+                                        No payment was due and your place has been reserved
+                                    </p>',
+            ],
+            [
+                'category_id'   => 7,
+                'key_name'      => 'payment.booking.no_payment_due.checkout.success.details_html',
+                'label'         => 'No payment due checkout success details html',
+                'display_order' => 1,
+                'type'          => 'textarea',
+                'value'         => '',
+            ],
+            [
+                'category_id'   => 7,
+                'key_name'      => 'payment.booking.no_payment_due.checkout.success.footer_html',
+                'label'         => 'No payment due checkout success footer html',
+                'display_order' => 1,
+                'type'          => 'textarea',
+                'value'         => '',
+            ],
+            [
+                'category_id'   => 7,
+                'key_name'      => 'payment.booking.no_payment_due.checkout.success.finish_button_label',
+                'label'         => 'No payment due checkout success finish button label',
+                'display_order' => 1,
+                'type'          => 'text',
+                'value'         => 'Finish and return to homepage',
+            ],
+            [
+                'category_id'   => 7,
                 'key_name'      => 'payment.booking.stripe.payment.pending.header_html',
                 'label'         => 'Stripe payment pending header html',
                 'display_order' => 1,
