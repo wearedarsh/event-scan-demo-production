@@ -113,12 +113,18 @@
 
     <div class="flex gap-4">
         <x-registration.navigate-button
-            wire:click="$dispatch('validate-step', ['backward'])">
+            wire:click="$dispatch('validate-step', ['backward'])"
+            wire:loading.attr="disabled"
+            wire:target="$dispatch('validate-step', ['backward'])"
+        >
             Previous
         </x-registration.navigate-button>
 
         <x-registration.navigate-button
-            wire:click="$dispatch('validate-step', ['forward'])">
+            wire:click="$dispatch('validate-step', ['forward'])"
+            wire:loading.attr="disabled"
+            wire:target="$dispatch('validate-step', ['forward'])"
+        >
             Next
         </x-registration.navigate-button>
     </div>

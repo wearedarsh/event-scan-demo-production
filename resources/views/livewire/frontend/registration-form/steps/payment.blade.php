@@ -82,7 +82,10 @@
     <div class="grid grid-cols-4">
         <div class="col-span-2">
             <x-registration.navigate-button
-                wire:click="$dispatch('validate-step', ['backward'])">
+                wire:click="$dispatch('validate-step', ['backward'])"
+                wire:loading.attr="disabled"
+                wire:target="$dispatch('validate-step', ['backward'])"
+            >
                 Previous
             </x-registration.navigate-button>
         </div>

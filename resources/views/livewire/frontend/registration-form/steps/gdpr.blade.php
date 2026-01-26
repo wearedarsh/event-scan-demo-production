@@ -34,13 +34,21 @@
 
     <div class="flex gap-4 pt-6">
         <div class="flex-1">
-            <x-registration.navigate-button wire:click="$dispatch('validate-step', ['backward'])">
+            <x-registration.navigate-button 
+                wire:click="$dispatch('validate-step', ['backward'])"
+                wire:loading.attr="disabled"
+                wire:target="$dispatch('validate-step', ['backward'])"
+            >
                 Previous
             </x-registration.navigate-button>
         </div>
 
         <div class="flex-1">
-            <x-registration.navigate-button wire:click="$dispatch('validate-step', ['forward'])">
+            <x-registration.navigate-button 
+                wire:click="$dispatch('validate-step', ['forward'])"
+                wire:loading.attr="disabled"
+                wire:target="$dispatch('validate-step', ['forward'])"
+            >
                 @if($registration_form->type === 'approval' && $is_penultimate_step) 
                     {{ client_setting('booking.navigation.approval.final_step_button_label') }}
                 @else 
