@@ -118,18 +118,42 @@
 
     <div class="flex gap-4 pt-6">
         <div class="flex-1">
-            <x-registration.navigate-button wire:click="$dispatch('validate-step', ['backward'])">
-                Previous
+            <x-registration.navigate-button 
+                wire:click="$dispatch('validate-step', ['backward'])"
+                wire:loading.attr="disabled"
+                wire:target="$dispatch('validate-step', ['backward'])"
+            >
+                <span wire:loading.remove>
+                    Previous
+                </span>
+
+                <span wire:loading class="flex items-center gap-2">
+                    <x-heroicon-o-clock class="w-4 h-4" />
+                        Loading
+                </span>
             </x-registration.navigate-button>
         </div>
 
         <div class="flex-1">
-            <x-registration.navigate-button wire:click="$dispatch('validate-step', ['forward'])">
-                @if($this->registration->type === 'approval' && $is_penultimate_step) 
-                    client_setting('booking.navigation.approval.final_step_button_label') 
+            <x-registration.navigate-button 
+                wire:click="$dispatch('validate-step', ['forward'])"
+                wire:loading.attr="disabled"
+                wire:target="$dispatch('validate-step', ['forward'])"
+            >
+                @if($this->registration->type === 'approval' && $is_penultimate_step)
+                    <span wire:loading.remove>
+                        client_setting('booking.navigation.approval.final_step_button_label') 
+                    </span> 
+                    
                 @else 
-                    Next 
+                    <span wire:loading.remove>
+                        Next
+                    </span>
                 @endif
+                <span wire:loading class="flex items-center gap-2">
+                    <x-heroicon-o-clock class="w-4 h-4" />
+                        Loading
+                </span>
             </x-registration.navigate-button>
         </div>
     </div>

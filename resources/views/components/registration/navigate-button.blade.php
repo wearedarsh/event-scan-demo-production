@@ -1,5 +1,5 @@
 @props([
-    'action' => null,   // Livewire method
+    'action' => null,
     'type' => 'button',
 ])
 
