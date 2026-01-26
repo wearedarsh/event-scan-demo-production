@@ -20,7 +20,6 @@ return new class extends Migration
             $table->integer('max_volume')->default(1);
             $table->foreignId('ticket_group_id')->nullable()->constrained()->onDelete('cascade');
             $table->text('requires_document_copy')->nullable();
-            $table->string('allowed_file_types')->nullable();
             $table->boolean('active')->default(false);
             $table->integer('display_order')->default(1);
             $table->boolean('display_front_end')->default(false);

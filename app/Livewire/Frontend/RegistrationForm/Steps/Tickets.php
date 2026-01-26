@@ -175,11 +175,7 @@ class Tickets extends Component
             }
 
             if ($file) {
-                $rules = ['file', 'max:5120'];
-
-                if ($types = $ticket->allowedFileTypes()) {
-                    $rules[] = 'mimes:' . implode(',', $types);
-                }
+                $rules = json_decode(client_setting('ticket.document_upload.file_rules'));
 
                 $this->validate([
                     "ticket_documents.{$ticket->id}" => $rules,

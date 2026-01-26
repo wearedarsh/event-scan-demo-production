@@ -46,7 +46,6 @@ class TicketSeeder extends Seeder
                 'max_volume' => 1,
                 'ticket_group_id' => 1,
                 'requires_document_copy' => 'Please upload your identification.',
-                'allowed_file_types' => 'pdf,doc,docx',
                 'active' => 1,
                 'display_front_end' => 0,
             ],

@@ -11,7 +11,12 @@ use App\Models\Event;
 class Ticket extends Model
 {
     use SoftDeletes;
-    protected $fillable = ['event_id', 'name', 'price_cents', 'requires_document_upload', 'max_volume', 'requires_document_copy', 'active', 'display_front_end', 'ticket_group_id', 'display_order', 'allowed_file_types'];
+    
+    protected $fillable = ['event_id', 'name', 'price_cents', 
+        'requires_document_upload', 'max_volume', 'requires_document_copy', 
+        'active', 'display_front_end', 'ticket_group_id', 
+        'display_order'
+    ];
 
     protected $casts = [
         'price_cents' => 'integer',
