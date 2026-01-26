@@ -95,6 +95,12 @@ class RegistrationFormController extends Component
     public function mount(Event $event, $system_state = null)
     {
         $this->event = $event;
+
+        if(!$this->event->is_registerable)
+        {
+            return redirect()->route('home');
+        }
+
         $registration_id = session('registration_id');
 
         if($system_state){

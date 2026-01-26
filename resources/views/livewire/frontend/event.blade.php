@@ -4,14 +4,12 @@
 
 @include('livewire.frontend.partials.nav')
 
-<!-- ===== Hero ===== -->
 <section class="relative flex items-center justify-center pt-40 pb-16 text-center overflow-hidden">
-  <!-- Background -->
+
   <div class="absolute inset-0 bg-cover bg-center" 
        style="background-image:url('{{ asset('images/frontend/header-bg.jpg') }}');">
   </div>
 
-  <!-- Content -->
   <div class="relative max-w-3xl mx-auto px-6 text-white z-10">
     <h1 class="text-4xl md:text-5xl font-bold mb-4">{{ $event->title }}</h1>
     <p class="text-lg text-white/90 mb-10">
@@ -20,12 +18,9 @@
   </div>
 </section>
 
-
-<!-- ===== Sticky Section Nav ===== -->
 <nav id="sectionNav" class="sticky top-[72px] z-40 bg-[var(--color-surface)] border-b border-[var(--color-border)] shadow-sm">
   <div class="max-w-6xl mx-auto px-6 flex items-center justify-between py-3 text-sm font-medium text-[var(--color-text-light)]">
 
-    <!-- ===== Left: Event Information Dropdown ===== -->
     <div x-data="{ open: false }" class="relative">
       <button 
         @click="open = !open"
@@ -65,7 +60,6 @@
       </div>
     </div>
 
-    <!-- ===== Right: Booking Status / Button ===== -->
     <div class="flex-shrink-0">
       @if($event->provisional)
         <div class="p-2 rounded-lg bg-[var(--color-accent-light)] text-[var(--color-text-light)] text-xs sm:text-sm font-medium border border-[var(--color-border)]">
