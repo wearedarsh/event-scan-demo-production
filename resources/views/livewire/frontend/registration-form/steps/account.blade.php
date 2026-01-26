@@ -127,7 +127,7 @@
                     Previous
                 </span>
 
-                <span wire:loading class="flex items-center gap-2">
+                <span wire:loading class="flex flex-row items-center gap-2">
                     <x-heroicon-o-clock class="w-4 h-4" />
                         Loading
                 </span>
