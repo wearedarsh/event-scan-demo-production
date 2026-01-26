@@ -127,9 +127,9 @@
                     Previous
                 </span>
 
-                <span wire:loading class="flex flex-row items-center gap-2">
+                <span wire:loading class="inline-flex items-center gap-2">
                     <x-heroicon-o-clock class="w-4 h-4" />
-                        <span>Loading</span>
+                    <span>Loading</span>
                 </span>
             </x-registration.navigate-button>
         </div>
@@ -150,7 +150,7 @@
                         Next
                     </span>
                 @endif
-                <span wire:loading class="flex items-center gap-2">
+                <span wire:loading class="inline-flex items-center gap-2">
                     <x-heroicon-o-clock class="w-4 h-4" />
                     <span>Loading</span>
                 </span>
