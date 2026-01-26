@@ -15,6 +15,7 @@ class MasterClientSettingSeeder extends Seeder
             \Database\Seeders\ClientSetting\ClientSettingPaymentSeeder::class,
             \Database\Seeders\ClientSetting\ClientSettingCheckInAppSeeder::class,
             \Database\Seeders\ClientSetting\ClientSettingLegalSeeder::class,
+            \Database\Seeders\ClientSetting\ClientSettingTicketSeeder::class,
         ]);
     }
 }
