@@ -179,6 +179,12 @@ class Tickets extends Component
 
                 $this->validate([
                     "ticket_documents.{$ticket->id}" => $rules,
+                ],[
+                    "ticket_documents.{$ticket->id}.required" => client_setting('ticket.document_upload.messages.required'),
+                    "ticket_documents.{$ticket->id}.max" => client_setting('ticket.document_upload.messages.max'),
+                    "ticket_documents.{$ticket->id}.file" => client_setting('ticket.document_upload.messages.file'),
+                    "ticket_documents.{$ticket->id}.mimes" => client_setting('ticket.document_upload.messages.mimes'),
+
                 ]);
             }
         }
