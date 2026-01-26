@@ -123,14 +123,7 @@
                 wire:loading.attr="disabled"
                 wire:target="$dispatch('validate-step', ['backward'])"
             >
-                <span wire:loading.remove>
-                    Previous
-                </span>
-
-                <span wire:loading class="inline-flex items-center gap-2">
-                    <x-heroicon-o-clock class="w-4 h-4" />
-                    <span>Loading</span>
-                </span>
+                Previous
             </x-registration.navigate-button>
         </div>
 
@@ -141,19 +134,10 @@
                 wire:target="$dispatch('validate-step', ['forward'])"
             >
                 @if($this->registration->type === 'approval' && $is_penultimate_step)
-                    <span wire:loading.remove>
-                        client_setting('booking.navigation.approval.final_step_button_label') 
-                    </span> 
-                    
+                    client_setting('booking.navigation.approval.final_step_button_label')   
                 @else 
-                    <span wire:loading.remove>
-                        Next
-                    </span>
+                    Next
                 @endif
-                <span wire:loading class="inline-flex items-center gap-2">
-                    <x-heroicon-o-clock class="w-4 h-4" />
-                    <span>Loading</span>
-                </span>
             </x-registration.navigate-button>
         </div>
     </div>
