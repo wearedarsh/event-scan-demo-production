@@ -10,6 +10,9 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  {!! branding_css('registration') !!}
+</style>
 @vite(['resources/css/registration/app.css', 'resources/js/frontend/app.js'])
 
 <meta property="og:site_name" content="Eventscan demo site" />

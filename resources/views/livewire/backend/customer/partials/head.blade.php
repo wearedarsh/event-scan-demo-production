@@ -1,6 +1,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-{!! branding_css('backend_customer') !!}
+<style>
+  {!! branding_css('backend_customer') !!}
+</style>
 @vite(['resources/sass/backend_customer/app.scss', 'resources/js/backend/app.js'])
 
 <link href="https://cdn.jsdelivr.net/npm/@coreui/icons/css/all.min.css" rel="stylesheet">
