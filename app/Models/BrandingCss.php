@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class BrandingCss extends Model
 {
+    protected $table = 'branding_css';
+    
     protected $fillable = [
         'branding_platform_id',
         'key_name',
