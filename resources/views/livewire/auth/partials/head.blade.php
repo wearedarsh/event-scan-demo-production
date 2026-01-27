@@ -11,11 +11,13 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  {!! branding_css('frontend') !!}
+</style>
 @vite(['resources/css/frontend/app.css', 'resources/js/frontend/app.js'])
 @livewireStyles
 <title>Eventscan demo</title>
 
-<!-- OG -->
 <meta property="og:site_name" content="Eventscan demo" />
 <meta property="og:title" content="{{$og_title ?? 'Eventscan admin system' }}" />
 <meta property="og:description" content="{{$og_description  ?? 'Log in to manage your site'}}" />
@@ -24,5 +26,4 @@
 <meta property="og:url" content="{{config('app.url')}}" />
 <meta name="twitter:card" content="summary_large_image" />
 
-<!-- Favicon -->
 <link rel="icon" type="image/svg+xml" href="{{ asset('images/frontend/favicon.svg') }}">
