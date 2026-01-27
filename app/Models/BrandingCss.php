@@ -25,4 +25,14 @@ class BrandingCss extends Model
     {
         return $this->belongsTo(BrandingPlatform::class, 'branding_platform_id');
     }
+
+    public static function activeForPlatform(string $platformKey): ?self
+    {
+        return static::whereHas('platform', function ($query) use ($platformKey) {
+            $query->where('key_name', $platformKey);
+        })
+        ->where('is_active', true)
+        ->latest('version')
+        ->first();
+    }
 }

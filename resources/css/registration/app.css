@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+
+body {
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    color: var(--color-text);
+    background: var(--color-bg);
+}
+
+.sidebar-collapsed #sidebar {
+    transform: translateX(-16rem);
+}
+
+.sidebar-collapsed #main-content {
+    margin-left: 0;
+}
+
+.soft-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+}
+
+.soft-btn {
+    background: var(--color-secondary);
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+.prose-content {
+    @apply text-sm leading-relaxed text-[var(--color-text)];
+}
+
+.prose-content h3 {
+    @apply text-lg md:text-xl font-semibold text-[var(--color-primary)] mt-8 mb-3;
+}
+
+.prose-content p {
+    @apply mb-4 text-[var(--color-text-light)];
+}
+
+.prose-content a {
+    @apply text-[var(--color-primary)] font-medium hover:text-[var(--color-primary-hover)] transition-colors underline-offset-2 hover:underline;
+}
+
+.prose-content strong {
+    @apply font-semibold text-[var(--color-text)];
+}
+
+.prose-content br {
+    @apply block my-1;
+}

@@ -16,6 +16,7 @@ class BuildSiteAndSeedContent extends Seeder
             \Database\Seeders\MasterTicketSeeder::class,
             \Database\Seeders\MasterFeedbackFormSeeder::class,
             \Database\Seeders\MasterEmailSeeder::class,
+            \Database\Seeders\MasterBrandingSeeder::class,
         ]);
     }
 }
