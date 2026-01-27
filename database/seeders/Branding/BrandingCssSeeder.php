@@ -115,7 +115,7 @@ class BrandingCssSeeder extends Seeder
                     'version' => 1,
                 ],
                 [
-                    'key_name' => "branding_{$platformKey}",
+                    'key_name' => "{$platformKey}",
                     'name' => ucfirst(str_replace('_', ' ', $platformKey)) . ' default branding',
                     'css' => trim($css),
                     'is_active' => true,
