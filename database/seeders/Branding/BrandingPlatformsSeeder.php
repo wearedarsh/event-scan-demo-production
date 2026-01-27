@@ -15,8 +15,16 @@ class BrandingPlatformsSeeder extends Seeder
                 'label' => 'Frontend',
             ],
             [
-                'key_name' => 'backend',
-                'label' => 'Backend',
+                'key_name' => 'backend_admin',
+                'label' => 'Backend admin',
+            ],
+            [
+                'key_name' => 'backend_customer',
+                'label' => 'Backend customer',
+            ],
+            [
+                'key_name' => 'registration',
+                'label' => 'Registration',
             ],
             [
                 'key_name' => 'pdf',
