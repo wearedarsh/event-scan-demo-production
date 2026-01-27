@@ -12,7 +12,7 @@ class BrandingCssSeeder extends Seeder
     {
         $cssMap = [
             'frontend' => '
-@theme {
+:root {
   --color-bg: #F9FAFB;
   --color-surface: #FFFFFF;
   --color-primary: #1A4AFF;
@@ -34,7 +34,7 @@ class BrandingCssSeeder extends Seeder
 ',
 
             'registration' => '
-@theme {
+:root {
   --color-bg: #F9FAFB;
   --color-surface: #FFFFFF;
   --color-primary: #1A4AFF;
@@ -56,7 +56,7 @@ class BrandingCssSeeder extends Seeder
 ',
 
             'backend_admin' => '
-@theme {
+:root {
   --color-bg: #F9FAFB;
   --color-surface: #FFFFFF;
   --color-primary: #1A4AFF;
@@ -80,7 +80,7 @@ class BrandingCssSeeder extends Seeder
 ',
 
             'backend_customer' => '
-@theme {
+:root {
   --color-bg: #F9FAFB;
   --color-surface: #FFFFFF;
   --color-primary: #1A4AFF;
