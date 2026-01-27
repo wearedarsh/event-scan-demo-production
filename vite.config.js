@@ -9,8 +9,10 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/css/frontend/app.css', 
+                'resources/css/registration/app.css',
+                'resources/css/backend_customer/app.css',
+                'resources/css/backend_admin/app.css',
                 'resources/js/frontend/app.js',
-                'resources/css/backend/app.css',
                 'resources/js/backend/app.js'
             ],
             refresh: [
