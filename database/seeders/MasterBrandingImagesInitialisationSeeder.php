@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 
 class MasterBrandingImagesInitialisationSeeder extends Seeder
@@ -11,6 +10,7 @@ class MasterBrandingImagesInitialisationSeeder extends Seeder
     public function run(): void
     {
         $sourceFolder = database_path('seeders/Branding/branding_files');
+        $destinationFolder = storage_path('app/public/branding');
 
         if (! File::exists($sourceFolder)) {
             $this->command->warn("Source folder {$sourceFolder} does not exist. Skipping image initialisation.");
@@ -24,10 +24,8 @@ class MasterBrandingImagesInitialisationSeeder extends Seeder
             return;
         }
 
-        $destinationFolder = storage_path('app/public/branding');
-
         if (! File::exists($destinationFolder)) {
-            File::makeDirectory($destinationFolder, 0755, true); // recursive = true
+            File::makeDirectory($destinationFolder, 0755, true);
             $this->command->info("Created folder: {$destinationFolder}");
         }
 
@@ -36,7 +34,7 @@ class MasterBrandingImagesInitialisationSeeder extends Seeder
             $destinationPath = $destinationFolder . '/' . $filename;
 
             if (! File::exists($destinationPath)) {
-                Storage::putFileAs('public/branding', $file, $filename);
+                File::copy($file->getPathname(), $destinationPath);
                 $this->command->info("Copied: {$filename}");
             } else {
                 $this->command->info("Skipped (already exists): {$filename}");
