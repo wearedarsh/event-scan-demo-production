@@ -18,7 +18,7 @@
                         <td class="email-masthead">
                             <a href="{{ url('/' }}" style="text-decoration: none; display: inline-block;">
                                 <img src="{{ url(client_setting('branding.email.header.path')) }}" alt="Logo">
-                                <p style="color:#fff; font-size:16px; margin-top:10px;"> {{ $sub_title ?? 'events' }}</p>
+                                <p style="color:#fff; font-size:16px; margin-top:10px;"> {{ client_setting('branding.email.header.subtitle') ?? '' }}</p>
                             </a>
                         </td>
                     </tr>

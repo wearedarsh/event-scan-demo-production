@@ -167,6 +167,14 @@ class ClientSettingBrandingSeeder extends Seeder
                 'type'          => 'text',
                 'value'         => '/storage/branding/logo-email-header.png',
             ],
+            [
+                'category_id'   => 1,
+                'key_name'      => 'branding.email.header.sub_title',
+                'label'         => 'Email header subtitle',
+                'display_order' => 19,
+                'type'          => 'text',
+                'value'         => '',
+            ],
 
         ];
 
