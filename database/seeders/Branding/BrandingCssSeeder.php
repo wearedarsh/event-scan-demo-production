@@ -101,7 +101,7 @@ CSS,
 }
 CSS,
 
-            'email_main_layout' => <<<CSS
+            'email' => <<<CSS
 body {
     margin: 0;
     padding: 0;
