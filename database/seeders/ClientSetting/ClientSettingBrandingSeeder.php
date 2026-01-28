@@ -5,12 +5,12 @@ namespace Database\Seeders\ClientSetting;
 use Illuminate\Database\Seeder;
 use App\Models\ClientSetting;
 
-class BrandingClientSettingSeeder extends Seeder
+class ClientSettingBrandingSeeder extends Seeder
 {
     public function run(): void
     {
         $settings = [
-            
+
             [
                 'category_id'   => 1,
                 'key_name'      => 'branding.frontend.logo.path',
