@@ -4,7 +4,7 @@
 >
   <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
     <a href="{{ route('home') }}" class="flex items-center gap-3">
-      <img src="{{ asset('images/frontend/logo.png') }}" width="200" alt="{{ client_setting('general.customer_friendly_name') }}" />
+      <img src="{{ client_setting('branding.frontend.logo.path') }}" width="200" alt="{{ client_setting('general.customer_friendly_name') }}" />
     </a>
 
     <div class="hidden md:flex items-center gap-8">

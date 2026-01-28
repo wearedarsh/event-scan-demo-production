@@ -23,7 +23,7 @@
 <meta property="og:url" content="{{config('app.url')}}" />
 <meta name="twitter:card" content="summary_large_image" />
 
-<link rel="icon" type="image/svg+xml" href="{{ asset('images/frontend/favicon.svg') }}">
+<link rel="icon" type="image/svg+xml" href="{{ client_setting('branding.frontend.registration_favicon.path') }}">
 
 @livewireStyles
 <title>{{ $title }}</title>

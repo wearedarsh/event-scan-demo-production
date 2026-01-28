@@ -29,7 +29,7 @@ class ClientSettingBrandingSeeder extends Seeder
             ],
             [
                 'category_id'   => 1,
-                'key_name'      => 'branding.frontend.registration_logo.path',
+                'key_name'      => 'branding.frontend.registration.logo.path',
                 'label'         => 'Frontend registration logo path',
                 'display_order' => 3,
                 'type'          => 'text',
@@ -53,7 +53,7 @@ class ClientSettingBrandingSeeder extends Seeder
             ],
             [
                 'category_id'   => 1,
-                'key_name'      => 'branding.frontend.registration_favicon.path',
+                'key_name'      => 'branding.frontend.registration.favicon.path',
                 'label'         => 'Frontend registration favicon path',
                 'display_order' => 6,
                 'type'          => 'text',
@@ -69,8 +69,8 @@ class ClientSettingBrandingSeeder extends Seeder
             ],
             [
                 'category_id'   => 1,
-                'key_name'      => 'branding.frontend.login_background.path',
-                'label'         => 'Frontend login background path',
+                'key_name'      => 'branding.frontend.auth.background.path',
+                'label'         => 'Frontend auth background path',
                 'display_order' => 8,
                 'type'          => 'text',
                 'value'         => '/storage/branding/login-full-bg-frontend.jpg',
@@ -78,7 +78,7 @@ class ClientSettingBrandingSeeder extends Seeder
 
             [
                 'category_id'   => 1,
-                'key_name'      => 'branding.backend.admin_logo.path',
+                'key_name'      => 'branding.backend.admin.logo.path',
                 'label'         => 'Backend admin logo path',
                 'display_order' => 10,
                 'type'          => 'text',
@@ -86,7 +86,7 @@ class ClientSettingBrandingSeeder extends Seeder
             ],
             [
                 'category_id'   => 1,
-                'key_name'      => 'branding.backend.customer_logo.path',
+                'key_name'      => 'branding.backend.customer.logo.path',
                 'label'         => 'Backend customer logo path',
                 'display_order' => 11,
                 'type'          => 'text',
@@ -94,7 +94,7 @@ class ClientSettingBrandingSeeder extends Seeder
             ],
             [
                 'category_id'   => 1,
-                'key_name'      => 'branding.backend.admin_favicon.path',
+                'key_name'      => 'branding.backend.admin.favicon.path',
                 'label'         => 'Backend admin favicon path',
                 'display_order' => 12,
                 'type'          => 'text',
@@ -102,7 +102,7 @@ class ClientSettingBrandingSeeder extends Seeder
             ],
             [
                 'category_id'   => 1,
-                'key_name'      => 'branding.backend.customer_favicon.path',
+                'key_name'      => 'branding.backend.customer.favicon.path',
                 'label'         => 'Backend customer favicon path',
                 'display_order' => 13,
                 'type'          => 'text',
