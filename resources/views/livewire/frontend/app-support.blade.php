@@ -6,7 +6,7 @@
 
 <section class="relative flex items-center justify-center pt-40 pb-16 text-center overflow-hidden">
   <div class="absolute inset-0 bg-cover bg-center" 
-       style="background-image:url('{{ asset('images/frontend/header-bg.jpg') }}');">
+       style="background-image: url('{{ client_setting('branding.frontend.header_background.path') }}')">
   </div>
 
   <div class="relative max-w-3xl mx-auto px-6 text-white z-10">
