@@ -34,6 +34,10 @@ class BrandingPlatformsSeeder extends Seeder
                 'key_name' => 'badges',
                 'label' => 'Badges',
             ],
+            [   
+                'key_name' => 'email',
+                'label' => 'Email'
+            ]
         ];
 
         foreach ($platforms as $platform) {
