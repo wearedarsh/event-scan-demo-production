@@ -16,7 +16,7 @@
                 <table class="email-content" cellpadding="0" cellspacing="0" width="100%">
                     <tr>
                         <td class="email-masthead">
-                            <a href="{{ url('/' }}" style="text-decoration: none; display: inline-block;">
+                            <a href="{{ url('/') }}" style="text-decoration: none; display: inline-block;">
                                 <img src="{{ url(client_setting('branding.email.header.path')) }}" alt="Logo">
                                 @if(client_setting('branding.email.header.subtitle'))<p style="color:#fff; font-size:16px; margin-top:10px;"> {{ client_setting('branding.email.header.subtitle') }}</p>@endif
                             </a>
