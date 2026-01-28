@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders\Branding;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
