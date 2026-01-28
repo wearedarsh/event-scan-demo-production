@@ -1,4 +1,3 @@
-<!-- Google tag (gtag.js) -->
 @if(config('app.env') === 'production')
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-69TZZC5BK1"></script>
   <script>
