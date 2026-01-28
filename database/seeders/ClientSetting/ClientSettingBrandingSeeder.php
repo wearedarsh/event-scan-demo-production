@@ -25,7 +25,7 @@ class ClientSettingBrandingSeeder extends Seeder
                 'label'         => 'Frontend logo custom classes',
                 'display_order' => 2,
                 'type'          => 'text',
-                'value'         => 'width:200px',
+                'value'         => 'w-[200px]',
             ],
             [
                 'category_id'   => 1,
@@ -49,7 +49,7 @@ class ClientSettingBrandingSeeder extends Seeder
                 'label'         => 'Frontend registration logo custom classes',
                 'display_order' => 5,
                 'type'          => 'text',
-                'value'         => 'width:200px',
+                'value'         => 'w-[200px]',
             ],
             [
                 'category_id'   => 1,
