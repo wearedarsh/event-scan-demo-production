@@ -16,8 +16,8 @@
                 <table class="email-content" cellpadding="0" cellspacing="0" width="100%">
                     <tr>
                         <td class="email-masthead">
-                            <a href="{{ $app_url }}" style="text-decoration: none; display: inline-block;">
-                                <img src="{{ $app_url }}/images/frontend/logo-white.png" alt="Logo">
+                            <a href="{{ url('/' }}" style="text-decoration: none; display: inline-block;">
+                                <img src="{{ url(client_setting('branding.email.header.path')) }}" alt="Logo">
                                 <p style="color:#fff; font-size:16px; margin-top:10px;"> {{ $sub_title ?? 'events' }}</p>
                             </a>
                         </td>
