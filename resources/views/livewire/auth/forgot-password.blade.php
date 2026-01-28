@@ -1,9 +1,7 @@
 <div class="w-full flex flex-col items-center">
   
-  <!-- Logo -->
-  <img src="{{ asset('images/frontend/logo-white.png') }}" alt="{{client_setting('general.customer_friendly_name')}} Logo" class="mx-auto w-56 mb-6">
+  <img src="{{ client_setting('branding.frontend.auth_logo.path') }}" alt="{{client_setting('general.customer_friendly_name')}} Logo" class="mx-auto w-56 mb-6">
 
-  <!-- Reset Password Card -->
   <div class="w-full max-w-md bg-[var(--color-surface)] rounded-2xl p-8 text-center shadow-lg border border-[var(--color-border)]">
     
     <h1 class="text-2xl font-semibold mb-2 text-[var(--color-text)]">Reset your password</h1>
@@ -23,10 +21,8 @@
       </div>
     @endif
 
-    <!-- Password Reset Form -->
     <form wire:submit="sendPasswordResetLink" class="flex flex-col gap-5 text-left">
       
-      <!-- Email -->
       <div>
         <label for="email" class="block mb-1 text-sm font-bold text-[var(--color-text)]">
           Email address
@@ -43,7 +39,6 @@
         />
       </div>
 
-      <!-- Submit -->
       <button
         type="submit"
         class="w-full py-3 rounded-lg font-semibold bg-[var(--color-primary)] text-white transition hover:opacity-90 shadow-md"
@@ -52,7 +47,6 @@
       </button>
     </form>
 
-    <!-- Back to login -->
     <div class="text-center mt-5">
       <a href="{{ route('login') }}" class="text-[var(--color-accent)] font-medium hover:underline">
         Back to login
