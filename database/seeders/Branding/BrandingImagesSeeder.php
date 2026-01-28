@@ -5,103 +5,55 @@ namespace Database\Seeders\Branding;
 use Illuminate\Database\Seeder;
 use App\Models\BrandingImage;
 use App\Models\BrandingPlatform;
+use Illuminate\Support\Facades\Storage;
 
 class BrandingImagesSeeder extends Seeder
 {
     public function run(): void
     {
-        $frontend = BrandingPlatform::where('key_name', 'frontend')->first();
-        $backend  = BrandingPlatform::where('key_name', 'backend')->first();
+        $sourcePath = database_path('seeders/branding/branding_files');
+        $destinationPath = 'public/branding';
 
-        $images = [
-            [
-                'branding_platform_id' => $frontend->id,
-                'key_name' => 'frontend_logo',
-                'path' => '/storage/branding/logo-frontend.png',
-                'alt_text' => 'Frontend main logo',
-            ],
-            [
-                'branding_platform_id' => $frontend->id,
-                'key_name' => 'frontend_favicon',
-                'path' => '/storage/branding/favicon-frontend.svg',
-                'alt_text' => 'Frontend favicon',
-            ],
-            [
-                'branding_platform_id' => $frontend->id,
-                'key_name' => 'frontend_registration_logo',
-                'path' => '/storage/branding/logo-registration-frontend.png',
-                'alt_text' => 'Frontend registration logo',
-            ],
-            [
-                'branding_platform_id' => $frontend->id,
-                'key_name' => 'frontend_registration_favicon',
-                'path' => '/storage/branding/favicon-registration.svg',
-                'alt_text' => 'Frontend registration favicon',
-            ],
-            [
-                'branding_platform_id' => $frontend->id,
-                'key_name' => 'frontend_header_background',
-                'path' => '/storage/branding/header-bg-frontend.jpg',
-                'alt_text' => 'Frontend header background',
-            ],
-            [
-                'branding_platform_id' => $frontend->id,
-                'key_name' => 'frontend_login_background',
-                'path' => '/storage/branding/login-full-bg-frontend.jpg',
-                'alt_text' => 'Frontend login background',
-            ],
-            [
-                'branding_platform_id' => $frontend->id,
-                'key_name' => 'frontend_auth_logo',
-                'path' => '/storage/branding/logo-auth-frontend.png',
-                'alt_text' => 'Frontend auth/login logo',
-            ],
-            [
-                'branding_platform_id' => $frontend->id,
-                'key_name' => 'frontend_auth_favicon',
-                'path' => '/storage/branding/favicon-auth-frontend.svg',
-                'alt_text' => 'Frontend auth/login favicon',
-            ],
-
-
-
-
-
-            [
-                'branding_platform_id' => $backend->id,
-                'key_name' => 'backend_admin_logo',
-                'path' => '/storage/branding/logo-admin-backend.png',
-                'alt_text' => 'Backend admin logo',
-            ],
-            [
-                'branding_platform_id' => $backend->id,
-                'key_name' => 'backend_customer_logo',
-                'path' => '/storage/branding/logo-customer-backend.png',
-                'alt_text' => 'Backend customer logo',
-            ],
-            [
-                'branding_platform_id' => $backend->id,
-                'key_name' => 'backend_admin_favicon',
-                'path' => '/storage/branding/favicon-admin-backend.svg',
-                'alt_text' => 'Backend admin favicon',
-            ],
-            [
-                'branding_platform_id' => $backend->id,
-                'key_name' => 'backend_customer_favicon',
-                'path' => '/storage/branding/favicon-customer-backend.svg',
-                'alt_text' => 'Backend customer favicon',
-            ],
+        $platforms = [
+            'frontend' => BrandingPlatform::where('key_name', 'frontend')->first(),
+            'backend'  => BrandingPlatform::where('key_name', 'backend')->first(),
         ];
 
-        foreach ($images as $image) {
+        $images = [
+            ['platform' => 'frontend', 'key_name' => 'frontend_logo', 'file' => 'logo-frontend.png', 'alt' => 'Frontend logo'],
+            ['platform' => 'frontend', 'key_name' => 'frontend_logo_white', 'file' => 'logo-white-frontend.png', 'alt' => 'Frontend logo (white)'],
+            ['platform' => 'frontend', 'key_name' => 'registration_logo', 'file' => 'logo-registration-frontend.png', 'alt' => 'Registration logo'],
+            ['platform' => 'backend',  'key_name' => 'admin_logo_backend', 'file' => 'logo-admin-backend.png', 'alt' => 'Admin backend logo'],
+            ['platform' => 'backend',  'key_name' => 'customer_logo_backend', 'file' => 'logo-customer-backend.png', 'alt' => 'Customer backend logo'],
+            ['platform' => 'backend',  'key_name' => 'auth_logo_frontend', 'file' => 'logo-auth-frontend.png', 'alt' => 'Auth frontend logo'],
+            ['platform' => 'frontend', 'key_name' => 'frontend_favicon', 'file' => 'favicon-frontend.svg', 'alt' => 'Frontend favicon'],
+            ['platform' => 'frontend', 'key_name' => 'registration_favicon', 'file' => 'favicon-registration.svg', 'alt' => 'Registration favicon'],
+            ['platform' => 'backend',  'key_name' => 'auth_favicon_frontend', 'file' => 'favicon-auth-frontend.svg', 'alt' => 'Auth frontend favicon'],
+            ['platform' => 'backend',  'key_name' => 'admin_favicon_backend', 'file' => 'favicon-admin-backend.svg', 'alt' => 'Admin backend favicon'],
+            ['platform' => 'backend',  'key_name' => 'customer_favicon_backend', 'file' => 'favicon-customer-backend.svg', 'alt' => 'Customer backend favicon'],
+            ['platform' => 'frontend', 'key_name' => 'frontend_header_background', 'file' => 'header-bg-frontend.jpg', 'alt' => 'Frontend header background'],
+            ['platform' => 'frontend', 'key_name' => 'frontend_login_background', 'file' => 'login-full-bg-frontend.jpg', 'alt' => 'Frontend login background'],
+        ];
+
+        foreach ($images as $img) {
+            $platform = $platforms[$img['platform']] ?? null;
+            if (!$platform) continue;
+
+            $sourceFile = "{$sourcePath}/{$img['file']}";
+            $storagePath = "{$destinationPath}/{$img['file']}";
+
+            if (file_exists($sourceFile) && !Storage::exists($storagePath)) {
+                Storage::putFileAs($destinationPath, $sourceFile, $img['file']);
+            }
+
             BrandingImage::updateOrCreate(
                 [
-                    'branding_platform_id' => $image['branding_platform_id'],
-                    'key_name' => $image['key_name'],
+                    'branding_platform_id' => $platform->id,
+                    'key_name' => $img['key_name'],
                 ],
                 [
-                    'path' => $image['path'],
-                    'alt_text' => $image['alt_text'],
+                    'path' => "/storage/branding/{$img['file']}",
+                    'alt_text' => $img['alt'],
                 ]
             );
         }
