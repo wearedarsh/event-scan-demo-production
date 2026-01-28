@@ -10,7 +10,7 @@ class MasterBrandingImagesInitialisationSeeder extends Seeder
 {
     public function run(): void
     {
-        $sourceFolder = database_path('seeders/Branding/BrandingFiles');
+        $sourceFolder = database_path('seeders/Branding/branding_files');
         $destinationFolder = 'public/branding';
 
         if (! File::exists($sourceFolder)) {
