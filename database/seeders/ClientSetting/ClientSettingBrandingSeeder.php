@@ -157,6 +157,17 @@ class ClientSettingBrandingSeeder extends Seeder
                 'type'          => 'text',
                 'value'         => '/storage/branding/favicon-auth-frontend.svg',
             ],
+
+
+            [
+                'category_id'   => 1,
+                'key_name'      => 'branding.email.header.path',
+                'label'         => 'Email header logo path',
+                'display_order' => 19,
+                'type'          => 'text',
+                'value'         => '/storage/branding/logo-email-header.png',
+            ],
+
         ];
 
         foreach ($settings as $setting) {

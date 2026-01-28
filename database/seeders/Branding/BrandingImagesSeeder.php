@@ -12,6 +12,7 @@ class BrandingImagesSeeder extends Seeder
     {
         $frontend = BrandingPlatform::where('key_name', 'frontend')->first();
         $backend  = BrandingPlatform::where('key_name', 'backend')->first();
+        $email  = BrandingPlatform::where('key_name', 'email')->first();
 
         $images = [
             [
@@ -91,6 +92,18 @@ class BrandingImagesSeeder extends Seeder
                 'path' => '/storage/branding/favicon-customer-backend.svg',
                 'alt_text' => 'Backend customer favicon',
             ],
+
+
+
+            [
+                'branding_platform_id' => $email->id,
+                'key_name' => 'email_header_logo',
+                'path' => '/storage/branding/logo-email-header.png',
+                'alt_text' => 'Email header logo',
+            ],
+
+
+
         ];
 
         foreach ($images as $image) {
