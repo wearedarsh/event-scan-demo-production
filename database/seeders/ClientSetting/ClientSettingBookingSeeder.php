@@ -43,7 +43,7 @@ class ClientSettingBookingSeeder extends Seeder
                 'display_order' => 3,
                 'type'          => 'textarea',
                 'value'         => '<h3 class="text-[var(--color-text)] font-semibold mb-3">Secure Payments</h3>
-                                    <img src="/images/frontend/stripe.png" alt="Stripe Secure Payments" class="h-8 inline-block opacity-80">
+                                    <img src="/storage/branding/stripe.png" alt="Stripe Secure Payments" class="h-8 inline-block opacity-80">
                                     <p class="mt-3 leading-relaxed">
                                         We accept all major cards via Stripe - your transactions are encrypted and protected.
                                     </p>',

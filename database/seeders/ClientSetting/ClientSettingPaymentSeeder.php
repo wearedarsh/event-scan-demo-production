@@ -88,7 +88,7 @@ class ClientSettingPaymentSeeder extends Seeder
                 'label'         => 'Stripe payment booking method cta information html',
                 'display_order' => 1,
                 'type'          => 'textarea',
-                'value'         => '<img src="/images/frontend/stripe.png" alt="Stripe Secure Payments" class="mt-2 h-8 inline-block opacity-80"><br>
+                'value'         => '<img src="/storage/branding/stripe.png" alt="Stripe Secure Payments" class="mt-2 h-8 inline-block opacity-80"><br>
                                     <strong>Secure card payment</strong><br>
                                     <p>Payment will be processed securely via Stripe.</p>',
             ],

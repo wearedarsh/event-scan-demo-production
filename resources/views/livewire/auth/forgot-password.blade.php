@@ -1,6 +1,6 @@
 <div class="w-full flex flex-col items-center">
   
-  <img src="{{ client_setting('branding.frontend.auth_logo.path') }}" alt="{{client_setting('general.customer_friendly_name')}} Logo" class="mx-auto w-56 mb-6">
+  <img src="{{ client_setting('branding.frontend.auth.logo.path') }}" alt="{{client_setting('general.customer_friendly_name')}} Logo" class="{{ client_setting('branding.frontend.auth.logo.custom_classes') }}">
 
   <div class="w-full max-w-md bg-[var(--color-surface)] rounded-2xl p-8 text-center shadow-lg border border-[var(--color-border)]">
     
